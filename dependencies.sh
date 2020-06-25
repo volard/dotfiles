@@ -21,3 +21,4 @@ sudo apt-get install -y unclutter
 sudo apt-get install -y breeze-cursor-theme
 sudo apt-get install -y neofetch
 sudo apt-get install i3blocks
+sudo apt-get install arandr
