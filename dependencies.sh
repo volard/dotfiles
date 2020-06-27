@@ -45,7 +45,8 @@ sudo apt-get install -y libstartup-notification0-dev \
     arandr \
     cmake \
     cmake-data \
-    compton 
+    compton \
+    flameshot
 
 #installing i3-auto-layout
 sudo apt remove --auto-remove --purge rust-gdb rustc libstd-rust-1.24 libstd-rust-1.28 libstd-rust-dev
