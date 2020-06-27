@@ -19,7 +19,6 @@ set nowrap
 set smartcase
 "set guifont=Ubuntu_Mono_Nerd_Font_Complete_Mono:h33
 " guifont configures in console emulator settings
-
 call plug#begin('~/.vim/plugged')
 
 Plug 'vim-airline/vim-airline-themes'
@@ -84,5 +83,7 @@ let g:multi_cursor_skip_key            = '<C-x>'
 let g:multi_cursor_quit_key            = '<Esc>'
 
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme="deus"
+let g:airline_theme="simple"
 let g:airline_powerline_fonts = 1
+let g:gruvbox_transparent_bg=1
+highlight Normal ctermbg=None
