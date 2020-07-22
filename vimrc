@@ -35,6 +35,15 @@ Plug 'terryma/vim-multiple-cursors'
 
 call plug#end()
 
+let g:gruvbox_contrast_dark = 'hard'
+
+if exists('+termguicolors')
+    let &t_8f = "/<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "/<Esc>[38;2;%lu;%lu;%lum"
+endif
+
+let g:gruvbox_invert_selection='0'
+
 colorscheme gruvbox
 let mapleader = " "
 let g:netrw_browse_split=2
@@ -69,8 +78,6 @@ let g:XkbSwitchNLayout = 'us'
 
 map <F7> gg=G<C-o><C-o>
 
-"let g:multi_cursor_use_default_mapping=0
-
 " Default mapping for multicursor (yeah, i don't so skilled enough in vim
 " actually)
 let g:multi_cursor_start_word_key      = '<C-n>'
@@ -87,3 +94,4 @@ let g:airline_theme="simple"
 let g:airline_powerline_fonts = 1
 let g:gruvbox_transparent_bg=1
 highlight Normal ctermbg=None
+set confirm
