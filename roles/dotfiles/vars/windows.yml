@@ -1,0 +1,6 @@
+scoop_path: "C:\\Users\\{{ ansible_user }}\\scoop"
+scoop_global_path: "C:\\Users\\{{ ansible_user }}\\scoop\\global"
+packages:
+  - neovim
+  - git
+  - curl

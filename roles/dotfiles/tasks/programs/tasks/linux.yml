@@ -1,0 +1,32 @@
+---
+- name: Install required packages using Nala on Linux
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages }}"
+  when: ansible_os_family in ["Debian", "Ubuntu"]
+
+- name: Install Nala if not already installed
+  apt:
+    name: nala
+    state: present
+    update_cache: true
+
+- name: Create Neovim configuration directory
+  file:
+    path: "{{ ansible_user_dir }}/.config/nvim"
+    state: directory
+
+- name: Copy init.vim configuration
+  template:
+    src: init.vim.j2
+    dest: "{{ ansible_user_dir }}/.config/nvim/init.vim"
+
+- name: Install vim-plug (plugin manager for Neovim)
+  get_url:
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest: "{{ ansible_user_dir }}/.local/share/nvim/site/autoload/plug.vim"
+    mode: '0755'
+
+- name: Ensure Neovim plugins are installed
+  command: nvim +PlugInstall +qall

@@ -1,0 +1,30 @@
+---
+- name: Install dependencies for Windows
+  win_chocolatey:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - neovim
+    - python3-neovim
+    - git
+    - curl
+  when: ansible_os_family == "Windows"
+
+- name: Create Neovim configuration directory on Windows
+  win_file:
+    path: "{{ ansible_user_profile }}\.config\nvim"
+    state: directory
+
+- name: Copy init.vim configuration on Windows
+  template:
+    src: init.vim.j2
+    dest: "{{ ansible_user_profile }}\.config\nvim\init.vim"
+
+- name: Install vim-plug (plugin manager for Neovim) on Windows
+  win_get_url:
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest: "{{ ansible_user_profile }}\.local\share\nvim\site\autoload\plug.vim"
+    mode: '0755'
+
+- name: Ensure Neovim plugins are installed on Windows
+  command: nvim +PlugInstall +qall

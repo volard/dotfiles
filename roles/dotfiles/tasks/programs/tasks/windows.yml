@@ -1,0 +1,50 @@
+---
+- name: Set up SCOOP and SCOOP_GLOBAL environment variables
+  win_environment:
+    name: SCOOP
+    value: "{{ scoop_path }}"
+    state: present
+
+- name: Set up SCOOP_GLOBAL environment variable
+  win_environment:
+    name: SCOOP_GLOBAL
+    value: "{{ scoop_global_path }}"
+    state: present
+
+- name: Install Scoop if not installed
+  win_shell: |
+    Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+    iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+  args:
+    creates: "{{ scoop_path }}\\shims"
+
+- name: Add Scoop to PATH (if needed)
+  win_environment:
+    name: Path
+    value: "{{ scoop_path }}\\shims"
+    state: present
+
+- name: Install required packages using Scoop on Windows
+  win_scoop:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages }}"
+
+- name: Create Neovim configuration directory on Windows
+  win_file:
+    path: "{{ ansible_user_profile }}\\.config\\nvim"
+    state: directory
+
+- name: Copy init.vim configuration on Windows
+  template:
+    src: init.vim.j2
+    dest: "{{ ansible_user_profile }}\\.config\\nvim\\init.vim"
+
+- name: Install vim-plug (plugin manager for Neovim) on Windows
+  win_get_url:
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest: "{{ ansible_user_profile }}\\.local\\share\\nvim\\site\\autoload\\plug.vim"
+    mode: '0755'
+
+- name: Ensure Neovim plugins are installed on Windows
+  command: nvim +PlugInstall +qall

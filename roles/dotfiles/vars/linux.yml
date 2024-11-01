@@ -1,0 +1,7 @@
+packages:
+  - neovim
+  - python3-neovim
+  - git
+  - curl
+  - ripgrep
+  - fd
