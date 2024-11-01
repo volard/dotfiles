@@ -1,0 +1,32 @@
+---
+- name: Include vault variables
+  include_vars:
+    file: "vault/ssh_keys.yml"
+
+- name: Ensure SSH directory exists
+  file:
+    path: "{{ config_paths.ssh }}"
+    state: directory
+    mode: '0700'
+  when: ansible_os_family == 'Linux'
+
+- name: Deploy SSH keys
+  copy:
+    content: "{{ item.private_key }}"
+    dest: "{{ config_paths.ssh }}/{{ item.name }}"
+    mode: '0600'
+  loop: "{{ ssh_keys }}"
+  when: ansible_os_family == 'Linux'
+
+- name: Deploy SSH public keys
+  copy:
+    content: "{{ item.public_key }}"
+    dest: "{{ config_paths.ssh }}/{{ item.name }}.pub"
+    mode: '0644'
+  loop: "{{ ssh_keys }}"
+  when: ansible_os_family == 'Linux'
+
+- name: Copy config
+  ansible.builtin.template:
+    dest: "{{ ansible_user_dir }}/.ssh/config"
+    src: "config"

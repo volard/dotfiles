@@ -1,0 +1,8 @@
+---
+packages:
+  - git
+  - neovim
+  - vifm
+  - ripgrep
+  - alacritty
+  - sudo

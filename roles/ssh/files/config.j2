@@ -1,0 +1,17 @@
+# GitLab.com
+Host gitlab.com
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/personal_gitlab_ed25519
+
+
+# GitHub
+Host github.com
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/github_ed25519
+
+
+# Roadcons
+Host git.roadcons.ru
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/roadcons_ed25519
+    Port {{ roadcons_port_number }} 

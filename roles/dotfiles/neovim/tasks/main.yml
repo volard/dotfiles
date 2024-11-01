@@ -1,3 +1,0 @@
----
-- name: Include tasks for Linux or Windows
-  include_tasks: "{{ ansible_os_family | lower }}.yml"

@@ -1,6 +1,3 @@
-# Created by https://www.toptal.com/developers/gitignore/api/ansible,visualstudiocode,vim
-# Edit at https://www.toptal.com/developers/gitignore?templates=ansible,visualstudiocode,vim
-
 ### Ansible ###
 *.retry
 
@@ -97,7 +94,9 @@ flycheck_*.el
 # network security
 /network-security.data
 
+.DS_Store
+*.DS_Store
 
-# End of https://www.toptal.com/developers/gitignore/api/emacs
-
-# End of https://www.toptal.com/developers/gitignore/api/ansible,visualstudiocode,vim
+vault-password.*
+roles/neovim/files/lazy-lock.json
+/callback_plugins/__pycache__

@@ -1,0 +1,5 @@
+# just all common roles
+default_roles:
+  - alacritty
+  - neovim
+  - ssh

@@ -8,11 +8,13 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     ansible \
     python3-pip \
+    sudo \
     git \
-    && apt-get clean
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
-WORKDIR /dotfiles
+WORKDIR /home/dotfiles
 
 # Copy the dotfiles and the playbook into the container
 COPY . .

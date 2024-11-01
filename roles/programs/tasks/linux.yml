@@ -1,0 +1,7 @@
+---
+- name: "{{ role_name }} | Install required packages using Nala on Linux"
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages }}"
+  when: ansible_os_family in ["Debian", "Ubuntu"]
