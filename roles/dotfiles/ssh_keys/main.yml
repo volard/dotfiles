@@ -1,0 +1,24 @@
+---
+- name: Copy Multiple Encrypted SSH Keys
+  hosts: all
+  become: no
+  vars:
+    ssh_key_path: "{{ ansible_env.HOME }}/.ssh/"
+    key_source: "ssh_keys/"
+  tasks:
+    - name: Ensure .ssh directory exists
+      ansible.builtin.file:
+        path: "{{ ssh_key_path }}"
+        state: directory
+        mode: '0700'
+
+    - name: Copy all encrypted SSH keys
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ ssh_key_path }}/{{ item | basename }}"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0600'
+      loop: "{{ lookup('fileglob', key_source + '*') }}"
+      vars:
+        ansible_vault_password_file: /path/to/vault_password_file  # Use this if needed
