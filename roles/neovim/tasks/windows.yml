@@ -1,0 +1,20 @@
+---
+- name: "{{ role_name }} | Install dependencies for Windows"
+  win_chocolatey:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - neovim
+    - git
+    - curl
+  when: ansible_os_family == "Windows"
+
+- name: "{{ role_name }} | Create Neovim configuration directory on Windows"
+  win_file:
+    path: "{{ ansible_user_profile }}/.config/nvim"
+    state: directory
+
+- name: "{{ role_name }} | Copy init.vim configuration on Windows"
+  template:
+    src: init.vim.j2
+    dest: "{{ ansible_user_profile }}/.config/nvim/init.vim"

@@ -1,0 +1,8 @@
+---
+- name: Configure dotfiles and system settings
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  vars_files:
+      - "/vars/vault/sensitive_vars.yml"
+

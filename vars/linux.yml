@@ -1,0 +1,13 @@
+---
+packages:
+  - curl
+  - ripgrep
+  - tmux
+  - ripgrep
+  - fzf
+  - nala
+  - fd
+
+config_paths:
+  neovim: "~/.config/nvim"
+  vscode: "~/.config/Code/User/settings.json"

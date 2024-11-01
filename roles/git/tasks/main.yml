@@ -1,0 +1,22 @@
+---
+- name: Install Git on Linux
+  ansible.builtin.apt:
+    name: git
+    state: present
+    update_cache: yes
+  become: true
+  when: 
+    - ansible_os_family == 'Linux'
+    - ansible_pkg_mgr == 'apt'
+
+- name: Install Git using Scoop
+  community.windows.scoop:
+    name: git
+    state: present
+  when: ansible_os_family == 'Windows'
+
+- name: Copy Git configuration
+  template:
+    src: "git/{{ ansible_os_family | lower }}_gitconfig.j2"
+    dest: "{{ config_paths.git }}"
+    mode: '0644'

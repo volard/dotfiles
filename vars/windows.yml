@@ -1,0 +1,16 @@
+---
+scoop_packages:
+  - vscode
+  - powershell
+  - wezterm
+  - sophiapp
+
+config_paths:
+  neovim: "%LOCALAPPDATA%\\nvim"
+  vscode: "%APPDATA%\\Code\\User\\settings.json"
+  pwsh_profile: "%USERPROFILE%\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1"
+
+
+env_vars:
+  scoop_path: "C:\\Users\\{{ ansible_user }}\\scoop"
+  scoop_global_path: "C:\\Users\\{{ ansible_user }}\\scoop\\global"
