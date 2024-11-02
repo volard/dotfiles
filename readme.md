@@ -1,5 +1,6 @@
 # Ansible driven dotfiles management
 
+## Set up
 ```bash
 dotfiles_path=~/dotfiles
 
@@ -16,21 +17,32 @@ ansible-galaxy collection install -r requirements.yml
 ansible-playbook main.yml --vaul-password-file /vault-password.txt
 ```
 
+```bash
+# git@gitlab.com:dotfiles30/comma_files.git
+v .git/config
+```
+
+## Structure
 Each role **installs and configures** a program. If program doesn't need to be configured, it's listed in `packages` list.
+
+```bash
+roles/              # setup and install programs
+roles/common_tasks/ # tasks, that can be used across roles
+roles/files/        # config files: templates and static
+vars/               # role-specific variables
+group_vars/         # os-specific variables
+files/              # common static files
+pre_tasks/          # preliminary tasks to setup an OS
+archive/            # old stuff, not used by Ansible 
+scripts/            # some useful things, not used by Ansible
+```
 
 
 ## SSH keys
-SSH keys secured with [`Ansible Valut`](https://docs.ansible.com/ansible/latest/vault_guide/index.html)
+SSH keys as well as sensitive variables encoded with [`Ansible Valut`](https://docs.ansible.com/ansible/latest/vault_guide/index.html)
 
-1. Create Encrypted SSH Keys
 
-```bash
-for key in ssh_keys/*; do
-    ansible-vault encrypt "$key"
-done
-```
-
-## Credits
+### Some references
 - https://github.com/Wintus/Ansible-WSL
 - https://www.youtube.com/watch?v=gIDywsGBqf4&t=49s
 - https://github.com/TechDufus/dotfiles

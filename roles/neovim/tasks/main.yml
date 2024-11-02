@@ -1,3 +1,49 @@
 ---
-- name: "{{ role_name }} | Include tasks for Linux or Windows"
-  include_tasks: "{{ ansible_os_family | lower }}.yml"
+- name: "{{ role_name }} | Install required packages on Linux"
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - git
+    - curl
+    - ripgrep
+    - fd
+    - snapd
+    - gcc
+  become: true
+  when: ansible_os_family in ["Debian", "Ubuntu"]
+
+- name: Install nvim via snap on Linux
+  community.general.snap:
+    name: nvim
+    state: present
+  become: true
+  when: ansible_os_family == 'Linux'
+
+- name: Install Neovim and its dependencies on Windows using Scoop
+  community.windows.scoop:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - neovim
+    - curl
+    - gcc
+    - vcredist2022
+    - ripgrep
+  when: ansible_os_family == 'Windows'
+
+- name: Set OS-specific config paths
+  set_fact:
+    config_path: "{{ ansible_user_dir }}/.config/nvim"
+
+- name: Remove Neovim configuration directories
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{ config_path }}"
+    - "{{ ansible_user_dir }}/.local/share/nvim"
+  when: ansible_os_family == 'Linux'
+
+- name: Include common copy tasks
+  include_tasks: roles/common_tasks/tasks/copy_configs.yml

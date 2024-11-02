@@ -1,0 +1,412 @@
+" =================== CHEATSHEET (my most used) =================== "
+
+" https://vim.rtorr.com
+
+" c$ or C - change (replace) to the end of the line
+" E B - word back and fourth including punctuation
+
+" Ctrl-C - exit insert mode (yeah thats default...)
+
+" 0 - last yank
+" " - unnamed register, last delete or yank
+" % - current file name
+" # - alternate file name
+" * - clipboard contents (X11 primary)
+" + - clipboard contents (X11 clipboard)
+" / - last search pattern
+" : - last command-line
+" . - last inserted text
+" - - last small (less than a line) delete
+" = - expression register
+" _ - black hole register
+
+" ----------------- BETWEEN FILES NAVIGATION -----------------
+
+" :sp
+
+
+" CTRL-^        | Alternate file (like CTRL-TAB) (usually works out of the box)
+" CTRL-6        |
+" CTRL-SHIFT-6  |
+
+" ----------------- IN FILE NAVIGATION -----------------
+
+" Vim provides the f, t or F, T command to jump forward or backward to a character in current line,
+" and you can repeat the action by pressing , or ;
+" but it's better to use vim-sneak
+
+" This don't populate jumplist
+" Ctrl + d - move cursor and screen down 1/2 page
+" Ctrl + u - move cursor and screen up 1/2 page
+
+" That's freaking cool
+" CTRL-] — Look-up the keyword under the cursor. Useful for jumping to a function’s definition.
+
+
+" ----- Jumplist ------
+" https://codeinthehole.com/tips/vim-lists/
+" :ju
+" :clearjumps
+
+" ) (     | end \ begin of sentence
+" / ?     | forward \ backward search
+
+" #CTRL-i    | Jump forward
+" #CTRL-o    | Jump back
+
+
+" *         | search for the word under cursor
+
+" %         | go to matching brackets  '()', '{}', '[]'
+
+
+" #[<token>  | Previous (# times) <token> token can be anything like <>, (), {}, z, M
+" ]<token>  | Next <token>
+" e.g. :
+" [m        | Previous method start
+" [M        | Previous method end
+" [z        | move to start of open fold
+" ]z        | move to end of open fold
+
+
+" ----------------- FOLDS -----------------
+
+" zo         | opens  a fold at the cursor
+" zc         | closes a fold at the cursor
+" za         | toggle a fold at the cursor
+" Shift modification after z will operate on all nested levels
+
+" zM         | closes all open folds
+" zR         | decreases the foldlevel to zero -- all folds will be open
+
+" zm         | increases the foldlevel by one
+" zr         | decreases the foldlevel by one
+
+
+" zf#j       | creates a fold from the cursor down # lines
+" zf/        | string creates a fold from the cursor to string
+
+" zj         | moves the cursor to the next fold
+" zk         | moves the cursor to the previous fold
+
+" zd         | deletes the fold at the cursor
+" zE         | deletes all folds
+
+
+" =================== CHEATSHEET (my most used) =================== "
+
+" IdeaVim specific ------
+
+" List of commands: https://jb.gg/h38q75
+" Examples        : https://jb.gg/share-ideavimrc
+" Example config  : https://www.cyberwizard.io/posts/the-ultimate-ideavim-setup/
+
+
+set scrolloff=40
+
+" Do incremental searching
+set incsearch
+
+" ensure that the Vim mode (normal, insert etc) and any commands you execute are displayed at the bottom of the screen
+set showmode
+
+set showcmd
+
+" turn off annoying audio bell
+set visualbell
+
+" make sure IdeaVim shares its clipboard with the system clipboard
+set clipboard+=unnamed
+
+set ignorecase
+
+" if any of the search characters are uppercase, treat the search as case-sensitive
+set smartcase
+
+set hlsearch
+set ideastatusicon=enabled
+set notimeout
+set ideavimsupport=dialog
+let mapleader = " "
+
+" #jhkl don't populate jumplist so why do I even care about line numbers
+" :# ability and ace-jump is quite enough
+set nonumber
+
+
+" ------------------------------------------------------------
+" ---------------------- TELESCOPE ---------------------------
+" ------------------------------------------------------------
+
+" As JetBrains hasn't actuall telescope, I treat it's native features
+" in telescopic way
+
+" switch to differet opened buffer
+map <leader>, :action RecentChangedFiles<CR>
+
+" search in buffer
+map <leader>sb :action Find<CR>
+
+" search grep
+map <leader>sg :action FindInPath<CR>
+
+" its like search in registers
+map <leader>s" :action PasteMultiple<CR>
+
+" ------------------------------------------------------------
+" --------------------- Display options ----------------------
+" ------------------------------------------------------------
+map <leader>dd <action>(ToggleDistractionFreeMode)
+map <leader>dz <action>(ToggleZenMode)
+map <leader>df <action>(ToggleFullScreen)
+
+" ------------------------------------------------------------
+" ------------ Enable IdeaVim plugins plugins ----------------
+" ------------ https://jb.gg/ideavim-plugins -----------------
+" ------------------------------------------------------------
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-commentary'
+
+set sneak
+
+map s <Action>(AceAction)
+
+
+set which-key
+set surround
+
+set NERDTree
+
+nnoremap <leader>e :NERDTreeToggle<CR>
+
+" ------------------------------------------------------------
+" -------------------------- GENERAL -------------------------
+" ------------------------------------------------------------
+
+map <leader>bh :action WebDeployment.BrowseServers<CR>
+map <C-/> :action ActivateTerminalToolWindow<CR>
+
+" Commenting
+nmap gcc :action CommentByLineComment<CR>
+imap gcc :action CommentByLineComment<CR>
+vmap gc :action CommentByLineComment<CR>
+
+" Escape keys
+imap <C-;> <Esc>
+vmap <C-;> <Esc>
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+nmap ; :
+
+" splits navigation
+map <C-H> <C-W>h
+map <C-L> <C-W>l
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+
+nmap <leader>ff :action GotoFile<CR>
+
+" code format
+nmap <leader>cf :action ReformatCode<CR>
+vmap <leader>cf :action ReformatCode<CR>
+
+" debug breakpoint
+nmap <leader>db :action ToggleLineBreakpoint<CR>
+
+nmap <leader>pw :action ShowNavBar<CR>
+
+" copy whole file
+nnoremap <C-c> ggyG<C-o>
+
+
+" ------------------------------------------------------------
+" ------------------------- LSP ------------------------------
+" ------------------------------------------------------------
+
+" to compiler next message
+nmap cn :action GotoNextError<CR>
+
+" to compiler previous message
+nmap cp :action GotoPreviousError<CR>
+
+" go to declaration
+nmap gD :action GotoDeclaration<CR>
+
+" code rename
+nmap <leader>cr :action RenameElement<CR>
+
+" code actions
+nmap <leader>ca :action ShowIntentionActions<CR>
+
+" go to implementation
+nmap gI :action GotoImplementation<CR>
+
+" go to references
+nmap gr :action FindUsages<CR>
+
+" Diagnostics (Trouble)
+nmap <leader>xx :action ActivateProblemsViewToolWindow<CR>
+
+
+" ------------------------------------------------------------
+" ------------------------- git ------------------------------
+" ------------------------------------------------------------
+
+" show branches and history overall
+nmap <leader>gc :action ActivateVersionControlToolWindow<CR>
+
+" git explore git changes
+nnoremap <leader>ge :action ActivateCommitToolWindow<CR>
+
+" git about file history
+nnoremap <leader>gf :action Vcs.ShowTabbedFileHistory<CR>
+
+
+" ------------------------------------------------------------
+" ------------------------- TABUFLINE ------------------------
+" ------------------------------------------------------------
+
+" buffer delete
+nmap <leader>bd :action CloseEditor<CR>
+
+nmap <tab> :action NextTab<CR>
+nmap <S-tab> :action PreviousTab<CR>
+
+
+" ------------------------------------------------------------
+" ------------- Map russian to workman layout -------------
+" ------------------------------------------------------------
+map й q
+map ц d
+map у r
+map к w
+map е b
+map н j
+map г f
+map ш u
+map щ p
+map з ;
+map х [
+map ъ ]
+map ф a
+map ы s
+map в h
+map а t
+map п g
+map р y
+map о n
+map л e
+map д o
+map ж i
+map э '
+map я z
+map ч x
+map с m
+map м c
+map и v
+map т k
+map ь l
+map б ,
+map ю .
+
+
+map Й Q
+map Ц D
+map У R
+map К W
+map Е B
+map Н J
+map Г F
+map Ш U
+map Щ P
+map З :
+map Х {
+map Ъ }
+map Ф A
+map Ы S
+map В H
+map А T
+map П G
+map Р Y
+map О N
+map Л E
+map Д O
+map Ж I
+map Э "
+map Я Z
+map Ч X
+map С M
+map М C
+map И V
+map Т K
+map Ь L
+map Б <
+map Ю >
+" cmap й q
+" cmap ц d
+" cmap у r
+" cmap к w
+" cmap е b
+" cmap н j
+" cmap г f
+" cmap ш u
+" cmap щ p
+" cmap з ;
+" cmap х [
+" cmap ъ ]
+" cmap ф a
+" cmap ы s
+" cmap в h
+" cmap а t
+" cmap п g
+" cmap р y
+" cmap о n
+" cmap л e
+" cmap д o
+" cmap ж i
+" cmap э '
+" cmap я z
+" cmap ч x
+" cmap с m
+" cmap м c
+" cmap и v
+" cmap т k
+" cmap ь l
+" cmap б ,
+" cmap ю .
+"
+"
+" cmap Й Q
+" cmap Ц D
+" cmap У R
+" cmap К W
+" cmap Е B
+" cmap Н J
+" cmap Г F
+" cmap Ш U
+" cmap Щ P
+" cmap З :
+" cmap Х {
+" cmap Ъ }
+" cmap Ф A
+" cmap Ы S
+" cmap В H
+" cmap А T
+" cmap П G
+" cmap Р Y
+" cmap О N
+" cmap Л E
+" cmap Д O
+" cmap Ж I
+" cmap Э "
+" cmap Я Z
+" cmap Ч X
+" cmap С M
+" cmap М C
+" cmap И V
+" cmap Т K
+" cmap Ь L
+" cmap Б <
+" cmap Ю >

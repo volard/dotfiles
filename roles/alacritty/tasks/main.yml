@@ -1,1 +1,17 @@
 ---
+- name: Install Alacritty on Linux
+  apt:
+    name: alacritty
+    state: present
+    update_cache: yes
+  become: true
+  when: ansible_os_family == 'Linux'
+
+- name: Install Alacritty on Windows using Scoop
+  community.windows.scoop:
+    name: alacritty
+    state: present
+  when: ansible_os_family == 'Windows'
+
+
+

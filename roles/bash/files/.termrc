@@ -1,0 +1,42 @@
+# vim: filetype=bash
+PATH="$PATH:$HOME/.cargo/bin:$HOME/.config/emacs/bin:$HOME/.pyenv/bin:$HOME/.pyenv:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
+
+
+alias v=nvim
+alias ll="eza -l --icons --color=always -a --group-directories-first"
+alias update='sudo apt-get update && sudo apt-get upgrade && sudo apt-get dist-upgrade'
+alias bc=batcat
+alias pn=pnpm
+alias lg=lazygit
+alias vv='v .'
+alias ..='cd ..'
+alias sv='sudo nvim'
+alias svv='sudo nvim .'
+alias wget='wget -c'
+
+# do not delete / or prompt if deleting more than 3 files at a time #
+alias rm='rm -I --preserve-root'
+
+source /usr/share/doc/fzf/examples/key-bindings.bash
+
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_DEFAULT_OPTS="--border=rounded --height=80% --layout=reverse --inline-info --bind ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle"
+
+export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+export FZF_CTRL_T_OPTS="--preview 'batcat --color=always --line-range :50 {}'"
+
+export FZF_ALT_C_COMMAND='fd --type d . --hidden'
+export FZF_ALT_C_OPTS="--preview 'exa -T --all --level=2 --icons --group-directories-first {}'"
+
+
+# export EDITOR=/opt/nvim-linux64/bin/nvim
+export EDITOR=nvim
+
+
+eval "$(oh-my-posh init bash --config ~/.config/oh-my-posh/amro.omp.json)"
+
+eval "$(pyenv init -)"
+
+# should be in the end
+eval "$(zoxide init bash)"
+

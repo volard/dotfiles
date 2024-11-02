@@ -1,0 +1,26 @@
+---
+- name: "{{ role_name }} | Create fonts directory"
+  file:
+    path: "{{ ansible_user_dir }}/.local/share/fonts"
+    state: directory
+    mode: '0755'
+  when: ansible_os_family == 'Linux'
+
+- name: "{{ role_name }} | List font archives"
+  find:
+    paths: "files/fonts"
+    patterns: "*.tar.gz"
+  register: font_archives
+  when: ansible_os_family == 'Linux'
+
+- name: "{{ role_name }} | Extract fonts"
+  ansible.builtin.unarchive:
+    src: "{{ item.path }}"
+    dest: "{{ ansible_user_dir }}/.local/share/fonts"
+    mode: '0644'
+  with_items: "{{ font_archives.files }}"
+  when: ansible_os_family == 'Linux'
+
+- name: "{{ role_name }} | Update font cache"
+  command: fc-cache -f -v
+  when: ansible_os_family == 'Linux'
