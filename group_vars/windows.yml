@@ -1,1 +1,4 @@
 ansible_connection: winrm
+roles:
+  - glazewm
+  - powershell

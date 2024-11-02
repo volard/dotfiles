@@ -1,32 +1,38 @@
 ---
-- name: Include vault variables
-  include_vars:
-    file: "vault/ssh_keys.yml"
+- name: "{{ role_name }} | Install required packages on Linux"
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - ufw
+    - openssh-server
+    - openssh-client
+  when: ansible_os_family in ["Debian", "Ubuntu"]
 
-- name: Ensure SSH directory exists
-  file:
-    path: "{{ config_paths.ssh }}"
-    state: directory
-    mode: '0700'
+- name: "{{ role_name }} | Enable and start SSH service"
+  systemd:
+    name: ssh
+    state: started
+    enabled: yes
+  become: true
+  when: ansible_os_family == "Linux"
+
+- name: "{{ role_name }} | Allow SSH through UFW"
+  ufw:
+    rule: allow
+    name: ssh
+  become: true
+  when: ansible_os_family == "Linux"
+
+- name: Set OS-specific config paths
+  set_fact:
+    config_path: "{{ ansible_user_dir }}/.ssh"
   when: ansible_os_family == 'Linux'
 
-- name: Deploy SSH keys
-  copy:
-    content: "{{ item.private_key }}"
-    dest: "{{ config_paths.ssh }}/{{ item.name }}"
-    mode: '0600'
-  loop: "{{ ssh_keys }}"
-  when: ansible_os_family == 'Linux'
+- name: Set OS-specific config paths for Windows
+  set_fact:
+    config_path: "{{ ansible_user_profile }}\\.ssh"
+  when: ansible_os_family == 'Windows'
 
-- name: Deploy SSH public keys
-  copy:
-    content: "{{ item.public_key }}"
-    dest: "{{ config_paths.ssh }}/{{ item.name }}.pub"
-    mode: '0644'
-  loop: "{{ ssh_keys }}"
-  when: ansible_os_family == 'Linux'
-
-- name: Copy config
-  ansible.builtin.template:
-    dest: "{{ ansible_user_dir }}/.ssh/config"
-    src: "config"
+- name: Include common copy tasks
+  include_tasks: roles/common_tasks/tasks/copy_configs.yml

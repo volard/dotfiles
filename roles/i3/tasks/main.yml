@@ -1,0 +1,40 @@
+---
+- name: "Install i3 and dependencies for Linux"
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - i3
+    - pulseaudio-utils # Audio
+    - polybar # Bar
+    - light # Backlight
+    # BLuetooth
+    - blueman
+    - bluez
+    - bluez-obexd
+    - pavucontrol # Volume
+    - tlp # Battery
+  when: ansible_os_family == "Linux"
+
+- name: Ensure i3 config directory exists on Linux
+  file:
+    path: "{{ ansible_user_dir }}/.config/i3"
+    state: directory
+    mode: '0755'
+  when: ansible_os_family == 'Linux'
+
+- name: Copy i3 config for Linux
+  copy:
+    src: alacritty.toml
+    dest: "{{ ansible_user_dir }}/.config/i3/config"
+    mode: '0644'
+  when: ansible_os_family == 'Linux'
+
+# fix not working light buttons
+- name: Add current user to video group
+  user:
+    name: "{{ ansible_user_name }}"
+    groups: video
+    append: yes
+  become: true
+  when: ansible_os_family == 'Linux'

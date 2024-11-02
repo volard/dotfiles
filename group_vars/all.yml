@@ -1,5 +1,11 @@
 # just all common roles
-default_roles:
+roles:
   - alacritty
   - neovim
   - ssh
+  - oh-my-posh
+  - ideavim
+  - doom
+  - git
+  - programs
+  - lazygit

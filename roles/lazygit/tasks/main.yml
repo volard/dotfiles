@@ -1,0 +1,63 @@
+---
+- name: Set OS-specific config paths
+  set_fact:
+    config_path: "{{ ansible_user_dir }}/.config/lazygit"
+  when: ansible_os_family == 'Linux'
+
+- name: Set OS-specific config paths for Windows
+  set_fact:
+    config_path: "{{ ansible_user_profile }}\\.config\\lazygit"
+  when: ansible_os_family == 'Windows'
+
+- name: Get latest Lazygit version
+  uri:
+    url: "https://api.github.com/repos/jesseduffield/lazygit/releases/latest"
+    return_content: yes
+  register: lazygit_latest
+  when: ansible_os_family == 'Linux'
+
+- name: Set Lazygit version fact
+  set_fact:
+    lazygit_version: "{{ lazygit_latest.json.tag_name[1:] }}"
+  when: ansible_os_family == 'Linux'
+
+- name: Download Lazygit archive
+  get_url:
+    url: "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_{{ lazygit_version }}_Linux_x86_64.tar.gz"
+    dest: "/tmp/lazygit.tar.gz"
+  when: ansible_os_family == 'Linux'
+
+- name: Extract Lazygit binary
+  unarchive:
+    src: "/tmp/lazygit.tar.gz"
+    dest: "/tmp"
+    remote_src: yes
+  when: ansible_os_family == 'Linux'
+
+- name: Move Lazygit binary to /usr/local/bin
+  copy:
+    src: "/tmp/lazygit"
+    dest: "/usr/local/bin/lazygit"
+    mode: '0755'
+    remote_src: yes
+  become: true
+  when: ansible_os_family == 'Linux'
+
+- name: Clean up temporary files
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "/tmp/lazygit.tar.gz"
+    - "/tmp/lazygit"
+  when: ansible_os_family == 'Linux'
+
+
+- name: Install Lazygit on Windows using Scoop
+  community.windows.scoop:
+    name: lazygit
+    state: present
+  when: ansible_os_family == 'Windows'
+
+- name: Include common copy tasks
+  include_tasks: roles/common_tasks/tasks/copy_configs.yml

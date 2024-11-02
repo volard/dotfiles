@@ -1,7 +1,156 @@
 ---
-- name: "{{ role_name }} | Install required packages using Nala on Linux"
+- name: "{{ role_name }} | Add CopyQ PPA repository"
+  apt_repository:
+    repo: ppa:hluk/copyq
+    state: present
+  become: true
+  when: ansible_os_family == 'Linux'
+
+- name: "{{ role_name }} | Install required packages on Linux"
   apt:
     name: "{{ item }}"
     state: present
-  loop: "{{ packages }}"
+  loop:
+    - fzf
+    - nala
+    - fd
+    - btop  # cooler htop
+    - duff # Provides information about the free space on the disk
+    - ncdu # Shows the information about disk usage
+    - icdiff
+    - wget
+    - xclip
+    - lxappearance
+    - git
+    - vifm
+    - ripgrep
+    - sudo
+    - curl
+    - tldr
+    - okular
+    - flux
+    - eza
+    - anki
+    - qbittorrent
+    - vim
+    - dos2unix
+    - vlc
+    - peazip
+    - bat
+    - sharex
+    - unzip
+    - ncal
+    - sshpass
+    - rar
+    - unrar
+    - mpv
+    - git-delta
+    - nemo
+    - gh
+    - lf
+    - redshift
+    - copyq
+    - cargo
+  become: true
   when: ansible_os_family in ["Debian", "Ubuntu"]
+
+
+# Finds a specific file or directory from the terminal
+- name: "{{ role_name }} | Install fd-find"
+  apt:
+    name: fd-find
+    state: present
+  become: true
+  when: ansible_os_family in ["Debian", "Ubuntu"]
+
+- name: Make fd-find available by fd command
+  file:
+    src: "{{ lookup('pipe', 'which fdfind') }}"
+    dest: "{{ ansible_user_dir }}/.local/bin/fd"
+    state: link
+  when: ansible_os_family == "Linux"
+
+- name: Install SDKMAN
+  shell: >
+    curl -s "https://get.sdkman.io" | bash
+  args:
+    creates: "{{ ansible_user_dir }}/.sdkman"
+  when: ansible_os_family == 'Linux'
+
+- name: Install programs via snap
+  community.general.snap:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - vivaldi
+    - discord
+    - stretchly
+  become: true
+  when: ansible_os_family == 'Linux'
+
+- name: Install zoxide via installation script
+  ansible.builtin.shell: |
+    curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+  args:
+    creates: "/usr/local/bin/zoxide"  # Prevents re-running if zoxide is already installed
+  when: ansible_os_family == 'Linux'
+
+- name: Install Obsidian via snap
+  community.general.snap:
+    name: obsidian
+    state: present
+    classic: true
+  become: true
+  when: ansible_os_family == 'Linux'
+
+- name: Install bottom via snap
+  community.general.snap:
+    name: bottom
+    state: present
+  become: true
+  when: ansible_os_family == 'Linux'
+
+- name: Configure bottom snap connections
+  command: snap connect bottom:{{ item }}
+  loop:
+    - mount-observe
+    - hardware-observe
+    - system-observe
+    - process-control
+  become: true
+  when: ansible_os_family == 'Linux'
+
+# better neofetch
+- name: Install macchina via cargo
+  ansible.builtin.shell: |
+    cargo install macchina
+  args:
+    creates: "{{ ansible_user_dir }}/.cargo/bin/macchina"  # Prevents re-running if macchina is already installed
+  when: ansible_os_family == 'Linux'
+
+
+- name: Install Flatpak
+  apt:
+    name: flatpak
+    state: present
+  become: true
+  when: ansible_os_family == 'Linux'
+
+- name: Add Flathub repository
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+  become: true
+  when: ansible_os_family == 'Linux'
+
+# - name: Install applications via Flatpak
+#   community.general.flatpak:
+#     name: "{{ item }}"
+#     state: present
+#   loop:
+#     - com.spotify.Client
+#     # Add more Flatpak applications as needed
+#   become: true
+#   when: ansible_os_family == 'Linux'
+

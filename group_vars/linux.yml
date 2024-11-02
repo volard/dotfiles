@@ -1,1 +1,8 @@
 ansible_connection: local
+roles:
+  - i3
+  - rofi
+  - awesome
+  - i3status
+  - polybar
+  - bash

@@ -1,0 +1,58 @@
+---
+# Used vars:
+#   - config_path
+- name: "{{role_name }} | Ensure config directory exists"
+  file:
+    path: "{{ config_path }}"
+    state: directory
+    mode: '0755'
+  when: ansible_os_family == 'Linux'
+
+- name: "{{role_name }} | Ensure config directory exists on Windows"
+  win_file:
+    path: "{{ config_path }}"
+    state: directory
+  when: ansible_os_family == 'Windows'
+
+- name: "{{role_name }} | Find all configuration files"
+  find:
+    paths: "{{ role_path }}/files"
+    recurse: yes
+    file_type: file  # Only get regular files, exclude directories
+  register: config_files
+
+- name: "{{role_name }} | Copy template files on Linux"
+  template:
+    src: "{{ item.path | basename }}"
+    dest: "{{ config_path }}/{{ item.path | basename | regex_replace('.j2$', '') }}"
+  loop: "{{ config_files.files }}"
+  when: 
+    - item.path.endswith('.j2')
+    - ansible_os_family == 'Linux'
+
+- name: "{{role_name }} | Copy template files on Windows"
+  win_template:
+    src: "{{ item.path | basename }}"
+    dest: "{{ config_path }}\\{{ item.path | basename | regex_replace('.j2$', '') }}"
+  loop: "{{ config_files.files }}"
+  when:
+    - item.path.endswith('.j2')
+    - ansible_os_family == 'Windows'
+
+- name: "{{role_name }} | Copy static files on Linux"
+  copy:
+    src: "{{ item.path }}"
+    dest: "{{ config_path }}/{{ item.path | basename }}"
+  loop: "{{ config_files.files }}"
+  when: 
+    - not item.path.endswith('.j2')
+    - ansible_os_family == 'Linux'
+
+- name: "{{role_name }} | Copy static files on Windows"
+  win_copy:
+    src: "{{ item.path }}"
+    dest: "{{ config_path }}\\{{ item.path | basename }}"
+  loop: "{{ config_files.files }}"
+  when:
+    - not item.path.endswith('.j2')
+    - ansible_os_family == 'Windows'
