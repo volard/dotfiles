@@ -47,3 +47,4 @@ SSH keys as well as sensitive variables encoded with [`Ansible Valut`](https://d
 - https://www.youtube.com/watch?v=gIDywsGBqf4&t=49s
 - https://github.com/TechDufus/dotfiles
 - https://github.com/stkrzysiak/windows-playbook-scoop
+- https://github.com/ALT-F4-LLC/dotfiles
