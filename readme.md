@@ -28,13 +28,13 @@ Each role **installs and configures** a program. If program doesn't need to be c
 ```bash
 roles/              # setup and install programs
 roles/common_tasks/ # tasks, that can be used across roles
-roles/files/        # config files: templates and static
+roles/'name'/files/ # config files: templates and static
 vars/               # role-specific variables
 group_vars/         # os-specific variables
 files/              # common static files
 pre_tasks/          # preliminary tasks to setup an OS
 archive/            # old stuff, not used by Ansible 
-scripts/            # some useful things, not used by Ansible
+molecule/           # test playbook
 ```
 
 

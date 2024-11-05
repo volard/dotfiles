@@ -1,0 +1,8 @@
+# roles/alacritty/molecule/default/converge.yml
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Include alacritty role
+      include_role:
+        name: alacritty

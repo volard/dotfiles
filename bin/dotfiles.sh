@@ -3,6 +3,7 @@ set -e;
 
 # ansible project path 
 DOTFILES_DIR="$HOME/dotfiles";
+PASSWORD_FILE_PATH="$DOTFILES_DIR/vault-password.txt";
 mkdir -p $CONFIG_DIR;
 rm -r $CONFIG_DIR;
 
@@ -51,6 +52,8 @@ if ! [ -x "$(command -v ansible)" ]; then
         pip3 install pywinrm;
         pip3 install pyvmomi;
         pip3 install ansible;
+
+        pip3 install molecule molecule-docker;
     fi
 fi
 
@@ -60,8 +63,8 @@ ansible-galaxy install -r requirements.yml
 # Setup password if not exists
 if ! [[ -f "$DOTFILES_DIR/vault-password.txt" ]]; then
     read -p "Please enter your Ansible Vault password: " ANSIBLE_PASSWORD;
-    echo $ANSIBLE_PASSWORD >> $DOTFILES_DIR/vault-password.txt;
+    echo $ANSIBLE_PASSWORD >> $PASSWORD_FILE_PATH;
 fi
 
 # Run playbook
-ansible-playbook --diff --vault-password-file "$DOTFILES_DIR/vault-password.txt" "$DOTFILES_DIR/main.yaml" "$@"
+ansible-playbook --diff --vault-password-file $PASSWORD_FILE_PATH "$DOTFILES_DIR/main.yaml" "$@"
