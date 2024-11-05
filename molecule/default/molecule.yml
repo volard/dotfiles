@@ -1,0 +1,23 @@
+# molecule/default/molecule.yml
+---
+dependency:
+  name: galaxy
+  options:
+    requirements-file: requirements.yml
+platforms:
+  - name: linux-instance
+    image: geerlingguy/docker-ubuntu2204-ansible
+    groups:
+      - linux
+  - name: windows-instance
+    image: jborean93/ansible-windows
+    groups:
+      - windows
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ../main.yml
+  inventory:
+    links:
+      hosts: inventory.yml
+      group_vars: group_vars/
