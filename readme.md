@@ -23,7 +23,7 @@ v .git/config
 ```
 
 ## Structure
-Each role **installs and configures** a program. If program doesn't need to be configured, it's listed in `packages` list.
+Each role **installs and configures** a program. If program doesn't need to be configured, it is gonna be installed in `programs` role.
 
 ```bash
 roles/              # setup and install programs
@@ -35,6 +35,7 @@ files/              # common static files
 pre_tasks/          # preliminary tasks to setup an OS
 archive/            # old stuff, not used by Ansible 
 molecule/           # test playbook
+inventory.yml       # define hosts and groups
 ```
 
 
