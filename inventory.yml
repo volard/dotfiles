@@ -1,0 +1,20 @@
+all:
+  children:
+    windows:
+      hosts:
+        localhost:
+          ansible_connection: local
+          ansible_become: no
+        vagrant:
+          ansible_host: 127.0.0.1
+          ansible_port: 55986
+          ansible_user: vagrant
+          ansible_password: vagrant
+          ansible_connection: winrm
+          ansible_winrm_scheme: http
+          ansible_winrm_transport: basic
+    linux:
+      hosts:
+        localhost:
+          ansible_connection: local
+          ansible_become: yes
