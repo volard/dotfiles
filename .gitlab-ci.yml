@@ -1,0 +1,33 @@
+image: python:latest
+
+stages:
+  - test
+  - lint
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+before_script:
+  - python -m pip install --upgrade pip
+  - pip install molecule docker ansible
+
+ansible-lint:
+  stage: lint
+  before_script:
+    - pip install ansible-lint
+    - ansible-galaxy install -r requirements.yml
+  script:
+    - ansible-lint main.yml
+
+test_roles:
+  stage: test
+  script:
+    - cd roles/alacritty
+    - molecule test
+
+test_playbook:
+  stage: test
+  script:
+    - molecule test
+
+

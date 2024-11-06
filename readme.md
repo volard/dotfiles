@@ -1,26 +1,19 @@
 # Ansible driven dotfiles management
 
-## Set up
+## Install
+
+### Linux
 ```bash
-dotfiles_path=~/dotfiles
-
-mkdir -p $dotfiles_path;
-rm -r $dotfiles_path;
-
-git clone https://gitlab.com/dotfiles30/comma_files.git $dotfiles_path;
-cd $dotfiles_path;
-vi vault-password.txt
+bash -c "$(curl -fsSL https://gitlab.com/dotfiles30/comma_files/-/raw/main/bin/dotfiles.sh)"
 ```
 
-```bash
-ansible-galaxy collection install -r requirements.yml
-ansible-playbook main.yml --vaul-password-file /vault-password.txt
+### Windows
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+iex (iwr -Uri "https://gitlab.com/dotfiles30/comma_files/-/raw/main/bin/dotfiles.sh" -UseBasicParsing).Content
 ```
 
-```bash
-# git@gitlab.com:dotfiles30/comma_files.git
-v .git/config
-```
 
 ## Structure
 Each role **installs and configures** a program. If program doesn't need to be configured, it is gonna be installed in `programs` role.
@@ -28,7 +21,7 @@ Each role **installs and configures** a program. If program doesn't need to be c
 ```bash
 roles/              # setup and install programs
 roles/common_tasks/ # tasks, that can be used across roles
-roles/'name'/files/ # config files: templates and static
+roles/name/files/   # config files: templates and static
 vars/               # role-specific variables
 group_vars/         # os-specific variables
 files/              # common static files
