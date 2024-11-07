@@ -1,20 +1,20 @@
 ---
-- name: "{{ role_name }} | Set Windows dark theme"
+- name: Set Windows dark theme
   ansible.windows.win_regedit:
     path: HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize
     name: AppsUseLightTheme
     data: 0
     type: dword
 
-- name: "{{ role_name }} | Copy custom cursor files"
+- name: Copy custom cursor files
   ansible.windows.win_copy:
     src: files/cursor/
     dest: "%USERPROFILE%\\\\cursors"
 
-- name: "{{ role_name }} | Install custom cursor"
+- name: Install custom cursor
   ansible.windows.win_shell: |
     rundll32.exe desk.cpl,InstallScreenSaver {{ cursor_inf_path }}
-- name: "{{ role_name }} | Configure wallpaper slideshow"
+- name: Configure wallpaper slideshow
   ansible.windows.win_regedit:
     path: HKCU:\Control Panel\Desktop
     name: Wallpaper

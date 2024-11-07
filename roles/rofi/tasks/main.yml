@@ -7,7 +7,7 @@
   become: true
   when: ansible_os_family == 'Linux'
 
-- name: "{{role_name }} | Ensure config directory exists on Windows"
+- name: Ensure config directory exists on Windows
   ansible.windows.win_file:
     path: "{{ ansible_user_dir }}/.local/rofi/themes"
     state: directory
@@ -17,9 +17,10 @@
   ansible.builtin.copy:
     src: catpuccin-mocha.rasi
     dest: "{{ ansible_user_dir }}/.local/rofi/themes/catpuccin-mocha.rasi"
+    mode: preserve
   when: ansible_os_family == 'Linux'
 
-- name: "{{role_name }} | Ensure config directory exists on Windows"
+- name: Ensure config directory exists on Windows
   ansible.windows.win_file:
     path: "{{ ansible_user_dir }}/.config/rofi"
     state: directory
@@ -29,4 +30,5 @@
   ansible.builtin.copy:
     src: config.rasi
     dest: "{{ ansible_user_dir }}/.config/rofi/config.rasi"
+    mode: preserve
   when: ansible_os_family == 'Linux'

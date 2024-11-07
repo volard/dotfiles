@@ -1,12 +1,12 @@
 ---
-- name: "{{ role_name }} | Add CopyQ PPA repository"
+- name: Add CopyQ PPA repository
   ansible.builtin.apt_repository:
     repo: ppa:hluk/copyq
     state: present
   become: true
   when: ansible_os_family == 'Linux'
 
-- name: "{{ role_name }} | Install required packages on Linux"
+- name: Install required packages on Linux
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present
@@ -55,7 +55,7 @@
   when: ansible_os_family in ["Debian", "Ubuntu"]
 
 # Finds a specific file or directory from the terminal
-- name: "{{ role_name }} | Install fd-find"
+- name: Install fd-find
   ansible.builtin.apt:
     name: fd-find
     state: present

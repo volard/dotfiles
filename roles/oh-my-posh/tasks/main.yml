@@ -13,7 +13,7 @@
     creates: "{{ ansible_user_dir }}/.local/bin/oh-my-posh"
   when: ansible_os_family == 'Linux'
 
-- name: "{{ role_name }} | Install oh-my-posh on Windows"
+- name: Install oh-my-posh on Windows
   community.windows.scoop:
     name: oh-my-posh
     state: present
