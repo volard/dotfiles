@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | Install required packages on Linux"
+- name: Install required packages on Linux
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present

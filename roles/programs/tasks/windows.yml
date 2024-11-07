@@ -1,6 +1,6 @@
 ---
 # windows specifig scoop packages that don't require configuration
-- name: "{{ role_name }} | Install required packages on Windows"
+- name: Install required packages on Windows
   community.windows.scoop:
     name: "{{ item }}"
     state: present

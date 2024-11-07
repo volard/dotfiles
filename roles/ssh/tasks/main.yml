@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | Install required packages on Linux"
+- name: Install required packages on Linux
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present
@@ -9,7 +9,7 @@
     - openssh-client
   when: ansible_os_family in ["Debian", "Ubuntu"]
 
-- name: "{{ role_name }} | Enable and start SSH service"
+- name: Enable and start SSH service
   ansible.builtin.systemd:
     name: ssh
     state: started
@@ -17,7 +17,7 @@
   become: true
   when: ansible_os_family == "Linux"
 
-- name: "{{ role_name }} | Allow SSH through UFW"
+- name: Allow SSH through UFW
   community.general.ufw:
     rule: allow
     name: ssh

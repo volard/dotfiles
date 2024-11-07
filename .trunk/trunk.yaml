@@ -19,6 +19,7 @@ runtimes:
 # This is the section where you manage your linters. (https://docs.trunk.io/check/configuration)
 lint:
   enabled:
+    - ansible-lint@24.9.2
     - actionlint@1.7.4
     - checkov@3.2.281
     - git-diff-check

@@ -1,6 +1,4 @@
 ---
-# Used vars:
-#   - config_path
 - name: Ensure config directory exists
   ansible.builtin.file:
     path: "{{ config_path }}"
@@ -8,50 +6,54 @@
     mode: "0755"
   when: ansible_os_family == 'Linux'
 
-- name: "{{role_name }} | Ensure config directory exists on Windows"
+- name: Ensure config directory exists on Windows
   ansible.windows.win_file:
     path: "{{ config_path }}"
     state: directory
   when: ansible_os_family == 'Windows'
 
-- name: "{{role_name }} | Find all configuration files"
+- name: Find all configuration files
   ansible.builtin.find:
     paths: "{{ role_path }}/files"
     recurse: true
     file_type: file # Only get regular files, exclude directories
   register: config_files
 
-- name: "{{role_name }} | Copy template files on Linux"
+- name: Copy template files on Linux
   ansible.builtin.template:
     src: "{{ item.path | basename }}"
     dest: "{{ config_path }}/{{ item.path | basename | regex_replace('.j2$', '') }}"
+    mode: preserve
   loop: "{{ config_files.files }}"
   when:
     - item.path.endswith('.j2')
     - ansible_os_family == 'Linux'
 
-- name: "{{role_name }} | Copy template files on Windows"
+- name: Copy template files on Windows
   ansible.windows.win_template:
     src: "{{ item.path | basename }}"
     dest: "{{ config_path }}\\{{ item.path | basename | regex_replace('.j2$', '') }}"
+    mode: preserve
   loop: "{{ config_files.files }}"
   when:
     - item.path.endswith('.j2')
     - ansible_os_family == 'Windows'
 
-- name: "{{role_name }} | Copy static files on Linux"
+- name: Copy static files on Linux
   ansible.builtin.copy:
     src: "{{ item.path }}"
     dest: "{{ config_path }}/{{ item.path | basename }}"
+    mode: preserve
   loop: "{{ config_files.files }}"
   when:
     - not item.path.endswith('.j2')
     - ansible_os_family == 'Linux'
 
-- name: "{{role_name }} | Copy static files on Windows"
+- name: Copy static files on Windows
   ansible.windows.win_copy:
     src: "{{ item.path }}"
     dest: "{{ config_path }}\\{{ item.path | basename }}"
+    mode: preserve
   loop: "{{ config_files.files }}"
   when:
     - not item.path.endswith('.j2')
