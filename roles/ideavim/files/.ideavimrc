@@ -107,7 +107,8 @@ set scrolloff=40
 " Do incremental searching
 set incsearch
 
-" ensure that the Vim mode (normal, insert etc) and any commands you execute are displayed at the bottom of the screen
+" ensure that the Vim mode (normal, insert etc) and any commands you execute are displayed
+" at the bottom of the screen
 set showmode
 
 set showcmd
@@ -129,19 +130,44 @@ set notimeout
 set ideavimsupport=dialog
 let mapleader = " "
 
-" #jhkl don't populate jumplist so why do I even care about line numbers
-" :# ability and ace-jump is quite enough
+" #jhkl don't populate jump list so why do I even care about line numbers
+" :# command and ace-jump is quite enough
 set nonumber
+
+
+
+
+
+" ------------------------------------------------------------
+" ------------ Enable IdeaVim plugins plugins ----------------
+" ------------ https://jb.gg/ideavim-plugins -----------------
+" ------------------------------------------------------------
+" https://github.com/machakann/vim-highlightedyank/blob/master/doc/highlightedyank.txt
+set highlightedyank
+
+" https://github.com/tpope/vim-commentary/blob/master/doc/commentary.txt
+set commentary
+
+" https://github.com/tpope/vim-surround/blob/master/doc/surround.txt
+set surround
+
+" Requires Which-Key plugin
+set which-key
+
+" https://github.com/JetBrains/ideavim/wiki/NERDTree-support
+set NERDTree
+
+
+
 
 
 " ------------------------------------------------------------
 " ---------------------- TELESCOPE ---------------------------
 " ------------------------------------------------------------
-
-" As JetBrains hasn't actuall telescope, I treat it's native features
+" As JetBrains hasn't actual telescope, I treat it's native features
 " in telescopic way
 
-" switch to differet opened buffer
+" switch to different opened buffer
 map <leader>, :action RecentChangedFiles<CR>
 
 " search in buffer
@@ -153,6 +179,16 @@ map <leader>sg :action FindInPath<CR>
 " its like search in registers
 map <leader>s" :action PasteMultiple<CR>
 
+
+
+" ------------------------------------------------------------
+" --------------------- Commentary ----------------------
+" ------------------------------------------------------------
+nmap gcc :action CommentByLineComment<CR>
+imap gcc :action CommentByLineComment<CR>
+vmap gc :action CommentByLineComment<CR>
+
+
 " ------------------------------------------------------------
 " --------------------- Display options ----------------------
 " ------------------------------------------------------------
@@ -160,36 +196,47 @@ map <leader>dd <action>(ToggleDistractionFreeMode)
 map <leader>dz <action>(ToggleZenMode)
 map <leader>df <action>(ToggleFullScreen)
 
+
+
+
 " ------------------------------------------------------------
-" ------------ Enable IdeaVim plugins plugins ----------------
-" ------------ https://jb.gg/ideavim-plugins -----------------
+" --------------------- AceJump         ----------------------
 " ------------------------------------------------------------
-Plug 'machakann/vim-highlightedyank'
-Plug 'tpope/vim-commentary'
+" Press `S` in normal mode to activate AceJump mode before the caret
+nmap S <Action>(AceBackwardAction)
 
-set sneak
+" Press `s` in normal mode to activate AceJump mode after the caret
+nmap s <Action>(AceForwardAction)
 
-map s <Action>(AceAction)
 
 
-set which-key
-set surround
 
-set NERDTree
-
+" ------------------------------------------------------------
+" --------------------- NERDTree        ----------------------
+" ------------------------------------------------------------
 nnoremap <leader>e :NERDTreeToggle<CR>
+
+
+
+" ------------------------------------------------------------
+" --------------------- Surround        ----------------------
+" ------------------------------------------------------------
+nmap ds <Plug>Dsurround
+nmap cs <Plug>Csurround
+nmap ys <Plug>Ysurround
+
+
+" ------------------------------------------------------------
+" --------------------- WhichKey        ----------------------
+" ------------------------------------------------------------
+let g:WhichKey_FontSize = 20
+
 
 " ------------------------------------------------------------
 " -------------------------- GENERAL -------------------------
 " ------------------------------------------------------------
-
 map <leader>bh :action WebDeployment.BrowseServers<CR>
 map <C-/> :action ActivateTerminalToolWindow<CR>
-
-" Commenting
-nmap gcc :action CommentByLineComment<CR>
-imap gcc :action CommentByLineComment<CR>
-vmap gc :action CommentByLineComment<CR>
 
 " Escape keys
 imap <C-;> <Esc>
@@ -221,6 +268,11 @@ nmap <leader>pw :action ShowNavBar<CR>
 nnoremap <C-c> ggyG<C-o>
 
 
+nmap ]m :action MethodDown<CR>
+nmap [m :action MethodUp<CR>
+
+
+
 " ------------------------------------------------------------
 " ------------------------- LSP ------------------------------
 " ------------------------------------------------------------
@@ -250,6 +302,10 @@ nmap gr :action FindUsages<CR>
 nmap <leader>xx :action ActivateProblemsViewToolWindow<CR>
 
 
+
+
+
+
 " ------------------------------------------------------------
 " ------------------------- git ------------------------------
 " ------------------------------------------------------------
@@ -264,6 +320,10 @@ nnoremap <leader>ge :action ActivateCommitToolWindow<CR>
 nnoremap <leader>gf :action Vcs.ShowTabbedFileHistory<CR>
 
 
+
+
+
+
 " ------------------------------------------------------------
 " ------------------------- TABUFLINE ------------------------
 " ------------------------------------------------------------
@@ -273,6 +333,9 @@ nmap <leader>bd :action CloseEditor<CR>
 
 nmap <tab> :action NextTab<CR>
 nmap <S-tab> :action PreviousTab<CR>
+
+
+
 
 
 " ------------------------------------------------------------

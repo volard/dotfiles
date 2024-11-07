@@ -17,7 +17,7 @@ ansible-lint:
     - pip install ansible-lint
     - ansible-galaxy install -r requirements.yml
   script:
-    - ansible-lint main.yml
+    - ansible-lint
 
 test_roles:
   stage: test
