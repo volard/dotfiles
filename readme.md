@@ -12,7 +12,7 @@ bash -c "$(curl -fsSL https://gitlab.com/dotfiles30/comma_files/-/raw/main/bin/d
 
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-iex (iwr -Uri "https://gitlab.com/dotfiles30/comma_files/-/raw/main/bin/dotfiles.sh" -UseBasicParsing).Content
+iex (iwr -Uri "https://gitlab.com/dotfiles30/comma_files/-/raw/main/bin/dotfiles.ps1" -UseBasicParsing).Content
 ```
 
 ## Structure
