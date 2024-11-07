@@ -12,6 +12,3 @@
     name: alacritty
     state: present
   when: ansible_os_family == 'Windows'
-
-
-

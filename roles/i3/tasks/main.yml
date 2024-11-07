@@ -20,14 +20,14 @@
   file:
     path: "{{ ansible_user_dir }}/.config/i3"
     state: directory
-    mode: '0755'
+    mode: "0755"
   when: ansible_os_family == 'Linux'
 
 - name: Copy i3 config for Linux
   copy:
     src: alacritty.toml
     dest: "{{ ansible_user_dir }}/.config/i3/config"
-    mode: '0644'
+    mode: "0644"
   when: ansible_os_family == 'Linux'
 
 # fix not working light buttons

@@ -14,7 +14,7 @@
     - fzf
     - nala
     - fd
-    - btop  # cooler htop
+    - btop # cooler htop
     - duff # Provides information about the free space on the disk
     - ncdu # Shows the information about disk usage
     - icdiff
@@ -54,7 +54,6 @@
   become: true
   when: ansible_os_family in ["Debian", "Ubuntu"]
 
-
 # Finds a specific file or directory from the terminal
 - name: "{{ role_name }} | Install fd-find"
   apt:
@@ -92,7 +91,7 @@
   ansible.builtin.shell: |
     curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
   args:
-    creates: "/usr/local/bin/zoxide"  # Prevents re-running if zoxide is already installed
+    creates: "/usr/local/bin/zoxide" # Prevents re-running if zoxide is already installed
   when: ansible_os_family == 'Linux'
 
 - name: Install Obsidian via snap
@@ -125,9 +124,8 @@
   ansible.builtin.shell: |
     cargo install macchina
   args:
-    creates: "{{ ansible_user_dir }}/.cargo/bin/macchina"  # Prevents re-running if macchina is already installed
+    creates: "{{ ansible_user_dir }}/.cargo/bin/macchina" # Prevents re-running if macchina is already installed
   when: ansible_os_family == 'Linux'
-
 
 - name: Install Flatpak
   apt:
@@ -143,7 +141,6 @@
     flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
   become: true
   when: ansible_os_family == 'Linux'
-
 # - name: Install applications via Flatpak
 #   community.general.flatpak:
 #     name: "{{ item }}"

@@ -2,7 +2,7 @@
   file:
     path: "{{ ansible_user_dir }}/.local/bin"
     state: directory
-    mode: '0755'
+    mode: "0755"
   when: ansible_os_family == 'Linux'
 
 - name: Install Oh My Posh on Linux

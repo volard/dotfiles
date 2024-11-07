@@ -5,7 +5,7 @@ stages:
   - test
 
 variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  PIP_CACHE_DIR: $CI_PROJECT_DIR/.cache/pip
 
 before_script:
   - python -m pip install --upgrade pip
@@ -29,5 +29,3 @@ test_playbook:
   stage: test
   script:
     - molecule test
-
-

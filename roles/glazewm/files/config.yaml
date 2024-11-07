@@ -29,7 +29,7 @@ gaps:
 
   # Add more spacing at the top.
   # outer_gap: '45px 20px 20px 20px'
-  outer_gap: '10px'
+  outer_gap: "10px"
 
 # Highlight active/inactive windows with a colored border.
 # ** Exclusive to Windows 11 due to API limitations.
@@ -148,8 +148,8 @@ window_rules:
     match_process_name: "steam"
 
   # Ignore the bar window.
-  - command: 'ignore'
-    match_process_name: '/Zebar/'
+  - command: "ignore"
+    match_process_name: "/Zebar/"
 
   # Auto move windows to dedicated workspaces
   - command: "move to workspace 1"
@@ -170,7 +170,6 @@ window_rules:
 
   - command: "move to workspace 9"
     match_process_name: "VK Мессенджер"
-
 
 binding_modes:
   - name: "resize"
