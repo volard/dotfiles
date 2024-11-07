@@ -1,4 +1,4 @@
 ---
 env_vars:
-  scoop_path: "C:\\Users\\{{ ansible_user }}\\scoop"
-  scoop_global_path: "C:\\Users\\{{ ansible_user }}\\scoop\\global"
+  scoop_path: C:\Users\{{ ansible_user }}\scoop
+  scoop_global_path: C:\Users\{{ ansible_user }}\scoop\global

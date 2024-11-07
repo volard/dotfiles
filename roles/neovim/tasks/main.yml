@@ -1,6 +1,6 @@
 ---
 - name: "{{ role_name }} | Install required packages on Linux"
-  apt:
+  ansible.builtin.apt:
     name: "{{ item }}"
     state: present
   loop:
@@ -33,11 +33,11 @@
   when: ansible_os_family == 'Windows'
 
 - name: Set OS-specific config paths
-  set_fact:
+  ansible.builtin.set_fact:
     config_path: "{{ ansible_user_dir }}/.config/nvim"
 
 - name: Remove Neovim configuration directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   loop:
@@ -46,4 +46,4 @@
   when: ansible_os_family == 'Linux'
 
 - name: Include common copy tasks
-  include_tasks: roles/common_tasks/tasks/copy_configs.yml
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml

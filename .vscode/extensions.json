@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "redhat.ansible",
+    "redhat.vscode-yaml",
+    "wholroyd.jinja",
+    "ms-vscode-remote.remote-wsl",
+    "ms-azuretools.vscode-docker",
+    "trunk.io",
+    "github.vscode-github-actions"
+  ]
+}

@@ -1,12 +1,13 @@
+---
 - name: Create local bin directory
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.local/bin"
     state: directory
     mode: "0755"
   when: ansible_os_family == 'Linux'
 
 - name: Install Oh My Posh on Linux
-  shell: >
+  ansible.builtin.shell: >
     curl -s https://ohmyposh.dev/install.sh | bash -s -- -d {{ ansible_user_dir }}/.local/bin
   args:
     creates: "{{ ansible_user_dir }}/.local/bin/oh-my-posh"
@@ -19,8 +20,8 @@
   when: ansible_os_family == 'Windows'
 
 - name: Set OS-specific config paths
-  set_fact:
+  ansible.builtin.set_fact:
     config_path: "{{ ansible_user_dir }}/.config/oh-my-posh"
 
 - name: Include common copy tasks
-  include_tasks: roles/common_tasks/tasks/copy_configs.yml
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml

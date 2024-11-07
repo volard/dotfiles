@@ -1,8 +1,9 @@
+#!/bin/bash
 # setup dconf-editor
 sudo nala install dconf-editor -y
 
 # remove silly startup drums sound via renaming sound file
-cd /usr/share/sounds/arctica-greeter/stereo
+cd /usr/share/sounds/arctica-greeter/stereo || exit
 sudo mv system-ready.ogg system-ready-silly-sound.ogg
 
 # setup i3 with mate

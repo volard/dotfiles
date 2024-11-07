@@ -1,6 +1,6 @@
 ---
 - name: "{{ role_name }} | Install required packages on Linux"
-  apt:
+  ansible.builtin.apt:
     name: "{{ item }}"
     state: present
   loop:
@@ -10,29 +10,29 @@
   when: ansible_os_family in ["Debian", "Ubuntu"]
 
 - name: "{{ role_name }} | Enable and start SSH service"
-  systemd:
+  ansible.builtin.systemd:
     name: ssh
     state: started
-    enabled: yes
+    enabled: true
   become: true
   when: ansible_os_family == "Linux"
 
 - name: "{{ role_name }} | Allow SSH through UFW"
-  ufw:
+  community.general.ufw:
     rule: allow
     name: ssh
   become: true
   when: ansible_os_family == "Linux"
 
 - name: Set OS-specific config paths
-  set_fact:
+  ansible.builtin.set_fact:
     config_path: "{{ ansible_user_dir }}/.ssh"
   when: ansible_os_family == 'Linux'
 
 - name: Set OS-specific config paths for Windows
-  set_fact:
+  ansible.builtin.set_fact:
     config_path: "{{ ansible_user_profile }}\\.ssh"
   when: ansible_os_family == 'Windows'
 
 - name: Include common copy tasks
-  include_tasks: roles/common_tasks/tasks/copy_configs.yml
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml

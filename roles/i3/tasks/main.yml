@@ -1,6 +1,6 @@
 ---
-- name: "Install i3 and dependencies for Linux"
-  package:
+- name: Install i3 and dependencies for Linux
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   loop:
@@ -17,14 +17,14 @@
   when: ansible_os_family == "Linux"
 
 - name: Ensure i3 config directory exists on Linux
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.config/i3"
     state: directory
     mode: "0755"
   when: ansible_os_family == 'Linux'
 
 - name: Copy i3 config for Linux
-  copy:
+  ansible.builtin.copy:
     src: alacritty.toml
     dest: "{{ ansible_user_dir }}/.config/i3/config"
     mode: "0644"
@@ -32,9 +32,9 @@
 
 # fix not working light buttons
 - name: Add current user to video group
-  user:
+  ansible.builtin.user:
     name: "{{ ansible_user_name }}"
     groups: video
-    append: yes
+    append: true
   become: true
   when: ansible_os_family == 'Linux'

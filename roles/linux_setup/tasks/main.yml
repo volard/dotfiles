@@ -1,14 +1,14 @@
 ---
 - name: "{{ role_name }} | Create fonts directory"
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.local/share/fonts"
     state: directory
     mode: "0755"
   when: ansible_os_family == 'Linux'
 
 - name: "{{ role_name }} | List font archives"
-  find:
-    paths: "files/fonts"
+  ansible.builtin.find:
+    paths: files/fonts
     patterns: "*.tar.gz"
   register: font_archives
   when: ansible_os_family == 'Linux'
@@ -22,5 +22,5 @@
   when: ansible_os_family == 'Linux'
 
 - name: "{{ role_name }} | Update font cache"
-  command: fc-cache -f -v
+  ansible.builtin.command: fc-cache -f -v
   when: ansible_os_family == 'Linux'

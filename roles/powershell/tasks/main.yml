@@ -6,7 +6,7 @@
   when: ansible_os_family == 'Windows'
 
 - name: "{{ role_name }} | Install PowerShell modules"
-  win_shell: |
+  ansible.windows.win_shell: |
     Install-Module -Name PSReadLine -Scope CurrentUser -Force
     Install-Module -Name Terminal-Icons -Scope CurrentUser -Force
     Install-Module -Name PSFzf -Scope CurrentUser -Force
@@ -15,7 +15,7 @@
     executable: pwsh.exe
 
 - name: "{{ role_name }} | Create PowerShell config directories"
-  win_file:
+  ansible.windows.win_file:
     path: "{{ item }}"
     state: directory
   loop:
@@ -23,11 +23,11 @@
     - "{{ ansible_user_profile }}\\.config\\powershell"
 
 - name: "{{ role_name }} | Create main PowerShell profile"
-  win_copy:
-    content: ". $env:USERPROFILE\\.config\\powershell\\profile.ps1"
+  ansible.windows.win_copy:
+    content: . $env:USERPROFILE\.config\powershell\profile.ps1
     dest: "{{ ansible_user_profile }}\\Documents\\PowerShell\\Microsoft.PowerShell_profile.ps1"
 
 - name: "{{ role_name }} | Create actual PowerShell config"
-  win_copy:
+  ansible.windows.win_copy:
     src: profile.ps1
     dest: "{{ ansible_user_profile }}\\.config\\powershell\\profile.ps1"

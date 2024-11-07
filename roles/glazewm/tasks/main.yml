@@ -1,6 +1,6 @@
 ---
 - name: Set OS-specific config paths
-  set_fact:
+  ansible.builtin.set_fact:
     config_path: "{{ ansible_user_dir }}/.glaze-wm"
   when: ansible_os_family == 'Windows'
 
@@ -11,4 +11,4 @@
   when: ansible_os_family == 'Windows'
 
 - name: Include common copy tasks
-  include_tasks: roles/common_tasks/tasks/copy_configs.yml
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
