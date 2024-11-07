@@ -1,11 +1,12 @@
+---
 name: Ansible CI
+permissions: read-all
 on: push
-
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout
+      - uses: actions/checkout@latest
       - name: Install ansible-lint
         run: pip install ansible-lint
       - name: Install Galaxy Modules

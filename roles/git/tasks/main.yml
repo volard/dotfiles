@@ -3,7 +3,7 @@
   ansible.builtin.apt:
     name: git
     state: present
-    update_cache: yes
+    update_cache: true
   become: true
   when:
     - ansible_os_family == 'Linux'
@@ -16,14 +16,14 @@
   when: ansible_os_family == 'Windows'
 
 - name: Set OS-specific config paths
-  set_fact:
+  ansible.builtin.set_fact:
     config_path: "{{ ansible_user_dir }}"
   when: ansible_os_family == 'Linux'
 
 - name: Set OS-specific config paths for Windows
-  set_fact:
+  ansible.builtin.set_fact:
     config_path: "{{ ansible_user_profile }}"
   when: ansible_os_family == 'Windows'
 
 - name: Include common copy tasks
-  include_tasks: roles/common_tasks/tasks/copy_configs.yml
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml

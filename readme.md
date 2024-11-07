@@ -38,8 +38,8 @@ SSH keys as well as sensitive variables encoded with [`Ansible Valut`](https://d
 
 ### Some references
 
-- https://github.com/Wintus/Ansible-WSL
-- https://www.youtube.com/watch?v=gIDywsGBqf4&t=49s
-- https://github.com/TechDufus/dotfiles
-- https://github.com/stkrzysiak/windows-playbook-scoop
-- https://github.com/ALT-F4-LLC/dotfiles
+- [Wintus' Ansible-WSL](https://github.com/Wintus/Ansible-WSL)
+- [TechDufus config - YT](https://www.youtube.com/watch?v=gIDywsGBqf4&t=49s)
+- [TechDufus config - GitHub](https://github.com/TechDufus/dotfiles)
+- [Windows playbook scoop](https://github.com/stkrzysiak/windows-playbook-scoop)
+- [ALT-F4-LLC's dotfiles](https://github.com/ALT-F4-LLC/dotfiles)

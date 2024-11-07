@@ -1,9 +1,9 @@
 ---
 - name: Install Alacritty on Linux
-  apt:
+  ansible.builtin.apt:
     name: alacritty
     state: present
-    update_cache: yes
+    update_cache: true
   become: true
   when: ansible_os_family == 'Linux'
 

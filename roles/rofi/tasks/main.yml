@@ -1,32 +1,32 @@
 ---
 - name: Install rofi on Linux
-  apt:
+  ansible.builtin.apt:
     name: rofi
     state: present
-    update_cache: yes
+    update_cache: true
   become: true
   when: ansible_os_family == 'Linux'
 
 - name: "{{role_name }} | Ensure config directory exists on Windows"
-  win_file:
+  ansible.windows.win_file:
     path: "{{ ansible_user_dir }}/.local/rofi/themes"
     state: directory
   when: ansible_os_family == 'Linux'
 
 - name: Copy theme
-  copy:
+  ansible.builtin.copy:
     src: catpuccin-mocha.rasi
     dest: "{{ ansible_user_dir }}/.local/rofi/themes/catpuccin-mocha.rasi"
   when: ansible_os_family == 'Linux'
 
 - name: "{{role_name }} | Ensure config directory exists on Windows"
-  win_file:
+  ansible.windows.win_file:
     path: "{{ ansible_user_dir }}/.config/rofi"
     state: directory
   when: ansible_os_family == 'Linux'
 
 - name: Copy config
-  copy:
+  ansible.builtin.copy:
     src: config.rasi
     dest: "{{ ansible_user_dir }}/.config/rofi/config.rasi"
   when: ansible_os_family == 'Linux'

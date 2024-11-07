@@ -1,13 +1,13 @@
 ---
 - name: "{{ role_name }} | Add CopyQ PPA repository"
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: ppa:hluk/copyq
     state: present
   become: true
   when: ansible_os_family == 'Linux'
 
 - name: "{{ role_name }} | Install required packages on Linux"
-  apt:
+  ansible.builtin.apt:
     name: "{{ item }}"
     state: present
   loop:
@@ -56,21 +56,21 @@
 
 # Finds a specific file or directory from the terminal
 - name: "{{ role_name }} | Install fd-find"
-  apt:
+  ansible.builtin.apt:
     name: fd-find
     state: present
   become: true
   when: ansible_os_family in ["Debian", "Ubuntu"]
 
 - name: Make fd-find available by fd command
-  file:
+  ansible.builtin.file:
     src: "{{ lookup('pipe', 'which fdfind') }}"
     dest: "{{ ansible_user_dir }}/.local/bin/fd"
     state: link
   when: ansible_os_family == "Linux"
 
 - name: Install SDKMAN
-  shell: >
+  ansible.builtin.shell: >
     curl -s "https://get.sdkman.io" | bash
   args:
     creates: "{{ ansible_user_dir }}/.sdkman"
@@ -91,7 +91,7 @@
   ansible.builtin.shell: |
     curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
   args:
-    creates: "/usr/local/bin/zoxide" # Prevents re-running if zoxide is already installed
+    creates: /usr/local/bin/zoxide # Prevents re-running if zoxide is already installed
   when: ansible_os_family == 'Linux'
 
 - name: Install Obsidian via snap
@@ -110,7 +110,7 @@
   when: ansible_os_family == 'Linux'
 
 - name: Configure bottom snap connections
-  command: snap connect bottom:{{ item }}
+  ansible.builtin.command: snap connect bottom:{{ item }}
   loop:
     - mount-observe
     - hardware-observe
@@ -128,7 +128,7 @@
   when: ansible_os_family == 'Linux'
 
 - name: Install Flatpak
-  apt:
+  ansible.builtin.apt:
     name: flatpak
     state: present
   become: true
@@ -150,4 +150,3 @@
 #     # Add more Flatpak applications as needed
 #   become: true
 #   when: ansible_os_family == 'Linux'
-

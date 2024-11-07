@@ -1,4 +1,6 @@
+---
 name: CI test
+permissions: read-all
 
 on:
   push:

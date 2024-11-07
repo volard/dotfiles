@@ -1,6 +1,6 @@
+#!/bin/bash
 # thaks to https://medium.com/@roshan.mehta.jignesh/guide-to-auto-tiling-in-pop-os-d4f187137040
 
-OS="$(uname -s)"
 # TODO and the rest of stuff
 gsettings set org.gnome.shell.keybindings switch-to-application-1 []
 gsettings set org.gnome.shell.keybindings switch-to-application-2 []

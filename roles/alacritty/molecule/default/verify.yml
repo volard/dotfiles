@@ -5,13 +5,13 @@
   gather_facts: false
   tasks:
     - name: Check if Alacritty is installed
-      command: which alacritty
+      ansible.builtin.command: which alacritty
       register: alacritty_check
       changed_when: false
       failed_when: alacritty_check.rc != 0
 
     - name: Verify Alacritty config exists
-      stat:
+      ansible.builtin.stat:
         path: "{{ ansible_user_dir }}/.config/alacritty/alacritty.toml"
       register: config_check
       failed_when: not config_check.stat.exists

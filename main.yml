@@ -4,22 +4,21 @@
   connection: local
   gather_facts: true
   vars_files:
-    - "/vars/sensitive_vars.yml"
+    - /vars/sensitive_vars.yml
 
   pre_tasks:
     - name: Include Windows pre-tasks
-      include_tasks: pre_tasks/windows.yml
+      ansible.builtin.include_tasks: pre_tasks/windows.yml
       when: ansible_os_family == 'Windows'
 
     - name: Include Linux pre-tasks
-      include_tasks: pre_tasks/linux.yml
+      ansible.builtin.include_tasks: pre_tasks/linux.yml
       when: ansible_os_family == 'Linux'
 
   tasks:
     - name: Set combined roles fact
-      set_fact:
-        combined_roles: "{{ (group_vars.all.roles | default([])) +
-          (group_vars[ansible_os_family | lower].roles | default([])) }}"
+      ansible.builtin.set_fact:
+        combined_roles: "{{ (group_vars.all.roles | default([])) + (group_vars[ansible_os_family | lower].roles | default([])) }}"
 
   roles:
     - role: "{{ item }}"
