@@ -41,18 +41,18 @@
     - discord
     - bat
     - fzf
-    - capture2text  # windows 10 only
+    - capture2text # windows 10 only
     - sharex
     - unzip
     - sdk
     - coretemp
     - espanso
-    # A hardware monitoring program that reads PC systems main health sensors 
+    # A hardware monitoring program that reads PC systems main health sensors
     # : voltages, temperatures, fans speed.
     - hwmonitor
     - fsviewer
     - upscayl
     - JetBrainsMono-NF
     - flameshot
-    - unar  # Universal archives extractor.
+    - unar # Universal archives extractor.
   when: ansible_os_family == 'Windows'

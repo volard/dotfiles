@@ -13,22 +13,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@latest
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
+      - name: Set up Python
+        uses: actions/setup-python@latest
+        with:
+          python-version: "3.9"
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install molecule docker ansible
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install molecule docker ansible
 
-    - name: Test roles
-      run: |
-        cd roles/alacritty
-        molecule test
+      - name: Test roles
+        run: |
+          cd roles/alacritty
+          molecule test
 
-    - name: Test playbook
-      run: molecule test
+      - name: Test playbook
+        run: molecule test

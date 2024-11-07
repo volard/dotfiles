@@ -5,8 +5,8 @@
     value: "{{ item.value }}"
     level: machine
   loop:
-    - { name: 'SCOOP', value: 'C:\Scoop' }
-    - { name: 'SCOOP_GLOBAL', value: 'C:\ProgramData\scoop' }
+    - { name: "SCOOP", value: 'C:\Scoop' }
+    - { name: "SCOOP_GLOBAL", value: 'C:\ProgramData\scoop' }
   when: ansible_os_family == 'Windows'
 
 - name: Install Scoop
@@ -42,12 +42,6 @@
     name: "{{ item.name }}"
     value: "{{ item.value }}"
   loop:
-    - { name: 'aria2-enabled', value: 'true' }
-    - { name: 'aria2-warning-enabled', value: 'false' }
+    - { name: "aria2-enabled", value: "true" }
+    - { name: "aria2-warning-enabled", value: "false" }
   when: ansible_os_family == 'Windows'
-
-
-
-
-
-

@@ -3,7 +3,7 @@
   file:
     path: "{{ ansible_user_dir }}/.local/share/fonts"
     state: directory
-    mode: '0755'
+    mode: "0755"
   when: ansible_os_family == 'Linux'
 
 - name: "{{ role_name }} | List font archives"
@@ -17,7 +17,7 @@
   ansible.builtin.unarchive:
     src: "{{ item.path }}"
     dest: "{{ ansible_user_dir }}/.local/share/fonts"
-    mode: '0644'
+    mode: "0644"
   with_items: "{{ font_archives.files }}"
   when: ansible_os_family == 'Linux'
 
