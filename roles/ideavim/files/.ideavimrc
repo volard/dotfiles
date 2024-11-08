@@ -254,6 +254,8 @@ map <C-J> <C-W>j
 map <C-K> <C-W>k
 
 nmap <leader>ff :action GotoFile<CR>
+nmap <leader>ss :action GotoSymbol<CR>
+
 
 " code format
 nmap <leader>cf :action ReformatCode<CR>
