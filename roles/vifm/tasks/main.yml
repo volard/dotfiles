@@ -1,0 +1,27 @@
+---
+- name: Install vifm on Linux
+  ansible.builtin.apt:
+    name: vifm
+    state: present
+    update_cache: true
+  become: true
+  when: ansible_os_family == 'Linux'
+
+- name: Install vifm on Windows using Scoop
+  community.windows.scoop:
+    name: vifm
+    state: present
+  when: ansible_os_family == 'Windows'
+
+- name: Set OS-specific config paths
+  ansible.builtin.set_fact:
+    config_path: "{{ ansible_user_dir }}/AppData/Roaming/Vifm"
+  when: ansible_os_family == 'Windows'
+
+- name: Set OS-specific config paths
+  ansible.builtin.set_fact:
+    config_path: "{{ ansible_user_dir }}/.config/Vifm"
+  when: ansible_os_family == 'Linux'
+
+- name: Include common copy tasks
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
