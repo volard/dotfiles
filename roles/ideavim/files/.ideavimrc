@@ -185,16 +185,20 @@ map <leader>s" :action PasteMultiple<CR>
 " --------------------- Commentary ----------------------
 " ------------------------------------------------------------
 nmap gcc :action CommentByLineComment<CR>
-imap gcc :action CommentByLineComment<CR>
 vmap gc :action CommentByLineComment<CR>
 
 
 " ------------------------------------------------------------
 " --------------------- Display options ----------------------
 " ------------------------------------------------------------
-map <leader>dd <action>(ToggleDistractionFreeMode)
-map <leader>dz <action>(ToggleZenMode)
-map <leader>df <action>(ToggleFullScreen)
+" view distraction free
+nmap <leader>vd <action>(ToggleDistractionFreeMode)
+
+" view zen mode
+nmap <leader>vz <action>(ToggleZenMode)
+
+" view fullscreen
+nmap <leader>vf <action>(ToggleFullScreen)
 
 
 
@@ -238,9 +242,14 @@ let g:WhichKey_FontSize = 20
 map <leader>bh :action WebDeployment.BrowseServers<CR>
 map <C-/> :action ActivateTerminalToolWindow<CR>
 
+
 " Escape keys
 imap <C-;> <Esc>
 vmap <C-;> <Esc>
+imap <C-L> <Esc>
+vmap <C-L> <Esc>
+vmap <C-i> <Esc>
+imap <C-i> <Esc>
 
 " Don't use Ex mode, use Q for formatting.
 map Q gq
@@ -255,7 +264,6 @@ map <C-K> <C-W>k
 
 nmap <leader>ff :action GotoFile<CR>
 nmap <leader>ss :action GotoSymbol<CR>
-
 
 " code format
 nmap <leader>cf :action ReformatCode<CR>
