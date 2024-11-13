@@ -311,6 +311,8 @@ nmap gr :action FindUsages<CR>
 " Diagnostics (Trouble)
 nmap <leader>xx :action ActivateProblemsViewToolWindow<CR>
 
+nmap e] :action GotoNextError<CR>
+nmap e[ :action GotoPreviousError<CR>
 
 
 
