@@ -35,6 +35,8 @@
     - dos2unix
     - vlc
     - peazip
+    - ayugram
+    - anytype
     - stretchly
     - vivaldi
     - obsidian
@@ -47,12 +49,15 @@
     - sdk
     - coretemp
     - espanso
+    - flux
     # A hardware monitoring program that reads PC systems main health sensors
     # : voltages, temperatures, fans speed.
     - hwmonitor
     - fsviewer
     - upscayl
     - JetBrainsMono-NF
-    - flameshot
+    - copyq
+    - JetBrainsMono-NF-Mono
+    - lazydocker
     - unar # Universal archives extractor.
   when: ansible_os_family == 'Windows'
