@@ -1,0 +1,125 @@
+{
+    /**********************************************************/
+    /*********              VIM                        ********/
+    /**********************************************************/
+
+    "vim.easymotion": true,
+    "vim.hlsearch": true,
+    "vim.incsearch": true,
+    "vim.leader": "<space>",
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+        "before": ["K"],
+        "commands": ["editor.action.showHover"]
+        }
+    ],
+    "vim.statusBarColorControl": true,
+    "vim.statusBarColors.normal": ["#8FBCBB", "#434C5E"],
+    "vim.statusBarColors.insert": "#BF616A",
+    "vim.statusBarColors.visual": "#B48EAD",
+    "vim.statusBarColors.visualline": "#B48EAD",
+    "vim.statusBarColors.visualblock": "#A3BE8C",
+    "vim.statusBarColors.replace": "#D08770",
+    "vim.statusBarColors.commandlineinprogress": "#007ACC",
+    "vim.statusBarColors.searchinprogressmode": "#007ACC",
+    "vim.statusBarColors.easymotionmode": "#007ACC",
+    "vim.statusBarColors.easymotioninputmode": "#007ACC",
+    "vim.statusBarColors.surroundinputmode": "#007ACC",
+    "workbench.statusBar.visible": true,
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#B48EAD",
+        "statusBar.noFolderBackground": "#B48EAD",
+        "statusBar.debuggingBackground": "#B48EAD",
+        "statusBar.foreground": "#434C5E",
+        "statusBar.debuggingForeground": "#434C5E"
+    },
+    "vim.useSystemClipboard": true,
+     "vim.handleKeys": {
+        "<C-v>": false,
+        "<C-s>": false,
+        "<C-y>": false,
+        "<C-z>": false,
+        "<C-p>": false,
+        "<C-q>": false,
+        "<C-n>": false,
+        "<C-x>": false,
+        "<C-b>": false,
+        "<C-a>": false,
+        "<C-f>": false,
+    },
+    "vim.camelCaseMotion.enable": true,
+    "vim.smartRelativeLine": true,
+    "vim.cursorStylePerMode.visual": "block",
+
+    /**********************************************************/
+    /*********              PLUGINS                    ********/
+    /**********************************************************/
+
+    "C_Cpp.autocompleteAddParentheses": true,
+    "cmake.configureOnOpen": true,
+
+    /**********************************************************/
+    /*********              EDITOR                     ********/
+    /**********************************************************/
+
+    "editor.fontSize": 15,
+    "editor.fontFamily": "'JetBrainsMono Nerd Font', Consolas, 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "editor.minimap.enabled": false,
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.smoothScrolling": true,
+    "editor.unicodeHighlight.nonBasicASCII": false,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+    /**********************************************************/
+    /*********              APPEARENCE                 ********/
+    /**********************************************************/
+    
+    "workbench.colorTheme": "Tokyo Night",
+    "workbench.iconTheme": "eq-material-theme-icons",
+    "breadcrumbs.enabled": false,
+
+    /**********************************************************/
+    /*********              TERMINAL                    *******/
+    /**********************************************************/
+
+    "terminal.explorerKind": "integrated",
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        },
+        "Command Prompt": {
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe",
+                "${env:windir}\\System32\\cmd.exe"
+            ],
+            "args": [],
+            "icon": "terminal-cmd"
+        },
+        "Git Bash": {
+            "source": "Git Bash"
+        },
+        "PowerShell 7": {
+            "path": "${env:SCOOP}\\shims\\pwsh.exe",
+            "args": []
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "PowerShell 7",
+    
+    /**********************************************************/
+    /*********              BEHAVIOUR                  ********/
+    /**********************************************************/
+    
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": true,
+    "files.autoSave": "afterDelay",
+    "security.workspace.trust.banner": "never",
+    "security.workspace.trust.startupPrompt": "never",
+    "workbench.editor.closeEmptyGroups": false,
+    "security.workspace.trust.untrustedFiles": "open", 
+    "window.menuBarVisibility": "toggle",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+}

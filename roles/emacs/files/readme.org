@@ -1,0 +1,689 @@
+[Setup emacs daemon on windows](https://medium.com/@shibucite/emacs-in-windows-options-to-launch-a86a3f590d22)
+TLDR: start "runemacs -daemon" on system start
+
+
+* Keybindings I've used during configuring
+
+** Help
+|---------+-----------------------------|
+| C-h k   | help on function a key runs |
+| C-h r   | help in general             |
+| C-h v   | help on variables           |
+| C-h f   | help on function            |
+| C-h m   | help on mode                |
+| C-h t   | tutorial                    |
+| C-h C-q | quick help toggle           |
+|---------+-----------------------------|
+
+** General
+- C-x C-c | exit Emacs
+- kill-emacs
+- save-buffers-kill-emacs
+
+- C-s search forward
+- C-r search backward
+
+- C-S-backspace | delete line
+- C-y     | paste
+- M-w     | Copy
+
+- C-x     | dired
+
+- C-c p f | find in projectile project
+
+** Org
+|------------------------+----------------------------------------------|
+| S-Tab (org-shifttab)   | to go through different levels of visibility |
+| S-left\right           | change task type                             |
+| C-c C-c                | realign table                                |
+| C-c RET                | insert horizontal line below                 |
+| RET                    | Insert new line                              |
+| Tab \ S-Tab            | Usual (excel-like) navigation                |
+| "(hor. line)- and Tab" | table line separator                         |
+|------------------------+----------------------------------------------|
+
+
+** Buffers and windows
+|---------+--------------------------------------|
+| C-x o   | other-window (evil mode solves this) |
+| C-x 0   | delete-window                        |
+| C-x 1   | delete-other-windows                 |
+| C-x 2   | split-window-vertically              |
+| C-x 3   | split-window-horizontally            |
+| C-x +   | balance-windows                      |
+| C-x k   | kill current buffer                  |
+| C-x C-b | List buffers                         |
+|---------+--------------------------------------|
+
+
+* Functions I've used during configuring
+- lsp-install-server
+- dired-jump
+- help-quick
+- customize-themes
+- package-refresh-contents
+- list-packages
+- customize-option
+- ibuffer
+
+* Fun facts
+- https://emacsdocs.org
+- If some package **not found**, execute `package-refresh-contents` 
+- With evil plugins go to insert mode to be able to mark files and do stuff in dired
+- https://codeberg.org/ashton314/emacs-bedrock/src/branch/main/extras/dev.el
+- Sometimes if config don't reloads, try to open not only client but server
+- dired stands for "directory edit"
+- Don't forget to set HOME variable so "~" works correctly on windows
+- Its possible to use ESC-x - inside emacs anyway translate alt-x to ESC-x (not working for me sometimes)
+
+
+* Package management
+Emacs has a built in package manager but it doesn’t make it easy to automatically install packages on a new system the first time you pull down your configuration. use-package is a really helpful package used in this configuration to make it a lot easier to automate the installation and configuration
+
+** Package.el
+#+begin_src emacs-lisp
+
+  (require 'package)
+  (require 'use-package-ensure) ;; Load use-package-always-ensure
+  (setq use-package-always-ensure t) ;; Always ensures that a package is installed
+
+  (setq package-archives '(("melpa" . "https://melpa.org/packages/") ;; Sets default package repositories
+                          ("org" . "https://orgmode.org/elpa/")
+                          ("elpa" . "https://elpa.gnu.org/packages/")
+                          ("nongnu" . "https://elpa.nongnu.org/nongnu/"))) ;; For Eat Terminal
+
+  (package-initialize)
+
+  (use-package diminish)
+
+#+end_src
+
+
+
+** Straight.el
+https://systemcrafters.net/advanced-package-management/using-straight-el/
+
+#+begin_src emacs-lisp
+
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+	(expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+	(bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+	  (url-retrieve-synchronously
+	  "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+	  'silent 'inhibit-cookies)
+	(goto-char (point-max))
+	(eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+
+#+end_src
+
+
+
+
+* Basic settings
+
+
+
+#+begin_src emacs-lisp
+
+    (setopt x-underline-at-descent-line nil)           ; Prettier underlines
+    (blink-cursor-mode -1)                                ; Steady cursor
+
+    ; Remap M-x to C-c x
+    (global-set-key (kbd "C-c x") 'execute-extended-command)
+
+    ; make ESC escape shit
+    (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+
+    (tool-bar-mode -1)             ; Disable the tool bar
+    (menu-bar-mode -1)             ; Disable the menu bar 
+    (scroll-bar-mode -1)           ; Hide the always-visible scrollbar
+    (electric-indent-mode nil)     ; Turn off the weird indenting that Emacs does by default.
+    (electric-pair-mode t)         ; Turns on automatic parens pairing
+    (setq inhibit-splash-screen t) ; Remove the "Welcome to GNU Emacs" splash screen
+
+
+
+
+
+    ;; define function to shutdown emacs server instance
+    (defun server-shutdown ()
+	"Save buffers, Quit, and Shutdown (kill) server"
+	(interactive)
+	(save-some-buffers)
+	(kill-emacs)
+    )
+
+	
+    (use-package doom-modeline
+	:init (doom-modeline-mode 1)
+	:custom ((doom-modeline-height 15))
+    )
+
+   
+
+(electric-indent-mode -1)    ;; Turn off the weird indenting that Emacs does by default.
+
+#+end_src
+
+** Backups and auto-saves
+
+Do not outright delete files.  Move them to the system trash instead.  The `trashed' package can act on them in a Dired-like fashion.  I use it and can recommend it to either restore (R) or permanently delete (D) the files.
+#+begin_src emacs-lisp
+  (setq delete-by-moving-to-trash t)
+#+end_src
+
+#+begin_src emacs-lisp
+  (defvar --backup-directory (concat user-emacs-directory "backups"))
+(if (not (file-exists-p --backup-directory))
+    (make-directory --backup-directory t))
+(setq backup-directory-alist `(("." . ,--backup-directory)))
+(setq make-backup-files t               ; backup of a file the first time it is saved.
+      backup-by-copying t               ; don't clobber symlinks
+      version-control t                 ; version numbers for backup files
+      delete-old-versions t             ; delete excess backup files silently
+      delete-by-moving-to-trash t
+      kept-old-versions 6               ; oldest versions to keep when a new numbered backup is made (default: 2)
+      kept-new-versions 9               ; newest versions to keep when a new numbered backup is made (default: 2)
+      auto-save-default t               ; auto-save every buffer that visits a file
+      auto-save-timeout 20              ; number of seconds idle time before auto-save (default: 30)
+      auto-save-interval 200            ; number of keystrokes between auto-saves (default: 300)
+)
+
+#+end_src
+
+** Color theme
+
+#+begin_src emacs-lisp
+  ;(use-package gruvbox-theme
+	;  :config
+	;  (load-theme 'gruvbox-dark-medium t) ;; We need to add t to trust this package
+ ; )
+
+(use-package doom-themes
+  :init (load-theme 'doom-dracula t)
+)
+
+#+end_src
+
+** Font
+
+#+begin_src emacs-lisp
+  
+; M-x menu-set-font to see the font and fontset menu
+; M-x describe-font to see the requested font and actual font being used.
+(set-face-attribute 'default nil
+		    :font "JetBrainsMono NFM-14.5" )
+(set-frame-font "JetBrainsMono NFM-12.5" nil t)
+
+  ;; This sets the default font on all graphical frames created after restarting Emacs.
+  ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
+  ;; are not right unless I also add this method of setting the default font.
+
+(add-to-list 'default-frame-alist '(font . "JetBrainsMono NFM-14.5")) ;; Set your favorite font
+#+end_src
+
+** Icons
+
+#+begin_src emacs-lisp
+
+;; M-x nerd-icons-install-fonts
+(setq doom-modeline-icon t)
+
+(use-package all-the-icons-dired
+    :hook (dired-mode . all-the-icons-dired-mode)
+)
+
+#+end_src
+
+** Dired
+
+#+begin_src emacs-lisp
+(add-hook 'dired-mode-hook
+      (lambda ()
+        (dired-hide-details-mode)
+        (dired-sort-toggle-or-edit))
+)
+#+end_src
+
+** Zooming In/Out
+
+You can use the bindings C-+ C– for zooming in/out. You can also use CTRL plus the mouse wheel for zooming in/out.
+
+#+begin_src emacs-lisp
+(use-package emacs
+  :bind
+  ("C-+" . text-scale-increase)
+  ("C--" . text-scale-decrease)
+  ("<C-wheel-up>" . text-scale-increase)
+  ("<C-wheel-down>" . text-scale-decrease)
+)
+#+end_src
+
+** Minibuffer escape
+
+By default, Emacs requires you to hit ESC *three times* to escape quit the minibuffer.
+
+#+begin_src emacs-lisp
+  (global-set-key [escape] 'keyboard-escape-quit)
+#+end_src
+
+* Packages
+
+** General
+
+#+begin_src emacs-lisp
+(use-package general
+  :config
+  (general-create-definer rune/leader-keys
+    :keymaps '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "C-SPC")
+
+  (rune/leader-keys
+    "t"  '(:ignore t :which-key "toggles")
+    "tt" '(counsel-load-theme :which-key "choose theme"))
+)
+#+end_src
+
+
+** Which-key
+Shows a popup of available keybindings when typing a long key sequence (e.g. C-x ...)
+#+begin_src emacs-lisp
+  (
+    use-package which-key
+      :config
+        (which-key-mode)
+  )
+#+end_src
+
+** Evil mode
+This configuration uses evil-mode for a Vi-like modal editing experience. general.el is used for easy keybinding configuration that integrates well with which-key. evil-collection is used to automatically configure various Emacs modes with Vi-like keybindings for evil-mode.
+
+#+begin_src emacs-lisp
+
+  ;; Download Evil
+  (unless (package-installed-p 'evil)
+    (package-install 'evil)
+  )
+
+
+  (use-package evil
+    :init ;; Execute code Before a package is loaded
+      (evil-mode)
+
+    :config ;; Execute code After a package is loaded
+      (evil-set-initial-state 'eat-mode 'insert) ;; Set initial state in eat terminal to insert mode
+      (evil-set-initial-state 'messages-buffer-mode 'normal)
+      (evil-set-initial-state 'dashboard-mode 'normal)
+
+    :custom ;; Customization of package custom variables
+      (evil-want-keybinding nil)    ;; Disable evil bindings in other modes (It's not consistent and not good)
+      (evil-want-C-u-scroll t)      ;; Set C-u to scroll up
+      (evil-want-C-i-jump nil)      ;; Disables C-i jump
+      (evil-undo-system 'undo-redo) ;; C-r to redo
+      (org-return-follows-link t)   ;; Sets RETURN key in org-mode to follow links
+
+    ;; Unmap keys in 'evil-maps. If not done, org-return-follows-link will not work
+    :bind (:map evil-motion-state-map
+              ("SPC" . nil)
+              ("RET" . nil)
+              ("TAB" . nil)
+          )
+  )
+
+
+
+  (use-package evil-collection
+    :after evil
+    :config
+    (setq evil-collection-mode-list '(dashboard dired ibuffer))
+    (evil-collection-init)
+  )
+  (use-package evil-tutor)
+
+#+end_src
+
+
+** Dashboard
+
+#+begin_src emacs-lisp
+(use-package dashboard
+  :init
+    (setq initial-buffer-choice 'dashboard-open)
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-set-file-icons t)
+    (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
+    ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
+    (setq dashboard-startup-banner "~/.config/emacs/images/dtmacs-logo.png")  ;; use custom image as banner
+    (setq dashboard-center-content nil) ;; set to 't' for centered content
+    (setq dashboard-items '((recents . 5)
+                            (agenda . 5 )
+                            (bookmarks . 3)
+                            (projects . 3)
+                            (registers . 3)))
+  :custom 
+    (dashboard-modify-heading-icons '((recents . "file-text")
+                (bookmarks . "book")))
+  :config
+    (dashboard-setup-startup-hook))
+
+#+end_src
+
+** Projectile
+
+
+#+begin_src emacs-lisp
+
+  (use-package projectile
+    :diminish projectile-mode
+    :config (projectile-mode)
+    :custom ((projectile-completion-system 'ivy))
+    :bind-keymap ("C-c p" . projectile-command-map)
+  )
+
+  (use-package counsel-projectile
+    :after projectile
+    :config
+      (counsel-projectile-mode 1)
+  )
+
+#+end_src
+
+
+** Org mode
+#+begin_src emacs-lisp
+  (require 'org)
+
+  ; Make Org mode work with files ending in .org
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+
+  ; Try to remove strange auto indents
+  (setq org-adapt-indentation nil)
+
+  (setq org-todo-keywords
+    '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE"))
+  )
+#+end_src
+
+*** Nicer Heading Bullets
+org-bullets replaces the heading stars in org-mode buffers with nicer looking characters that you can control. Another option for this is org-superstar-mode which we may cover in a later video.
+
+
+#+begin_src emacs-lisp
+
+(use-package org-bullets
+  :after org
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+#+end_src
+
+
+*** Toc-Org
+Allows us to create a Table of Contents in our Org docs.
+
+#+begin_src emacs-lisp
+(use-package toc-org
+    :commands toc-org-enable
+    :init (add-hook 'org-mode-hook 'toc-org-enable))
+
+#+end_src
+
+*** Display settings
+
+#+begin_src emacs-lisp
+  (setq org-hide-emphasis-markers t)
+#+end_src
+
+
+#+begin_src emacs-lisp
+(setq org-src-fontify-natively t
+	  org-src-tab-acts-natively t
+      org-edit-src-content-indentation 0)
+#+end_src
+
+I want the text to fill the screen adaptively, so that long lines of text adapt to the size of the window. It also breaks lines instead of truncating them.
+
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook 'visual-line-mode)
+#+end_src
+
+
+
+
+Native fancy look
+
+#+begin_src emacs-lisp
+;; Org styling, hide markup etc.
+    (setq org-adapt-indentation t
+	  org-hide-leading-stars t
+	  ;org-hide-emphasis-markers t
+	  org-pretty-entities t )
+#+end_src
+
+
+#+begin_src emacs-lisp
+
+(use-package org-modern)
+(with-eval-after-load 'org (global-org-modern-mode))
+
+#+end_src
+
+** Ivy
+Generic completion frontend for Emacs, Swiper - isearch with an overview, and more
+*** Installation
+https://oremacs.com/swiper/#installation
+#+begin_src emacs-lisp
+  (straight-use-package 'ivy) 
+  (straight-use-package 'swiper) 
+  (straight-use-package 'counsel) 
+
+  (ivy-mode 1)
+
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+
+(use-package all-the-icons-ivy-rich
+  :ensure t
+  :init (all-the-icons-ivy-rich-mode 1))
+
+(use-package ivy-rich
+  :after ivy
+  :ensure t
+  :init (ivy-rich-mode 1) ;; this gets us descriptions in M-x.
+)
+
+#+end_src
+
+*** Keybindings
+#+begin_src emacs-list
+  (global-set-key (kbd "C-s") 'swiper-isearch)
+  (global-set-key (kbd "C-c x") 'counsel-M-x)
+  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  (global-set-key (kbd "M-y") 'counsel-yank-pop)
+  (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+  (global-set-key (kbd "<f1> l") 'counsel-find-library)
+  (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+  (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+  (global-set-key (kbd "<f2> j") 'counsel-set-variable)
+  (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+  (global-set-key (kbd "C-c v") 'ivy-push-view)
+  (global-set-key (kbd "C-c V") 'ivy-pop-view)
+#+end_src
+
+
+** Helpful Help Commands
+Helpful adds a lot of very helpful (get it?) information to Emacs’ describe- command buffers. For example, if you use describe-function, you will not only get the documentation about the function, you will also see the source code of the function and where it gets used in other places in the Emacs configuration. It is very useful for figuring out how things work in Emacs.
+
+
+#+begin_src emacs-list
+(use-package helpful
+  :custom
+    (counsel-describe-function-function #'helpful-callable)
+    (counsel-describe-variable-function #'helpful-variable)
+  :bind
+    ([remap describe-function] . counsel-describe-function)
+    ([remap describe-command] . helpful-command)
+    ([remap describe-variable] . counsel-describe-variable)
+    ([remap describe-key] . helpful-key)
+)
+#+end_src
+
+
+** Helm
+Better emacs' autocompletion
+#+begin_src emacs-lisp
+  (straight-use-package 'helm)
+  ;(global-set-key (kbd "C-c x") 'helm-M-x)
+  (helm-mode 1) ; make helm-mode start with Emacg
+  (setq completion-styles '(flex)) ; emacs 27+
+#+end_src
+
+* Development 
+https://systemcrafters.net/emacs-from-scratch/build-your-own-ide-with-lsp-mode/
+
+** LSP
+#+begin_src emacs-lisp
+
+    (use-package lsp-mode
+      :init
+        (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
+      :config
+        (lsp-enable-which-key-integration t)
+    )
+
+#+end_src
+
+** LSP UI
+
+#+begin_src emacs-lisp
+
+  (use-package lsp-ui 
+    :commands lsp-ui-mode
+    :hook (lsp-mode . lsp-ui-mode)
+    :custom
+      (lsp-ui-doc-position 'bottom)
+  )
+
+#+end_src
+
+** LSP treemacs
+[[lsp-treemacs][https://github.com/emacs-lsp/lsp-treemacs]] provides nice tree views for different aspects of your code like symbols in a file, references of a symbol, or diagnostic messages (errors and warnings) that are found in your code.
+This package is built on the [[treemacs][https://github.com/Alexander-Miller/treemacs]] package 
+
+#+begin_src emacs-lisp
+(use-package treemacs
+  :after lsp
+  :config
+    ;(treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode 'always)
+)
+
+(use-package treemacs-evil
+  :after (treemacs evil)
+)
+
+(use-package treemacs-icons-dired
+  :hook (dired-mode . treemacs-icons-dired-enable-once)
+)
+
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+#+end_src
+
+
+** LSP ivy
+lsp-ivy integrates Ivy with lsp-mode to make it easy to search for things by name in your code. When you run these commands, a prompt will appear in the minibuffer allowing you to type part of the name of a symbol in your code.
+
+- lsp-ivy-workspace-symbol - Search for a symbol name in the current project workspace
+- lsp-ivy-global-workspace-symbol - Search for a symbol name in all active project workspaces
+
+#+begin_src emacs-lisp
+  (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+#+end_src
+
+
+** Git
+
+#+begin_src emacs-lisp
+(use-package magit)
+#+end_src
+
+
+** Languages
+Emacs has built-in programming language modes for Lisp, Scheme, DSSSL, Ada, ASM, AWK, C, C++, Fortran, Icon, IDL (CORBA), IDLWAVE, Java, Javascript, M4, Makefiles, Metafont, Modula2, Object Pascal, Objective-C, Octave, Pascal, Perl, Pike, PostScript, Prolog, Python, Ruby, Simula, SQL, Tcl, Verilog, and VHDL.  Other languages will require you to install additional modes.
+
+#+begin_src emacs-lisp
+  (use-package lua-mode)
+  (use-package php-mode)
+  (use-package web-mode)
+
+; Makes web-mode the default mode for editing web files
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+#+end_src
+
+** Company mode
+
+Company Mode provides a nicer in-buffer completion interface than completion-at-point which is more reminiscent of what you would expect from an IDE.
+Here TAB now completes the selection and initiates completion at the current location if needed
+company-box is used to further enhance the look of the completions with icons and better overall presentation.
+
+
+#+begin_src emacs-lisp
+
+  (use-package company
+    :after lsp-mode
+    :hook (lsp-mode . company-mode)
+    :bind 
+          (:map company-active-map
+            ("<tab>" . company-complete-selection)
+          )
+          (:map lsp-mode-map
+            ("<tab>" . company-indent-or-complete-common)
+          )
+    :custom
+      (company-minimum-prefix-length 1)
+      (company-idle-delay 0.0)
+  )
+
+  (use-package company-box
+    :hook (company-mode . company-box-mode)
+  )
+
+(use-package flycheck
+  :ensure t
+  :config
+  (add-hook 'after-init-hook #'global-flycheck-mode))
+
+#+end_src
+
+* Terminal
+
+#+begin_src emacs-lisp
+
+(use-package term
+  :config
+  (setq explicit-shell-file-name "pwsh") ;; Change this to zsh, etc
+  ;;(setq explicit-zsh-args '())         ;; Use 'explicit-<shell>-args for shell-specific args
+
+  ;; Match the default Bash shell prompt.  Update this if you have a custom prompt
+  (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")
+)
+
+(use-package eterm-256color
+  :hook (term-mode . eterm-256color-mode))
+
+#+end_src
