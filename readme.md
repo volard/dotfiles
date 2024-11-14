@@ -41,3 +41,6 @@ SSH keys as well as sensitive variables encoded with [`Ansible Valut`](https://d
 - [TechDufus config - GitHub](https://github.com/TechDufus/dotfiles)
 - [Windows playbook scoop](https://github.com/stkrzysiak/windows-playbook-scoop)
 - [ALT-F4-LLC's dotfiles](https://github.com/ALT-F4-LLC/dotfiles)
+
+## todos
+- [ ] add excludes by default (I won't use vanilla nvim or emacs, but don't want to delete it)
