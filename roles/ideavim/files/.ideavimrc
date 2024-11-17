@@ -262,6 +262,10 @@ map <C-L> <C-W>l
 map <C-J> <C-W>j
 map <C-K> <C-W>k
 
+" Insert right from "0
+:nnoremap <C-P> "0p
+
+
 nmap <leader>ff :action GotoFile<CR>
 nmap <leader>ss :action GotoSymbol<CR>
 
