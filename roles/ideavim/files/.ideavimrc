@@ -251,6 +251,9 @@ vmap <C-L> <Esc>
 vmap <C-i> <Esc>
 imap <C-i> <Esc>
 
+" Insert right from "0
+:nnoremap <C-P> "0p
+
 " Don't use Ex mode, use Q for formatting.
 map Q gq
 
@@ -262,12 +265,11 @@ map <C-L> <C-W>l
 map <C-J> <C-W>j
 map <C-K> <C-W>k
 
-" Insert right from "0
-:nnoremap <C-P> "0p
-
+nmap <ESC> :noh<CR>
 
 nmap <leader>ff :action GotoFile<CR>
 nmap <leader>ss :action GotoSymbol<CR>
+nmap <leader>fr :action RecentChangedFiles<CR>
 
 " code format
 nmap <leader>cf :action ReformatCode<CR>
@@ -315,9 +317,8 @@ nmap gr :action FindUsages<CR>
 " Diagnostics (Trouble)
 nmap <leader>xx :action ActivateProblemsViewToolWindow<CR>
 
-nmap e] :action GotoNextError<CR>
-nmap e[ :action GotoPreviousError<CR>
-
+nmap ]e :action GotoNextError<CR>
+nmap [e :action GotoPreviousError<CR>
 
 
 
