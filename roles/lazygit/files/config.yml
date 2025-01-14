@@ -1,3 +1,6 @@
 ---
 gui:
   showIcons: true
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
