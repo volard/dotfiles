@@ -6,8 +6,8 @@ set -e
 DOTFILES_DIR="${HOME}/dotfiles"
 PASSWORD_FILE_PATH="${DOTFILES_DIR}/vault-password.txt"
 
-mkdir -p "${CONFIG_DIR}"
-rm -r "${CONFIG_DIR}"
+rm -r "${DOTFILES_DIR}"
+mkdir -p "${DOTFILES_DIR}"
 
 # Clone repository or pull
 if ! [[ -d ${DOTFILES_DIR} ]]; then
