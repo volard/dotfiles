@@ -6,6 +6,10 @@
 bash -c "$(curl -fsSL https://gitlab.com/dotfiles30/comma_files/-/raw/main/bin/dotfiles.sh)"
 ```
 
+```bash
+bash -c "$(wget -qO- https://gitlab.com/dotfiles30/comma_files/-/raw/main/bin/dotfiles.sh)"
+```
+
 ## Windows
 
 ```powershell
