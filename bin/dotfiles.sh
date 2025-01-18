@@ -12,9 +12,9 @@ echo
 # Clone repository or pull
 if ! [[ -d ${DOTFILES_DIR} ]]; then
 	if ! [[ -d "${DOTFILES_DIR}/.git" ]]; then
-		git -C "${DOTFILES_DIR}" pull
-	else
 		git clone "https://gitlab.com/dotfiles30/comma_files.git" "${DOTFILES_DIR}"
+	else
+		git -C "${DOTFILES_DIR}" pull
 	fi
 else
 	git -C "${DOTFILES_DIR}" pull
