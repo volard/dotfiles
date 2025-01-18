@@ -6,9 +6,6 @@ set -e
 DOTFILES_DIR="${HOME}/dotfiles"
 PASSWORD_FILE_PATH="${DOTFILES_DIR}/vault-password.txt"
 
-read -s -p "Enter vault password: " PASSWORD
-echo
-
 # Clone repository or pull
 if ! [[ -d ${DOTFILES_DIR} ]]; then
 	git clone "https://gitlab.com/dotfiles30/comma_files.git" "${DOTFILES_DIR}"
@@ -19,8 +16,6 @@ else
 		git -C "${DOTFILES_DIR}" pull
 	fi
 fi
-
-echo "${PASSWORD}" > "${PASSWORD_FILE_PATH}"
 
 cd "${DOTFILES_DIR}"
 
