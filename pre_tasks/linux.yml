@@ -1,12 +1,12 @@
 ---
 - name: Update apt cache
   apt:
-    update_cache: yes
+    update_cache: true
   become: true
 
 - name: Upgrade all packages
   apt:
     upgrade: full
-    autoclean: yes
-    autoremove: yes
+    autoclean: true
+    autoremove: true
   become: true
