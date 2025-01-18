@@ -6,15 +6,16 @@ set -e
 DOTFILES_DIR="${HOME}/dotfiles"
 PASSWORD_FILE_PATH="${DOTFILES_DIR}/vault-password.txt"
 
-rm -rf "${DOTFILES_DIR}"
-mkdir -p "${DOTFILES_DIR}"
+read -s -p "Enter vault password: " PASSWORD
 
 # Clone repository or pull
 if ! [[ -d ${DOTFILES_DIR} ]]; then
-	git clone "https://github.com/ALT-F4-LLC/dotfiles.git" "${DOTFILES_DIR}"
+	git clone "https://gitlab.com/dotfiles30/comma_files.git" "${DOTFILES_DIR}"
 else
 	git -C "${DOTFILES_DIR}" pull
 fi
+
+echo "${PASSWORD}" > "${PASSWORD_FILE_PATH}"
 
 cd "${DOTFILES_DIR}"
 
