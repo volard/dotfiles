@@ -21,8 +21,6 @@ I like [these ideas](https://www.nytimes.com/wirecutter/guides/how-to-organize-y
 
 On Windows I keep `docs` folder separated from `Documents` library as it gets cluttered by `Telegram Desktop` and sometimes other things. In this library I keep `temp` stuff.
 
-On Linux its just a `Documents` directory.
-
 - `. docs/`
     - `<project>/` - stuff that i'm working on
         - `resources/` - things belongs to project in general
@@ -35,7 +33,3 @@ On Linux its just a `Documents` directory.
 - `. separate partiton for programs especially/`
     - `scoop/`
     - `nonportable/` - for programs that can't be managed by scoop and also for these program's related files
-
-## Linux
-- `/home/`
-    - `programs/` - extracted programs on linux
