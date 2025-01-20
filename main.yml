@@ -6,15 +6,15 @@
   vars_files:
     - /vars/sensitive_vars.yml
 
-  pre_tasks:
+  # pre_tasks:
 
-    - name: Include Windows pre-tasks
-      ansible.builtin.include_tasks: pre_tasks/windows.yml
-      when: ansible_os_family == 'Windows'
+  #   - name: Include Windows pre-tasks
+  #     ansible.builtin.include_tasks: pre_tasks/windows.yml
+  #     when: ansible_os_family == 'Windows'
 
-    - name: Include Linux pre-tasks
-      ansible.builtin.include_tasks: pre_tasks/linux.yml
-      when: ansible_distribution == 'Ubuntu'
+  #   - name: Include Linux pre-tasks
+  #     ansible.builtin.include_tasks: pre_tasks/linux.yml
+  #     when: ansible_distribution == 'Ubuntu'
 
   tasks:
     - name: set roles
@@ -25,6 +25,11 @@
                   
     - name: Display roles
       debug: "var=roles"
+      tags:
+        - always
+
+    - name: Display os
+      debug: "var=ansible_os_family"
       tags:
         - always
 
