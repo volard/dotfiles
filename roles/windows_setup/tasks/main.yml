@@ -5,17 +5,20 @@
     name: AppsUseLightTheme
     data: 0
     type: dword
+  when: ansible_os_family == 'Windows'
 
 - name: Copy custom cursor files
   ansible.windows.win_copy:
     src: files/cursor/
     dest: "%USERPROFILE%\\\\cursors"
+  when: ansible_os_family == 'Windows'
 
-- name: Install custom cursor
-  ansible.windows.win_shell: |
-    rundll32.exe desk.cpl,InstallScreenSaver {{ cursor_inf_path }}
-- name: Configure wallpaper slideshow
-  ansible.windows.win_regedit:
-    path: HKCU:\Control Panel\Desktop
-    name: Wallpaper
-    data: files/wallpapers
+# - name: Install custom cursor
+#   ansible.windows.win_shell: |
+#     rundll32.exe desk.cpl,InstallScreenSaver {{ cursor_inf_path }}
+# - name: Configure wallpaper slideshow
+#   ansible.windows.win_regedit:
+#     path: HKCU:\Control Panel\Desktop
+#     name: Wallpaper
+#     data: files/wallpapers
+#   when: ansible_os_family == 'Windows'
