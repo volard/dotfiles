@@ -4,7 +4,7 @@
     path: "{{ config_path }}"
     state: directory
     mode: "0755"
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Ensure config directory exists on Windows
   ansible.windows.win_file:
@@ -27,7 +27,7 @@
   loop: "{{ config_files.files }}"
   when:
     - item.path.endswith('.j2')
-    - ansible_os_family == 'Linux'
+    - ansible_distribution == 'Ubuntu'
 
 - name: Copy template files on Windows
   ansible.windows.win_template:
@@ -47,7 +47,7 @@
   loop: "{{ config_files.files }}"
   when:
     - not item.path.endswith('.j2')
-    - ansible_os_family == 'Linux'
+    - ansible_distribution == 'Ubuntu'
 
 - name: Copy static files on Windows
   ansible.windows.win_copy:

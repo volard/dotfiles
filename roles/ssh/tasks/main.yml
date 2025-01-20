@@ -27,7 +27,7 @@
 - name: Set OS-specific config paths
   ansible.builtin.set_fact:
     config_path: "{{ ansible_user_dir }}/.ssh"
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Set OS-specific config paths for Windows
   ansible.builtin.set_fact:

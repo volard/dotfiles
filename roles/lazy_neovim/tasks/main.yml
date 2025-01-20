@@ -18,10 +18,10 @@
     name: nvim
     state: present
   become: true
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Install Neovim and its dependencies on Windows using Scoop
-  community.windows.scoop:
+  community.windows.win_scoop:
     name: "{{ item }}"
     state: present
   loop:
@@ -43,7 +43,7 @@
   loop:
     - "{{ config_path }}"
     - "{{ ansible_user_dir }}/.local/share/nvim"
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Include common copy tasks
   ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml

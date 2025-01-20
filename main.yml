@@ -7,20 +7,35 @@
     - /vars/sensitive_vars.yml
 
   pre_tasks:
+
     - name: Include Windows pre-tasks
       ansible.builtin.include_tasks: pre_tasks/windows.yml
       when: ansible_os_family == 'Windows'
 
     - name: Include Linux pre-tasks
       ansible.builtin.include_tasks: pre_tasks/linux.yml
-      when: ansible_os_family == 'Linux'
+      when: ansible_distribution == 'Ubuntu'
 
   tasks:
-    - name: Set combined roles fact
-      ansible.builtin.set_fact:
-        combined_roles: "{{ (group_vars.all.roles | default([])) + (group_vars[ansible_os_family | lower].roles | default([])) }}"
+    - name: set roles
+      set_fact:
+        roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or default_roles | difference(exclude_roles | default([])) }}"
+      tags:
+        - always
+                  
+    - name: Display roles
+      debug: "var=roles"
+      tags:
+        - always
 
-  roles:
-    - role: "{{ item }}"
-      when: item in combined_roles
-      loop: "{{ combined_roles }}"
+    - name: Run roles
+      include_role:
+        apply:
+          tags:
+            - "{{ roles_item }}"
+        name: "{{ roles_item }}"
+      loop_control:
+        loop_var: roles_item
+      with_items: "{{ roles }}"
+      tags:
+        - always

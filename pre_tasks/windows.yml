@@ -10,13 +10,13 @@
   when: ansible_os_family == 'Windows'
 
 - name: Install Scoop
-  community.windows.scoop:
+  community.windows.win_scoop:
     name: scoop
     state: present
   when: ansible_os_family == 'Windows'
 
 - name: Install Git using Scoop
-  community.windows.scoop:
+  community.windows.win_scoop:
     name: git
     state: present
   when: ansible_os_family == 'Windows'

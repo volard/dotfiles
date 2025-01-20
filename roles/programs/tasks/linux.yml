@@ -4,7 +4,7 @@
     repo: ppa:hluk/copyq
     state: present
   become: true
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Install required packages on Linux
   ansible.builtin.apt:
@@ -74,7 +74,7 @@
     curl -s "https://get.sdkman.io" | bash
   args:
     creates: "{{ ansible_user_dir }}/.sdkman"
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Install programs via snap
   community.general.snap:
@@ -85,14 +85,14 @@
     - discord
     - stretchly
   become: true
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Install zoxide via installation script
   ansible.builtin.shell: |
     curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
   args:
     creates: /usr/local/bin/zoxide # Prevents re-running if zoxide is already installed
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Install Obsidian via snap
   community.general.snap:
@@ -100,14 +100,14 @@
     state: present
     classic: true
   become: true
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Install bottom via snap
   community.general.snap:
     name: bottom
     state: present
   become: true
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Configure bottom snap connections
   ansible.builtin.command: snap connect bottom:{{ item }}
@@ -117,7 +117,7 @@
     - system-observe
     - process-control
   become: true
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 # better neofetch
 - name: Install macchina via cargo
@@ -125,14 +125,14 @@
     cargo install macchina
   args:
     creates: "{{ ansible_user_dir }}/.cargo/bin/macchina" # Prevents re-running if macchina is already installed
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Install Flatpak
   ansible.builtin.apt:
     name: flatpak
     state: present
   become: true
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Add Flathub repository
   community.general.flatpak_remote:
@@ -140,7 +140,7 @@
     state: present
     flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
   become: true
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 # - name: Install applications via Flatpak
 #   community.general.flatpak:
 #     name: "{{ item }}"
@@ -149,4 +149,4 @@
 #     - com.spotify.Client
 #     # Add more Flatpak applications as needed
 #   become: true
-#   when: ansible_os_family == 'Linux'
+#   when: ansible_distribution == 'Ubuntu'
