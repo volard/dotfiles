@@ -1,11 +1,11 @@
 # Ansible driven dotfiles management
 
 ## Linux
-
+with `curl`
 ```bash
 bash -c "$(curl -fsSL https://gitlab.com/dotfiles30/comma_files/-/raw/main/bin/dotfiles.sh)"
 ```
-
+or with `wget`
 ```bash
 bash -c "$(wget -qO- https://gitlab.com/dotfiles30/comma_files/-/raw/main/bin/dotfiles.sh)"
 ```
@@ -49,6 +49,3 @@ SSH keys as well as sensitive variables encoded with [`Ansible Valut`](https://d
 ## Editors (it's here for short time)
 - Editor theme: Catppuccin Mocha with background (`#080808`) and disabled current line highlighting
 - Base theme: Github Dark or simular to editor theme vibes
-
-## todos
-- [ ] add excludes by default (I won't use vanilla nvim or emacs, but don't want to delete it)

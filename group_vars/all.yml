@@ -1,18 +1,19 @@
 default_roles:
-  # - alacritty
+  #- alacritty
   # - awesome
-  # - bash
-  # - git
+  #- bash
+  #- git
   # - glazewm
-  # - ideavim
-  # - lazy_neovim
-  # - lazygit
-  # - lf
-  # - linux_setup
-  # - oh-my-posh
+  #- ideavim
+  #- lazy_neovim
+  #- lazygit
+  #- lf
+  #- linux_setup
+  #- oh-my-posh
   # - powershell
-  # - programs
-  - ssh
-  # - wakatime
-  # - wezterm
+  - programs
+  # - ssh
+  #- wakatime
+  #- wezterm
+  #- i3
   # - windows_setup
