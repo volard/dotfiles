@@ -19,6 +19,8 @@ fi
 
 cd "${DOTFILES_DIR}"
 
+chmod +x "${DOTFILES_DIR}/bin/dotfiles.sh"
+
 # Determine distro
 if [[ -f /etc/os-release ]]; then
         # Modern distributions use os-release file
@@ -60,10 +62,18 @@ if ! [[ -x "$(command -v ansible || true)" ]]; then
 		sudo pipx ensurepath
 		source ~/.bashrc
 
+		if ! [[ ":$PATH:" == *":$DIR:"* ]]; then
+		    echo 'PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
+		fi
+
+		source ~/.bashrc
+
 		# Ansible installation itself
 		pipx install --include-deps ansible
         fi
 fi
+
+
 
 # Update Galaxy
 ansible-galaxy install -r requirements.yml
@@ -75,7 +85,7 @@ if ! [[ -f "${DOTFILES_DIR}/vault-password.txt" ]]; then
 fi
 
 # Run playbook
-ansible-playbook --diff --vault-password-file "${PASSWORD_FILE_PATH}" "${DOTFILES_DIR}/main.yml" "$@"
+ansible-playbook --diff --vault-password-file "${PASSWORD_FILE_PATH}" "${DOTFILES_DIR}/main.yml" "$@" --ask-become-pass
 
 # vi:ft=sh:
 

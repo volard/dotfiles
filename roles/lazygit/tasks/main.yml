@@ -2,7 +2,7 @@
 - name: Set OS-specific config paths
   ansible.builtin.set_fact:
     config_path: "{{ ansible_user_dir }}/.config/lazygit"
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Set OS-specific config paths for Windows
   ansible.builtin.set_fact:
@@ -14,25 +14,25 @@
     url: https://api.github.com/repos/jesseduffield/lazygit/releases/latest
     return_content: true
   register: lazygit_latest
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Set Lazygit version fact
   ansible.builtin.set_fact:
     lazygit_version: "{{ lazygit_latest.json.tag_name[1:] }}"
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Download Lazygit archive
   ansible.builtin.get_url:
     url: https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_{{ lazygit_version }}_Linux_x86_64.tar.gz
     dest: /tmp/lazygit.tar.gz
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Extract Lazygit binary
   ansible.builtin.unarchive:
     src: /tmp/lazygit.tar.gz
     dest: /tmp
     remote_src: true
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Move Lazygit binary to /usr/local/bin
   ansible.builtin.copy:
@@ -41,7 +41,7 @@
     mode: "0755"
     remote_src: true
   become: true
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Clean up temporary files
   ansible.builtin.file:
@@ -50,10 +50,10 @@
   loop:
     - /tmp/lazygit.tar.gz
     - /tmp/lazygit
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Install Lazygit on Windows using Scoop
-  community.windows.scoop:
+  community.windows.win_scoop:
     name: lazygit
     state: present
   when: ansible_os_family == 'Windows'

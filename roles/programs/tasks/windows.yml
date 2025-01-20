@@ -1,7 +1,7 @@
 ---
 # windows specifig scoop packages that don't require configuration
 - name: Install required packages on Windows
-  community.windows.scoop:
+  community.windows.win_scoop:
     name: "{{ item }}"
     state: present
   loop:

@@ -5,10 +5,11 @@
   when: ansible_os_family == 'Windows'
 
 - name: Install GlazeWM using Scoop
-  community.windows.scoop:
+  community.windows.win_scoop:
     name: glazewm
     state: present
   when: ansible_os_family == 'Windows'
 
 - name: Include common copy tasks
   ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
+  when: ansible_os_family == 'Windows'

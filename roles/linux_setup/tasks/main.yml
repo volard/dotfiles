@@ -4,14 +4,14 @@
     path: "{{ ansible_user_dir }}/.local/share/fonts"
     state: directory
     mode: "0755"
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: List font archives
   ansible.builtin.find:
     paths: files/fonts
     patterns: "*.tar.gz"
   register: font_archives
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Extract fonts
   ansible.builtin.unarchive:
@@ -19,8 +19,8 @@
     dest: "{{ ansible_user_dir }}/.local/share/fonts"
     mode: "0644"
   with_items: "{{ font_archives.files }}"
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Update font cache
   ansible.builtin.command: fc-cache -f -v
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'

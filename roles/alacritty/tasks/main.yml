@@ -5,10 +5,10 @@
     state: present
     update_cache: true
   become: true
-  when: ansible_os_family == 'Linux'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Install Alacritty on Windows using Scoop
-  community.windows.scoop:
+  community.windows.win_scoop:
     name: alacritty
     state: present
   when: ansible_os_family == 'Windows'
