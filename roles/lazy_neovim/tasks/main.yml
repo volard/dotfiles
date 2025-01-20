@@ -7,7 +7,7 @@
     - git
     - curl
     - ripgrep
-    - fd
+    - fd-find
     - snapd
     - gcc
   become: true

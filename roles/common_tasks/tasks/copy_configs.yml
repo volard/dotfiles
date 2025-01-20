@@ -1,4 +1,5 @@
 ---
+
 - name: Ensure config directory exists
   ansible.builtin.file:
     path: "{{ config_path }}"
@@ -21,7 +22,7 @@
 
 - name: Copy template files on Linux
   ansible.builtin.template:
-    src: "{{ item.path | basename }}"
+    src:  "{{ item.path }}"
     dest: "{{ config_path }}/{{ item.path | basename | regex_replace('.j2$', '') }}"
     mode: preserve
   loop: "{{ config_files.files }}"
@@ -31,7 +32,7 @@
 
 - name: Copy template files on Windows
   ansible.windows.win_template:
-    src: "{{ item.path | basename }}"
+    src:  "{{ item.path }}" 
     dest: "{{ config_path }}\\{{ item.path | basename | regex_replace('.j2$', '') }}"
     mode: preserve
   loop: "{{ config_files.files }}"
@@ -44,7 +45,9 @@
     src: "{{ item.path }}"
     dest: "{{ config_path }}/{{ item.path | basename }}"
     mode: preserve
+    # vault_password_file: "{{ vault_password_file }}"
   loop: "{{ config_files.files }}"
+  delegate_to: localhost  
   when:
     - not item.path.endswith('.j2')
     - ansible_distribution == 'Ubuntu'

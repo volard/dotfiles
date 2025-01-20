@@ -67,7 +67,7 @@
     src: "{{ lookup('pipe', 'which fdfind') }}"
     dest: "{{ ansible_user_dir }}/.local/bin/fd"
     state: link
-  when: ansible_os_family == "Linux"
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Install SDKMAN
   ansible.builtin.shell: >

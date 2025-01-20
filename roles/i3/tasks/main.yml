@@ -14,7 +14,7 @@
     - bluez-obexd
     - pavucontrol # Volume
     - tlp # Battery
-  when: ansible_os_family == "Linux"
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Ensure i3 config directory exists on Linux
   ansible.builtin.file:
