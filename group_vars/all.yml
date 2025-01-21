@@ -1,7 +1,7 @@
 default_roles:
   #- alacritty
   # - awesome
-  #- bash
+  - bash
   #- git
   # - glazewm
   #- ideavim
@@ -11,7 +11,10 @@ default_roles:
   #- linux_setup
   #- oh-my-posh
   # - powershell
-  - programs
+  # - programs
+  # - docker
+  #- linux_setup 
+  #- ideavim
   # - ssh
   #- wakatime
   #- wezterm
