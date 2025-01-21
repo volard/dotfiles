@@ -1,26 +1,44 @@
 ---
-- name: Create fonts directory
-  ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.local/share/fonts"
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  become: yes
+
+- name: Install required packages
+  apt:
+    name:
+      - fontconfig
+      - wget
+    state: present
+  become: yes
+
+- name: Create font directory
+  file:
+    path: /usr/local/share/fonts
     state: directory
-    mode: "0755"
-  when: ansible_distribution == 'Ubuntu'
+    mode: '0755'
+  become: yes
 
-- name: List font archives
-  ansible.builtin.find:
-    paths: files/fonts
-    patterns: "*.tar.gz"
-  register: font_archives
-  when: ansible_distribution == 'Ubuntu'
+- name: Download JetBrains Mono Nerd Font
+  get_url:
+    url: https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
+    dest: /tmp/JetBrainsMono.zip
+  become: yes
 
-- name: Extract fonts
-  ansible.builtin.unarchive:
-    src: "{{ item.path }}"
-    dest: "{{ ansible_user_dir }}/.local/share/fonts"
-    mode: "0644"
-  with_items: "{{ font_archives.files }}"
-  when: ansible_distribution == 'Ubuntu'
+- name: Unzip JetBrains Mono Nerd Font
+  unarchive:
+    src: /tmp/JetBrainsMono.zip
+    dest: /usr/local/share/fonts/
+    remote_src: yes
+  become: yes
 
 - name: Update font cache
-  ansible.builtin.command: fc-cache -f -v
-  when: ansible_distribution == 'Ubuntu'
+  command: fc-cache -f -v
+  become: yes
+
+
+- name: Clean up downloaded font zip
+  file:
+    path: /tmp/JetBrainsMono.zip
+    state: absent
+  become: yes

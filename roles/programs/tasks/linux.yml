@@ -1,133 +1,161 @@
 ---
-- name: Add CopyQ PPA repository
-  ansible.builtin.apt_repository:
-    repo: ppa:hluk/copyq
-    state: present
-  become: true
-  when: ansible_distribution == 'Ubuntu'
+# - name: Add CopyQ PPA repository
+#   ansible.builtin.apt_repository:
+#     repo: ppa:hluk/copyq
+#     state: present
+#   become: true
+#   when: ansible_distribution == 'Ubuntu'
 
-- name: Install required packages on Linux
-  ansible.builtin.apt:
-    name: "{{ apt_item }}"
-    state: present
-  loop:
-    - fzf
-    - nala
-    - btop # cooler htop
-    - duff # Provides information about the free space on the disk
-    - ncdu # Shows the information about disk usage
-    - icdiff
-    - wget
-    - xclip
-    - lxappearance
-    - git
-    - vifm
-    - ripgrep
-    - sudo
-    - curl
-    - tldr
-    - okular
-    - eza
-    - anki
-    - qbittorrent
-    - vim
-    - dos2unix
-    - vlc
-    - bat
-    - unzip
-    - ncal
-    - sshpass
-    - rar
-    - unrar
-    - mpv
-    - git-delta
-    - nemo
-    - gh
-    - lf
-    - redshift
-    - copyq
-    - cargo
-  become: true
-  loop_control:
-    loop_var: apt_item
-  when: ansible_os_family in ["Debian", "Ubuntu"]
+# - name: Install required packages on Linux
+#   ansible.builtin.apt:
+#     name: "{{ apt_item }}"
+#     state: present
+#   loop:
+#     - fzf
+#     - nala
+#     - btop # cooler htop
+#     - duff # Provides information about the free space on the disk
+#     - ncdu # Shows the information about disk usage
+#     - icdiff
+#     - wget
+#     - xclip
+#     - lxappearance
+#     - git
+#     - vifm
+#     - ripgrep
+#     - sudo
+#     - curl
+#     - tldr
+#     - okular
+#     - eza
+#     - anki
+#     - qbittorrent
+#     - tmux
+#     - vim
+#     - dos2unix
+#     - vlc
+#     - bat
+#     - unzip
+#     - ncal
+#     - sshpass
+#     - rar
+#     - unrar
+#     - mpv
+#     - git-delta
+#     - nemo
+#     - gh
+#     - lf
+#     - redshift
+#     - copyq
+#     - cargo
+#   become: true
+#   loop_control:
+#     loop_var: apt_item
+#   when: ansible_os_family in ["Debian", "Ubuntu"]
 
-# Finds a specific file or directory from the terminal
-- name: Install fd-find
-  ansible.builtin.apt:
-    name: fd-find
-    state: present
-  become: true
-  when: ansible_os_family in ["Debian", "Ubuntu"]
+# # Finds a specific file or directory from the terminal
+# - name: Install fd-find
+#   ansible.builtin.apt:
+#     name: fd-find
+#     state: present
+#   become: true
+#   when: ansible_os_family in ["Debian", "Ubuntu"]
 
-- name: Make fd-find available by fd command
-  ansible.builtin.file:
-    src: "{{ lookup('pipe', 'which fdfind') }}"
-    dest: "{{ ansible_user_dir }}/.local/bin/fd"
-    state: link
-  when: ansible_distribution == 'Ubuntu'
+# - name: Make fd-find available by fd command
+#   ansible.builtin.file:
+#     src: "{{ lookup('pipe', 'which fdfind') }}"
+#     dest: "{{ ansible_user_dir }}/.local/bin/fd"
+#     state: link
+#   when: ansible_distribution == 'Ubuntu'
 
-- name: Install SDKMAN
-  ansible.builtin.shell: >
-    curl -s "https://get.sdkman.io" | bash
-  args:
-    creates: "{{ ansible_user_dir }}/.sdkman"
-  when: ansible_distribution == 'Ubuntu'
+# - name: Install SDKMAN
+#   ansible.builtin.shell: >
+#     curl -s "https://get.sdkman.io" | bash
+#   args:
+#     creates: "{{ ansible_user_dir }}/.sdkman"
+#   when: ansible_distribution == 'Ubuntu'
 
-- name: Install programs via snap
-  community.general.snap:
-    name: "{{ snap_item }}"
-    state: present
-  loop:
-    - vivaldi
-    - discord
-    - stretchly
-  loop_control:
-    loop_var: snap_item
-  become: true
-  when: ansible_distribution == 'Ubuntu'
+# - name: Install programs via snap
+#   community.general.snap:
+#     name: "{{ snap_item }}"
+#     state: present
+#   loop:
+#     - vivaldi
+#     - discord
+#     - stretchly
+#   loop_control:
+#     loop_var: snap_item
+#   become: true
+#   when: ansible_distribution == 'Ubuntu'
 
-- name: Install zoxide via installation script
-  ansible.builtin.shell: |
-    curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
-  args:
-    creates: /usr/local/bin/zoxide # Prevents re-running if zoxide is already installed
-  when: ansible_distribution == 'Ubuntu'
+# - name: Install zoxide via installation script
+#   ansible.builtin.shell: |
+#     curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+#   args:
+#     creates: /usr/local/bin/zoxide # Prevents re-running if zoxide is already installed
+#   when: ansible_distribution == 'Ubuntu'
 
-- name: Install Obsidian via snap
-  community.general.snap:
-    name: obsidian
-    state: present
-    classic: true
-  become: true
-  when: ansible_distribution == 'Ubuntu'
+# - name: Install Obsidian via snap
+#   community.general.snap:
+#     name: obsidian
+#     state: present
+#     classic: true
+#   become: true
+#   when: ansible_distribution == 'Ubuntu'
 
-- name: Install bottom via snap
-  community.general.snap:
-    name: bottom
-    state: present
-  become: true
-  when: ansible_distribution == 'Ubuntu'
+# - name: Install bottom via snap
+#   community.general.snap:
+#     name: bottom
+#     state: present
+#   become: true
+#   when: ansible_distribution == 'Ubuntu'
 
-- name: Configure bottom snap connections
-  ansible.builtin.command: snap connect bottom:{{ snap_connection }}
-  loop:
-    - mount-observe
-    - hardware-observe
-    - system-observe
-    - process-control
-  become: true
-  loop_control:
-    loop_var: snap_connection
-  when: ansible_distribution == 'Ubuntu'
+# - name: Configure bottom snap connections
+#   ansible.builtin.command: snap connect bottom:{{ snap_connection }}
+#   loop:
+#     - mount-observe
+#     - hardware-observe
+#     - system-observe
+#     - process-control
+#   become: true
+#   loop_control:
+#     loop_var: snap_connection
+#   when: ansible_distribution == 'Ubuntu'
+
+
 
 # better neofetch
-- name: Install macchina via cargo
-  ansible.builtin.shell:
-    cargo install macchinaitem
+- name: Install required packages
+  apt:
+    name:
+      - curl
+      - build-essential
+      - libssl-dev
+    state: present
+
+- name: Install rustup
+  shell: |
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   args:
-    creates: "{{ ansible_user_dir }}/.cargo/bin/macchina" # Prevents re-running if macchina is already installed
-  when: ansible_distribution == 'Ubuntu'
+    creates: "$HOME/.cargo/bin/rustup"
+
+- name: Add cargo to PATH
+  lineinfile:
+    path: ~/.bashrc
+    line: 'export PATH="$HOME/.cargo/bin:$PATH"'
+    state: present
+
+- name: Source bashrc to update PATH
+  shell: source ~/.bashrc
+  args:
+    executable: /bin/bash
+
+- name: Install macchina
+  shell: |
+    source $HOME/.cargo/env
+    cargo install macchina
+  args:
+    executable: /bin/bash
 
 - name: Install Flatpak
   ansible.builtin.apt:
@@ -143,6 +171,7 @@
     flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
   become: true
   when: ansible_distribution == 'Ubuntu'
+
 # - name: Install applications via Flatpak
 #   community.general.flatpak:
 #     name: "{{ item }}"

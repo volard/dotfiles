@@ -8,13 +8,13 @@
     - pulseaudio-utils # Audio
     - polybar # Bar
     - light # Backlight
-    # BLuetooth
-    - blueman
+    - blueman # BLuetooth
     - bluez
     - bluez-obexd
     - pavucontrol # Volume
     - tlp # Battery
   when: ansible_distribution == 'Ubuntu'
+  become: true
 
 - name: Ensure i3 config directory exists on Linux
   ansible.builtin.file:

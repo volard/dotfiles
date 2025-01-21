@@ -1,24 +1,41 @@
 ---
+- name: Debug found configuration files
+  debug:
+    var: config_path
+
+- name: Debug ansible_distribution
+  debug:
+    var: ansible_distribution
+
 
 - name: Ensure config directory exists
   ansible.builtin.file:
     path: "{{ config_path }}"
     state: directory
     mode: "0755"
-  when: ansible_distribution == 'Ubuntu'
 
-- name: Ensure config directory exists on Windows
-  ansible.windows.win_file:
-    path: "{{ config_path }}"
-    state: directory
-  when: ansible_os_family == 'Windows'
+      # - name: Ensure config directory exists on Windows
+      #   ansible.windows.win_file:
+      #     path: "{{ config_path }}"
+      #     state: directory
+      #   when: ansible_os_family == 'Windows'
 
 - name: Find all configuration files
   ansible.builtin.find:
     paths: "{{ role_path }}/files"
     recurse: true
+    hidden: true
     file_type: file # Only get regular files, exclude directories
   register: config_files
+  become: true
+
+- name: Debug found configuration files
+  debug:
+    var: config_files
+
+- name: Debug found configuration files
+  debug:
+    var: role_path
 
 - name: Copy template files on Linux
   ansible.builtin.template:
@@ -28,36 +45,32 @@
   loop: "{{ config_files.files }}"
   when:
     - item.path.endswith('.j2')
-    - ansible_distribution == 'Ubuntu'
 
-- name: Copy template files on Windows
-  ansible.windows.win_template:
-    src:  "{{ item.path }}" 
-    dest: "{{ config_path }}\\{{ item.path | basename | regex_replace('.j2$', '') }}"
-    mode: preserve
-  loop: "{{ config_files.files }}"
-  when:
-    - item.path.endswith('.j2')
-    - ansible_os_family == 'Windows'
+      # - name: Copy template files on Windows
+      #   ansible.windows.win_template:
+      #     src:  "{{ item.path }}" 
+      #     dest: "{{ config_path }}\\{{ item.path | basename | regex_replace('.j2$', '') }}"
+      #     mode: preserve
+      #   loop: "{{ config_files.files }}"
+      #   when:
+      #     - item.path.endswith('.j2')
+      #     - ansible_os_family == 'Windows'
 
 - name: Copy static files on Linux
   ansible.builtin.copy:
     src: "{{ item.path }}"
     dest: "{{ config_path }}/{{ item.path | basename }}"
     mode: preserve
-    # vault_password_file: "{{ vault_password_file }}"
   loop: "{{ config_files.files }}"
-  delegate_to: localhost  
   when:
     - not item.path.endswith('.j2')
-    - ansible_distribution == 'Ubuntu'
 
-- name: Copy static files on Windows
-  ansible.windows.win_copy:
-    src: "{{ item.path }}"
-    dest: "{{ config_path }}\\{{ item.path | basename }}"
-    mode: preserve
-  loop: "{{ config_files.files }}"
-  when:
-    - not item.path.endswith('.j2')
-    - ansible_os_family == 'Windows'
+# - name: Copy static files on Windows
+#   ansible.windows.win_copy:
+#     src: "{{ item.path }}"
+#     dest: "{{ config_path }}\\{{ item.path | basename }}"
+#     mode: preserve
+#   loop: "{{ config_files.files }}"
+#   when:
+#     - not item.path.endswith('.j2')
+#     - ansible_os_family == 'Windows'

@@ -49,7 +49,7 @@
     state: absent
   loop:
     - /tmp/lazygit.tar.gz
-    - /tmp/lazygit
+    - /tmp/lazygit      
   when: ansible_distribution == 'Ubuntu'
 
 - name: Install Lazygit on Windows using Scoop

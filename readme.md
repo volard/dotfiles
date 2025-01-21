@@ -49,3 +49,7 @@ SSH keys as well as sensitive variables encoded with [`Ansible Valut`](https://d
 ## Editors (it's here for short time)
 - Editor theme: Catppuccin Mocha with background (`#080808`) and disabled current line highlighting
 - Base theme: Github Dark or simular to editor theme vibes
+
+## Tested
+On Kubuntu:
+- programs
