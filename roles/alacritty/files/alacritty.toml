@@ -228,7 +228,7 @@ multiplier = 3
 
 [font]
 normal = { family = "JetBrainsMonoNerdFont" }
-size = 10
+size = 12
 builtin_box_drawing = true
 
 # COLORS

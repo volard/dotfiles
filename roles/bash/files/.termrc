@@ -17,7 +17,9 @@ alias wget='wget -c'
 # do not delete / or prompt if deleting more than 3 files at a time #
 alias rm='rm -I --preserve-root'
 
-source /usr/share/doc/fzf/examples/key-bindings.bash
+if [ -e "/usr/share/doc/fzf/examples/key-bindings.bash" ]; then
+    source "/usr/share/doc/fzf/examples/key-bindings.bash"
+fi
 
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_OPTS="--border=rounded --height=80% --layout=reverse --inline-info --bind ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle"
@@ -32,11 +34,20 @@ export FZF_ALT_C_OPTS="--preview 'exa -T --all --level=2 --icons --group-directo
 # export EDITOR=/opt/nvim-linux64/bin/nvim
 export EDITOR=nvim
 
+if command -v oh-my-posh &> /dev/null; then
+  OH_MY_POSH_CONFIG="$HOME/.config/oh-my-posh/amro.omp.json"
+  if [ -e "${OH_MY_POSH_CONFIG}" ]; then
+    eval "$(oh-my-posh init bash --config $OH_MY_POSH_CONFIG)"
+  else
+    eval "$(oh-my-posh init bash)"
+  fi
+fi
 
-eval "$(oh-my-posh init bash --config ~/.config/oh-my-posh/amro.omp.json)"
-
-eval "$(pyenv init -)"
+if command -v pyenv &> /dev/null; then
+    eval "$(pyenv init -)"
+fi
 
 # should be in the end
-eval "$(zoxide init bash)"
-
+if command -v zoxide &> /dev/null; then
+    eval "$(zoxide init bash)"
+fi

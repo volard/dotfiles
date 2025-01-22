@@ -50,6 +50,13 @@ SSH keys as well as sensitive variables encoded with [`Ansible Valut`](https://d
 - Editor theme: Catppuccin Mocha with background (`#080808`) and disabled current line highlighting
 - Base theme: Github Dark or simular to editor theme vibes
 
-## Tested
+## Tested roles
 On Kubuntu:
 - programs
+- bash
+- lazy_neovim
+- bash
+- oh-my-posh
+- linux_setup
+- alacritty
+- docker
