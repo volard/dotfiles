@@ -1,15 +1,15 @@
 default_roles:
-  #- alacritty
+  - alacritty
   # - awesome
-  - bash
-  #- git
+  # - git
   # - glazewm
   #- ideavim
-  #- lazy_neovim
-  #- lazygit
+  # - lazy_neovim
+  # - lazygit
+  - bash 
   #- lf
-  #- linux_setup
-  #- oh-my-posh
+  # - linux_setup
+  - oh-my-posh
   # - powershell
   # - programs
   # - docker

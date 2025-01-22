@@ -65,6 +65,7 @@
   when:
     - not item.path.endswith('.j2')
 
+
 # - name: Copy static files on Windows
 #   ansible.windows.win_copy:
 #     src: "{{ item.path }}"

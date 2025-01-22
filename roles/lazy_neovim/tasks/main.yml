@@ -32,18 +32,31 @@
     - ripgrep
   when: ansible_os_family == 'Windows'
 
-- name: Set OS-specific config paths
-  ansible.builtin.set_fact:
-    config_path: "{{ ansible_user_dir }}/.config/nvim"
+# - name: Set OS-specific config paths
+#   ansible.builtin.set_fact:
+#     config_path: "{{ ansible_user_dir }}/.config/nvim"
 
-- name: Remove Neovim configuration directories
+# - name: Remove Neovim configuration directories
+#   ansible.builtin.file:
+#     path: "{{ item }}"
+#     state: absent
+#   loop:
+#     - "{{ config_path }}"
+#     - "{{ ansible_user_dir }}/.local/share/nvim"
+#   when: ansible_distribution == 'Ubuntu'
+
+# - name: Include common copy tasks
+#   ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
+
+- name: "Neovim | Config folder"
   ansible.builtin.file:
-    path: "{{ item }}"
-    state: absent
-  loop:
-    - "{{ config_path }}"
-    - "{{ ansible_user_dir }}/.local/share/nvim"
-  when: ansible_distribution == 'Ubuntu'
+    mode: "0755"
+    path: "{{ ansible_user_dir }}/.config/nvim"
+    state: directory
 
-- name: Include common copy tasks
-  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
+- name: "Neovim | Create symlink to role files directory"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_user_dir }}/.config/nvim"
+    state: link
+    force: true
