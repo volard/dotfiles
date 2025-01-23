@@ -1,15 +1,15 @@
 default_roles:
-  - alacritty
+  # - alacritty
   # - awesome
   # - git
   # - glazewm
   #- ideavim
   # - lazy_neovim
   # - lazygit
-  - bash 
+  # - bash 
   #- lf
   # - linux_setup
-  - oh-my-posh
+  # - oh-my-posh
   # - powershell
   # - programs
   # - docker
@@ -18,5 +18,12 @@ default_roles:
   # - ssh
   #- wakatime
   #- wezterm
-  #- i3
+  - i3
+  # - i3status
+  # - polybar
+  # - wakatime
+  - lf
+  - ideavim
+  - rofi
+  - vscode
   # - windows_setup

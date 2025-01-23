@@ -1,14 +1,9 @@
 ---
 - name: Set OS-specific config paths
   ansible.builtin.set_fact:
-    config_path: "{{ ansible_user_dir }}"
+    config_path: "{{ ansible_user_dir }}/.config/i3status"
   when: ansible_distribution == 'Ubuntu'
   become: false
-
-- name: Set OS-specific config paths for Windows
-  ansible.builtin.set_fact:
-    config_path: "{{ ansible_user_profile }}"
-  when: ansible_os_family == 'Windows'
 
 - name: Include common copy tasks
   ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
