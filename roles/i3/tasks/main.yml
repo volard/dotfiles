@@ -6,7 +6,6 @@
   loop:
     - i3
     - pulseaudio-utils # Audio
-    - polybar # Bar
     - light # Backlight
     - blueman # BLuetooth
     - bluez
@@ -16,25 +15,20 @@
   when: ansible_distribution == 'Ubuntu'
   become: true
 
-- name: Ensure i3 config directory exists on Linux
-  ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.config/i3"
-    state: directory
-    mode: "0755"
-  when: ansible_distribution == 'Ubuntu'
-
-- name: Copy i3 config for Linux
-  ansible.builtin.copy:
-    src: alacritty.toml
-    dest: "{{ ansible_user_dir }}/.config/i3/config"
-    mode: "0644"
-  when: ansible_distribution == 'Ubuntu'
-
 # fix not working light buttons
 - name: Add current user to video group
   ansible.builtin.user:
-    name: "{{ ansible_user_name }}"
+    name: "{{ ansible_user_id }}"
     groups: video
     append: true
   become: true
   when: ansible_distribution == 'Ubuntu'
+
+- name: Set OS-specific config paths
+  ansible.builtin.set_fact:
+    config_path: "{{ ansible_user_dir }}/.config/i3"
+  when: ansible_distribution == 'Ubuntu'
+  become: false
+
+- name: Include common copy tasks
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml

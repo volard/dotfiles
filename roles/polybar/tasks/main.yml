@@ -1,18 +1,20 @@
 ---
-- name: Install rofi on Linux
+- name: Install polybar on Linux
   ansible.builtin.apt:
-    name: rofi
+    name: "{{ apt_item }}"
     state: present
-    update_cache: true
+  loop:
+    - polybar
   become: true
-  when: ansible_distribution == 'Ubuntu'
+  loop_control:
+    loop_var: apt_item
+  when: ansible_os_family in ["Debian", "Ubuntu"]
 
 - name: Set OS-specific config paths
   ansible.builtin.set_fact:
-    config_path: "{{ ansible_user_dir }}/.local/rofi/themes"
+    config_path: "{{ ansible_user_dir }}/.config/polybar"
   when: ansible_distribution == 'Ubuntu'
   become: false
 
 - name: Include common copy tasks
   ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
-

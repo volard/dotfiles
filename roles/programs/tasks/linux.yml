@@ -44,10 +44,8 @@
     - git-delta
     - nemo
     - gh
-    - lf
     - redshift
     - copyq
-    - cargo
   become: true
   loop_control:
     loop_var: apt_item
