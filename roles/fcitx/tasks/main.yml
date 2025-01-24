@@ -1,0 +1,27 @@
+---
+- name: Install FCITX 5
+  apt:
+    name: fcitx5
+    state: present
+  become: true
+
+- name: Install FCITX input methods
+  apt:
+    name: fcitx5-*
+    state: present
+  become: true
+
+- name: Configure FCITX profile
+  template:
+    src: profile
+    dest: "{{ ansible_user_dir }}/.config/fcitx5"
+    mode: '0644'
+  become: true
+
+- name: Enable FCITX
+  service:
+    name: fcitx
+    enabled: yes
+    state: started
+  become: true
+
