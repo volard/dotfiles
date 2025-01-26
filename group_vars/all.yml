@@ -18,12 +18,13 @@ default_roles:
   # - ssh
   #- wakatime
   #- wezterm
-  - i3
+  # - i3
   # - i3status
   # - polybar
   # - wakatime
-  - lf
-  - ideavim
-  - rofi
-  - vscode
+  # - lf
+  - sway
+  # - ideavim
+  # - rofi
+  # - vscode
   # - windows_setup

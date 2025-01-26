@@ -13,12 +13,12 @@ font pango:JetBrainsMonoNerdFont 10
 bindsym $mod+Shift+o exec screen-lock
 exec --no-startup-id xss-lock --transfer-sleep-lock -- screen-lock
 
-exec --no-startup-id nm-applet
 
 # exec eval "$(ssh-agent -s)"
 
-exec --no-startup-id blueman-mananger &
 
+exec --no-startup-id nm-applet
+exec --no-startup-id blueman-mananger &
 exec --no-startup-id stretchly &
 
 # Use pactl to adjust volume in PulseAudio.
