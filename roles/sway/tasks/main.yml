@@ -6,9 +6,11 @@
   loop:
     - sway
     - light
+    - waybar
     - alsa-utils
     - mpc
     - nitrogen
+    - rofi
   become: true
   loop_control:
     loop_var: apt_item
@@ -21,3 +23,14 @@
 
 - name: Include common copy tasks
   ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
+
+
+- name: Ensure the script is executable
+  file:
+    path: "{{ ansible_user_dir }}/.config/sway/wallpapers.sh"  # Path to your script
+    mode: '0755'          # Set the permissions to make it executable
+  become: true
+
+
+- name: Include common copy tasks
+  ansible.builtin.include_tasks: roles/rofi/tasks/main.yml
