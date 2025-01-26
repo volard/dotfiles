@@ -13,6 +13,3 @@
   when: ansible_distribution == 'Ubuntu'
   become: false
 
-- name: Include common copy tasks
-  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
-
