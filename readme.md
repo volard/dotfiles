@@ -60,3 +60,6 @@ On Kubuntu:
 - linux_setup
 - alacritty
 - docker
+
+## Some resources
+- https://blog.geekinstitute.org/2024/11/comprehensive-guide-to-samba-server.html
