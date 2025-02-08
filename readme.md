@@ -46,9 +46,6 @@ SSH keys as well as sensitive variables encoded with [`Ansible Valut`](https://d
 - [Windows playbook scoop](https://github.com/stkrzysiak/windows-playbook-scoop)
 - [ALT-F4-LLC's dotfiles](https://github.com/ALT-F4-LLC/dotfiles)
 
-## Editors (it's here for short time)
-- Editor theme: Catppuccin Mocha with background (`#080808`) and disabled current line highlighting
-- Base theme: Github Dark or simular to editor theme vibes
 
 ## Tested roles
 On Kubuntu:
@@ -60,6 +57,3 @@ On Kubuntu:
 - linux_setup
 - alacritty
 - docker
-
-## Some resources
-- https://blog.geekinstitute.org/2024/11/comprehensive-guide-to-samba-server.html
