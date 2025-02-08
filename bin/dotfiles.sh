@@ -6,21 +6,6 @@ set -e
 DOTFILES_DIR="${HOME}/dotfiles"
 PASSWORD_FILE_PATH="${DOTFILES_DIR}/vault-password.txt"
 
-# Clone repository or pull
-if ! [[ -d ${DOTFILES_DIR} ]]; then
-  git clone "https://gitlab.com/dotfiles30/comma_files.git" "${DOTFILES_DIR}"
-else
-  if ! [[ -d "${DOTFILES_DIR}/.git" ]]; then
-    git clone "https://gitlab.com/dotfiles30/comma_files.git" "${DOTFILES_DIR}"
-  else
-    git -C "${DOTFILES_DIR}" pull
-	fi
-fi
-
-cd "${DOTFILES_DIR}"
-
-chmod +x "${DOTFILES_DIR}/bin/dotfiles.sh"
-
 # Determine distro
 if [[ -f /etc/os-release ]]; then
   # Modern distributions use os-release file
@@ -45,6 +30,24 @@ echo "\n==== Configuring system ====\n"
 echo "Distribution: ${distro}"
 echo "Version: ${version}"
 echo "\n==== ------------------ ====\n"
+
+# Install git
+
+
+# Clone repository or pull
+if ! [[ -d ${DOTFILES_DIR} ]]; then
+  git clone "https://gitlab.com/dotfiles30/comma_files.git" "${DOTFILES_DIR}"
+else
+  if ! [[ -d "${DOTFILES_DIR}/.git" ]]; then
+    git clone "https://gitlab.com/dotfiles30/comma_files.git" "${DOTFILES_DIR}"
+  else
+    git -C "${DOTFILES_DIR}" pull
+	fi
+fi
+
+cd "${DOTFILES_DIR}"
+chmod +x "${DOTFILES_DIR}/bin/dotfiles.sh"
+
 
 # Install Ansible
 if ! [[ -x "$(command -v ansible || true)" ]]; then
