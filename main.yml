@@ -21,55 +21,26 @@
       when: ansible_distribution == 'Fedora'
 
   tasks:
-
-    - name: "Gather all role directories"
-      ansible.builtin.find:
-        paths: roles
-        file_type: directory
-      register: role_dirs
-
-    - name: "Set roles to include"
-      set_fact:
-        roles_to_include: "{{ role_dirs.files | map(attribute='path') | map('basename') | difference(roles_to_exclude) }}"
-
-    - name: "Checking for Distribution Config"
-      ansible.builtin.stat:
-        path: "roles/{{ item }}/tasks/{{ ansible_distribution }}.yml"
-      register: distribution_config
-      loop: "{{ roles_to_include }}"
-
-    - name: Display roles
-      debug: "var=roles_to_include"
-      tags:
-        - always
-
-    - name: Display os
-      debug: "var=ansible_os_family"
-      tags:
-        - always
-
-
-    - name: Display distribution
-      debug: "var=ansible_distribution"
-      tags:
-        - always
-    
-
-    # - name: "Run Tasks for Each Role"
-    #   ansible.builtin.include_tasks: "roles/{{ item }}/tasks/{{ ansible_distribution }}.yml"
-    #   when: distribution_config.results[loop.index0].stat.exists
-    #   loop: "{{ roles_to_include }}"
-
-
-
-    # - name: set roles
-    #   set_fact:
-    #     roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or default_roles | difference(exclude_roles | default([])) }}"
+    # - name: Display os
+    #   debug: "var=ansible_os_family"
     #   tags:
     #     - always
-                  
-    
 
+    # - name: Display distribution
+    #   debug: "var=ansible_distribution"
+    #   tags:
+    #     - always
+
+    - name: set roles
+      set_fact:
+        roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or default_roles | difference(exclude_roles | default([])) }}"
+      tags:
+        - always
+    
+    - name: Display roles
+      debug: "var=roles"
+      tags:
+        - always
 
     # - name: Run roles
     #   include_role:
