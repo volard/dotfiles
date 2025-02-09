@@ -1,0 +1,20 @@
+---
+- name: Enable pennbauman/ports COPR repository
+  ansible.builtin.dnf:
+    name: pennbauman/ports
+    state: present
+    enablerepo: pennbauman/ports
+  become: true
+
+- name: Install lf
+  ansible.builtin.dnf:
+    name: lf
+    state: present
+  become: true
+
+- name: Set OS-specific config paths
+  ansible.builtin.set_fact:
+    config_path: "{{ ansible_user_dir }}/.config/lf"
+
+- name: Include common copy tasks
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml

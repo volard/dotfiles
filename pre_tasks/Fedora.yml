@@ -1,0 +1,128 @@
+---
+- name: Upgrade all packages and refresh cache
+  dnf:
+    name: '*'
+    state: latest
+    update_cache: yes
+  become: true
+  when: ansible_distribution == 'Fedora'
+
+- name: Get devices for firmware updates
+  command: fwupdmgr get-devices
+  register: fwupdmgr_devices
+  become: true
+  when: ansible_distribution == 'Fedora'
+
+- name: Refresh firmware metadata
+  command: fwupdmgr refresh --force
+  become: true
+  when: ansible_distribution == 'Fedora'
+
+- name: Get available firmware updates
+  command: fwupdmgr get-updates
+  register: fwupdmgr_updates
+  become: true
+  when: ansible_distribution == 'Fedora'
+
+- name: Update firmware
+  command: fwupdmgr update
+  when: fwupdmgr_updates.stdout != ""
+  become: true
+  when: ansible_distribution == 'Fedora'
+
+- name: Install RPM Fusion Free Release
+  dnf:
+    name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+    state: present
+  become: true
+  when: ansible_distribution == 'Fedora'
+
+- name: Install RPM Fusion Non-Free Release
+  dnf:
+    name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+    state: present
+  become: true
+  when: ansible_distribution == 'Fedora'
+
+- name: Update core group
+  dnf:
+    name: '@core'
+    state: latest
+  become: true
+  when: ansible_distribution == 'Fedora'
+
+- name: Install RPM Fusion Free Release Tainted
+  dnf:
+    name: rpmfusion-free-release-tainted
+    state: present
+  become: true
+  when: ansible_distribution == 'Fedora'
+
+- name: Install RPM Fusion Non-Free Release Tainted
+  dnf:
+    name: rpmfusion-nonfree-release-tainted
+    state: present
+  become: true
+  when: ansible_distribution == 'Fedora'
+
+- name: Install DNF plugins core
+  dnf:
+    name: dnf-plugins-core
+    state: present
+  become: true
+  when: ansible_distribution == 'Fedora'
+
+
+
+
+
+
+- name: Install libdvdcss
+  dnf:
+    name: libdvdcss
+    state: present
+  become: yes
+  when: ansible_distribution == 'Fedora'
+
+- name: Install multimedia group
+  dnf:
+    name: '@multimedia'
+    state: present
+  become: yes
+  when: ansible_distribution == 'Fedora'
+
+- name: Enable Cisco OpenH264 repository
+  dnf_config_manager:
+    name: fedora-cisco-openh264
+    enabled: yes
+  become: yes
+  when: ansible_distribution == 'Fedora'
+
+- name: Install GStreamer OpenH264 plugin
+  dnf:
+    name:
+      - gstreamer1-plugin-openh264
+      - mozilla-openh264
+    state: present
+  become: yes
+  when: ansible_distribution == 'Fedora'
+
+- name: Install sound and video group
+  dnf:
+    name: '@sound-and-video'
+    state: present
+  become: yes
+  when: ansible_distribution == 'Fedora'
+
+- name: Install flatpak fuse
+  dnf:
+    name: fuse-libs
+    state: present
+  become: yes
+  when: ansible_distribution == 'Fedora'
+
+- name: Add Flathub remote for Flatpak
+  command: flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  changed_when: flathub_add.rc == 0  # Mark as changed if the command succeeds
+  become: yes
+  when: ansible_distribution == 'Fedora'

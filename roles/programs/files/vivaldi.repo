@@ -1,0 +1,7 @@
+[vivaldi]
+name=Fedora $releasever - $basearch
+failovermethod=priority
+baseurl=http://repo.vivaldi.com/preview/rpm/x86_64/
+enabled=1
+metadata_expire=10d
+gpgcheck=0

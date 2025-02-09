@@ -1,17 +1,4 @@
 ---
-- name: Update apt cache
-  apt:
-    update_cache: yes
-  become: yes
-
-- name: Install required packages
-  apt:
-    name:
-      - fontconfig
-      - wget
-    state: present
-  become: yes
-
 - name: Create font directory
   file:
     path: /usr/local/share/fonts
@@ -35,7 +22,6 @@
 - name: Update font cache
   command: fc-cache -f -v
   become: yes
-
 
 - name: Clean up downloaded font zip
   file:

@@ -1,6 +1,0 @@
----
-# main.yml
-- name: Include tasks based on the operating system
-  include_tasks: "{{ item }}"
-  with_items:
-    - "{{ 'linux.yml' if ansible_distribution == 'Ubuntu' else 'windows.yml' }}"

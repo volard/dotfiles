@@ -1,6 +1,13 @@
 #!/bin/bash
 
+# Define colored output
 set -e
+RED='\e[31m'
+GREEN='\e[32m'
+YELLOW='\e[33m'
+BLUE='\e[34m'
+RESET='\e[0m'
+
 
 # paths
 DOTFILES_DIR="${HOME}/dotfiles"
@@ -26,12 +33,34 @@ else
   version=$(uname -r)
 fi
 
-echo "\n==== Configuring system ====\n"
-echo "Distribution: ${distro}"
-echo "Version: ${version}"
-echo "\n==== ------------------ ====\n"
+echo
+echo -e "==== Configuring system ===="
+echo -e "Distribution:${GREEN} ${distro} ${RESET}"
+echo -e "Version:${GREEN} ${version} ${RESET}"
+echo -e "============================"
+echo
 
-# Install git
+
+# Install sudo
+
+if [[ ${distro} == "fedora" ]]; then
+	sudo dnf in sudo -y
+fi
+
+# install git
+if [[ ${distro} == "arch" ]]; then
+	sudo pacman -S git --noconfirm
+fi
+
+if [[ ${distro} == "ubuntu" ]]; then
+	sudo apt install git -y
+fi
+
+if [[ ${distro} == "fedora" ]]; then
+	sudo dnf in git -y
+fi
+
+
 
 
 # Clone repository or pull
@@ -51,28 +80,34 @@ chmod +x "${DOTFILES_DIR}/bin/dotfiles.sh"
 
 # Install Ansible
 if ! [[ -x "$(command -v ansible || true)" ]]; then
-    if [[ ${distro,,} == "arch" ]]; then
-      sudo pacman -S ansible --noconfirm
-    else
-		# Update the system initially
+  if [[ ${distro,,} == "arch" ]]; then
+    sudo pacman -S ansible --noconfirm
+  fi
+
+  if [[ ${distro} == "fedora" ]]; then
+    sudo dnf in ansible -y
+  fi
+
+  if [[ ${distro} == "ubuntu" ]]; then
+    # Update the system initially
     sudo apt-get update
     sudo apt-get upgrade
 
-		# pipx is the best method to install ansible imo
-		sudo apt install pipx -y
+    # pipx is the best method to install ansible imo
+    sudo apt install pipx -y
 
-		# Add pipx to PATH
-		sudo pipx ensurepath
-		source ~/.bashrc
+    # Add pipx to PATH
+    sudo pipx ensurepath
+    source ~/.bashrc
 
-		if ! [[ ":$PATH:" == *":$DIR:"* ]]; then
+    if ! [[ ":$PATH:" == *":$DIR:"* ]]; then
       echo 'PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
-		fi
+    fi
 
-		source ~/.bashrc
+    source ~/.bashrc
 
-		# Ansible installation itself
-		pipx install --include-deps ansible
+    # Ansible installation itself
+    pipx install --include-deps ansible
   fi
 fi
 
@@ -83,12 +118,13 @@ ansible-galaxy install -r requirements.yml
 
 # Setup password if not exists
 if ! [[ -f "${DOTFILES_DIR}/vault-password.txt" ]]; then
-        read -pr "Please enter your Ansible Vault password: " ANSIBLE_PASSWORD
-        echo "${ANSIBLE_PASSWORD}" > "${PASSWORD_FILE_PATH}"
+  read -s -p "Please enter your Ansible Vault password: " ANSIBLE_PASSWORD
+  echo
+  echo "${ANSIBLE_PASSWORD}" > "${PASSWORD_FILE_PATH}"
 fi
 
 # Run playbook
-ansible-playbook --diff --vault-password-file "${PASSWORD_FILE_PATH}" "${DOTFILES_DIR}/main.yml" --ask-become-pass "$@"
+ansible-playbook --vault-password-file "${PASSWORD_FILE_PATH}" "${DOTFILES_DIR}/main.yml" --ask-become-pass "$@"
 
 # vi:ft=sh:
 

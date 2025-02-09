@@ -1,0 +1,12 @@
+---
+- name: Install required packages
+  apt:
+    name:
+      - fontconfig
+      - wget
+    state: present
+  become: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Include common linux bash setup
+  ansible.builtin.include_tasks: roles/linux_setup/tasks/linux.yml

@@ -26,6 +26,8 @@ set cursorpreviewfmt "\033[7;2m"
 # use enter for shell commands
 map <enter> shell
 
+set hidden true
+set sixel true
 set icons true
 
 # show the result of execution of previous commands
@@ -109,6 +111,18 @@ cmd zip ${{
     rm -rf $1
 }}
 
+cmd follow-link %{{
+  lf -remote "send $id select \"$(readlink -- "$f" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
+
+map gL follow-link
+
+cmd quit-and-cd &{{
+    pwd > "$LF_CD_FILE"
+    lf -remote "send $id quit"
+}}
+
+map Q quit-and-cd
 
 # zoxide integration
 cmd z %{{

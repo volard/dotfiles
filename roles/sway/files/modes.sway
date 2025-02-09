@@ -1,0 +1,41 @@
+mode "resize" {
+	bindsym --to-code {
+    $left resize shrink width 10px
+    $down resize grow height 10px
+    $up resize shrink height 10px
+    $right resize grow width 10px
+
+    # Return to default mode
+    Return mode "default"
+    Escape mode "default"
+	}
+}
+
+
+mode $layout_mode {
+  # change container layout (stacked, tabbed, splitv, splith)
+  bindsym --to-code {
+    d layout stacking     ; mode "default"
+    t layout tabbed       ; mode "default"
+    s layout toggle split ; mode "default"
+    v layout splitv       ; mode "default"
+    h layout splith       ; mode "default"
+
+    # back to normal: Enter or Escape
+    Return mode "default"
+    Escape mode "default"
+  }
+}
+
+mode $power_mode {
+  bindsym --to-code {
+    # F2 exec idle.sh kill 1; mode "default"
+    # F3 exec $lock; mode "default"
+    F4 exec --no-startup-id systemctl -i reboot
+    F5 exec --no-startup-id systemctl -i poweroff
+
+    # back to normal: Enter or Escape
+    Return mode "default"
+    Escape mode "default"
+  }
+}

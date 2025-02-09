@@ -7,25 +7,39 @@
     - /vars/sensitive_vars.yml
     - /vars/configuration.yml
 
-  # pre_tasks:
+  pre_tasks:
+    - name: Include Windows pre-tasks
+      ansible.builtin.include_tasks: pre_tasks/windows.yml
+      when: ansible_os_family == 'Windows'
 
-  #   - name: Include Windows pre-tasks
-  #     ansible.builtin.include_tasks: pre_tasks/windows.yml
-  #     when: ansible_os_family == 'Windows'
+    - name: Include Ubuntu pre-tasks
+      ansible.builtin.include_tasks: pre_tasks/Ubuntu.yml
+      when: ansible_distribution == 'Ubuntu'
 
-  #   - name: Include Linux pre-tasks
-  #     ansible.builtin.include_tasks: pre_tasks/linux.yml
-  #     when: ansible_distribution == 'Ubuntu'
+    - name: Include Fedora pre-tasks
+      ansible.builtin.include_tasks: pre_tasks/Fedora.yml
+      when: ansible_distribution == 'Fedora'
 
   tasks:
-    - name: set roles
+
+    - name: "Gather all role directories"
+      ansible.builtin.find:
+        paths: roles
+        file_type: directory
+      register: role_dirs
+
+    - name: "Set roles to include"
       set_fact:
-        roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or default_roles | difference(exclude_roles | default([])) }}"
-      tags:
-        - always
-                  
+        roles_to_include: "{{ role_dirs.files | map(attribute='path') | map('basename') | difference(roles_to_exclude) }}"
+
+    - name: "Checking for Distribution Config"
+      ansible.builtin.stat:
+        path: "roles/{{ item }}/tasks/{{ ansible_distribution }}.yml"
+      register: distribution_config
+      loop: "{{ roles_to_include }}"
+
     - name: Display roles
-      debug: "var=roles"
+      debug: "var=roles_to_include"
       tags:
         - always
 
@@ -34,14 +48,37 @@
       tags:
         - always
 
-    - name: Run roles
-      include_role:
-        apply:
-          tags:
-            - "{{ roles_item }}"
-        name: "{{ roles_item }}"
-      loop_control:
-        loop_var: roles_item
-      with_items: "{{ roles }}"
+
+    - name: Display distribution
+      debug: "var=ansible_distribution"
       tags:
         - always
+    
+
+    # - name: "Run Tasks for Each Role"
+    #   ansible.builtin.include_tasks: "roles/{{ item }}/tasks/{{ ansible_distribution }}.yml"
+    #   when: distribution_config.results[loop.index0].stat.exists
+    #   loop: "{{ roles_to_include }}"
+
+
+
+    # - name: set roles
+    #   set_fact:
+    #     roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or default_roles | difference(exclude_roles | default([])) }}"
+    #   tags:
+    #     - always
+                  
+    
+
+
+    # - name: Run roles
+    #   include_role:
+    #     apply:
+    #       tags:
+    #         - "{{ roles_item }}"
+    #     name: "{{ roles_item }}"
+    #   loop_control:
+    #     loop_var: roles_item
+    #   with_items: "{{ roles }}"
+    #   tags:
+    #     - always
