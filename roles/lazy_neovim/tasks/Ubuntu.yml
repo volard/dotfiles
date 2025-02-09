@@ -1,0 +1,34 @@
+---
+- name: Install required packages on Linux
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - curl
+    - ripgrep
+    - fd-find
+    - snapd
+    - gcc
+  become: true
+  when: ansible_os_family in ["Debian", "Ubuntu"]
+
+- name: Install nvim via snap on Linux
+  community.general.snap:
+    name: nvim
+    state: present
+  become: true
+  when: ansible_distribution == 'Ubuntu'
+
+- name: "Create config folder"
+  ansible.builtin.file:
+    mode: "0755"
+    path: "{{ ansible_user_dir }}/.config/nvim"
+    state: directory
+
+- name: "Create symlink to role files directory"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_user_dir }}/.config/nvim"
+    state: link
+    force: true
+  when: ansible_distribution == 'Ubuntu'

@@ -1,0 +1,10 @@
+---
+- name: Install Docker packages
+  ansible.builtin.dnf:
+    name:
+      - docker-cli
+      - containerd
+      - docker-compose
+      - docker-switch
+    state: present
+  become: true

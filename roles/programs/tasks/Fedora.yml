@@ -1,0 +1,63 @@
+---
+- name: Copy Vivaldi repository file
+  ansible.builtin.copy:
+    src: vivaldi.repo
+    dest: /etc/yum.repos.d/
+    mode: '0644'
+  become: true
+
+- name: Install required packages on Fedora
+  ansible.builtin.dnf:
+    name: "{{ dnf_item }}"
+    state: present
+  loop:
+    - fzf
+    - btop # better htop/top
+    - duff # better df
+    - ncdu
+    - icdiff
+    - wget
+    - lxappearance
+    - flameshot
+    - copyq
+    - ripgrep
+    - curl
+    - tldr
+    - anki
+    - qbittorrent
+    - trash-cli
+    - tmux
+    - dos2unix
+    - vlc
+    - vivaldi-stable
+    - bat
+    - unzip
+    - fastfetch
+    - fd-find
+    - ncal
+    - sshpass
+    - rar
+    - unrar
+    - zoxide
+    - mpv
+    - jq
+    - git-delta
+    - nemo
+  become: true
+  loop_control:
+    loop_var: dnf_item
+  when: ansible_distribution == "Fedora"
+
+- name: Download and install wlprop script
+  ansible.builtin.get_url:
+    url: https://gist.github.com/crispyricepc/f313386043395ff06570e02af2d9a8e0/raw/8b06f025a0f34685f5ffc2000fd19a64754c9b29/wlprop.sh
+    dest: ~/.local/bin/wlprop
+    mode: '0755'
+  become: true
+
+- name: Install SDKMAN
+  ansible.builtin.shell: >
+    curl -s "https://get.sdkman.io" | bash
+  args:
+    creates: "{{ ansible_user_dir }}/.sdkman"
+  when: ansible_distribution == 'Fedora'

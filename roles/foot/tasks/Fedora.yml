@@ -1,0 +1,8 @@
+---
+- name: Install foot
+  dnf:
+    name: foot
+    state: present
+  become: true
+  when: ansible_distribution == 'Fedora'
+

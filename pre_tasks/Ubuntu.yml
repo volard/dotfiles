@@ -3,6 +3,7 @@
   apt:
     update_cache: true
   become: true
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Upgrade all packages
   apt:
@@ -10,3 +11,4 @@
     autoclean: true
     autoremove: true
   become: true
+  when: ansible_distribution == 'Ubuntu'
