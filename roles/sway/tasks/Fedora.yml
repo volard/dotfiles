@@ -1,0 +1,13 @@
+---
+- name: Set OS-specific config paths
+  ansible.builtin.set_fact:
+    config_path: "{{ ansible_user_dir }}/.config/sway"
+
+- name: Include common copy tasks
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
+
+- name: Ensure the script is executable
+  file:
+    path: "{{ ansible_user_dir }}/.config/sway/dynamic_wallpapers.sh"
+    mode: '0755'          # Set the permissions to make it executable
+  become: true

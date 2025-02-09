@@ -13,6 +13,7 @@ alias ..='cd ..'
 alias sv='sudo nvim'
 alias svv='sudo nvim .'
 alias wget='wget -c'
+alias lzd='lazydocker'
 
 # do not delete / or prompt if deleting more than 3 files at a time #
 alias rm='rm -I --preserve-root'
@@ -47,7 +48,16 @@ if command -v pyenv &> /dev/null; then
     eval "$(pyenv init -)"
 fi
 
+
 # should be in the end
 if command -v zoxide &> /dev/null; then
     eval "$(zoxide init bash)"
+fi
+
+# tmux exists on the system
+# we're in an interactive shell, and
+# tmux doesn't try to run within itself
+
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  exec tmux
 fi

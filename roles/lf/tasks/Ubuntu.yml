@@ -1,0 +1,20 @@
+---
+- name: Install lf on Linux
+  ansible.builtin.apt:
+    name: "{{ apt_item }}"
+    state: present
+  loop:
+    - lf
+  become: true
+  loop_control:
+    loop_var: apt_item
+  when: ansible_os_family in ["Debian", "Ubuntu"]
+
+- name: Set OS-specific config paths
+  ansible.builtin.set_fact:
+    config_path: "{{ ansible_user_dir }}/.config/lf"
+  when: ansible_distribution == 'Ubuntu'
+  become: false
+
+- name: Include common copy tasks
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
