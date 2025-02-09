@@ -17,7 +17,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 iex (iwr -Uri "https://gitlab.com/dotfiles30/comma_files/-/raw/main/bin/dotfiles.ps1" -UseBasicParsing).Content
 ```
 
-Binary `dotfiles` ([see](bin/dotfiles)) is in PATH after initial setup.
+Binary `dotfiles` ([see](bin/dotfiles)) is in PATH after initial setup (make sure to reopen Bash).
 
 ## Structure
 
