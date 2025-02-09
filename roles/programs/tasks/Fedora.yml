@@ -1,7 +1,7 @@
 ---
 - name: Copy Vivaldi repository file
   ansible.builtin.copy:
-    src: "{{ role_path }}/vivaldi.repo"
+    src: "{{ role_path }}/files/vivaldi.repo"
     dest: /etc/yum.repos.d/
     mode: '0644'
   become: true
@@ -11,34 +11,32 @@
     name: "{{ dnf_item }}"
     state: present
   loop:
-    - fzf
     - btop # better htop/top
     - duff # better df
-    - ncdu
-    - icdiff
+    - eza # better ls
+    - zoxide # better cd
+    - tldr # better man pages
+    - vivaldi-stable # the best browser. End of discussion.
+    - bat # better cat
+    - ncdu # disk usage analyzer
     - wget
+    - fzf
     - lxappearance
     - flameshot
     - copyq
     - ripgrep
     - curl
-    - tldr
-    - anki
+    - lshw
     - qbittorrent
     - trash-cli
     - tmux
     - dos2unix
     - vlc
-    - vivaldi-stable
-    - bat
     - unzip
     - fastfetch
     - fd-find
-    - ncal
     - sshpass
-    - rar
     - unrar
-    - zoxide
     - mpv
     - jq
     - git-delta
@@ -73,3 +71,43 @@
     loop_var: snap_item
   become: true
   when: ansible_distribution == 'Fedora'
+
+
+- name: Check if nvm is installed
+  ansible.builtin.command: command -v nvm
+  register: nvm_check
+  changed_when: false
+  ignore_errors: true
+
+- name: Install nvm (only if not installed)
+  ansible.builtin.shell: >
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+  args:
+    creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+  when: nvm_check.rc != 0 
+
+- name: Check if OnlyOffice is installed
+  stat:
+    path: /usr/bin/onlyoffice-desktopeditors
+  register: onlyoffice_installed
+
+- name: Download OnlyOffice installer if not installed
+  get_url:
+    url: https://download.onlyoffice.com/install/desktop/editors/linux/onlyoffice-desktopeditors.x86_64.rpm
+    dest: /tmp/onlyoffice-desktopeditors.x86_64.rpm
+    mode: '0644'
+  when: not onlyoffice_installed.stat.exists
+
+- name: Install OnlyOffice
+  dnf:
+    name: /tmp/onlyoffice-desktopeditors.x86_64.rpm
+    state: present
+    disable_gpg_check: true
+  when: not onlyoffice_installed.stat.exists
+  become: true
+
+- name: Remove OnlyOffice installer
+  file:
+    path: /tmp/onlyoffice-desktopeditors.x86_64.rpm
+    state: absent
+  when: not onlyoffice_installed.stat.exists

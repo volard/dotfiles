@@ -19,6 +19,11 @@ iex (iwr -Uri "https://gitlab.com/dotfiles30/comma_files/-/raw/main/bin/dotfiles
 
 Binary `dotfiles` ([see](bin/dotfiles)) is in PATH after initial setup (make sure to reopen Bash).
 
+Run specified roles only
+```bash
+dotfiles -t separated, roles
+```
+
 ## Structure
 
 Each role **installs and configures** a program. If program doesn't need to be configured, it would be installed with help of `programs` ([see](roles/programs/tasks)) role.

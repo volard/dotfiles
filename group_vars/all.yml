@@ -25,7 +25,6 @@ roles_to_exclude:
   - doom
 
   # Not now
-  - linux_setup
   - ssh
   - sway
   - vifm
