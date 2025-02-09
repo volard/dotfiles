@@ -1,6 +1,8 @@
 #!/bin/bash
 
+########################################
 # Define colored output
+########################################
 set -e
 RED='\e[31m'
 GREEN='\e[32m'
@@ -9,11 +11,19 @@ BLUE='\e[34m'
 RESET='\e[0m'
 
 
-# paths
+
+########################################
+# Define paths
+########################################
 DOTFILES_DIR="${HOME}/dotfiles"
 PASSWORD_FILE_PATH="${DOTFILES_DIR}/vault-password.txt"
 
+
+
+
+########################################
 # Determine distro
+########################################
 if [[ -f /etc/os-release ]]; then
   # Modern distributions use os-release file
   . /etc/os-release
@@ -41,29 +51,26 @@ echo -e "============================"
 echo
 
 
-# Install sudo
 
-if [[ ${distro} == "fedora" ]]; then
-	sudo dnf in sudo -y
-fi
 
+########################################
 # install git
+########################################
 if [[ ${distro} == "arch" ]]; then
 	sudo pacman -S git --noconfirm
-fi
-
-if [[ ${distro} == "ubuntu" ]]; then
+elif [[ ${distro} == "ubuntu" ]]; then
 	sudo apt install git -y
-fi
-
-if [[ ${distro} == "fedora" ]]; then
+elif [[ ${distro} == "fedora" ]]; then
 	sudo dnf in git -y
+  sudo dnf in dnf-plugins-core -y 
 fi
 
 
 
 
+########################################
 # Clone repository or pull
+########################################
 if ! [[ -d ${DOTFILES_DIR} ]]; then
   git clone "https://gitlab.com/dotfiles30/comma_files.git" "${DOTFILES_DIR}"
 else
@@ -74,24 +81,18 @@ else
 	fi
 fi
 
-cd "${DOTFILES_DIR}"
-chmod +x "${DOTFILES_DIR}/bin/dotfiles.sh"
 
 
+
+########################################
 # Install Ansible
+########################################
 if ! [[ -x "$(command -v ansible || true)" ]]; then
   if [[ ${distro,,} == "arch" ]]; then
     sudo pacman -S ansible --noconfirm
-  fi
-
-  if [[ ${distro} == "fedora" ]]; then
+  elif [[ ${distro} == "fedora" ]]; then
     sudo dnf in ansible -y
-  fi
-
-  if [[ ${distro} == "ubuntu" ]]; then
-    # Update the system initially
-    sudo apt-get update
-    sudo apt-get upgrade
+  elif [[ ${distro} == "ubuntu" ]]; then
 
     # pipx is the best method to install ansible imo
     sudo apt install pipx -y
@@ -113,17 +114,27 @@ fi
 
 
 
-# Update Galaxy
-ansible-galaxy install -r requirements.yml
-
+########################################
 # Setup password if not exists
+########################################
 if ! [[ -f "${DOTFILES_DIR}/vault-password.txt" ]]; then
   read -s -p "Please enter your Ansible Vault password: " ANSIBLE_PASSWORD
   echo
   echo "${ANSIBLE_PASSWORD}" > "${PASSWORD_FILE_PATH}"
 fi
 
+
+
+
+########################################
 # Run playbook
+########################################
+cd "${DOTFILES_DIR}"
+
+python3 bin/sync_roles.py
+
+ansible-galaxy install -r requirements.yml
+
 ansible-playbook --vault-password-file "${PASSWORD_FILE_PATH}" "${DOTFILES_DIR}/main.yml" --ask-become-pass "$@"
 
 # vi:ft=sh:

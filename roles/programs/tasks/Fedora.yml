@@ -1,7 +1,7 @@
 ---
 - name: Copy Vivaldi repository file
   ansible.builtin.copy:
-    src: vivaldi.repo
+    src: "{{ role_path }}/vivaldi.repo"
     dest: /etc/yum.repos.d/
     mode: '0644'
   become: true
@@ -60,4 +60,16 @@
     curl -s "https://get.sdkman.io" | bash
   args:
     creates: "{{ ansible_user_dir }}/.sdkman"
+  when: ansible_distribution == 'Fedora'
+
+- name: Install programs via snap
+  community.general.snap:
+    name: "{{ snap_item }}"
+    state: present
+  loop:
+    - pieces-os
+    - pieces-for-developers
+  loop_control:
+    loop_var: snap_item
+  become: true
   when: ansible_distribution == 'Fedora'

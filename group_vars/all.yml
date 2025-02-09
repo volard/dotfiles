@@ -1,24 +1,69 @@
 ---
 roles_to_exclude:
-  - ssh
-  - sway
+  # I'm not using Windows anymore (I had enough)
+  - vscode
   - powershell
+  - windows_setup
+  - glazewm
+
+  # I'm not using X anymore
   - i3
   - i3status
-  - fcitx
+  - polybar
+  - rofi
   - awesome
+
+  # Foot is my choice now
   - alacritty
+  - wezterm
+
+  # Vanilla things I played with for fun
   - emacs
   - neovim
-  - common_tasks
-  - linux_setup
-  - polybar
-  - glazewm
+
+  # I'm afraid of it
   - doom
+
+  # Not now
+  - linux_setup
+  - ssh
+  - sway
+  - vifm
+  - git
+  - wakatime
+  - fcitx
+
+
+
+default_roles:
+  - alacritty
+  - awesome
+  - bash
+  - docker
+  - doom
+  - emacs
+  - fcitx
+  - git
+  - glazewm
+  - i3
+  - i3status
+  - ideavim
+  - lazy_neovim
+  - lazygit
+  - lf
+  - linux_setup
+  - neovim
+  - oh-my-posh
+  - polybar
+  - powershell
+  - programs
   - rofi
+  - ssh
+  - sway
   - vifm
   - vscode
-  - wezterm
-  - git
-  - windows_setup
   - wakatime
+  - wezterm
+  - windows_setup
+  - foot
+  - tmux

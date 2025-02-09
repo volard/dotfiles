@@ -81,6 +81,8 @@
     - vivaldi
     - discord
     - stretchly
+    - obsidian
+    - bottom
   loop_control:
     loop_var: snap_item
   become: true
@@ -91,21 +93,6 @@
     curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
   args:
     creates: /usr/local/bin/zoxide # Prevents re-running if zoxide is already installed
-  when: ansible_distribution == 'Ubuntu'
-
-- name: Install Obsidian via snap
-  community.general.snap:
-    name: obsidian
-    state: present
-    classic: true
-  become: true
-  when: ansible_distribution == 'Ubuntu'
-
-- name: Install bottom via snap
-  community.general.snap:
-    name: bottom
-    state: present
-  become: true
   when: ansible_distribution == 'Ubuntu'
 
 - name: Configure bottom snap connections

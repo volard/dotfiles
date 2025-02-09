@@ -5,6 +5,5 @@
       - docker-cli
       - containerd
       - docker-compose
-      - docker-switch
     state: present
   become: true
