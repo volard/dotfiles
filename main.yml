@@ -3,9 +3,6 @@
   hosts: localhost
   connection: local
   gather_facts: true
-  vars_files:
-    - /vars/sensitive_vars.yml
-    - /vars/configuration.yml
 
   pre_tasks:
     - name: Include Windows pre-tasks
@@ -37,7 +34,15 @@
       tags:
         - always
 
+    # In case I'll need to have the same vars in many places in the future
+    # roles/sensitive_vars/tasks/main.yml
+    # - name: Load sensitive variables
+    #   ansible.builtin.include_vars:
+    #   file: /vars/sensitive_vars.yml
+
     - name: Run roles
+      # include_role:
+      #   name: sensitive_vars
       include_role:
         apply:
           tags:

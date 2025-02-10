@@ -1,0 +1,34 @@
+---
+- name: Install required packages on Linux
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - ufw
+    - openssh-server
+    - openssh-client
+  when: ansible_os_family in ["Debian", "Ubuntu"]
+
+- name: Enable and start SSH service
+  ansible.builtin.systemd:
+    name: ssh
+    state: started
+    enabled: true
+  become: true
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Allow SSH through UFW
+  community.general.ufw:
+    rule: allow
+    name: OpenSSH   
+  become: true
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Set OS-specific config paths
+  ansible.builtin.set_fact:
+    config_path: "{{ ansible_user_dir }}/.ssh"
+  when: ansible_distribution == 'Ubuntu'
+  become: false
+
+- name: Include common copy tasks
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml

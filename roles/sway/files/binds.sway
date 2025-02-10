@@ -17,7 +17,7 @@ bindsym --to-code {
     # Exit sway (logs you out of your Wayland session)
     $mod+Shift+e exec swaynag -t warning -m 'Exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
-
+    $mod+p exec copyq toggle
 
 
 	# Move your focus around

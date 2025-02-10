@@ -1,8 +1,9 @@
 ---
-- name: Set OS-specific config paths
-  ansible.builtin.set_fact:
-    config_path: "{{ ansible_user_dir }}"
-  become: false
+- name: "Checking for distribution config"
+  ansible.builtin.stat:
+    path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+  register: distribution_config
 
-- name: Include common copy tasks
-  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
+- name: "Run distro specific tasks"
+  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
+  when: distribution_config.stat.exists

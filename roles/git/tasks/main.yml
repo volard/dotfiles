@@ -1,30 +1,9 @@
 ---
-- name: Install Git on Linux
-  ansible.builtin.apt:
-    name: git
-    state: present
-    update_cache: true
-  become: true
-  when:
-    - ansible_distribution == 'Ubuntu'
-    - ansible_pkg_mgr == 'apt'
+- name: "Checking for distribution config"
+  ansible.builtin.stat:
+    path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+  register: distribution_config
 
-- name: Install Git using Scoop
-  community.windows.win_scoop:
-    name: git
-    state: present
-  when: ansible_os_family == 'Windows'
-
-- name: Set OS-specific config paths
-  ansible.builtin.set_fact:
-    config_path: "{{ ansible_user_dir }}"
-  when: ansible_distribution == 'Ubuntu'
-  become: false
-
-- name: Set OS-specific config paths for Windows
-  ansible.builtin.set_fact:
-    config_path: "{{ ansible_user_profile }}"
-  when: ansible_os_family == 'Windows'
-
-- name: Include common copy tasks
-  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
+- name: "Run distro specific tasks"
+  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
+  when: distribution_config.stat.exists

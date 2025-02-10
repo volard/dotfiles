@@ -1,0 +1,8 @@
+---
+- name: Set OS-specific config paths
+  ansible.builtin.set_fact:
+    config_path: "{{ ansible_user_dir }}"
+  become: false
+
+- name: Include common copy tasks
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml

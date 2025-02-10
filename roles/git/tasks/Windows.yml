@@ -1,0 +1,11 @@
+---
+- name: Install Git using Scoop
+  community.windows.win_scoop:
+    name: git
+    state: present
+  when: ansible_os_family == 'Windows'
+
+- name: Set OS-specific config paths for Windows
+  ansible.builtin.set_fact:
+    config_path: "{{ ansible_user_profile }}"
+  when: ansible_os_family == 'Windows'

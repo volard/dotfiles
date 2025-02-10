@@ -33,7 +33,6 @@ roles/                      # setup and install programs
 roles/common_tasks/         # tasks, that can be used across roles
 roles/name/files/           # config files: templates and static
 roles/name/molecule/        # test a role
-vars/                       # role-specific variables
 group_vars/                 # os-specific variables
 files/                      # common static files
 pre_tasks/                  # preliminary tasks to setup an OS
@@ -46,6 +45,14 @@ By default playbook would run all available roles (except [common_tasks](roles/c
 ## SSH keys
 
 SSH keys as well as sensitive variables encoded with [`Ansible Valut`](https://docs.ansible.com/ansible/latest/vault_guide/index.html)
+
+```bash
+# encrypt files
+ansible-vault encrypt ./roles/ssh/files/*
+
+# encrypt variable
+ansible-vault encrypt_string 'name' --name 'username' | wl-copy
+```
 
 ## Credits
 
