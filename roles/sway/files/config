@@ -75,11 +75,13 @@ floating_modifier $mod normal
 focus_follows_mouse no
 
 # monitor temperature
-exec_always --no-startup-id wlsunset &
+exec --no-startup-id wlsunset &
 
 # wallpapers
-exec_always --no-startup-id /home/volard/.config/sway/dynamic_wallpapers.sh &
+exec --no-startup-id /home/volard/.config/sway/dynamic_wallpapers.sh &
 
+# copyq
+exec copyq &
 
 #set $gnome-schema org.gnome.desktop.interface
 #
@@ -101,7 +103,7 @@ include binds.sway
 # wlprop
 # window rules
 for_window {
-	[title="Picture-in-Picture"] floating enable
+	[title="Picture-in-Picture"] sticky enable, floating enable, move position right
 	[window_role="GtkFileChooserDialog"] resize set 800 600
 	[window_role="GtkFileChooserDialog"] move position center
 
@@ -111,8 +113,8 @@ for_window {
 	[window_role="Nm-connection-editor"] resize set 800 600
 	[window_role="Nm-connection-editor"] move position center
 
-	[class="copyq"] floating enable
-	[class="copyq"] move position center
+	[app_id="com.github.hluk.copyq"] floating enable
+	[app_id="com.github.hluk.copyq"] move position center
 
 
   [window_role="pop-up"] floating enable

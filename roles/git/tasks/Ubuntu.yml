@@ -1,0 +1,20 @@
+---
+- name: Install Git on Linux
+  ansible.builtin.apt:
+    name: git
+    state: present
+    update_cache: true
+  become: true
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_pkg_mgr == 'apt'
+
+- name: Set OS-specific config paths
+  ansible.builtin.set_fact:
+    config_path: "{{ ansible_user_dir }}"
+  when: ansible_distribution == 'Ubuntu'
+  become: false
+
+
+- name: Include common copy tasks
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml

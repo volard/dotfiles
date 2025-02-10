@@ -111,3 +111,8 @@
     path: /tmp/onlyoffice-desktopeditors.x86_64.rpm
     state: absent
   when: not onlyoffice_installed.stat.exists
+
+- name: Install LazyDocker
+  shell: curl -sSL https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
+  args:
+    executable: /bin/bash

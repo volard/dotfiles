@@ -1,11 +1,15 @@
 ---
-- name: Debug found configuration files
-  debug:
-    var: config_path
+# - name: Debug found configuration files
+#   debug:
+#     var: config_path
 
-- name: Debug ansible_distribution
-  debug:
-    var: ansible_distribution
+- name: Include all variables from YAML files in the 'vars' directory
+  include_vars:
+    dir: "{{ role_path }}/vars"
+    extensions:
+      - "yml"
+      - "yaml"
+  ignore_errors: yes # a lot of roles don't have vars
 
 
 - name: Ensure config directory exists
