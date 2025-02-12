@@ -1,38 +1,38 @@
-#!/bin/sh
+#!/bin/bash
 
-# Kill any existing instances of this script to avoid multiple wallpaper processes.
-# This uses pgrep to find processes with the same name as this script 
-# (excluding the current process) and kills them.
-pkill -f "$(basename "$0")"
+# Directory containing wallpapers
+WALLPAPER_DIR="$HOME/dotfiles/files/wallpapers"  # Change this to your wallpaper directory
+LOCKFILE="/tmp/wallpaper_changer.lock"
 
-# Check if swaybg is already running.
-# The 'grep -m 1' limits to the first match for efficiency.
-isServerExist=$(ps -ef | grep -m 1 swaybg | grep -v "grep" | wc -l)
 
-# If swaybg is not running, start it with a random wallpaper.
-if [ "$isServerExist" = "0" ]; then
-  echo "swaybg not found, starting it..."
+# Function to set a random wallpaper
+set_random_wallpaper() {
+    # Kill any existing swaybg process
+    pkill swaybg
+
+    # Get a random wallpaper from the specified directory
+    wallpaper=$(find "$WALLPAPER_DIR" -type f | shuf -n 1)
+    
+    # Set the wallpaper using `sway` or `wlroot` (adjust according to your compositor)
+    # swaymsg output '*' bg "$wallpaper" fill
+    swaybg -i "$wallpaper" -m fill &
+}
+
+# Check if another instance is running
+if [ -e "$LOCKFILE" ]; then
+    echo "Another instance is already running."
+    exit 1
 fi
 
-# Start the first wallpaper. 
-# - The '&' puts it in the background so the loop can continue.
-swaybg -i $(find ~/dotfiles/files/wallpapers/ -name "*.png" | shuf -n1) -m fill &
-OLD_PID=$! # Store the process ID (PID) of the background process.
+# Create a lock file
+touch "$LOCKFILE"
 
-# Loop to change the wallpaper every 120 seconds (2 minutes).
+# Cleanup lock file on exit
+trap 'rm -f "$LOCKFILE"; exit' INT TERM EXIT
+
+# Main loop to change wallpaper every 10 seconds
 while true; do
-    sleep 120 
-    
-    # Start a new swaybg process with a new random wallpaper in the background.
-    swaybg -i $(find ~/dotfiles/files/wallpapers/ -name "*.png" | shuf -n1) -m fill &
-    NEXT_PID=$!
-
-    # Give swaybg a moment to start.
-    sleep 5 
-
-    # Kill the old swaybg process gracefully.
-    kill $OLD_PID
-    
-    # Update the OLD_PID for the next iteration of the loop.
-    OLD_PID=$NEXT_PID
+    set_random_wallpaper
+    sleep 600
 done
+

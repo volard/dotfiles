@@ -1,0 +1,11 @@
+---
+- name: Install DNF plugins core
+  dnf:
+    name: tmux
+    state: present
+  become: true
+  when: ansible_distribution == 'Fedora'
+
+
+- name: Include common linux bash setup
+  ansible.builtin.include_tasks: roles/bash/tasks/linux.yml

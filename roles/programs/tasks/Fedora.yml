@@ -6,6 +6,14 @@
     mode: '0644'
   become: true
 
+- name: Upgrade all packages and refresh cache
+  dnf:
+    name: '*'
+    state: latest
+    update_cache: yes
+  become: true
+  when: ansible_distribution == 'Fedora'
+
 - name: Install required packages on Fedora
   ansible.builtin.dnf:
     name: "{{ dnf_item }}"
@@ -21,6 +29,7 @@
     - ncdu # disk usage analyzer
     - wget
     - fzf
+    - qt5ct
     - lxappearance
     - flameshot
     - copyq
@@ -29,7 +38,6 @@
     - lshw
     - qbittorrent
     - trash-cli
-    - tmux
     - dos2unix
     - vlc
     - unzip

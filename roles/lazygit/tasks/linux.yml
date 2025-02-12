@@ -38,7 +38,7 @@
     state: absent
   loop:
     - /tmp/lazygit.tar.gz
-    - /tmp/lazygit      
+    - /tmp/lazygit
 
 - name: Include common copy tasks
   ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml

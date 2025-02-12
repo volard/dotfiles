@@ -8,6 +8,7 @@
     - ripgrep
     - fd-find
     - gcc
+    - nvim
   become: true
   loop_control:
     loop_var: dnf_item
