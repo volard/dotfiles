@@ -1,16 +1,15 @@
 ---
-- name: Enable pennbauman/ports COPR repository
-  ansible.builtin.dnf:
-    name: lf
-    state: present
-    enablerepo: pennbauman/ports
+- name: Enable project Test of the user schlupov
+  community.general.copr:
+    state: enabled
+    name: pennbauman/ports
   become: true
 
-# - name: Install lf
-#   ansible.builtin.dnf:
-#     name: lf
-#     state: present
-#   become: true
+- name: Ensure lf is installed
+  dnf:
+    name: lf
+    state: present
+  become: true
 
 - name: Set OS-specific config paths
   ansible.builtin.set_fact:

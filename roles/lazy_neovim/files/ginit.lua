@@ -20,7 +20,7 @@ if vim.g.neovide then
   -- vim.g.neovide_underline_automatic_scaling = true -- Noticeable for font sizes above 15
 end
 
-local font_size = 22
+local font_size = 14
 -- vim.o.guifont = 'JetBrains Mono Nerd Font Mono' .. ':h' .. font_size
 vim.o.guifont = "JetBrains Mono" .. ":h" .. font_size
 

@@ -83,14 +83,14 @@ exec --no-startup-id /home/volard/.config/sway/dynamic_wallpapers.sh &
 # copyq
 exec copyq &
 
-#set $gnome-schema org.gnome.desktop.interface
-#
-#exec_always {
-#    gsettings set $gnome-schema gtk-theme 'Your theme'
-#    gsettings set $gnome-schema icon-theme 'Your icon theme'
-#    gsettings set $gnome-schema cursor-theme 'Your cursor Theme'
-#    gsettings set $gnome-schema font-name 'Your font name'
-#}
+set $gnome-schema org.gnome.desktop.interface
+
+exec_always {
+   gsettings set $gnome-schema gtk-theme 'Sweet-nova'
+   # gsettings set $gnome-schema icon-theme 'Your icon theme'
+   # gsettings set $gnome-schema cursor-theme 'Your cursor Theme'
+   # gsettings set $gnome-schema font-name 'Your font name'
+}
 
 # gaps
 default_border pixel 3

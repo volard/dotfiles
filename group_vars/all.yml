@@ -26,10 +26,10 @@ roles_to_exclude:
 
   # Not now
   - ssh
-  - sway
-  - vifm
   - git
   - wakatime
+  - lf
+  - vifm
   - fcitx
 
 
@@ -42,6 +42,7 @@ default_roles:
   - doom
   - emacs
   - fcitx
+  - foot
   - git
   - glazewm
   - i3
@@ -59,10 +60,10 @@ default_roles:
   - rofi
   - ssh
   - sway
+  - tmux
   - vifm
   - vscode
   - wakatime
   - wezterm
   - windows_setup
-  - foot
-  - tmux
+  - hiddify

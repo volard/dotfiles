@@ -1,4 +1,17 @@
 ---
+- name: Install required packages on Fedora
+  ansible.builtin.dnf:
+    name: "{{ dnf_item }}"
+    state: present
+  loop:
+    - sway
+    - sweet-gtk-theme
+  become: true
+  loop_control:
+    loop_var: dnf_item
+  when: ansible_distribution == "Fedora"
+
+
 - name: Set OS-specific config paths
   ansible.builtin.set_fact:
     config_path: "{{ ansible_user_dir }}/.config/sway"

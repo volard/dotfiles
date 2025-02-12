@@ -20,7 +20,7 @@ alias lg=lazygit
 
 
 # get docker container names and port numbers
-alias dnp=docker container ls --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}" -a
+alias dnp='docker container ls --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}" -a'
 
 # remove all dangling images -f is flag for force
 alias dip="docker image prune -f"
@@ -52,7 +52,7 @@ alias dps="docker ps"
 
 # This command is a neat shell pipeline to stop all running containers no matter
 # where you are and without knowing any container names
-alias dsa=docker ps -q | awk '{print $1}' | xargs -o docker stop
+alias dsa="docker ps -q | awk '{print $1}' | xargs -o docker stop"
 
 # do not delete / or prompt if deleting more than 3 files at a time #
 alias rm='rm -I --preserve-root'

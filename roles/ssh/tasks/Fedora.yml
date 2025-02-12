@@ -7,3 +7,31 @@
 
 - name: Include common copy tasks
   ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
+
+- name: Ensure .ssh directory exists
+  file:
+    path: ~/.ssh
+    state: directory
+    mode: '0700'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Set permissions for all private keys
+  file:
+    path: "{{ item }}"
+    state: file
+    mode: '0600'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  loop: "{{ lookup('fileglob', '~/.ssh/*') }}"
+  when: item.endswith('.pub') == false
+
+- name: Set permissions for all public keys
+  file:
+    path: "{{ item }}"
+    state: file
+    mode: '0644'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  loop: "{{ lookup('fileglob', '~/.ssh/*') }}"
+  when: item.endswith('.pub')

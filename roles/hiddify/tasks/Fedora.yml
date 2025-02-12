@@ -1,0 +1,21 @@
+---
+
+- name: Download hiddify archive
+  ansible.builtin.get_url:
+    url: https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-rpm-x64.rpm
+    dest: /tmp/hiddify.rpm
+
+- name: Install RPM package
+  dnf:
+    name: /tmp/hiddify.rpm
+    state: present
+    disable_gpg_check: true
+  become: true
+
+- name: Clean up temporary files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /tmp/hiddify.rpm
+
