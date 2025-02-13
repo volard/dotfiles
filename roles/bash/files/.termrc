@@ -49,6 +49,7 @@ alias dex="docker exec -it"
 
 # 'docker ps' displays the currently running containers
 alias dps="docker ps"
+alias dockeren="sudo systemctl enable docker"
 
 # This command is a neat shell pipeline to stop all running containers no matter
 # where you are and without knowing any container names
