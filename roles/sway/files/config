@@ -92,6 +92,8 @@ exec_always {
    # gsettings set $gnome-schema font-name 'Your font name'
 }
 
+client.focused   #6ace12  #282828  #fbf1c7  #cc241d  #d65d0e
+
 # gaps
 default_border pixel 3
 smart_borders on

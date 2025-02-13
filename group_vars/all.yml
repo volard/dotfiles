@@ -67,3 +67,4 @@ default_roles:
   - wezterm
   - windows_setup
   - hiddify
+  - waybar
