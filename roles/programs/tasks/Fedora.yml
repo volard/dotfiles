@@ -57,9 +57,8 @@
 - name: Download and install wlprop script
   ansible.builtin.get_url:
     url: https://gist.github.com/crispyricepc/f313386043395ff06570e02af2d9a8e0/raw/8b06f025a0f34685f5ffc2000fd19a64754c9b29/wlprop.sh
-    dest: ~/.local/bin/wlprop
+    dest: "{{ansible_user_dir}}/.local/bin/wlprop"
     mode: '0755'
-  become: true
 
 - name: Install SDKMAN
   ansible.builtin.shell: >
@@ -120,7 +119,13 @@
     state: absent
   when: not onlyoffice_installed.stat.exists
 
+- name: Check if lazydocker is installed
+  stat:
+    path: "{{ansible_user_dir}}/.local/bin/lazydocker"
+  register: lazydocker_installed
+
 - name: Install LazyDocker
   shell: curl -sSL https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
   args:
     executable: /bin/bash
+  when: not lazydocker_installed.stat.exists
