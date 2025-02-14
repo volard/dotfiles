@@ -81,6 +81,7 @@ export FZF_ALT_C_OPTS="--preview 'exa -T --all --level=2 --icons --group-directo
 export EDITOR=nvim
 
 bind -x '"\C-f": "tsesh"'
+bind -x '"\C-g": "lfcd"'
 
 if command -v oh-my-posh &> /dev/null; then
   OH_MY_POSH_CONFIG="$HOME/.config/oh-my-posh/amro.omp.json"

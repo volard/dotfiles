@@ -17,31 +17,34 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
-    local ts_builtin = require('telescope.builtin')
-    local function is_git_repo()
-      vim.fn.system("git rev-parse --is-inside-work-tree")
-      vim.print(vim.v.shell_error == 0)
-      return vim.v.shell_error == 0
-    end
-    local function get_git_root()
-      local dot_git_path = vim.fn.finddir(".git", ".;")
-      return vim.fn.fnamemodify(dot_git_path, ":h")
-    end
-    local opts = {
-        hidden = { file_browser = true, folder_browser = true },
-        hide_parent_dir = true,
-        show_untracked = true,
-    }
-    if is_git_repo() then
-      opts = {
-        cwd = get_git_root(),
-        hidden = { file_browser = true, folder_browser = true },
-        hide_parent_dir = true,
-        show_untracked = true,
+    local bufferPath = vim.fn.expand('%:p')
+    if vim.fn.isdirectory(bufferPath) ~= 0 then
+      local ts_builtin = require('telescope.builtin')
+      local function is_git_repo()
+        vim.fn.system("git rev-parse --is-inside-work-tree")
+        vim.print(vim.v.shell_error == 0)
+        return vim.v.shell_error == 0
+      end
+      local function get_git_root()
+        local dot_git_path = vim.fn.finddir(".git", ".;")
+        return vim.fn.fnamemodify(dot_git_path, ":h")
+      end
+      local opts = {
+          hidden = { file_browser = true, folder_browser = true },
+          hide_parent_dir = true,
+          show_untracked = true,
       }
-      ts_builtin.git_files(opts)
-    else
-      ts_builtin.find_files(opts)
+      if is_git_repo() then
+        opts = {
+          cwd = get_git_root(),
+          hidden = { file_browser = true, folder_browser = true },
+          hide_parent_dir = true,
+          show_untracked = true,
+        }
+        ts_builtin.git_files(opts)
+      else
+        ts_builtin.find_files(opts)
+      end
     end
   end,
 })
