@@ -1,6 +1,8 @@
 # vim: filetype=bash
 PATH="$PATH:$HOME/.cargo/bin:$HOME/.config/emacs/bin:$HOME/.pyenv/bin:$HOME/.pyenv:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
 
+# https://askubuntu.com/questions/22037/aliases-not-available-when-using-sudo
+alias sudo='sudo '
 
 alias ll="eza -l --icons --color=always -a --group-directories-first"
 
@@ -49,7 +51,8 @@ alias dex="docker exec -it"
 
 # 'docker ps' displays the currently running containers
 alias dps="docker ps"
-alias dockeren="sudo systemctl enable docker"
+alias dockeron="sudo systemctl enable docker"
+alias dockeroff="sudo systemctl disable docker"
 
 # This command is a neat shell pipeline to stop all running containers no matter
 # where you are and without knowing any container names
@@ -72,8 +75,9 @@ export FZF_ALT_C_COMMAND='fd --type d . --hidden'
 export FZF_ALT_C_OPTS="--preview 'exa -T --all --level=2 --icons --group-directories-first {}'"
 
 
-# export EDITOR=/opt/nvim-linux64/bin/nvim
 export EDITOR=nvim
+
+bind -x '"\C-f": "tsesh"'
 
 if command -v oh-my-posh &> /dev/null; then
   OH_MY_POSH_CONFIG="$HOME/.config/oh-my-posh/amro.omp.json"
@@ -94,10 +98,3 @@ if command -v zoxide &> /dev/null; then
     eval "$(zoxide init bash)"
 fi
 
-# tmux exists on the system
-# we're in an interactive shell, and
-# tmux doesn't try to run within itself
-
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  exec tmux
-fi

@@ -17,7 +17,7 @@ bindsym --to-code {
     # Exit sway (logs you out of your Wayland session)
     $mod+Shift+e exec swaynag -t warning -m 'Exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
-    $mod+p exec copyq toggle
+    $mod+q exec copyq toggle
 
 
 	# Move your focus around
@@ -33,10 +33,11 @@ bindsym --to-code {
 	$mod+Shift+$right move right
 
 
-# modes
+  # modes
   $mod+r       mode "resize"
   $mod+t       mode $layout_mode
-  $mod+F2      mode $power_mode
+  $mod+e       mode $power_mode
+  $mod+p       mode $rofi_mode
 
     # Switch to workspace
     $mod+1 workspace number 1

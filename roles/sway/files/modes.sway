@@ -11,6 +11,21 @@ mode "resize" {
 	}
 }
 
+mode $rofi_mode {
+
+  bindsym --to-code {
+    d rofi -show drun
+    r rofi -show run
+    w rofi -show window
+    e rofi -modi "emoji:rofimoji" -show emoji
+
+    # back to normal: Enter or Escape
+    Return mode "default"
+    Escape mode "default"
+  }
+
+}
+
 
 mode $layout_mode {
   # change container layout (stacked, tabbed, splitv, splith)

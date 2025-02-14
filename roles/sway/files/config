@@ -15,9 +15,6 @@ set {
   $laptop  eDP-1
   $hdmi    HDMI-A-1
 
-  # $font ...
-
-  # Your preferred terminal emulator
   $term foot
 
   # Note: pass the final command to swaymsg so that the resulting window can be opened
@@ -29,9 +26,11 @@ set {
   # executables from PATH.
   $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
 
-  $layout_mode "Layout: (d) stacking|(t) tabbed|(s) split|(v) splitv|(h) splith"
+  $layout_mode "Layout: (d)stacking | (t)tabbed | (s)split | (v)splitv | (h)splith"
 
   $power_mode  "Power: (F2)SCRNOFF | (F3)LCK | (F4)RBT | (F5)POFF"
+
+  $rofi_mode "Pick: (d) drun | (r) run | (w) wndw | (e) emoji"
 }
 
 # You can get the names of your outputs by running: swaymsg -t get_outputs
@@ -40,8 +39,8 @@ output {
 }
 
 exec swayidle -w \
-          timeout 300 'swaylock -f -c 000000' \
-          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+          timeout 600 'swaylock -f -c 000000' \
+          timeout 1600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
           before-sleep 'swaylock -f -c 000000'
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
@@ -88,7 +87,7 @@ set $gnome-schema org.gnome.desktop.interface
 exec_always {
    gsettings set $gnome-schema gtk-theme 'Sweet-nova'
    # gsettings set $gnome-schema icon-theme 'Your icon theme'
-   gsettings set $gnome-schema cursor-theme 'Bibata-Modern-Ice'
+   gsettings set $gnome-schema cursor-theme 'Oreo Red Cursors'
    # gsettings set $gnome-schema font-name 'Your font name'
 }
 
@@ -105,7 +104,8 @@ include binds.sway
 # wlprop
 # window rules
 for_window {
-	[title="Picture-in-Picture"] sticky enable, floating enable, move position right
+	[title="Picture in picture"] sticky enable, floating enable, move position right, 
+	[title="Picture-in-Picture"] sticky enable, floating enable, move position right, 
 	[window_role="GtkFileChooserDialog"] resize set 800 600
 	[window_role="GtkFileChooserDialog"] move position center
 
