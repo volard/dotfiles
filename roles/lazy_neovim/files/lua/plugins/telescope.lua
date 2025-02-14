@@ -4,6 +4,7 @@ return {
   opts = {
     theme = "catppuccin",
     defaults = {
+      file_ignore_patterns = { "^./.git/", "^node_modules/", "^vendor/" },
       layout_config = { prompt_position = "top" }, -- search bar at the top
       sorting_strategy = "ascending", -- display results top->bottom
       history = {

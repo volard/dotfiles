@@ -21,18 +21,20 @@
   loop:
     - btop # better htop/top
     - duff # better df
+    - git-delta # better git diff
     - eza # better ls
     - zoxide # better cd
     - tldr # better man pages
     - vivaldi-stable # the best browser. End of discussion.
     - bat # better cat
+    - distrobox # virtual linux distros
     - ncdu # disk usage analyzer
     - wget
     - fzf
-    - qt5ct
-    - lxappearance
-    - flameshot
-    - copyq
+    - qt5ct # styling qt apps
+    - lxappearance # styling gtk apps
+    - flameshot # screenshots
+    - copyq # clipboard manager
     - ripgrep
     - curl
     - lshw
@@ -41,14 +43,13 @@
     - dos2unix
     - vlc
     - unzip
-    - fastfetch
+    - fastfetch # neofetch :(
     - fd-find
     - sshpass
     - unrar
     - mpv
     - jq
-    - git-delta
-    - nemo
+    - nemo # Cinnamon file manager
   become: true
   loop_control:
     loop_var: dnf_item
@@ -60,12 +61,12 @@
     dest: "{{ansible_user_dir}}/.local/bin/wlprop"
     mode: '0755'
 
-- name: Install SDKMAN
-  ansible.builtin.shell: >
-    curl -s "https://get.sdkman.io" | bash
-  args:
-    creates: "{{ ansible_user_dir }}/.sdkman"
-  when: ansible_distribution == 'Fedora'
+# - name: Install SDKMAN
+#   ansible.builtin.shell: >
+#     curl -s "https://get.sdkman.io" | bash
+#   args:
+#     creates: "{{ ansible_user_dir }}/.sdkman"
+#   when: ansible_distribution == 'Fedora'
 
 - name: Install programs via snap
   community.general.snap:
@@ -80,18 +81,18 @@
   when: ansible_distribution == 'Fedora'
 
 
-- name: Check if nvm is installed
-  ansible.builtin.command: command -v nvm
-  register: nvm_check
-  changed_when: false
-  ignore_errors: true
-
-- name: Install nvm (only if not installed)
-  ansible.builtin.shell: >
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-  args:
-    creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
-  when: nvm_check.rc != 0 
+# - name: Check if nvm is installed
+#   ansible.builtin.command: command -v nvm
+#   register: nvm_check
+#   changed_when: false
+#   ignore_errors: true
+#
+# - name: Install nvm (only if not installed)
+#   ansible.builtin.shell: >
+#     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+#   args:
+#     creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+#   when: nvm_check.rc != 0 
 
 - name: Check if OnlyOffice is installed
   stat:
@@ -104,6 +105,17 @@
     dest: /tmp/onlyoffice-desktopeditors.x86_64.rpm
     mode: '0644'
   when: not onlyoffice_installed.stat.exists
+
+- name: Check if mise is installed
+  stat:
+    path: "{{ansible_user_dir}}/.local/bin/mise"
+  register: mise_installed
+
+- name: Install mise
+  shell: curl https://mise.run | sh
+  args:
+    executable: /bin/sh
+  when: not mise_installed.stat.exists
 
 - name: Install OnlyOffice
   dnf:
@@ -129,3 +141,4 @@
   args:
     executable: /bin/bash
   when: not lazydocker_installed.stat.exists
+
