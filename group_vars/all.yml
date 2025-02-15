@@ -68,3 +68,4 @@ default_roles:
   - windows_setup
   - hiddify
   - waybar
+  - swaylock

@@ -97,3 +97,9 @@
 
 - name: Source dotfiles bin
   ansible.builtin.include_tasks: pre_tasks/linux_bash_dotfiles_bin.yml
+
+- name: Adding existing user to group sudo
+  user:
+    name: volard
+    groups: uucp
+    append: yes

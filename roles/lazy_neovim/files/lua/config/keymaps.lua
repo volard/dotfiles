@@ -7,4 +7,5 @@ local map = vim.keymap.set
 map("n", ";", ":", { desc = "Go to command mode" })
 map("i", "<C-i>", "<esc>", { desc = "Go to normal mode" })
 map("n", "<C-p>", "\"0p", { desc = 'Paste last copyed "0 regester content' })
+map("v", "<C-p>", "\"0p", { desc = 'Paste last copyed "0 regester content' })
 map("n", "<space>fb", "<cmd>Telescope file_browser<CR>", { desc = "Open file browser" })

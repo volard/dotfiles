@@ -23,6 +23,11 @@ set scrolloff 10
 # Use the `dim` attribute instead of underline for the cursor in the preview pane
 set cursorpreviewfmt "\033[7;2m"
 
+set previewer stpv
+set cleaner stpvimgclr
+&stpvimg --listen $id
+cmd on-quit $stpvimg --end $id
+
 # use enter for shell commands
 map <enter> shell
 
@@ -74,6 +79,25 @@ cmd trash %set -f; mv $fx ~/.trash
 #     read ans
 #     [ "$ans" = "y" ] && rm -rf $fx
 # }}
+
+# purge the unclean
+cmd remove ${{
+    if [ -z $fs ]; then
+        echo 'trash? [y/n]'
+        read ans
+
+        [ $ans = 'y' ] && (echo 'trashing...' && trash $f) || (echo 'cancelled...')
+    else
+        IFS=':'; echo $fs | tr " " "\n"
+        echo 'trash? [y/n]'
+        read ans
+
+        [ $ans = 'y' ] && (echo 'trashing files...' && trash $fs) || (echo 'cancelled...')
+    fi
+}}
+map d # leave the command name empty like this for unmapping
+map dd delete
+map dD remove
 
 # use '<delete>' key for either 'trash' or 'delete' command
 # map <delete> trash
