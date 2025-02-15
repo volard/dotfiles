@@ -6,9 +6,6 @@ bindsym --to-code {
     # Kill focused window
     $mod+Shift+u kill
 
-    # Start your launcher
-    $mod+d exec $menu
-
 
     # Reload the configuration file
     $mod+Shift+c reload
@@ -37,7 +34,12 @@ bindsym --to-code {
   $mod+r       mode "resize"
   $mod+t       mode $layout_mode
   $mod+e       mode $power_mode
-  $mod+p       mode $rofi_mode
+  #$mod+d       mode $rofi_mode
+  $mod+s       mode $screenshot_mode
+
+
+    # Start your launcher
+    $mod+d exec $menu
 
     # Switch to workspace
     $mod+1 workspace number 1

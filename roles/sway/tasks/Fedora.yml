@@ -13,13 +13,6 @@
   when: ansible_distribution == "Fedora"
 
 
-- name: "Create config folder"
-  ansible.builtin.file:
-    mode: "0755"
-    path: "{{ ansible_user_dir }}/.config/sway"
-    state: directory
-  when: ansible_distribution == 'Fedora'
-
 - name: "Create symlink to role files directory"
   ansible.builtin.file:
     src: "{{ role_path }}/files"

@@ -14,10 +14,11 @@ mode "resize" {
 mode $rofi_mode {
 
   bindsym --to-code {
-    d rofi -show drun
-    r rofi -show run
-    w rofi -show window
-    e rofi -modi "emoji:rofimoji" -show emoji
+    d exec $rofi_cmd -show drun                         ; mode "default"
+    r exec $rofi_cmd -show run                          ; mode "default"
+    w exec $rofi_cmd -show window                       ; mode "default"
+    e exec $rofi_cmd -modi 'emoji:rofimoji' -show emoji ; mode "default"
+    o exec rofi -show p -modi p:~/.config/rofi/off.sh
 
     # back to normal: Enter or Escape
     Return mode "default"
@@ -35,6 +36,18 @@ mode $layout_mode {
     s layout toggle split ; mode "default"
     v layout splitv       ; mode "default"
     h layout splith       ; mode "default"
+
+    # back to normal: Enter or Escape
+    Return mode "default"
+    Escape mode "default"
+  }
+}
+
+mode $screenshot_mode {
+
+  bindsym --to-code {
+    s exec grimshot_next --notify save area ; mode "default"
+    c exec grimshot_next --notify copy area ; mode "default"
 
     # back to normal: Enter or Escape
     Return mode "default"
