@@ -6,10 +6,19 @@
   become: true
   when: ansible_distribution == 'Fedora'
 
-- name: Set Bash config path
-  ansible.builtin.set_fact:
-    config_path: "{{ ansible_user_dir }}/.config/rofi"
+- name: "Create symlink to role files directory"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_user_dir }}/.config/rofi"
+    state: link
+    force: true
+  when: ansible_distribution == 'Fedora'
 
-- name: Copy Bash config files
-  ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
+- name: Ensure off.sh executable
+  file:
+    path: ~/.config/rofi/off.sh
+    state: directory
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
 

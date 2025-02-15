@@ -36,6 +36,8 @@
     - flameshot # screenshots
     - copyq # clipboard manager
     - ripgrep
+    - qview # image viewer
+    - drawing
     - curl
     - lshw
     - qbittorrent

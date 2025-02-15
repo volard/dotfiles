@@ -29,7 +29,7 @@
 /* COLORS */
 
 /* Nord */
-@define-color bg rgba(0, 0, 0, 0.9);
+@define-color bg rgba(0, 0, 0, 0.98);
 /*@define-color bg #353C4A;*/
 @define-color light #D8DEE9;
 /*@define-color dark @nord_dark_font;*/
@@ -68,7 +68,7 @@
     background: @bg;
     color: @light;
     font-family: "Cantarell", "Font Awesome 5 Pro";
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
 }
 
