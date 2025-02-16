@@ -55,7 +55,7 @@ alias dps="docker ps"
 alias dockeron="sudo systemctl enable docker"
 alias dockeroff="sudo systemctl disable docker"
 
-alias dstopall="docker stop $(docker ps -a -q)"
+alias dstopall="docker stop $(docker ps -q)"
 
 # This command is a neat shell pipeline to stop all running containers no matter
 # where you are and without knowing any container names

@@ -69,3 +69,4 @@ default_roles:
   - hiddify
   - waybar
   - swaylock
+  - firefox
