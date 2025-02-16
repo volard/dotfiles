@@ -26,8 +26,8 @@ set {
 
   # Shows a combined list of the applications with desktop files and
   # executables from PATH.
-    $rofi_cmd -modi 'emoji:rofimoji' -show emoji ; mode "default"
-    rofi -show p -modi p:~/.config/rofi/off.sh
+    #$rofi_cmd -modi 'emoji:rofimoji' -show emoji ; mode "default"
+    #rofi -show p -modi p:~/.config/rofi/off.sh
   $menu $rofi_cmd -show combi -combi-modes "window,drun,run" -modes combi
 
   $layout_mode "Layout: (d)stacking | (t)tabbed | (s)split | (v)splitv | (h)splith"
