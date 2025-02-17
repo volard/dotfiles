@@ -12,4 +12,4 @@ sudo systemctl enable docker
 sudo systemctl start docker
 yay -S lazydocker
 
-sudo pacman -S lazygit neovim lf neofetch eza bat git-delta ansible
+sudo pacman -S lazygit neovim lf neofetch eza bat git-delta ansible lf zoxide
