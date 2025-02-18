@@ -46,11 +46,11 @@ fi
 
 echo
 echo
-echo -e "==== Configuring system ===="
-echo -e "Distribution:${GREEN} ${distro} ${RESET}"
-echo -e "Version:${GREEN} ${version} ${RESET}"
-echo -e "============================"
-echo
+# echo -e "==== Configuring system ===="
+# echo -e "Distribution:${GREEN} ${distro} ${RESET}"
+# echo -e "Version:${GREEN} ${version} ${RESET}"
+# echo -e "============================"
+# echo
 
 
 
@@ -58,15 +58,16 @@ echo
 ########################################
 # install git
 ########################################
-if [[ ${distro} == "arch" ]]; then
-	echo "$sudo_password" | sudo -S pacman -S git --noconfirm
-elif [[ ${distro} == "ubuntu" ]]; then
-	echo "$sudo_password" | sudo -S apt install git -y
-elif [[ ${distro} == "fedora" ]]; then
-	echo "$sudo_password" | sudo -S dnf in git -y
-  echo "$sudo_password" | sudo -S dnf in dnf-plugins-core -y
+if ! command -v git &> /dev/null; then
+  if [[ ${distro} == "endeavouros" ]]; then
+    echo "$sudo_password" | sudo -S pacman -S git --noconfirm
+  elif [[ ${distro} == "ubuntu" ]]; then
+    echo "$sudo_password" | sudo -S apt install git -y
+  elif [[ ${distro} == "fedora" ]]; then
+    echo "$sudo_password" | sudo -S dnf in git -y
+    echo "$sudo_password" | sudo -S dnf in dnf-plugins-core -y
+  fi
 fi
-
 
 
 
@@ -90,7 +91,7 @@ fi
 # Install Ansible
 ########################################
 if ! [[ -x "$(command -v ansible || true)" ]]; then
-  if [[ ${distro,,} == "arch" ]]; then
+  if [[ ${distro} == "endeavouros" ]]; then
     echo "$sudo_password" | sudo pacman -S ansible --noconfirm
   elif [[ ${distro} == "fedora" ]]; then
     echo "$sudo_password" | sudo -S dnf in ansible -y
@@ -137,6 +138,13 @@ python3 bin/sync_roles.py
 
 ansible-galaxy install -r requirements.yml
 
+cleanup() {
+    echo "Cleaning up before exit..."
+    rm -f temp_sudo.pass
+}
+
+trap cleanup SIGINT SIGTERM EXIT
+
 echo "${sudo_password}" > "temp_sudo.pass"
 
 ansible-playbook \
@@ -145,12 +153,11 @@ ansible-playbook \
   "${DOTFILES_DIR}/main.yml" \
   --syntax-check "$@"
 
-
 ansible-playbook \
   --vault-password-file "${PASSWORD_FILE_PATH}" \
   --become-pass-file "temp_sudo.pass" \
   "${DOTFILES_DIR}/main.yml" "$@"
 
-rm -f temp_sudo.pass
+cheanup
 
 # vi:ft=sh:

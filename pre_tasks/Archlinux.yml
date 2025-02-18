@@ -1,0 +1,12 @@
+---
+# - name: Update the package database
+#   pacman:
+#     update_cache: yes
+
+# - name: Install yay (AUR helper)
+#   pacman:
+#     name: yay
+#     state: present
+
+- name: Source dotfiles bin
+  ansible.builtin.include_tasks: pre_tasks/linux_bash_dotfiles_bin.yml

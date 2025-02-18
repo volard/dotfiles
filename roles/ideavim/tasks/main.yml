@@ -1,9 +1,7 @@
 ---
-- name: "Checking for distribution config"
-  ansible.builtin.stat:
-    path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
-  register: distribution_config
-
-- name: "Run distro specific tasks"
-  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
-  when: distribution_config.stat.exists
+- name: Create a symlink to a file
+  file:
+    src: "{{ role_path }}/files/.ideavimrc"
+    dest: "{{ ansible_user_dir }}/.ideavimrc"
+    state: link
+    force: true

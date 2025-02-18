@@ -1,0 +1,12 @@
+---
+- name: Delete a directory
+  file:
+    path: "{{ ansible_user_dir }}/.config/fuzzel"
+    state: absent
+
+- name: Create a symlink to a file
+  file:
+    src: "{{ role_path }}/endeavour_fuzzel"
+    dest: "{{ ansible_user_dir }}/.config/fuzzel"
+    state: link
+    force: true

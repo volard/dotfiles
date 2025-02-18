@@ -83,20 +83,20 @@ cmd trash %set -f; mv $fx ~/.trash
 # purge the unclean
 cmd remove ${{
     if [ -z $fs ]; then
-        echo 'trash? [y/n]'
+        printf 'trash? [y/n]'
         read ans
 
-        [ $ans = 'y' ] && (echo 'trashing...' && trash $f) || (echo 'cancelled...')
+        [ $ans = 'y' ] && (printf 'trashing...' && trash $f) || (printf 'cancelled...')
     else
-        IFS=':'; echo $fs | tr " " "\n"
-        echo 'trash? [y/n]'
+        IFS=':'; printf $fs | tr " " "\n"
+        printf 'trash? [y/n]'
         read ans
 
-        [ $ans = 'y' ] && (echo 'trashing files...' && trash $fs) || (echo 'cancelled...')
+        [ $ans = 'y' ] && (printf 'trashing files...' && trash $fs) || (printf 'cancelled...')
     fi
 }}
 map d # leave the command name empty like this for unmapping
-map dd delete
+map dd trash
 map dD remove
 
 # use '<delete>' key for either 'trash' or 'delete' command

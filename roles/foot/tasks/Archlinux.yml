@@ -1,0 +1,12 @@
+---
+- name: Delete a directory
+  file:
+    path: "{{ ansible_user_dir }}/.config/foot"
+    state: absent
+
+- name: Create a symlink to a file
+  file:
+    src: "{{ role_path }}/files/"
+    dest: "{{ ansible_user_dir }}/.config/foot"
+    state: link
+    force: true

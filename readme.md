@@ -29,15 +29,11 @@ dotfiles -t separated, roles
 Each role **installs and configures** a program. If program doesn't need to be configured, it would be installed with help of `programs` ([see](roles/programs/tasks)) role.
 
 ```bash
-roles/                      # setup and install programs
 roles/common_tasks/         # tasks, that can be used across roles
-roles/name/files/           # config files: templates and static
 roles/name/molecule/        # test a role
-group_vars/                 # os-specific variables
 files/                      # common static files
 pre_tasks/                  # preliminary tasks to setup an OS
 molecule/                   # test playbook
-inventory.yml               # define hosts and groups
 ```
 
 By default playbook would run all available roles (except [common_tasks](roles/common_tasks/tasks)). The `roles_to_exclude` list defined in [all.yml](groups/all.yml) provides the way to exclude unwanted roles. `default_roles` in the [all.yml](groups/all.yml) updates automagically everytime to stay in sync with the roles subdirectories. It's done by [sync_roles.py](bin/sync_roles.py), that also automates usage of [TechDufus](https://github.com/TechDufus/)'s [main.yml](https://github.com/TechDufus/).
