@@ -1,0 +1,3 @@
+---
+- name: Include linux tasks
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/linux.yml"

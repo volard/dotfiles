@@ -18,7 +18,7 @@ RESET='\e[0m'
 DOTFILES_DIR="${HOME}/dotfiles"
 PASSWORD_FILE_PATH="${DOTFILES_DIR}/vault-password.txt"
 
-# store sudo password temporary
+
 read -s -p "Enter sudo password: " sudo_password
 
 
@@ -123,7 +123,9 @@ fi
 if ! [[ -f "${DOTFILES_DIR}/vault-password.txt" ]]; then
   read -s -p "Please enter your Ansible Vault password: " ANSIBLE_PASSWORD
   echo
-  echo "${ANSIBLE_PASSWORD}" > "${PASSWORD_FILE_PATH}"
+  # Trim leading and trailing whitespace (including tabs and newlines)
+  trimmed_ANSIBLE_PASSWORD=$(echo "$input" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+  echo "${trimmed_ANSIBLE_PASSWORD}" > "${PASSWORD_FILE_PATH}"
 fi
 
 
@@ -138,6 +140,7 @@ python3 bin/sync_roles.py
 
 ansible-galaxy install -r requirements.yml
 
+# store sudo password temporary
 cleanup() {
     echo "Cleaning up before exit..."
     rm -f temp_sudo.pass
@@ -158,6 +161,6 @@ ansible-playbook \
   --become-pass-file "temp_sudo.pass" \
   "${DOTFILES_DIR}/main.yml" "$@"
 
-cheanup
+cleanup
 
 # vi:ft=sh:
