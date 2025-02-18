@@ -1,10 +1,33 @@
 #!/usr/bin/env bash
 # vi:ft=sh:
 
+# Create an array of directories
+directories=(
+    "/mnt/data/Projects"
+    "/mnt/data/Projects/pet"
+    "$HOME"
+)
+
+# Initialize an empty array to hold existing directories
+existing_dirs=()
+
+# Check if each directory exists and add it to the existing_dirs array
+for dir in "${directories[@]}"; do
+    if [[ -d "$dir" ]]; then
+        existing_dirs+=("$dir")
+    fi
+done
+
+# If no directories exist, exit the script
+if [[ ${#existing_dirs[@]} -eq 0 ]]; then
+    echo "No valid directories found."
+    exit 1
+fi
+
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find  /mnt/data/Projects /mnt/data/Projects/pet ~/ -mindepth 1 -maxdepth 1 -type d | fzf)
+    selected=$(find "${existing_dirs[@]}" -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
 if [[ -z $selected ]]; then

@@ -1,5 +1,5 @@
 # vim: filetype=bash
-PATH="$PATH:$HOME/.cargo/bin:$HOME/.config/emacs/bin:$HOME/.pyenv/bin:$HOME/.pyenv:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
+PATH="$PATH:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.config/emacs/bin:$HOME/.pyenv/bin:$HOME/.pyenv:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
 
 # https://askubuntu.com/questions/22037/aliases-not-available-when-using-sudo
 alias sudo='sudo '
@@ -81,7 +81,7 @@ export FZF_ALT_C_OPTS="--preview 'exa -T --all --level=2 --icons --group-directo
 export EDITOR=nvim
 
 bind -x '"\C-f": "tsesh"'
-bind -x '"\C-g": "lfcd"'
+bind -x '"\C-g": "lf"'
 
 if command -v oh-my-posh &> /dev/null; then
   OH_MY_POSH_CONFIG="$HOME/.config/oh-my-posh/amro.omp.json"

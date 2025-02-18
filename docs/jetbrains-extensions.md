@@ -1,0 +1,6 @@
+- autofetch
+- material icons
+- wakatime
+- GitHub Darker theme
+- Catpuccin theme
+- IdeaVim

@@ -17,20 +17,24 @@
       ansible.builtin.include_tasks: pre_tasks/Fedora.yml
       when: ansible_distribution == 'Fedora'
 
+    - name: Include Fedora pre-tasks
+      ansible.builtin.include_tasks: pre_tasks/Archlinux.yml
+      when: ansible_distribution == 'Archlinux'
+
   tasks:
     - name: Display distribution
       debug: "var=ansible_distribution"
       tags:
         - always
 
-    - name: set roles
+    - name: set roles_to_run
       set_fact:
-        roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or default_roles | difference(roles_to_exclude | default([])) }}"
+        roles_to_run: "{{ ansible_run_tags != ['all'] and ansible_run_tags or default_roles | difference(roles_to_exclude | default([])) }}"
       tags:
         - always
     
     - name: Display roles
-      debug: "var=roles"
+      debug: "var=roles_to_run"
       tags:
         - always
 
@@ -50,6 +54,6 @@
         name: "{{ roles_item }}"
       loop_control:
         loop_var: roles_item
-      with_items: "{{ roles }}"
+      with_items: "{{ roles_to_run }}"
       tags:
         - always

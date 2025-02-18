@@ -1,0 +1,40 @@
+---
+- name: Install packages from pacman
+  pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - neovim
+    - eza
+    - code
+    - tldr
+    - bat
+    - trash-cli
+    - fzf
+    - duff
+    - zoxide
+    - lshw
+    - neofetch
+    - vivaldi
+    - blueman
+    - lazygit
+    - lf
+    - git-delta
+    - tmux
+    - baobab
+    - ncdu
+  become: true
+  loop_control:
+    loop_var: pacman_item
+  when: ansible_distribution == "Archlinux"
+
+
+- name: Install packages from AUR
+  command: yay -S --noconfirm {{ aur_item }}
+  loop:
+    - stretchly-bin
+    - hiddify
+    - lazydocker-bin
+  loop_control:
+    loop_var: aur_item
+  when: ansible_distribution == "Archlinux"

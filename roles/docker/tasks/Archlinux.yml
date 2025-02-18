@@ -1,0 +1,35 @@
+---
+- name: Install packages from pacman
+  pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - docker
+    - docker-compose
+  become: true
+  loop_control:
+    loop_var: pacman_item
+  when: ansible_distribution == "Archlinux"
+
+- name: Reload systemd manager configuration
+  command: systemctl daemon-reload
+  become: true
+
+- name: Create docker group
+  group:
+    name: docker
+    state: present
+    become: true
+
+- name: Add user volard to docker group
+  user:
+    name: volard
+    groups: docker
+    append: yes
+    become: true
+
+- name: Enable and start Docker service
+  systemd:
+    name: docker
+    state: started
+    enabled: yes

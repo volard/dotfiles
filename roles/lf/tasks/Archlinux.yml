@@ -1,0 +1,48 @@
+---
+- name: Create a symlink
+  file:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_user_dir }}/.config/lf"
+    state: link
+    force: true
+
+- name: Check if a command exists
+  command: which stpv
+  register: stpv_check
+  ignore_errors: yes
+
+- name: Set fact if command exists
+  set_fact:
+    stpv_exists: true
+  when: stpv_check.rc == 0
+
+- name: Set fact if command does not exist
+  set_fact:
+    stpv_exists: false
+  when: stpv_check.rc != 0
+
+- name: Clone the Git repository
+  git:
+    repo: https://github.com/Naheel-Azawy/stpv.git
+    dest: /tmp/stpv
+    update: no
+  when: stpv_exists == false
+
+- name: Install the package using make
+  command: make install
+  args:
+    chdir: /tmp/stpv
+  become: yes
+  when: stpv_exists == false
+
+- name: Remove the cloned directory
+  file:
+    path: /tmp/stpv
+    state: absent
+  when: stpv_exists == false
+
+- name: Ensure lf.bash executable
+  file:
+    path: "{{ role_path }}/files/lf.bash"
+    state: file
+    mode: '0755'

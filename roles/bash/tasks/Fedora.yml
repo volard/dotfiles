@@ -1,3 +1,0 @@
----
-- name: Include common linux bash setup
-  ansible.builtin.include_tasks: roles/bash/tasks/linux.yml

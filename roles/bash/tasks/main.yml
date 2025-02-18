@@ -1,9 +1,61 @@
 ---
-- name: "Checking for distribution config"
-  ansible.builtin.stat:
-    path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
-  register: distribution_config
+- name: Ensure .config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config"
+    state: directory
+    mode: "0755"
 
-- name: "Run distro specific tasks"
-  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
-  when: distribution_config.stat.exists
+- name: Ensure .config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    state: file
+
+- name: Check if source line already exists
+  ansible.builtin.command: grep -Fxq "source $HOME/.config/.termrc" "{{ ansible_user_dir }}/.bashrc"
+  register: grep_result
+  changed_when: false
+  failed_when: false
+
+- name: Add source line to existing .bashrc
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    line: source $HOME/.config/.termrc
+    state: present
+  when:
+    - grep_result.rc != 0 # Only add line if grep didn't find it
+
+- name: Create a symlink to a file
+  file:
+    src: "{{ role_path }}/files/.termrc"
+    dest: "{{ ansible_user_dir }}/.config/.termrc"
+    state: link
+    force: true
+
+- name: Make a list of files executable
+  file:
+    path: "{{ script_item }}"
+    mode: u+x
+  loop:
+    - "{{ ansible_user_dir }}/dotfiles/bin/dotfiles"
+    - "{{ ansible_user_dir }}/dotfiles/bin/grimshot_next"
+    - "{{ ansible_user_dir }}/dotfiles/bin/tsesh"
+  loop_control:
+    loop_var: script_item
+
+- name: Install Oh My Posh on Linux
+  ansible.builtin.shell: >
+    curl -s https://ohmyposh.dev/install.sh | bash -s -- -d {{ ansible_user_dir }}/.local/bin
+  args:
+    creates: "{{ ansible_user_dir }}/.local/bin/oh-my-posh"
+
+- name: Ensure .config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/oh-my-posh"
+    state: directory
+
+- name: Create a symlink to a file
+  file:
+    src: "{{ role_path }}/files/amro.omp.json"
+    dest: "{{ ansible_user_dir }}/.config/oh-my-posh/amro.omp.json"
+    state: link
+    force: true
