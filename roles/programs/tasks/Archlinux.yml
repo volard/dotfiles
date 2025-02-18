@@ -15,6 +15,7 @@
     - fzf
     - duff
     - zoxide
+    - molecule
     - lshw
     - neofetch
     - vivaldi
