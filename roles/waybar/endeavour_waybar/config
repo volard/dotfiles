@@ -10,9 +10,9 @@
 
     "modules-left": [
         "custom/launcher",
-        "sway/workspaces",
-        "sway/mode",
-        "sway/window"
+        "network",
+        "sway/mode"
+        //"sway/window"
     ],
 
     "custom/launcher": {
@@ -51,7 +51,7 @@
 // Configuration - modules-center
     
     "modules-center": [
-        "network"
+        "sway/workspaces"
     ],
 
     "network": {
