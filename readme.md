@@ -21,7 +21,7 @@ Binary `dotfiles` ([see](bin/dotfiles)) is in PATH after initial setup (make sur
 
 Run specified roles only
 ```bash
-dotfiles -t separated, roles
+dotfiles -t separated,roles,no,spaces
 ```
 
 ## Structure
