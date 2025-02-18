@@ -10,6 +10,7 @@
     - tldr
     - bat
     - trash-cli
+    - mise
     - wlsunset
     - fzf
     - duff
@@ -19,6 +20,7 @@
     - vivaldi
     - blueman
     - lazygit
+    - meld
     - lf
     - git-delta
     - tmux
