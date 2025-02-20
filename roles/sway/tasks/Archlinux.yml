@@ -1,4 +1,36 @@
 ---
+# https://forum.endeavouros.com/t/unable-to-share-screen-with-sway-wm/46654
+- name: Install packages from pacman
+  pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - xdg-desktop-portal-wlr
+    - xdg-desktop-portal
+    - pipewire
+  become: true
+  loop_control:
+    loop_var: pacman_item
+  when: ansible_distribution == "Archlinux"
+
+- name: Enable pipewire service
+  command: systemctl enable --user pipewire
+  become: true
+
+- name: Start pipewire service
+  command: systemctl start --user pipewire
+  become: true
+
+- name: Enable xdg-desktop-portal service
+  command: systemctl enable --user xdg-desktop-portal
+  become: true
+
+- name: Start xdg-desktop-portal service
+  command: systemctl start --user xdg-desktop-portal
+  become: true
+
+# reload the system
+
 - name: Delete a directory
   file:
     path: "{{ ansible_user_dir }}/.config/sway"

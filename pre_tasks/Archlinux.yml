@@ -8,5 +8,26 @@
 #     name: yay
 #     state: present
 
+- name: Install packages from pacman
+  pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - blueman
+    - bluez 
+    - bluez-utils
+  become: true
+  loop_control:
+    loop_var: pacman_item
+  when: ansible_distribution == "Archlinux"
+
+- name: Start bluetooth service
+  command: systemctl start bluetooth
+  become: true
+
+- name: Enable bluetooth service
+  command: systemctl enable bluetooth
+  become: true
+
 - name: Source dotfiles bin
   ansible.builtin.include_tasks: pre_tasks/linux_bash_dotfiles_bin.yml
