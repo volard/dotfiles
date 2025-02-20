@@ -269,6 +269,7 @@ map <C-K> <C-W>k
 nmap <ESC> :noh<CR>
 
 nmap <leader>ff :action GotoFile<CR>
+nmap <leader><leader> :action GotoFile<CR>
 nmap <leader>ss :action GotoSymbol<CR>
 nmap <leader>fr :action RecentChangedFiles<CR>
 

@@ -1,13 +1,13 @@
 ---
 - name: Delete a directory
   file:
-    path: "{{ ansible_user_dir }}/.config/sway"
+    path: "{{ ansible_user_dir }}/.config/mako"
     state: absent
 
 - name: "Create symlink to role files directory"
   ansible.builtin.file:
-    src: "{{ role_path }}/endeavour_sway"
-    dest: "{{ ansible_user_dir }}/.config/sway"
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_user_dir }}/.config/mako"
     state: link
     force: true
   when: ansible_distribution == 'Archlinux'
