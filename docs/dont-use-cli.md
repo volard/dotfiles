@@ -1,0 +1,11 @@
+Deprecated -> it's better to use
+- `scp` -> `rsync`
+- `egrep` and `fgrep` -> `grep -E` and `grep -F`
+- `netstat` -> `ss`
+- `ifconfig` -> `ip`
+- `arp` -> `ip n`
+- `iptunnel` -> `ip tunnel`
+- `nameif` -> `ip link`
+- `route` -> `ip route`
+- `iwconfig` -> `iw`
+- `iptables` -> `nftables`
