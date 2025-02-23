@@ -1,0 +1,14 @@
+---
+- name: Delete a directory
+  file:
+    path: "{{ ansible_user_dir }}/.config/mise"
+    state: absent
+  when: ansible_distribution == 'Archlinux'
+
+- name: "Create symlink to role files directory"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_user_dir }}/.config/mise"
+    state: link
+    force: true
+  when: ansible_distribution == 'Archlinux'
