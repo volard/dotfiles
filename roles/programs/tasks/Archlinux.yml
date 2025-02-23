@@ -22,6 +22,9 @@
     - blueman
     - lazygit
     - meld
+    - gnome-keyring
+    - libsecret
+    - seahorse
     - lf
     - git-delta
     - tmux
