@@ -5,7 +5,7 @@
 # Ubuntu
 1.
 ```
-sudo apt install spice-webdavd spice-client-gtk
+sudo apt install spice-webdavd spice-client-gtk spice-vdagent
 systemctl reboot
 ```
 2. Share directory through box's preferences
