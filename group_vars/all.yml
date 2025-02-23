@@ -35,6 +35,7 @@ roles_to_exclude:
 
 default_roles:
   - powershell
+  - gtk3
   - i3status
   - doom
   - tmux
