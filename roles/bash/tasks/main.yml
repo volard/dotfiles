@@ -39,6 +39,7 @@
     - "{{ ansible_user_dir }}/dotfiles/bin/dotfiles"
     - "{{ ansible_user_dir }}/dotfiles/bin/grimshot_next"
     - "{{ ansible_user_dir }}/dotfiles/bin/tsesh"
+    - "{{ ansible_user_dir }}/dotfiles/bin/wlprop"
   loop_control:
     loop_var: script_item
 

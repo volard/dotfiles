@@ -43,3 +43,10 @@
     state: link
     force: true
   when: ansible_distribution == 'Archlinux'
+ 
+- name: Set all files in the specified directory to executable
+  file:
+    path: "{{ item }}"
+    mode: 'u+x'
+  with_fileglob:
+    - "{{ ansible_user_dir }}/.config/sway/scripts/*"
