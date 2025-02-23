@@ -10,3 +10,10 @@ systemctl reboot
 ```
 2. Share directory through box's preferences
 3. Access Spice client folder in network in file manager
+
+# Windows
+1. Download and install SPICE Guest Tools for Windows Guest system from https://www.spice-space.org/download.html
+2. Download ans install Spice WebDAV daemon from the same place
+3. Reload Shindows
+4. Share directory through box's preferences
+5. Access Spice client folder in network in file manager (it was DavWWWRoot under some localhost@8546)
