@@ -29,6 +29,7 @@
     - git-delta
     - tmux
     - baobab
+    - xplr
     - ncdu
   become: true
   loop_control:
@@ -42,6 +43,8 @@
     - stretchly-bin
     - hiddify
     - lazydocker-bin
+    - superproductivity-bin
   loop_control:
     loop_var: aur_item
   when: ansible_distribution == "Archlinux"
+

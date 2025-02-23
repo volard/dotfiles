@@ -1,0 +1,13 @@
+---
+- name: Delete a directory
+  file:
+    path: "{{ ansible_user_dir }}/.config/xplr"
+    state: absent
+
+- name: "Create symlink to role files directory"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_user_dir }}/.config/xplr"
+    state: link
+    force: true
+  when: ansible_distribution == 'Archlinux'

@@ -32,6 +32,7 @@ cmd on-quit $stpvimg --end $id
 map <enter> shell
 
 set hidden true
+set ignorecase true
 set sixel true
 set icons true
 
@@ -57,8 +58,24 @@ cmd open &{{
     esac
 }}
 
-# mkdir command. See wiki if you want it to select created dir
-map a :push %mkdir<space>
+
+# create a directory passing all specified params and select newly created directory afterwards
+cmd mkdir %{{
+    IFS=" "
+    file="$*"
+    mkdir -p -- "$file"
+    lf -remote "send $id select \"$(printf '%s' "$file" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
+map ad push :mkdir<space> # add directory
+
+# create a file passing all specified params and select newly created directory afterwards
+cmd touch %{{
+    IFS=" "
+    file="$*"
+    touch -- "$file"
+    lf -remote "send $id select \"$(printf '%s' "$file" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
+map af push :touch<space> # add file
 
 # define a custom 'rename' command without prompt for overwrite
 # cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
@@ -102,6 +119,36 @@ map dD remove
 # use '<delete>' key for either 'trash' or 'delete' command
 # map <delete> trash
 # map <delete> delete
+
+# This command either works on selected files or non-hidden files in the current directory if you don't have any selection.
+cmd bulk-rename ${{
+    old="$(mktemp)"
+    new="$(mktemp)"
+    if [ -n "$fs" ]; then
+        fs="$(basename -a -- $fs)"
+    else
+        fs="$(ls)"
+    fi
+    printf '%s\n' "$fs" > "$old"
+    printf '%s\n' "$fs" > "$new"
+    $EDITOR "$new"
+    [ "$(wc -l < "$new")" -ne "$(wc -l < "$old")" ] && exit
+    paste "$old" "$new" | while IFS= read -r names; do
+        src="$(printf '%s' "$names" | cut -f1)"
+        dst="$(printf '%s' "$names" | cut -f2)"
+        if [ "$src" = "$dst" ] || [ -e "$dst" ]; then
+            continue
+        fi
+        mv -- "$src" "$dst"
+    done
+    rm -- "$old" "$new"
+    lf -remote "send $id unselect"
+}}
+
+map R bulk-rename
+
+# Press . to repeat the last command typed on the command line:
+map . :read; cmd-history-prev; cmd-enter
 
 # extract the current file with the right command
 # (xkcd link: https://xkcd.com/1168/)
@@ -161,6 +208,24 @@ cmd zi ${{
 
 cmd on-cd &{{
     zoxide add "$PWD"
+}}
+
+cmd pager ${{
+    if [ -f "$f" ]; then
+        bat "$f"
+    elif [ -d "$f" ]; then
+        tree "$f" | bat
+    fi
+}}
+
+cmd bookmark-jump ${{
+    res="$(cat -- "$LF_BOOKMARK_PATH/$(ls -- "$LF_BOOKMARK_PATH" | fzf)" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+    lf -remote "send $id cd \"$res\""
+}}
+
+cmd bookmark-create ${{
+    read -r ans
+    printf '%s\n' "$PWD" > "$LF_BOOKMARK_PATH/$ans"
 }}
 
 # Combining fzf with ripgrep to interactively search in the contents of files under
