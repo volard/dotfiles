@@ -1,6 +1,6 @@
 - https://discussion.fedoraproject.org/t/gnome-boxes-does-not-show-shared-folders-menu/63839/3
 - https://alexandruvisarion.wordpress.com/2017/06/15/gnome-boxes-introducing-shared-folders/
-
+- https://itsfoss.com/share-files-gnome-boxes/
 
 # Ubuntu
 1.
@@ -10,6 +10,7 @@ systemctl reboot
 ```
 2. Share directory through box's preferences
 3. Access Spice client folder in network in file manager
+4. If it's not accessible, locate it manually via `dav://localhost:9843/`
 
 # Windows
 1. Download and install SPICE Guest Tools for Windows Guest system from https://www.spice-space.org/download.html
