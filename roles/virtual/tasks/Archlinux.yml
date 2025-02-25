@@ -1,0 +1,64 @@
+---
+- name: Install packages from pacman
+  pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - virt-manager
+    - qemu
+    - libvirt
+    - edk2-ovmf
+    - dnsmasq
+    - bridge-utils
+    - openbsd-netcat
+    - iptables-nft
+  become: true
+  loop_control:
+    loop_var: pacman_item
+  when: ansible_distribution == "Archlinux"
+
+- name: Create docker group
+  group:
+    name: libvirt
+    state: present
+    become: true
+
+- name: Add user volard to docker group
+  user:
+    name: volard
+    groups: libvirt
+    append: yes
+    become: true
+
+- name: Enable and start libvirtd service
+  systemd:
+    name: libvirtd
+    enabled: yes
+    state: started
+
+- name: Delete a file
+  file:
+    src: "/etc/libvirt/libvirt.conf"
+    state: absent
+    force: true
+
+- name: Create a symlink to a file
+  file:
+    src: "{{ role_path }}/files/libvirtd.conf"
+    dest: "/etc/libvirt/libvirt.conf"
+    state: link
+    force: true
+
+
+- name: Delete a file
+  file:
+    src: "/etc/libvirt/qemu.conf"
+    state: absent
+    force: true
+
+- name: Create a symlink to a file
+  file:
+    src: "{{ role_path }}/files/qemu.conf"
+    dest: "/etc/libvirt/qemu.conf"
+    state: link
+    force: true
