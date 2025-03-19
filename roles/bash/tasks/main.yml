@@ -50,6 +50,11 @@
   loop_control:
     loop_var: script_item
 
+- name: Ensure .local/bin directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.local/bin"
+    state: directory
+
 - name: Install Oh My Posh on Linux
   ansible.builtin.shell: >
     curl -s https://ohmyposh.dev/install.sh | bash -s -- -d {{ ansible_user_dir }}/.local/bin

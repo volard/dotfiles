@@ -5,6 +5,7 @@
     state: present
   loop:
     - neovim
+    - zip
     - eza
     - code
     - tldr
@@ -18,7 +19,6 @@
     - molecule
     - lshw
     - neofetch
-    - vivaldi
     - blueman
     - lazygit
     - meld
@@ -27,6 +27,7 @@
     - seahorse
     - lf
     - git-delta
+    - mpv
     - tmux
     - baobab
     - xplr
@@ -42,9 +43,17 @@
   loop:
     - stretchly-bin
     - hiddify
+    - zen-browser-bin
     - lazydocker-bin
-    - superproductivity-bin
   loop_control:
     loop_var: aur_item
   when: ansible_distribution == "Archlinux"
 
+- name: setup dev globals
+  command:  mise use -g {{ mise_item }}@latest
+  loop:
+    - node
+    - python
+  loop_control:
+    loop_var: mise_item
+  when: ansible_distribution == "Archlinux"
