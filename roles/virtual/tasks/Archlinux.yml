@@ -62,3 +62,18 @@
     dest: "/etc/libvirt/qemu.conf"
     state: link
     force: true
+
+
+- name: Delete a file
+  file:
+    src: "/etc/libvirt/network.conf"
+    state: absent
+    force: true
+
+- name: Create a symlink to a file
+  file:
+    src: "{{ role_path }}/files/network.conf"
+    dest: "/etc/libvirt/network.conf"
+    state: link
+    force: true
+
