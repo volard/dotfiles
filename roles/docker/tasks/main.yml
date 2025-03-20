@@ -7,3 +7,18 @@
 - name: "Run distro specific tasks"
   ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
   when: distribution_config.stat.exists
+
+# I live in garbage country
+
+- name: "Check for config"
+  file:
+    src: "{{ role_path }}/files/daemon.json"
+    dest: "/etc/docker/daemon.json"
+    state: link
+    force: true
+  become: true
+
+- name: "Restart docker"
+  command: sudo systemctl restart docker
+  become: true
+

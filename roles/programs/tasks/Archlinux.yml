@@ -14,6 +14,8 @@
     - mise
     - wlsunset
     - fzf
+    - qt6-wayland
+    - qt5-wayland
     - duff
     - zoxide
     - molecule
@@ -22,14 +24,14 @@
     - blueman
     - lazygit
     - meld
-    - gnome-keyring
-    - libsecret
+    - gnome-keyring # keyring itself
+    - libsecret # for keyring
     - seahorse
     - lf
     - git-delta
-    - mpv
+    - mpv # video player
     - tmux
-    - baobab
+    - baobab # storage analyzer gui
     - xplr
     - ncdu
   become: true
