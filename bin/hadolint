@@ -1,0 +1,11 @@
+#!/bin/bash
+dockerfile="$1"
+shift
+
+# Check if the image is available
+if ! docker images | grep -q "hadolint/hadolint"; then
+    echo "Image hadolint/hadolint is not available."
+    docker pull hadolint/hadolint:latest-alpine
+fi
+
+docker run --rm -i hadolint/hadolint:latest-alpine hadolint "$@" - < "$dockerfile"
