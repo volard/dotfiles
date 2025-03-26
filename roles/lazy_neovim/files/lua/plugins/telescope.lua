@@ -14,7 +14,7 @@ return {
     },
     extensions = {
       file_browser = {
-        hijack_netrw = true,
+        -- hijack_netrw = true,
         grouped = true,
         no_ignore = true,
         hidden = { file_browser = true, folder_browser = true },
