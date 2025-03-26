@@ -7,7 +7,4 @@ local g = vim.g
 
 o.number = false
 o.relativenumber = false
-o.ro = false
 g.autoformat = false
-g.noro = false
-g.ro = false
