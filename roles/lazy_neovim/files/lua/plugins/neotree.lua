@@ -17,7 +17,7 @@ return {
   ---@type neotree.Config?
   opts = {
     filesystem = {
-      hijack_netrw_behavior = "open_current", -- netrw disabled, opening a directory opens neo-tree
+      hijack_netrw_behavior = "disabled", -- netrw disabled, opening a directory opens neo-tree
       -- in whatever position is specified in window.position
       -- "open_current",  -- netrw disabled, opening a directory opens within the
       -- window like netrw would, regardless of window.position

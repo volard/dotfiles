@@ -3,7 +3,11 @@
 -- Add any additional options here
 
 local o = vim.opt
+local g = vim.g
 
 o.number = false
 o.relativenumber = false
-vim.g.autoformat = false
+o.ro = false
+g.autoformat = false
+g.noro = false
+g.ro = false
