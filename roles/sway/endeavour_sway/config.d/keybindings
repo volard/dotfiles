@@ -63,9 +63,11 @@ bindsym --to-code {
 # Layout stuff:
 #
     # Set how the current window will be split
-    # Split the window vertically
+ 
+    # Split the window vertically (new window at the bottom)
     $mod+v splitv
-    # Split the window horizontally
+
+    # Split the window horizontally (new window on side)
     $mod+b splith
 
     # Switch the current container between different layout styles

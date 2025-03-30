@@ -3,7 +3,7 @@ return {
 
   keys = {
     { "<leader>E", ":Neotree focus reveal current<CR>", desc = "Explorer NeoTree (cwd)", remap = true },
-    { "<leader>e", ":Neotree focus current<CR>", desc = "NeoTree focus current", remap = true },
+    { "<leader>e", ":Neotree toggle current reveal_force_cwd<cr>", desc = "NeoTree focus current", remap = true },
   },
 
   dependencies = {
