@@ -2,8 +2,8 @@ return {
   "nvim-neo-tree/neo-tree.nvim",
 
   keys = {
-    { "<leader>E", ':Neotree focus reveal current<CR>', desc = "Explorer NeoTree (cwd)", remap = true },
-    { '<leader>e', ':Neotree focus current<CR>',  desc = 'NeoTree focus current', remap = true  }
+    { "<leader>E", ":Neotree focus reveal current<CR>", desc = "Explorer NeoTree (cwd)", remap = true },
+    { "<leader>e", ":Neotree focus current<CR>", desc = "NeoTree focus current", remap = true },
   },
 
   dependencies = {
@@ -15,6 +15,12 @@ return {
   ---@module "neo-tree"
   ---@type neotree.Config?
   opts = {
+    default_component_configs = {
+      file_size = { enabled = false },
+      type = { enabled = false },
+      last_modified = { enabled = false },
+      created = { enabled = false },
+    },
     filesystem = {
       hijack_netrw_behavior = "open_current", -- netrw disabled, opening a directory opens neo-tree
       -- in whatever position is specified in window.position
@@ -26,9 +32,15 @@ return {
         always_show = { -- remains visible even if other settings would normally hide it
           ".gitignore",
         },
+        always_show_by_pattern = {
+          "*.env*"
+        }, -- remains visible even if other settings would normally hide it
+        hide_by_pattern = {
+
+        },
         show_hidden_count = true,
         hide_dotfiles = false,
-        hide_gitignored = false,
+        hide_gitignored = true,
         hide_by_name = {
           ".git",
           ".DS_Store",
