@@ -38,11 +38,13 @@ default_roles:
   - gtk3
   - i3status
   - doom
+  - virtual
   - tmux
   - ssh
   - sway
   - swaylock
   - lazy_neovim
+  - xplr
   - ideavim
   - alacritty
   - vscode
@@ -50,6 +52,7 @@ default_roles:
   - rofi
   - glazewm
   - vifm
+  - mise
   - lazygit
   - i3
   - docker
