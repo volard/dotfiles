@@ -180,6 +180,11 @@ map <leader>sg :action FindInPath<CR>
 map <leader>s" :action PasteMultiple<CR>
 
 
+map <C-Up> :action NextOccurence<CR>
+map <C-Down> :action PreviousOccurence<CR>
+
+
+
 
 " ------------------------------------------------------------
 " --------------------- Commentary ----------------------
@@ -200,7 +205,7 @@ nmap <leader>vz <action>(ToggleZenMode)
 " view fullscreen
 nmap <leader>vf <action>(ToggleFullScreen)
 
-
+nmap <C-/> <action>(ActivateTerminalToolWindow)
 
 
 " ------------------------------------------------------------
@@ -349,10 +354,6 @@ nnoremap <leader>gf :action Vcs.ShowTabbedFileHistory<CR>
 
 " buffer delete
 nmap <leader>bd :action CloseEditor<CR>
-
-nmap <tab> :action NextTab<CR>
-nmap <S-tab> :action PreviousTab<CR>
-
 
 
 
