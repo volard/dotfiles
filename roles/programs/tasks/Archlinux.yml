@@ -7,7 +7,7 @@
     - neovim
     - zip
     - eza
-    - code
+    - unzip
     - tldr
     - bat
     - trash-cli
@@ -16,9 +16,8 @@
     - fzf
     - qt6-wayland
     - qt5-wayland
-    - duff
+    - duff # better df
     - zoxide
-    - molecule
     - lshw
     - neofetch
     - blueman
@@ -26,8 +25,9 @@
     - meld
     - gnome-keyring # keyring itself
     - libsecret # for keyring
-    - seahorse
-    - lf
+    - seahorse # afair its for keyring
+    # - lf # to much os specific configuration that doesn't make sense for me
+    - ranger
     - git-delta
     - mpv # video player
     - tmux
