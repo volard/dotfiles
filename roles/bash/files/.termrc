@@ -62,6 +62,8 @@ alias dsa="docker ps -q | awk '{print $1}' | xargs -o docker stop"
 # do not delete / or prompt if deleting more than 3 files at a time #
 alias rm='rm -I --preserve-root'
 
+alias rr='. ranger'
+
 if [ -e "/usr/share/doc/fzf/examples/key-bindings.bash" ]; then
     source "/usr/share/doc/fzf/examples/key-bindings.bash"
 fi

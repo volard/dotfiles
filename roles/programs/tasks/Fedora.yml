@@ -50,7 +50,7 @@
     - fd-find
     - sshpass
     - unrar
-    - mpv
+    - mpv # video player
     - jq
     - nemo # Cinnamon file manager
   become: true
