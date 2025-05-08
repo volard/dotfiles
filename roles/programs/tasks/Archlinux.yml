@@ -6,34 +6,38 @@
   loop:
     - neovim
     - zip
-    - eza
     - unzip
-    - tldr
-    - bat
+    - eza # better ls
+    - wget
+    - tldr # better man pages
+    - bat # better cat
     - trash-cli
-    - mise
+    - mise # dev tools version manager
     - wlsunset
     - fzf
+    - qbittorrent
     - qt6-wayland
     - qt5-wayland
     - duff # better df
-    - zoxide
+    - zoxide # better cd
     - lshw
-    - neofetch
-    - blueman
+    - fastfetch # rip neofetch
+    - blueman # bluetooth gui manager
+    - btop # better htop/top
     - lazygit
-    - meld
+    - meld # gui diffing tool
     - gnome-keyring # keyring itself
     - libsecret # for keyring
     - seahorse # afair its for keyring
     # - lf # to much os specific configuration that doesn't make sense for me
-    - ranger
-    - git-delta
+    # - ranger # too slow
+    - git-delta # better git diff
     - mpv # video player
-    - tmux
+    - jq # json processor
+    - tmux # termanal multiplexer
     - baobab # storage analyzer gui
-    - xplr
-    - ncdu
+    - xplr # rust based lua hackable tui file manager
+    - ncdu # space analyzer
   become: true
   loop_control:
     loop_var: pacman_item
@@ -45,7 +49,7 @@
   loop:
     - stretchly-bin
     - hiddify
-    - zen-browser-bin
+    # - zen-browser-bin # memory usage is insane
     - lazydocker-bin
   loop_control:
     loop_var: aur_item
