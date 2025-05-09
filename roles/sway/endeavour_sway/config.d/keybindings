@@ -145,7 +145,7 @@ bindsym --to-code {
 # App shortcuts
 #
     # Launch the file explorer
-    $mod+n exec thunar
+    $mod+n exec nemo
 
     # Launch the browser
     $mod+o exec vivaldi
