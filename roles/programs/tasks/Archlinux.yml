@@ -34,6 +34,7 @@
     - git-delta # better git diff
     - mpv # video player
     - jq # json processor
+    - ark # kde gui archives manager
     - tmux # termanal multiplexer
     - baobab # storage analyzer gui
     - xplr # rust based lua hackable tui file manager
