@@ -68,7 +68,7 @@ ZSH_THEME="dstufft"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting)
+plugins=(git zsh-syntax-highlighting colored-man-pages)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -132,6 +132,16 @@ fi
 
 if command -v mise &> /dev/null; then
   eval "$(mise activate zsh)"
+fi
+
+if command -v fzf &> /dev/null; then
+  source <(fzf --zsh)
+
+  # Preview file content using bat (https://github.com/sharkdp/bat)
+  export FZF_CTRL_T_OPTS="
+    --walker-skip .git,node_modules,target
+    --preview 'bat -n --color=always {}'
+    --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 fi
 
 # should be in the end
