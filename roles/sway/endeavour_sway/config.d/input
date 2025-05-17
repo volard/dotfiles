@@ -15,7 +15,8 @@ input "type:keyboard" {
 	xkb_capslock disabled
 	xkb_layout us,ru
 	xkb_variant workman,
-	xkb_options grp:win_space_toggle
+# localectl list-x11-keymap-options | grep grp:
+	xkb_options grp:alt_space_toggle
 }
 
 
