@@ -26,7 +26,7 @@ dotfiles -t separated,roles,no,spaces
 
 ## Structure
 
-Each role **installs and configures** a program. If program doesn't need to be configured, it would be installed with help of `programs` ([see](roles/programs/tasks)) role.
+Each role **installs and configures** a program. If program doesn't need to be configured, it would be installed with help of `programs` ([see](roles/programs/tasks)) role. (this rule is broken now: the config is evolving with me, but I'm lazy to keep it clean)
 
 ```bash
 roles/common_tasks/         # tasks, that can be used across roles
@@ -49,6 +49,9 @@ ansible-vault encrypt ./roles/ssh/files/*
 # encrypt variable
 ansible-vault encrypt_string 'name' --name 'username' | wl-copy
 ```
+
+## Useful for later
+- [SwayOS](https://swayos.github.io)
 
 ## Credits
 

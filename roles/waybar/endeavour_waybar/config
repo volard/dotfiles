@@ -108,7 +108,7 @@
             "warning": 70,
             "critical": 90,
         },
-        "on-click": "footclient -T waybar_htop -e htop"
+        "on-click": "footclient -T waybar_htop -e btop"
     },
     
     "memory": {

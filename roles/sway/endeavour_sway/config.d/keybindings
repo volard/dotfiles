@@ -28,6 +28,7 @@ bindsym --to-code {
     # Reload the configuration file
     $mod+Shift+c reload
 
+    $mod+Shift+o exec bemoji -t
 
 
 #

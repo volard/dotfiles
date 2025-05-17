@@ -10,3 +10,25 @@
     dest: "{{ ansible_user_dir }}/.config/fuzzel"
     state: link
     force: true
+
+- name: Clone the bemoji repository
+  git:
+    repo: https://github.com/marty-oehme/bemoji.git
+    dest: /tmp/bemoji
+
+- name: Make the bemoji script executable
+  file:
+    path: /tmp/bemoji/bemoji
+    mode: '0755'
+  become: true
+
+- name: Move bemoji to /usr/local/bin
+  command: mv /tmp/bemoji/bemoji /usr/local/bin/bemoji
+  args:
+    removes: /usr/local/bin/bemoji
+  become: true
+
+- name: Remove the bemoji directory
+  file:
+    path: /tmp/bemoji
+    state: absent

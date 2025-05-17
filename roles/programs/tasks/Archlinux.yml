@@ -12,6 +12,7 @@
     - tldr # better man pages
     - bat # better cat
     - trash-cli
+    - zsh
     - mise # dev tools version manager
     - wlsunset
     - fzf
@@ -39,6 +40,7 @@
     - baobab # storage analyzer gui
     - xplr # rust based lua hackable tui file manager
     - ncdu # space analyzer
+    - hyprpicker # Wayland color picker
   become: true
   loop_control:
     loop_var: pacman_item

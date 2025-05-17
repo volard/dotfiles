@@ -1,68 +1,9 @@
 # vim: filetype=bash
 PATH="$PATH:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.config/emacs/bin:$HOME/.pyenv/bin:$HOME/.pyenv:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
 
-# https://askubuntu.com/questions/22037/aliases-not-available-when-using-sudo
-alias sudo='sudo '
-
-alias ll="eza -l --icons --color=always -a --group-directories-first"
-
-alias mx="mise x --"
-
-alias bc=batcat
-alias pn=pnpm
-
-alias ..='cd ..'
-
-alias sv='sudo nvim'
-alias svv='sudo nvim .'
-alias vv='v .'
-alias v=nvim
-
-alias wget='wget -c'
-alias lzd='lazydocker'
-alias lg=lazygit
-
-
-# get docker container names and port numbers
-alias dnp='docker container ls --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}" -a'
-
-# remove all dangling images -f is flag for force
-alias dip="docker image prune -f"
-
-# list all docker images available on my machine
-alias dil="docker images"
-
-# Start the docker-compose stack in the current directory
-alias dcu="docker-compose up -d"
-
-# Start the docker-compose stack in the current directory and rebuild the images
-alias dcub="docker-compose up -d --build"
-
-# Stop, delete (down) or restart the docker-compose stack in the current directory
-alias dcs="docker-compose stop"
-alias dcd="docker-compose down"
-alias dcr="docker-compose restart"
-
-# Show the logs for the docker-compose stack in the current directory
-# May be extended with the service name to get service-specific logs, like
-# 'dcl php' to get the logs of the php container
-alias dcl="docker-compose logs"
-
-# Quickly run the docker exec command like this: 'dex container-name bash'
-alias dex="docker exec -it"
-
-# 'docker ps' displays the currently running containers
-alias dps="docker ps"
-
-
-# This command is a neat shell pipeline to stop all running containers no matter
-# where you are and without knowing any container names
-alias dsa="docker ps -q | awk '{print $1}' | xargs -o docker stop"
-
-# do not delete / or prompt if deleting more than 3 files at a time #
-alias rm='rm -I --preserve-root'
-
-alias rr='. ranger'
+if [ -f ~/.aliases ]; then
+    . ~/.aliases
+fi
 
 if [ -e "/usr/share/doc/fzf/examples/key-bindings.bash" ]; then
     source "/usr/share/doc/fzf/examples/key-bindings.bash"
