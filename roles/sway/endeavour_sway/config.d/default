@@ -2,7 +2,7 @@
 
 set {
   # Logo key. Use Mod1 for Alt.
-  $mod Mod1
+  $mod Mod4
 
   # Add Vim key support
   $left h
