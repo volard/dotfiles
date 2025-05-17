@@ -110,6 +110,8 @@ if [ -f ~/.aliases ]; then
 fi
 
 function run_tsesh() {
+  exec </dev/tty
+  exec <&1
   tsesh
 }
 
