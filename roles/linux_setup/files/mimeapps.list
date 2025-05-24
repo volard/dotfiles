@@ -1,0 +1,35 @@
+[Default Applications]
+x-scheme-handler/anytype=anytype.desktop
+x-scheme-handler/discord=vesktop.desktop
+audio/mpeg=mpv.desktop
+x-scheme-handler/http=vivaldi.desktop
+x-scheme-handler/https=vivaldi.desktop
+x-scheme-handler/ftp=vivaldi.desktop
+x-scheme-handler/chrome=vivaldi.desktop
+text/html=vivaldi.desktop
+application/x-extension-htm=vivaldi.desktop
+application/x-extension-html=vivaldi.desktop
+application/x-extension-shtml=vivaldi.desktop
+application/xhtml+xml=vivaldi.desktop
+application/x-extension-xhtml=vivaldi.desktop
+application/x-extension-xht=vivaldi.desktop
+text/vbscript=org.x.editor.desktop
+application/zip=org.kde.ark.desktop
+
+[Added Associations]
+audio/mpeg=mpv.desktop;firefox.desktop;
+x-scheme-handler/http=vivaldi.desktop;
+x-scheme-handler/https=vivaldi.desktop;
+x-scheme-handler/chrome=vivaldi.desktop;
+text/html=vivaldi.desktop;
+application/x-extension-htm=vivaldi.desktop;
+application/x-extension-html=vivaldi.desktop;
+application/x-extension-shtml=vivaldi.desktop;
+application/xhtml+xml=vivaldi.desktop;
+application/x-extension-xhtml=vivaldi.desktop;
+application/x-extension-xht=vivaldi.desktop;
+text/plain=org.x.editor.desktop;
+image/svg+xml=org.x.editor.desktop;
+application/zip=thunar.desktop;org.kde.ark.desktop;
+application/x-shellscript=nvim.desktop;
+application/json=org.x.editor.desktop;

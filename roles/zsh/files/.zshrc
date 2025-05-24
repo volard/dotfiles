@@ -68,7 +68,10 @@ ZSH_THEME="dstufft"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting colored-man-pages)
+plugins=(git zsh-syntax-highlighting colored-man-pages vi-mode)
+
+# Enable vi mode
+bindkey -v
 
 source $ZSH/oh-my-zsh.sh
 
