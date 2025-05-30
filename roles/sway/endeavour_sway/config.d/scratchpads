@@ -6,22 +6,34 @@ set {
     $term_id quake_term
     $term_under_hand  footclient --app-id=$term_id
 
+    $messenger_id org.telegram.desktop
+    $messenger telegram-desktop
+
     # $editor_id emacs_float
     # $editor  emacs --name $editor_id
 }
 for_window {
-  # main terminal
+  ## main terminal
   [app_id=$term_id] move to scratchpad, scratchpad show
   [app_id=$term_id] $maximize
+
+  ## Messenger
+  [app_id=$messenger_id] move to scratchpad, scratchpad show
+
+  [app_id=$term_id] move to scratchpad, scratchpad show
   # emacs
   # [app_id=$editor_id] move to scratchpad, scratchpad show
   # [app_id=$editor_id] $maximize
 }
 
+# Scratchpad bindsym
 bindsym --to-code {
-  # Scratchpad bindsym
   ## Main terminal
-  $mod+semicolon      exec swaymsg [app_id=$term_id]   scratchpad show || exec $term_under_hand,   $maximize
+  $mod+semicolon   exec swaymsg [app_id=$term_id] scratchpad show || exec $term_under_hand, $maximize
+
+  ## Messenger
+  $mod+o  exec swaymsg [app_id=$messenger_id] scratchpad show || exec 
+
   ## editor
   # $mod+x       exec swaymsg [app_id=$editor_id] scratchpad show || exec $editor, $maximize
 }

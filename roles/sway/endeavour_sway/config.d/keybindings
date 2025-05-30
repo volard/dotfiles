@@ -148,8 +148,6 @@ bindsym --to-code {
     # Launch the file explorer
     $mod+n exec nemo
 
-    # Launch the browser
-    $mod+o exec vivaldi
 
     # Launch the clipboard manager
     $mod+Ctrl+v exec cliphist list | fuzzel -d -w 90 -l 30 -p ""| cliphist decode | wl-copy
