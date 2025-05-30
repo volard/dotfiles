@@ -20,11 +20,11 @@ for_window [title="Save File"] floating enable
 for_window [app_id="firefox" title="Firefox — Sharing Indicator"] kill
 
 # Positioning
-
 assign [class="superProductivity"] workspace number 8
 
 # Inhibit idle
 for_window [app_id="firefox"] inhibit_idle fullscreen
 for_window [app_id="Chromium"] inhibit_idle fullscreen
 for_window [app_id="vivaldi-stable"] inhibit_idle fullscreen
+
 
