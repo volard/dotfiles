@@ -1,0 +1,27 @@
+# vim: ft=i3
+
+set {
+    $maximize border none, move position center, resize set width 100 ppt height 100 ppt
+
+    $term_id quake_term
+    $term_under_hand  footclient --app-id=$term_id
+
+    # $editor_id emacs_float
+    # $editor  emacs --name $editor_id
+}
+for_window {
+  # main terminal
+  [app_id=$term_id] move to scratchpad, scratchpad show
+  [app_id=$term_id] $maximize
+  # emacs
+  # [app_id=$editor_id] move to scratchpad, scratchpad show
+  # [app_id=$editor_id] $maximize
+}
+
+bindsym --to-code {
+  # Scratchpad bindsym
+  ## Main terminal
+  $mod+semicolon      exec swaymsg [app_id=$term_id]   scratchpad show || exec $term_under_hand,   $maximize
+  ## editor
+  # $mod+x       exec swaymsg [app_id=$editor_id] scratchpad show || exec $editor, $maximize
+}
