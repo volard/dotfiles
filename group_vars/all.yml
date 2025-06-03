@@ -34,42 +34,47 @@ roles_to_exclude:
 
 
 default_roles:
-  - powershell
-  - gtk3
-  - doom
+  - emacs
+  - awesome
+  - docker
+  - hiddify
+  - waybar
   - virtual
-  - tmux
-  - ssh
-  - sway
-  - swaylock
-  - lazy_neovim
-  - xplr
-  - ideavim
-  - alacritty
-  - vscode
   - polybar
   - rofi
-  - glazewm
-  - vifm
-  - mise
-  - lazygit
-  - i3
-  - docker
-  - windows_setup
-  - wezterm
-  - neovim
-  - waybar
-  - fuzzel
-  - hiddify
-  - firefox
-  - oh-my-posh
-  - foot
-  - awesome
-  - emacs
-  - linux_setup
-  - programs
-  - awesome
-  - docker
-  - waybar
-  - rofi
   - ssh
+  - wakatime
+  - powershell
+  - ideavim
+  - sway
+  - vifm
+  - git
+  - swaylock
+  - i3
+  - lazygit
+  - mise
+  - windows_setup
+  - firefox
+  - neovim
+  - xplr
+  - ranger
+  - foot
+  - zsh
+  - lazy_neovim
+  - mako
+  - lf
+  - fuzzel
+  - tmux
+  - linux_setup
+  - alacritty
+  - fcitx
+  - glazewm
+  - i3status
+  - wezterm
+  - programs
+  - oh-my-posh
+  - vscode
+  - gtk3
+  - bash
+  - mpv
+  - doom
