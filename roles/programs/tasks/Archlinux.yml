@@ -22,6 +22,7 @@
     - duff # better df
     - zoxide # better cd
     - lshw
+    - nemo
     - fastfetch # rip neofetch
     - blueman # bluetooth gui manager
     - btop # better htop/top
