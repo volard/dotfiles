@@ -36,7 +36,6 @@ roles_to_exclude:
 default_roles:
   - powershell
   - gtk3
-  - i3status
   - doom
   - virtual
   - tmux
@@ -69,9 +68,8 @@ default_roles:
   - emacs
   - linux_setup
   - programs
-  - wakatime
-  - mako
-  - fcitx
-  - bash
-  - lf
-  - git
+  - awesome
+  - docker
+  - waybar
+  - rofi
+  - ssh

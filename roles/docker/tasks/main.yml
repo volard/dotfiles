@@ -10,6 +10,13 @@
 
 # I live in garbage country
 
+- name: Ensure .config directory exists
+  ansible.builtin.file:
+    path: "/etc/docker"
+    state: directory
+    mode: "0755"
+  become: true
+
 - name: "Check for config"
   file:
     src: "{{ role_path }}/files/daemon.json"
