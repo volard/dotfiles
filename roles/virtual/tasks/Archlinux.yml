@@ -21,14 +21,14 @@
   group:
     name: libvirt
     state: present
-    become: true
+  become: true
 
 - name: Add user volard to docker group
   user:
     name: volard
     groups: libvirt
     append: yes
-    become: true
+  become: true
 
 - name: Enable and start libvirtd service
   systemd:
@@ -66,7 +66,7 @@
 
 - name: Delete a file
   file:
-    src: "/etc/libvirt/network.conf"
+    path: "/etc/libvirt/network.conf"
     state: absent
     force: true
 

@@ -5,7 +5,7 @@
     state: directory
     mode: "0755"
 
-- name: Ensure .config directory exists
+- name: Ensure .bashrc file exists
   ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.bashrc"
     state: file

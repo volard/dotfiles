@@ -19,14 +19,14 @@
   group:
     name: docker
     state: present
-    become: true
+  become: true
 
 - name: Add user volard to docker group
   user:
     name: volard
     groups: docker
     append: yes
-    become: true
+  become: true
 
 - name: Enable and start Docker service
   systemd:

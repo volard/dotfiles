@@ -31,14 +31,14 @@
     - libsecret # for keyring
     - seahorse # afair its for keyring
     # - lf # to much os specific configuration that doesn't make sense for me
-    # - ranger # too slow
+    - ranger # too slow
     - git-delta # better git diff
     - mpv # video player
     - jq # json processor
     - ark # kde gui archives manager
     - tmux # termanal multiplexer
     - baobab # storage analyzer gui
-    - xplr # rust based lua hackable tui file manager
+    # - xplr # rust based lua hackable tui file manager
     - ncdu # space analyzer
     - hyprpicker # Wayland color picker
   become: true
