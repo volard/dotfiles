@@ -129,6 +129,10 @@ fi
 
 export PATH="$PATH:$HOME/dotfiles/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.config/emacs/bin:$HOME/.pyenv/bin:$HOME/.pyenv:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$HOME/bin:$HOME/.local/bin:/usr/local/bin"
 
+if command -v docker &> /dev/null; then
+  docker run -it --rm djoudix/git-tip git-tip 
+fi
+
 if command -v pyenv &> /dev/null; then
     eval "$(pyenv init -)"
 fi
@@ -146,6 +150,7 @@ if command -v fzf &> /dev/null; then
     --preview 'bat -n --color=always {}'
     --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 fi
+
 
 # should be in the end
 if command -v zoxide &> /dev/null; then
