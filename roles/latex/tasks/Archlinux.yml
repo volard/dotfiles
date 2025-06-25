@@ -1,0 +1,21 @@
+---
+- name: Install packages from pacman
+  pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - latexmk # for latexmk
+    - texlive-luatex # for lualatex
+  become: true
+  loop_control:
+    loop_var: pacman_item
+  when: ansible_distribution == "Archlinux"
+
+
+- name: "Create link to config for latexmk"
+  file:
+    src: "{{ role_path }}/files/.latexmkrc"
+    dest: "{{ ansible_user_dir }}/.latexmkrc"
+    state: link
+    force: true
+  become: true
