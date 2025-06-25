@@ -1,0 +1,26 @@
+---
+- name: Install packages from pacman
+  pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - tigervnc # clien
+    - wayvnc   # server
+  become: true
+  loop_control:
+    loop_var: pacman_item
+  when: ansible_distribution == "Archlinux"
+
+- name: Ensure config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/wayvnc"
+    state: directory
+
+- name: "Create link to wayvnc config"
+  file:
+    src: "{{ role_path }}/files/config"
+    dest: "{{ ansible_user_dir }}/wayvnc/config"
+    state: link
+    force: true
+  become: true
+
