@@ -6,6 +6,7 @@
   loop:
     - texlive-binextra # for latexmk
     - texlive-luatex # for lualatex
+    - texlive-latex # some tools and format files
   become: true
   loop_control:
     loop_var: pacman_item
