@@ -23,7 +23,7 @@
     - duff # better df
     - zoxide # better cd
     - lshw
-    - nemo
+    - nemo # file manager (found it better than thunder)
     - fastfetch # rip neofetch
     - blueman # bluetooth gui manager
     - btop # better htop/top
@@ -40,7 +40,7 @@
     - ark # kde gui archives manager
     - tmux # termanal multiplexer
     - baobab # storage analyzer gui
-    # - xplr # rust based lua hackable tui file manager
+    # - xplr # rust based lua hackable tui file manager, too complicated
     - ncdu # space analyzer
     - hyprpicker # Wayland color picker
   become: true
@@ -52,10 +52,10 @@
 - name: Install packages from AUR
   command: yay -S --noconfirm {{ aur_item }}
   loop:
-    - stretchly-bin
+    - stretchly-bin # don't stare at screen too hard
     - hiddify
-    # - zen-browser-bin # memory usage is insane
-    - lazydocker-bin
+    # - zen-browser-bin # memory consumption is insane
+    - lazydocker-bin # docker TUI
   loop_control:
     loop_var: aur_item
   when: ansible_distribution == "Archlinux"
