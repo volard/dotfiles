@@ -4,7 +4,7 @@
     name: "{{ pacman_item }}"
     state: present
   loop:
-    - latexmk # for latexmk
+    - texlive-binextra # for latexmk
     - texlive-luatex # for lualatex
   become: true
   loop_control:
