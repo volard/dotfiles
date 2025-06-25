@@ -5,6 +5,7 @@
     state: present
   loop:
     - neovim
+    - zathura # pdf viewer
     - zip
     - unzip
     - eza # better ls
@@ -12,11 +13,11 @@
     - tldr # better man pages
     - bat # better cat
     - trash-cli
-    - zsh
+    - zsh # better shell
     - mise # dev tools version manager
-    - wlsunset
-    - fzf
-    - qbittorrent
+    - wlsunset # warm screen display
+    - fzf # fuzzy searching tool
+    - qbittorrent # torrent client
     - qt6-wayland
     - qt5-wayland
     - duff # better df
@@ -26,7 +27,7 @@
     - fastfetch # rip neofetch
     - blueman # bluetooth gui manager
     - btop # better htop/top
-    - lazygit
+    - lazygit # git TUI
     - meld # gui diffing tool
     - gnome-keyring # keyring itself
     - libsecret # for keyring

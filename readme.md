@@ -60,3 +60,11 @@ ansible-vault encrypt_string 'name' --name 'username' | wl-copy
 - [TechDufus config - GitHub](https://github.com/TechDufus/dotfiles)
 - [Windows playbook scoop](https://github.com/stkrzysiak/windows-playbook-scoop)
 - [ALT-F4-LLC's dotfiles](https://github.com/ALT-F4-LLC/dotfiles)
+
+# jersey
+godot install:
+```bash
+sudo pacman -S godot
+sudo pacman -S libtheora
+```
+
