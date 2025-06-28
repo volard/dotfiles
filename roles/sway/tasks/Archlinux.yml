@@ -13,19 +13,19 @@
     loop_var: pacman_item
   when: ansible_distribution == "Archlinux"
 
-- name: Enable and start pipewire service
-  ansible.builtin.systemd:
-    name: pipewire
-    enabled: true
-    state: started
-  when: ansible_distribution == 'Archlinux'
-
-- name: Enable and start pipewire service
-  ansible.builtin.systemd:
-    name: xdg-desktop-portal
-    enabled: true
-    state: started
-  when: ansible_distribution == 'Archlinux'
+# - name: Enable and start pipewire service
+#   ansible.builtin.systemd:
+#     name: pipewire
+#     enabled: true
+#     state: started
+#   when: ansible_distribution == 'Archlinux'
+#
+# - name: Enable and start pipewire service
+#   ansible.builtin.systemd:
+#     name: xdg-desktop-portal
+#     enabled: true
+#     state: started
+#   when: ansible_distribution == 'Archlinux'
 
 # reload the system
 
