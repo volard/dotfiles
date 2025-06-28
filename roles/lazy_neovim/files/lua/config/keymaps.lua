@@ -13,4 +13,5 @@ map("v", "<C-p>", '"0p', { desc = 'Paste last copyed "0 regester content' })
 
 -- map("n", "<space>fb", "<cmd>Telescope file_browser<CR>", { desc = "Open file browser" })
 
+-- https://miguelcrespo.co/posts/using-telescope-to-find-text-inside-paths
 map("n", "<leader>fs", require("telescope").extensions.live_grep_args.live_grep_args, { noremap = true })
