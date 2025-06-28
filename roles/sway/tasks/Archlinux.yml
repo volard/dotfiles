@@ -18,7 +18,6 @@
     name: pipewire
     enabled: true
     state: started
-    user: true  # This ensures it runs in the user context
   when: ansible_distribution == 'Archlinux'
 
 - name: Enable and start pipewire service
@@ -26,7 +25,6 @@
     name: xdg-desktop-portal
     enabled: true
     state: started
-    user: true  # This ensures it runs in the user context
   when: ansible_distribution == 'Archlinux'
 
 # reload the system
