@@ -28,7 +28,7 @@ bindsym --to-code {
     $mod+Shift+c reload
 
     # Open emoji list
-    $mod+Shift+o exec bemoji -t
+    $mod+Shift+o exec bemoji
 
 
 #
