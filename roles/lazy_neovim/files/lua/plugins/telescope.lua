@@ -12,6 +12,7 @@ return {
         limit = 100, -- Limit the number of history entries
       },
     },
+
     extensions = {
       file_browser = {
         -- hijack_netrw = true,
