@@ -5,6 +5,7 @@
     state: present
   loop:
     - neovim
+    - ripgrep # better grep
     - zathura # pdf viewer
     - zip
     - unzip

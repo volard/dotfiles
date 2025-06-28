@@ -24,10 +24,10 @@ bindsym --to-code {
     # Activities
     $mod+p exec ~/.config/sway/scripts/window_switcher.sh
 
-
     # Reload the configuration file
     $mod+Shift+c reload
 
+    # Open emoji list
     $mod+Shift+o exec bemoji -t
 
 
@@ -39,6 +39,7 @@ bindsym --to-code {
         $mod+Down focus down
         $mod+Up focus up
         $mod+Right focus right
+
         # Vim key support
         $mod+$left focus left
         $mod+$down focus down
@@ -50,6 +51,7 @@ bindsym --to-code {
         $mod+Shift+Down move down
         $mod+Shift+Up move up
         $mod+Shift+Right move right
+
         # Vim key support
         $mod+Shift+$left move left
         $mod+Shift+$down move down
@@ -115,6 +117,7 @@ bindsym --to-code {
     $mod+ctrl+Up resize grow height 10 px
     $mod+ctrl+Down resize shrink height 10 px
     $mod+ctrl+Left resize grow width 10 px
+
     # Resize with Vim keys
     $mod+ctrl+l resize shrink width 10 px
     $mod+ctrl+k resize grow height 10 px
@@ -141,7 +144,6 @@ bindsym --to-code {
     XF86MonBrightnessDown exec brightnessctl -c backlight set 5%-
 
 
-
 #
 # App shortcuts
 #
@@ -151,6 +153,7 @@ bindsym --to-code {
 
     # Launch the clipboard manager
     $mod+Ctrl+v exec cliphist list | fuzzel -d -w 90 -l 30 -p ""| cliphist decode | wl-copy
+
     # Delete an entry from the clipboard manager
     $mod+Ctrl+x exec cliphist list | fuzzel -d -w 90 -l 30 -t cc9393ff -S cc9393ff -p "Select an entry to delete it from cliphist:"| cliphist delete
     # Note: you can clear all cliphist entries by running `cliphist wipe`
@@ -213,6 +216,7 @@ bindsym --to-code --whole-window --border {
     # Resize vertically
     $mod+button4 resize shrink height 5 px or 5 ppt
     $mod+button5 resize grow height 5 px or 5 ppt
+
     # Resize horizontally
     $mod+Shift+button4 resize shrink width 5 px or 5 ppt
     $mod+Shift+button5 resize grow width 5 px or 5 ppt

@@ -1,5 +1,3 @@
-#vim:ft=i3:
-
 set {
   # Logo key. Use Mod1 for Alt.
   $mod Mod4
