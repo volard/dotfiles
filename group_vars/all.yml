@@ -30,6 +30,7 @@ roles_to_exclude:
   - wakatime
   - vifm  # lf better
   - fcitx # I'm not chinese
+  - virtual
 
 
 
@@ -38,7 +39,6 @@ default_roles:
   - gtk3
   - i3status
   - doom
-  - virtual
   - ranger
   - tmux
   - ssh

@@ -35,12 +35,14 @@
     name: libvirtd
     enabled: yes
     state: started
+  become: true
 
 - name: Delete a file
   file:
     src: "/etc/libvirt/libvirt.conf"
     state: absent
     force: true
+  become: true
 
 - name: Create a symlink to a file
   file:
@@ -48,6 +50,7 @@
     dest: "/etc/libvirt/libvirt.conf"
     state: link
     force: true
+  become: true
 
 
 - name: Delete a file
@@ -55,6 +58,7 @@
     src: "/etc/libvirt/qemu.conf"
     state: absent
     force: true
+  become: true
 
 - name: Create a symlink to a file
   file:
@@ -62,6 +66,7 @@
     dest: "/etc/libvirt/qemu.conf"
     state: link
     force: true
+  become: true
 
 
 - name: Delete a file
@@ -69,6 +74,7 @@
     path: "/etc/libvirt/network.conf"
     state: absent
     force: true
+  become: true
 
 - name: Create a symlink to a file
   file:
@@ -76,4 +82,5 @@
     dest: "/etc/libvirt/network.conf"
     state: link
     force: true
+  become: true
 
