@@ -52,16 +52,16 @@
   when: ansible_distribution == "Archlinux"
 
 
-- name: Install packages from AUR
-  command: yay -S --noconfirm {{ aur_item }}
-  loop:
-    # - stretchly-bin # don't stare at screen too hard
-    - hiddify
-    # - zen-browser-bin # memory consumption is insane
-    - lazydocker-bin # docker TUI
-  loop_control:
-    loop_var: aur_item
-  when: ansible_distribution == "Archlinux"
+# - name: Install packages from AUR
+#   command: yay -S --noconfirm {{ aur_item }}
+#   loop:
+#     # - stretchly-bin # don't stare at screen too hard
+#     - hiddify
+#     # - zen-browser-bin # memory consumption is insane
+#     - lazydocker-bin # docker TUI
+#   loop_control:
+#     loop_var: aur_item
+#   when: ansible_distribution == "Archlinux"
 
 - name: setup dev globals
   command:  mise use -g {{ mise_item }}@latest
