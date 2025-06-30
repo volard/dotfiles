@@ -25,58 +25,65 @@ roles_to_exclude:
   - doom
 
   # Not now
-  - ssh
-  - git
-  - wakatime
   - vifm  # lf better
   - fcitx # I'm not chinese
   - virtual
-
+  - polybar
+  - alacritty
+  - oh-my-posh
+  - lf
+  - xplr
+  - emacs
+  - wezterm
+  - swaylock
+  - fcitx
+  - latex
 
 
 default_roles:
-  - powershell
-  - gtk3
-  - i3status
-  - doom
-  - ranger
-  - tmux
-  - ssh
-  - sway
-  - swaylock
-  - lazy_neovim
-  - xplr
-  - ideavim
   - alacritty
-  - vscode
   - polybar
+  - oh-my-posh
+  - wezterm
+  - zsh
+  - docker
+  - ssh
+  - lf
+  - swaylock
+  - xplr
+  - emacs
+  - mako
+  - vnc
+  - virtual
+  - fuzzel
+  - fcitx
+  - sway
+  - lazygit
+  - ideavim
+  - vscode
+  - git
+  - mpv
+  - neovim
+  - vifm
+  - programs
+  - windows_setup
+  - powershell
+  - lazy_neovim
+  - gtk3
+  - doom
   - rofi
   - glazewm
-  - vifm
-  - mise
-  - lazygit
-  - i3
-  - docker
-  - windows_setup
-  - wezterm
-  - neovim
-  - waybar
-  - fuzzel
-  - vnc
-  - hiddify
-  - firefox
-  - oh-my-posh
-  - foot
-  - awesome
-  - emacs
-  - linux_setup
-  - mpv
-  - programs
-  - latex
-  - wakatime
-  - mako
-  - zsh
-  - fcitx
+  - tmux
   - bash
-  - lf
-  - git
+  - awesome
+  - mise
+  - i3
+  - firefox
+  - hiddify
+  - linux_setup
+  - latex
+  - waybar
+  - foot
+  - ranger
+  - wakatime
+  - i3status
