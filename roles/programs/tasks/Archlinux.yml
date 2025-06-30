@@ -22,7 +22,7 @@
     - qbittorrent # torrent client
     - qt6-wayland
     - qt5-wayland
-    - duff # better df
+    - duf # better df
     - zoxide # better cd
     - lshw
     - nemo # file manager (found it better than thunder)
