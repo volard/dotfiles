@@ -55,7 +55,7 @@
 - name: Install packages from AUR
   command: yay -S --noconfirm {{ aur_item }}
   loop:
-    - stretchly-bin # don't stare at screen too hard
+    # - stretchly-bin # don't stare at screen too hard
     - hiddify
     # - zen-browser-bin # memory consumption is insane
     - lazydocker-bin # docker TUI
