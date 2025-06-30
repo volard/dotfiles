@@ -15,6 +15,7 @@
     - bat # better cat
     - trash-cli
     - zsh # better shell
+    - zenity # gui gtk propmts
     - mise # dev tools version manager
     - wlsunset # warm screen display
     - fzf # fuzzy searching tool
