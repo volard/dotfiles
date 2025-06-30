@@ -22,7 +22,6 @@
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
     dest: "{{ lookup('env', 'ZSH_CUSTOM') | default('~/.oh-my-zsh/custom') }}/plugins/zsh-syntax-highlighting"
     update: yes
-  become: true
 
 - name: Remove default .zshrc configuration
   file:

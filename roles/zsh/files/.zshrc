@@ -151,7 +151,6 @@ if command -v fzf &> /dev/null; then
     --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 fi
 
-
 # should be in the end
 if command -v zoxide &> /dev/null; then
   eval "$(zoxide init zsh)"
