@@ -27,7 +27,8 @@
     - lshw
     - nemo # file manager (found it better than thunder)
     - fastfetch # rip neofetch
-    - blueman # bluetooth gui manager
+    # - blueman # bluetooth gui manager # it sucks a lot with my corne for some reason
+    - blueberry
     - btop # better htop/top
     - lazygit # git TUI
     - meld # gui diffing tool
