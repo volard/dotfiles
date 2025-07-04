@@ -164,17 +164,15 @@ set NERDTree
 " ------------------------------------------------------------
 " ---------------------- HARPOON -----------------------------
 " ------------------------------------------------------------
-nmap <leader><C-n> :action SetHarpoon1<cr>
-nmap <leader><C-e> :action SetHarpoon2<cr>
-nmap <leader><C-o> :action SetHarpoon3<cr>
-nmap <leader><C-i> :action SetHarpoon4<cr>
-nmap <leader><C-i> :action SetHarpoon5<cr>
+nmap <leader><C-h> :action SetHarpoon1<cr>
+nmap <leader><C-t> :action SetHarpoon2<cr>
+nmap <leader><C-n> :action SetHarpoon3<cr>
+nmap <leader><C-s> :action SetHarpoon4<cr>
 
-nmap <C-n> :action GotoHarpoon1<cr>
-nmap <C-e> :action GotoHarpoon2<cr>
-nmap <C-o> :action GotoHarpoon3<cr>
-nmap <C-i> :action GotoHarpoon4<cr>
-nmap <C-'> :action GotoHarpoon5<cr>
+nmap <C-h> :action GotoHarpoon1<cr>
+nmap <C-t> :action GotoHarpoon2<cr>
+nmap <C-n> :action GotoHarpoon3<cr>
+nmap <C-s> :action GotoHarpoon4<cr>
 
 nmap <C-e> :action ShowHarpoon<cr>
 nmap <C-a> :action AddToHarpoon<cr>
