@@ -4,23 +4,24 @@
     name: "{{ pacman_item }}"
     state: present
   loop:
-   - neovim
-   - fzf
-   - ripgrep
+    - mpd
+    - mpc
+    - ncmpcpp
   become: true
   loop_control:
     loop_var: pacman_item
   when: ansible_distribution == "Archlinux"
 
-- name: "Remove lazy"
+- name: Ensure .mpd directory exists
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.local/share/nvim/lazy"
-    state: absent
+    path: "{{ ansible_user_dir }}/.mpd"
+    state: directory
+    mode: "0755"
 
-- name: "Create symlink to role files directory"
+- name: Create a symlink to a file
   ansible.builtin.file:
-    src: "{{ role_path }}/files"
-    dest: "{{ ansible_user_dir }}/.config/nvim"
+    src: "{{ role_path }}/files/mpd.conf"
+    dest: "{{ ansible_user_dir }}/.mpd/mpd.conf"
     state: link
     force: true
-  when: ansible_distribution == 'Archlinux'
+

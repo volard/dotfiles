@@ -1,6 +1,17 @@
 ---
+- name: Install packages from pacman
+  community.general.pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - mako
+  become: true
+  loop_control:
+    loop_var: pacman_item
+  when: ansible_distribution == "Archlinux"
+
 - name: Delete a directory
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.config/mako"
     state: absent
 

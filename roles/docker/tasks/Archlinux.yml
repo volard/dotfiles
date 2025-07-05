@@ -1,6 +1,6 @@
 ---
 - name: Install packages from pacman
-  pacman:
+  community.general.pacman:
     name: "{{ pacman_item }}"
     state: present
   loop:
@@ -25,11 +25,11 @@
   user:
     name: volard
     groups: docker
-    append: yes
+    append: true
   become: true
 
 - name: Enable and start Docker service
   systemd:
     name: docker
     state: started
-    enabled: yes
+    enabled: true

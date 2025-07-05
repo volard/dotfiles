@@ -1,4 +1,15 @@
 ---
+- name: Install git-delta
+  community.general.pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - git-delta # better git diff
+  become: true
+  loop_control:
+    loop_var: pacman_item
+  when: ansible_distribution == "Archlinux"
+
 - name: Set OS-specific config paths
   ansible.builtin.set_fact:
     config_path: "{{ ansible_user_dir }}"

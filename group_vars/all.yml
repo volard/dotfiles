@@ -25,19 +25,15 @@ roles_to_exclude:
   - doom
 
   # Not now
-  - vifm  # lf better
+  - vifm  # lf or ranger is better
   - fcitx # I'm not chinese
   - virtual
-  - polybar
-  - alacritty
   - oh-my-posh
-  - lf
-  - xplr
-  - emacs
-  - wezterm
+  - lf # too hard to configure for me
+  - xplr # no comments here ahah
   - swaylock
-  - fcitx
-  - latex
+  - latex # typst is better
+  - gtk3
 
 
 default_roles:
@@ -62,7 +58,6 @@ default_roles:
   - ideavim
   - vscode
   - git
-  - mpv
   - neovim
   - vifm
   - programs
@@ -78,7 +73,6 @@ default_roles:
   - awesome
   - mise
   - i3
-  - firefox
   - hiddify
   - linux_setup
   - latex

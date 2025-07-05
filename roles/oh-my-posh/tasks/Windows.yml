@@ -6,7 +6,6 @@
     mode: "0755"
   when: ansible_os_family == 'Windows'
 
-
 - name: Install oh-my-posh on Windows
   community.windows.win_scoop:
     name: oh-my-posh

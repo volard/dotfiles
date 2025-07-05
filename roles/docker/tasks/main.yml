@@ -18,7 +18,7 @@
   become: true
 
 - name: "Check for config"
-  file:
+  ansible.builtin.file:
     src: "{{ role_path }}/files/daemon.json"
     dest: "/etc/docker/daemon.json"
     state: link
@@ -26,6 +26,7 @@
   become: true
 
 - name: "Restart docker"
-  command: sudo systemctl restart docker
+  ansible.builtin.systemd:
+    name: docker
+    state: restarted
   become: true
-

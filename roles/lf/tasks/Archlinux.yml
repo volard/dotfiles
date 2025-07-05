@@ -1,6 +1,6 @@
 ---
 - name: Create a symlink
-  file:
+  ansible.builtin.file:
     src: "{{ role_path }}/files"
     dest: "{{ ansible_user_dir }}/.config/lf"
     state: link
@@ -9,7 +9,7 @@
 - name: Check if a command exists
   command: which stpv
   register: stpv_check
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: Set fact if command exists
   set_fact:
@@ -32,17 +32,17 @@
   command: make install
   args:
     chdir: /tmp/stpv
-  become: yes
+  become: true
   when: stpv_exists == false
 
 - name: Remove the cloned directory
-  file:
+  ansible.builtin.file:
     path: /tmp/stpv
     state: absent
   when: stpv_exists == false
 
 - name: Ensure lf.bash executable
-  file:
+  ansible.builtin.file:
     path: "{{ role_path }}/files/lf.bash"
     state: file
     mode: '0755'

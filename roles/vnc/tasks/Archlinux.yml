@@ -1,6 +1,6 @@
 ---
 - name: Install packages from pacman
-  pacman:
+  community.general.pacman:
     name: "{{ pacman_item }}"
     state: present
   loop:
@@ -17,7 +17,7 @@
     state: directory
 
 - name: "Create link to wayvnc config"
-  file:
+  ansible.builtin.file:
     src: "{{ role_path }}/files/config"
     dest: "{{ ansible_user_dir }}/wayvnc/config"
     state: link

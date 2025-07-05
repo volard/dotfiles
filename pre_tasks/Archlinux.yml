@@ -1,20 +1,20 @@
 ---
 # - name: Update the package database
-#   pacman:
-#     update_cache: yes
+#   community.general.pacman:
+#     update_cache: true
 
 # - name: Install yay (AUR helper)
-#   pacman:
+#   community.general.pacman:
 #     name: yay
 #     state: present
 
 - name: Install packages from pacman
-  pacman:
+  community.general.pacman:
     name: "{{ pacman_item }}"
     state: present
   loop:
     - blueman
-    - bluez 
+    - bluez
     - bluez-utils
   become: true
   loop_control:
