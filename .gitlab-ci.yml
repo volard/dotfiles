@@ -2,7 +2,7 @@
 image: python:latest
 
 stages:
-  # - lint
+  - lint
   # - test
 
 variables:
@@ -20,13 +20,13 @@ ansible-lint:
   script:
     - ansible-lint
 
-test_roles:
-  stage: test
-  script:
-    - cd roles/alacritty
-    - molecule test
+# test_roles:
+#   stage: test
+#   script:
+#     - cd roles/alacritty
+#     - molecule test
 
-test_playbook:
-  stage: test
-  script:
-    - molecule test
+# test_playbook:
+#   stage: test
+#   script:
+#     - molecule test
