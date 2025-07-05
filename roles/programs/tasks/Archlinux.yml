@@ -50,7 +50,7 @@
 
 
 # - name: Install packages from AUR
-#   command: yay -S --noconfirm {{ aur_item }}
+#   ansible.builtin.command: yay -S --noconfirm {{ aur_item }}
 #   loop:
 #     # - stretchly-bin # don't stare at screen too hard
 #     - hiddify
@@ -60,8 +60,8 @@
 #     loop_var: aur_item
 #   when: ansible_distribution == "Archlinux"
 
-- name: setup dev globals
-  command:  mise use -g {{ mise_item }}@latest
+- name: Setup dev globals
+  ansible.builtin.command: mise use -g {{ mise_item }}@latest
   loop:
     - node
     - python

@@ -1,12 +1,12 @@
 ---
 - name: Update apt cache
-  apt:
+  ansible.builtin.apt:
     update_cache: true
   become: true
   when: ansible_distribution == 'Ubuntu'
 
 - name: Upgrade all packages
-  apt:
+  ansible.builtin.apt:
     upgrade: full
     autoclean: true
     autoremove: true

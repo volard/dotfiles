@@ -1,6 +1,6 @@
 ---
 - name: Install foot
-  dnf:
+  ansible.builtin.dnf:
     name: foot
     state: present
   become: true

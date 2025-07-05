@@ -24,4 +24,3 @@
     dest: "{{ ansible_user_dir }}/.mpd/mpd.conf"
     state: link
     force: true
-

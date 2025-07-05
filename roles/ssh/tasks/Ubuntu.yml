@@ -20,7 +20,7 @@
 - name: Allow SSH through UFW
   community.general.ufw:
     rule: allow
-    name: OpenSSH   
+    name: OpenSSH
   become: true
   when: ansible_distribution == 'Ubuntu'
 

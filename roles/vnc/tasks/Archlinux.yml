@@ -15,6 +15,7 @@
   ansible.builtin.file:
     path: "{{ ansible_user_dir }}/wayvnc"
     state: directory
+    mode: '0755'
 
 - name: "Create link to wayvnc config"
   ansible.builtin.file:
@@ -23,4 +24,3 @@
     state: link
     force: true
   become: true
-

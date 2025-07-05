@@ -12,4 +12,3 @@
     config_path: "{{ ansible_user_dir }}/.local/rofi/themes"
   when: ansible_distribution == 'Ubuntu'
   become: false
-

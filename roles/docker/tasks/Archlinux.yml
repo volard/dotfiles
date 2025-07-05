@@ -12,24 +12,25 @@
   when: ansible_distribution == "Archlinux"
 
 - name: Reload systemd manager configuration
-  command: systemctl daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
   become: true
 
 - name: Create docker group
-  group:
+  ansible.builtin.group:
     name: docker
     state: present
   become: true
 
 - name: Add user volard to docker group
-  user:
+  ansible.builtin.user:
     name: volard
     groups: docker
     append: true
   become: true
 
 - name: Enable and start Docker service
-  systemd:
+  ansible.builtin.systemd:
     name: docker
     state: started
     enabled: true

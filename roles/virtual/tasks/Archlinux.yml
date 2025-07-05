@@ -18,20 +18,20 @@
   when: ansible_distribution == "Archlinux"
 
 - name: Create docker group
-  group:
+  ansible.builtin.group:
     name: libvirt
     state: present
   become: true
 
 - name: Add user volard to docker group
-  user:
+  ansible.builtin.user:
     name: volard
     groups: libvirt
     append: true
   become: true
 
 - name: Enable and start libvirtd service
-  systemd:
+  ansible.builtin.systemd:
     name: libvirtd
     enabled: true
     state: started
@@ -39,7 +39,7 @@
 
 - name: Delete a file
   ansible.builtin.file:
-    src: "/etc/libvirt/libvirt.conf"
+    path: "/etc/libvirt/libvirt.conf"
     state: absent
     force: true
   become: true
@@ -55,7 +55,7 @@
 
 - name: Delete a file
   ansible.builtin.file:
-    src: "/etc/libvirt/qemu.conf"
+    path: "/etc/libvirt/qemu.conf"
     state: absent
     force: true
   become: true
@@ -83,4 +83,3 @@
     state: link
     force: true
   become: true
-

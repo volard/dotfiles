@@ -46,12 +46,12 @@
 - name: Source bashrc for the current shell session
   block:
     - name: Check if running interactively
-      set_fact:
+      ansible.builtin.set_fact:
         is_interactive: "{{ lookup('env', 'PS1') is defined }}"
       changed_when: false
 
     - name: Source bashrc if interactive
       when: is_interactive
-      command: /bin/bash -c "source ~/.bashrc"
+      ansible.builtin.command: /bin/bash -c "source ~/.bashrc"
       changed_when: false
-  become: no
+  become: false

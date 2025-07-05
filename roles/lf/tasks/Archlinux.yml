@@ -7,39 +7,39 @@
     force: true
 
 - name: Check if a command exists
-  command: which stpv
+  ansible.builtin.command: which stpv
   register: stpv_check
   ignore_errors: true
 
 - name: Set fact if command exists
-  set_fact:
+  ansible.builtin.set_fact:
     stpv_exists: true
   when: stpv_check.rc == 0
 
 - name: Set fact if command does not exist
-  set_fact:
+  ansible.builtin.set_fact:
     stpv_exists: false
   when: stpv_check.rc != 0
 
 - name: Clone the Git repository
-  git:
+  ansible.builtin.git:
     repo: https://github.com/Naheel-Azawy/stpv.git
     dest: /tmp/stpv
-    update: no
-  when: stpv_exists == false
+    update: false
+  when: not stpv_exists
 
 - name: Install the package using make
-  command: make install
+  ansible.builtin.command: make install
   args:
     chdir: /tmp/stpv
   become: true
-  when: stpv_exists == false
+  when: not stpv_exists
 
 - name: Remove the cloned directory
   ansible.builtin.file:
     path: /tmp/stpv
     state: absent
-  when: stpv_exists == false
+  when: not stpv_exists
 
 - name: Ensure lf.bash executable
   ansible.builtin.file:

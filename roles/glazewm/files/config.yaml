@@ -111,192 +111,192 @@ workspaces:
 window_rules:
   # Task Manager requires admin privileges to manage and should be ignored unless running
   # the WM as admin.
-  - command: ignore
+  - ansible.builtin.command: ignore
     match_process_name: /Taskmgr|ScreenClippingHost/
 
-  - command: set floating
+  - ansible.builtin.command: set floating
     match_title: Sticky Notes
 
-  - command: set floating
+  - ansible.builtin.command: set floating
     match_title: /Adobe Photoshop*/
 
-  - command: set floating
+  - ansible.builtin.command: set floating
     match_title: /Adobe Illustrator*/
 
   # Ignore telegram media viewer
-  - command: ignore
+  - ansible.builtin.command: ignore
     match_title: Media.[Vv]iewer
 
   # ignore VLC player
-  - command: ignore
+  - ansible.builtin.command: ignore
     match_title: / *VLC media player/
 
   # Launches system dialogs as floating by default (eg. File Explorer save/open dialog).
-  - command: set floating
+  - ansible.builtin.command: set floating
     match_class_name: "#32770"
 
   # Do not manage picture-in-picture windows for browsers. Note that the default is for
   # English; change `match_title` to the window's title if you use another language.
-  - command: ignore
+  - ansible.builtin.command: ignore
     match_title: "[Pp]icture.in.[Pp]icture"
     match_class_name: Chrome_WidgetWin_1|MozillaDialogClass
 
-  - command: ignore
+  - ansible.builtin.command: ignore
     match_title: Color[Pp]icker
 
   # Some applications (eg. Steam) have borders that extend past the normal border size.
-  - command: resize borders 0px -7px -7px -7px
+  - ansible.builtin.command: resize borders 0px -7px -7px -7px
     match_process_name: steam
 
   # Ignore the bar window.
-  - command: ignore
+  - ansible.builtin.command: ignore
     match_process_name: /Zebar/
 
   # Auto move windows to dedicated workspaces
-  - command: move to workspace 1
+  - ansible.builtin.command: move to workspace 1
     match_process_name: /Vivaldi|Firefox|.*Chrome.*/
 
-  - command: move to workspace 2
+  - ansible.builtin.command: move to workspace 2
     match_title: /.*Emacs/
     match_process_name: /.*PhpStorm.*|.*Emacs.*/
 
-  - command: move to workspace 3
+  - ansible.builtin.command: move to workspace 3
     match_process_name: Obsidian
 
-  - command: move to workspace 4
+  - ansible.builtin.command: move to workspace 4
     match_process_name: /WezTerm.*/
 
-  - command: move to workspace 8
+  - ansible.builtin.command: move to workspace 8
     match_process_name: /Telegram.*|.*Discord.*/
 
-  - command: move to workspace 9
+  - ansible.builtin.command: move to workspace 9
     match_process_name: VK Мессенджер
 
 binding_modes:
   - name: resize
     keybindings:
       # Resize focused window by a percentage or pixel amount.
-      - command: resize width -2%
+      - ansible.builtin.command: resize width -2%
         bindings: [H, Left]
-      - command: resize width +2%
+      - ansible.builtin.command: resize width +2%
         bindings: [L, Right]
-      - command: resize height +2%
+      - ansible.builtin.command: resize height +2%
         bindings: [K, Up]
-      - command: resize height -2%
+      - ansible.builtin.command: resize height -2%
         bindings: [J, Down]
       # Press enter/escape to return to default keybindings.
-      - command: binding mode none
+      - ansible.builtin.command: binding mode none
         bindings: [Escape, Enter]
 
 keybindings:
   # Shift focus in a given direction.
-  - command: focus left
+  - ansible.builtin.command: focus left
     bindings: [Alt+H, Alt+Left]
-  - command: focus right
+  - ansible.builtin.command: focus right
     bindings: [Alt+L, Alt+Right]
-  - command: focus up
+  - ansible.builtin.command: focus up
     bindings: [Alt+K, Alt+Up]
-  - command: focus down
+  - ansible.builtin.command: focus down
     bindings: [Alt+J, Alt+Down]
 
   # Move focused window in a given direction.
-  - command: move left
+  - ansible.builtin.command: move left
     bindings: [Alt+Shift+H, Alt+Shift+Left]
-  - command: move right
+  - ansible.builtin.command: move right
     bindings: [Alt+Shift+L, Alt+Shift+Right]
-  - command: move up
+  - ansible.builtin.command: move up
     bindings: [Alt+Shift+K, Alt+Shift+Up]
-  - command: move down
+  - ansible.builtin.command: move down
     bindings: [Alt+Shift+J, Alt+Shift+Down]
 
   # Resize focused window by a percentage or pixel amount.
-  - command: resize width -2%
+  - ansible.builtin.command: resize width -2%
     binding: Alt+U
-  - command: resize width +2%
+  - ansible.builtin.command: resize width +2%
     binding: Alt+P
-  - command: resize height +2%
+  - ansible.builtin.command: resize height +2%
     binding: Alt+O
-  - command: resize height -2%
+  - ansible.builtin.command: resize height -2%
     binding: Alt+Shift+I
 
   # As an alternative to the resize keybindings above, resize mode enables resizing via
   # HJKL or arrow keys. The binding mode is defined above with the name "resize".
-  - command: binding mode resize
+  - ansible.builtin.command: binding mode resize
     binding: Alt+R
 
   # Change tiling direction. This determines where new tiling windows will be inserted.
-  - command: tiling direction toggle
+  - ansible.builtin.command: tiling direction toggle
     binding: Alt+V
 
   # Change focus between floating / tiling windows.
-  - command: focus mode toggle
+  - ansible.builtin.command: focus mode toggle
     binding: Alt+Shift+F
 
   # Change the focused window to be floating / tiling.
-  - command: toggle floating
+  - ansible.builtin.command: toggle floating
     binding: Alt+Shift+Space
 
   # Change the focused window to be maximized / unmaximized.
-  - command: toggle maximized
+  - ansible.builtin.command: toggle maximized
     # like BBig
     # default Alt+X blocks my emacs :)
     binding: Alt+B
 
   # Minimize focused window.
-  - command: set minimized
+  - ansible.builtin.command: set minimized
     binding: Alt+M
 
   # Close focused window.
-  - command: close
+  - ansible.builtin.command: close
     binding: Alt+Shift+U
 
   # Kill GlazeWM process safely.
-  - command: exit wm
+  - ansible.builtin.command: exit wm
     binding: Alt+Shift+E
 
   # Re-evaluate configuration file.
-  - command: reload config
+  - ansible.builtin.command: reload config
     binding: Alt+Shift+R
 
   # Focus the workspace that last had focus.
-  - command: focus workspace recent
+  - ansible.builtin.command: focus workspace recent
     binding: Alt+Y
 
   # Have never used it and it conflicts with mc
   # Focus the next/previous workspace defined in `workspaces` config.
-  # - command: "focus workspace next"
+  # - ansible.builtin.command: "focus workspace next"
   #   binding: "Alt+T"
-  # - command: "focus workspace prev"
+  # - ansible.builtin.command: "focus workspace prev"
   #   binding: "Alt+Shift+T"
 
   # Change focus to a workspace defined in `workspaces` config.
-  - command: focus workspace 1
+  - ansible.builtin.command: focus workspace 1
     binding: Alt+1
-  - command: focus workspace 2
+  - ansible.builtin.command: focus workspace 2
     binding: Alt+2
-  - command: focus workspace 3
+  - ansible.builtin.command: focus workspace 3
     binding: Alt+3
-  - command: focus workspace 4
+  - ansible.builtin.command: focus workspace 4
     binding: Alt+4
-  - command: focus workspace 5
+  - ansible.builtin.command: focus workspace 5
     binding: Alt+5
-  - command: focus workspace 6
+  - ansible.builtin.command: focus workspace 6
     binding: Alt+6
-  - command: focus workspace 7
+  - ansible.builtin.command: focus workspace 7
     binding: Alt+7
-  - command: focus workspace 8
+  - ansible.builtin.command: focus workspace 8
     binding: Alt+8
-  - command: focus workspace 9
+  - ansible.builtin.command: focus workspace 9
     binding: Alt+9
 
   # Move focused workspace to a monitor in a given direction.
-  - command: move workspace left
+  - ansible.builtin.command: move workspace left
     binding: Alt+A
-  - command: move workspace right
+  - ansible.builtin.command: move workspace right
     binding: Alt+F
-  - command: move workspace up
+  - ansible.builtin.command: move workspace up
     binding: Alt+D
-  - command: move workspace down
+  - ansible.builtin.command: move workspace down
     binding: Alt+S
 
   # Move focused window to a workspace defined in `workspaces` config.

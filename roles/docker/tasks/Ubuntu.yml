@@ -1,6 +1,6 @@
 ---
 - name: Install dependencies
-  apt:
+  ansible.builtin.apt:
     name: "{{ item }}"
     state: present
   with_items:
@@ -14,7 +14,7 @@
     - ansible_distribution == 'Ubuntu'
 
 - name: Add Docker GPG key
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
   become: true
@@ -22,7 +22,7 @@
     - ansible_distribution == 'Ubuntu'
 
 - name: Add Docker repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
     state: present
   become: true
@@ -30,7 +30,7 @@
     - ansible_distribution == 'Ubuntu'
 
 - name: Install Docker
-  apt:
+  ansible.builtin.apt:
     name: docker-ce
     state: present
   become: true
@@ -38,7 +38,7 @@
     - ansible_distribution == 'Ubuntu'
 
 - name: Add user to Docker group
-  user:
+  ansible.builtin.user:
     name: "{{ ansible_user_id }}"
     groups: "docker, sudo"
     append: true
@@ -47,7 +47,7 @@
     - ansible_distribution == 'Ubuntu'
 
 - name: Start Docker service
-  service:
+  ansible.builtin.service:
     name: docker
     state: started
   become: true

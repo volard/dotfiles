@@ -66,12 +66,25 @@
     state: link
   when: ansible_distribution == 'Ubuntu'
 
+- name: Download SDKMAN installation script
+  ansible.builtin.get_url:
+    url: https://get.sdkman.io
+    dest: /tmp/sdkman-install.sh
+    mode: '0755'
+
 - name: Install SDKMAN
-  ansible.builtin.shell: >
-    curl -s "https://get.sdkman.io" | bash
+  ansible.builtin.shell: |
+    set -o pipefail; \
+    bash /tmp/sdkman-install.sh
   args:
-    creates: "{{ ansible_user_dir }}/.sdkman"
+    creates: "{{ ansible_user_dir }}/.sdkman"  # Prevents re-running if SDKMAN is already installed
   when: ansible_distribution == 'Ubuntu'
+
+- name: Clean up SDKMAN installation script
+  ansible.builtin.file:
+    path: /tmp/sdkman-install.sh
+    state: absent
+
 
 - name: Install programs via snap
   community.general.snap:
@@ -88,12 +101,24 @@
   become: true
   when: ansible_distribution == 'Ubuntu'
 
-- name: Install zoxide via installation script
+- name: Download zoxide installation script
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh
+    dest: /tmp/zoxide-install.sh
+    mode: '0755'
+
+- name: Install zoxide
   ansible.builtin.shell: |
-    curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+    set -o pipefail; \
+    bash /tmp/zoxide-install.sh
   args:
-    creates: /usr/local/bin/zoxide # Prevents re-running if zoxide is already installed
+    creates: /usr/local/bin/zoxide  # Prevents re-running if zoxide is already installed
   when: ansible_distribution == 'Ubuntu'
+
+- name: Clean up zoxide installation script
+  ansible.builtin.file:
+    path: /tmp/zoxide-install.sh
+    state: absent
 
 - name: Configure bottom snap connections
   ansible.builtin.command: snap connect bottom:{{ snap_connection }}
@@ -106,43 +131,6 @@
   loop_control:
     loop_var: snap_connection
   when: ansible_distribution == 'Ubuntu'
-
-
-
-# better neofetch
-- name: Install required packages
-  apt:
-    name:
-      - curl
-      - build-essential
-      - libssl-dev
-    state: present
-    become: true
-
-- name: Install rustup
-  shell: |
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-  args:
-    creates: "$HOME/.cargo/bin/rustup"
-  become: true
-
-- name: Add cargo to PATH
-  lineinfile:
-    path: ~/.bashrc
-    line: 'export PATH="$HOME/.cargo/bin:$PATH"'
-    state: present
-
-- name: Source bashrc to update PATH
-  shell: source ~/.bashrc
-  args:
-    executable: /bin/bash
-
-- name: Install macchina
-  shell: |
-    source $HOME/.cargo/env
-    cargo install macchina
-  args:
-    executable: /bin/bash
 
 - name: Install Flatpak
   ansible.builtin.apt:
