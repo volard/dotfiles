@@ -22,11 +22,11 @@
   when: ansible_distribution == "Archlinux"
 
 - name: Start bluetooth service
-  command: systemctl start bluetooth
+  ansible.builtin.command: systemctl start bluetooth
   become: true
 
 - name: Enable bluetooth service
-  command: systemctl enable bluetooth
+  ansible.builtin.command: systemctl enable bluetooth
   become: true
 
 - name: Source dotfiles bin

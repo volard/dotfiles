@@ -1,6 +1,6 @@
 ---
 - name: Install packages
-  dnf:
+  ansible.builtin.dnf:
     name: rofimoji
     state: present
   become: true
@@ -21,4 +21,3 @@
     mode: '0755'
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
-

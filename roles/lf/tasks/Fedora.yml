@@ -6,7 +6,7 @@
   become: true
 
 - name: Ensure lf is installed
-  dnf:
+  ansible.builtin.dnf:
     name: lf
     state: present
   become: true

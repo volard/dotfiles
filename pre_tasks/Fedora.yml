@@ -1,6 +1,6 @@
 ---
 - name: Upgrade all packages and refresh cache
-  dnf:
+  ansible.builtin.dnf:
     name: '*'
     state: latest
     update_cache: true
@@ -8,7 +8,7 @@
   when: ansible_distribution == 'Fedora'
 
 - name: Install RPM Fusion Free Release
-  dnf:
+  ansible.builtin.dnf:
     name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
     state: present
     disable_gpg_check: true
@@ -16,7 +16,7 @@
   when: ansible_distribution == 'Fedora'
 
 - name: Install RPM Fusion Non-Free Release
-  dnf:
+  ansible.builtin.dnf:
     name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
     state: present
     disable_gpg_check: true
@@ -24,49 +24,49 @@
   when: ansible_distribution == 'Fedora'
 
 - name: Update core group
-  dnf:
+  ansible.builtin.dnf:
     name: '@core'
     state: latest
   become: true
   when: ansible_distribution == 'Fedora'
 
 - name: Install RPM Fusion Free Release Tainted
-  dnf:
+  ansible.builtin.dnf:
     name: rpmfusion-free-release-tainted
     state: present
   become: true
   when: ansible_distribution == 'Fedora'
 
 - name: Install RPM Fusion Non-Free Release Tainted
-  dnf:
+  ansible.builtin.dnf:
     name: rpmfusion-nonfree-release-tainted
     state: present
   become: true
   when: ansible_distribution == 'Fedora'
 
 - name: Install DNF plugins core
-  dnf:
+  ansible.builtin.dnf:
     name: dnf-plugins-core
     state: present
   become: true
   when: ansible_distribution == 'Fedora'
 
 - name: Install libdvdcss
-  dnf:
+  ansible.builtin.dnf:
     name: libdvdcss
     state: present
   become: true
   when: ansible_distribution == 'Fedora'
 
 - name: Install multimedia group
-  dnf:
+  ansible.builtin.dnf:
     name: '@multimedia'
     state: present
   become: true
   when: ansible_distribution == 'Fedora'
 
 - name: Install GStreamer OpenH264 plugin
-  dnf:
+  ansible.builtin.dnf:
     name:
       - gstreamer1-plugin-openh264
       - mozilla-openh264
@@ -75,21 +75,21 @@
   when: ansible_distribution == 'Fedora'
 
 - name: Install sound and video group
-  dnf:
+  ansible.builtin.dnf:
     name: '@sound-and-video'
     state: present
   become: true
   when: ansible_distribution == 'Fedora'
 
 - name: Install flatpak fuse
-  dnf:
+  ansible.builtin.dnf:
     name: fuse-libs
     state: present
   become: true
   when: ansible_distribution == 'Fedora'
 
 - name: Install Snap
-  dnf:
+  ansible.builtin.dnf:
     name: snapd
     state: present
   become: true
@@ -99,7 +99,7 @@
   ansible.builtin.include_tasks: pre_tasks/linux_bash_dotfiles_bin.yml
 
 - name: Adding existing user to group sudo
-  user:
+  ansible.builtin.user:
     name: volard
     groups: uucp
     append: true

@@ -11,10 +11,17 @@
     state: link
     force: true
 
-- name: Clone the bemoji repository
-  git:
+- name: Ensure bemoji directory exists
+  ansible.builtin.file:
+    path: /tmp/bemoji
+    state: directory
+    mode: "0755"
+
+- name: Clone or update the bemoji repository
+  ansible.builtin.git:
     repo: https://github.com/marty-oehme/bemoji.git
     dest: /tmp/bemoji
+    update: true
 
 - name: Make the bemoji script executable
   ansible.builtin.file:
@@ -23,7 +30,7 @@
   become: true
 
 - name: Move bemoji to /usr/local/bin
-  command: mv /tmp/bemoji/bemoji /usr/local/bin/bemoji
+  ansible.builtin.command: mv /tmp/bemoji/bemoji /usr/local/bin/bemoji
   args:
     removes: /usr/local/bin/bemoji
   become: true

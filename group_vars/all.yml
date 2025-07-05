@@ -39,7 +39,7 @@ roles_to_exclude:
 default_roles:
   - alacritty
   - polybar
-  - oh-my-posh
+  - ohmyposh
   - wezterm
   - zsh
   - docker

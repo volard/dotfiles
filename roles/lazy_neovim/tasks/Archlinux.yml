@@ -4,9 +4,9 @@
     name: "{{ pacman_item }}"
     state: present
   loop:
-   - neovim
-   - fzf
-   - ripgrep
+    - neovim
+    - fzf
+    - ripgrep
   become: true
   loop_control:
     loop_var: pacman_item

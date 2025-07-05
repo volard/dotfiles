@@ -7,7 +7,7 @@
   become: true
 
 - name: Upgrade all packages and refresh cache
-  dnf:
+  ansible.builtin.dnf:
     name: '*'
     state: latest
     update_cache: true
@@ -61,7 +61,7 @@
 - name: Download and install wlprop script
   ansible.builtin.get_url:
     url: https://gist.github.com/crispyricepc/f313386043395ff06570e02af2d9a8e0/raw/8b06f025a0f34685f5ffc2000fd19a64754c9b29/wlprop.sh
-    dest: "{{ansible_user_dir}}/.local/bin/wlprop"
+    dest: "{{ ansible_user_dir }}/.local/bin/wlprop"
     mode: '0755'
 
 # - name: Install SDKMAN
@@ -95,38 +95,51 @@
 #     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 #   args:
 #     creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
-#   when: nvm_check.rc != 0 
+#   when: nvm_check.rc != 0
 
 - name: Check if OnlyOffice is installed
-  stat:
+  ansible.builtin.stat:
     path: /usr/bin/onlyoffice-desktopeditors
   register: onlyoffice_installed
 
 - name: Download OnlyOffice installer if not installed
-  get_url:
+  ansible.builtin.get_url:
     url: https://download.onlyoffice.com/install/desktop/editors/linux/onlyoffice-desktopeditors.x86_64.rpm
     dest: /tmp/onlyoffice-desktopeditors.x86_64.rpm
     mode: '0644'
   when: not onlyoffice_installed.stat.exists
 
 - name: Check if mise is installed
-  stat:
-    path: "{{ansible_user_dir}}/.local/bin/mise"
+  ansible.builtin.stat:
+    path: "{{ ansible_user_dir }}/.local/bin/mise"
   register: mise_installed
 
+- name: Download mise installation script
+  ansible.builtin.get_url:
+    url: https://mise.run
+    dest: /tmp/mise-install.sh
+    mode: '0755'
+
 - name: Install mise
-  shell: curl https://mise.run | sh
+  ansible.builtin.shell: |
+    set -o pipefail; \
+    sh /tmp/mise-install.sh
   args:
     executable: /bin/sh
   when: not mise_installed.stat.exists
 
+- name: Clean up mise installation script
+  ansible.builtin.file:
+    path: /tmp/mise-install.sh
+    state: absent
+
 - name: Install x (not twitter)
-  shell: eval "$(curl https://get.x-cmd.com)"
+  ansible.builtin.shell: eval "$(curl https://get.x-cmd.com)"
   args:
     executable: /bin/bash
 
 - name: Install OnlyOffice
-  dnf:
+  ansible.builtin.dnf:
     name: /tmp/onlyoffice-desktopeditors.x86_64.rpm
     state: present
     disable_gpg_check: true
@@ -140,13 +153,25 @@
   when: not onlyoffice_installed.stat.exists
 
 - name: Check if lazydocker is installed
-  stat:
-    path: "{{ansible_user_dir}}/.local/bin/lazydocker"
+  ansible.builtin.stat:
+    path: "{{ ansible_user_dir }}/.local/bin/lazydocker"
   register: lazydocker_installed
 
+- name: Download LazyDocker installation script
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh
+    dest: /tmp/lazydocker-install.sh
+    mode: '0755'
+
 - name: Install LazyDocker
-  shell: curl -sSL https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
+  ansible.builtin.shell: |
+    set -o pipefail; \
+    bash /tmp/lazydocker-install.sh
   args:
     executable: /bin/bash
   when: not lazydocker_installed.stat.exists
 
+- name: Clean up LazyDocker installation script
+  ansible.builtin.file:
+    path: /tmp/lazydocker-install.sh
+    state: absent

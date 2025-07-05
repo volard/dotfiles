@@ -4,12 +4,13 @@
 #     var: config_path
 
 - name: Include all variables from YAML files in the 'vars' directory
-  include_vars:
+  ansible.builtin.include_vars:
     dir: "{{ role_path }}/vars"
     extensions:
       - "yml"
       - "yaml"
-  ignore_errors: yes # a lot of roles don't have vars
+  register: vars_included
+  failed_when: vars_included is not defined or vars_included.failed
 
 
 - name: Ensure config directory exists
@@ -34,31 +35,31 @@
   become: true
 
 - name: Debug found configuration files
-  debug:
+  ansible.builtin.debug:
     var: config_files
 
 - name: Debug found configuration files
-  debug:
+  ansible.builtin.debug:
     var: role_path
 
 - name: Copy template files on Linux
   ansible.builtin.template:
-    src:  "{{ item.path }}"
+    src: "{{ item.path }}"
     dest: "{{ config_path }}/{{ item.path | basename | regex_replace('.j2$', '') }}"
     mode: preserve
   loop: "{{ config_files.files }}"
   when:
     - item.path.endswith('.j2')
 
-      # - name: Copy template files on Windows
-      #   ansible.windows.win_template:
-      #     src:  "{{ item.path }}" 
-      #     dest: "{{ config_path }}\\{{ item.path | basename | regex_replace('.j2$', '') }}"
-      #     mode: preserve
-      #   loop: "{{ config_files.files }}"
-      #   when:
-      #     - item.path.endswith('.j2')
-      #     - ansible_os_family == 'Windows'
+# - name: Copy template files on Windows
+#   ansible.windows.win_template:
+#     src:  "{{ item.path }}"
+#     dest: "{{ config_path }}\\{{ item.path | basename | regex_replace('.j2$', '') }}"
+#     mode: preserve
+#   loop: "{{ config_files.files }}"
+#   when:
+#     - item.path.endswith('.j2')
+#     - ansible_os_family == 'Windows'
 
 - name: Copy static files on Linux
   ansible.builtin.copy:

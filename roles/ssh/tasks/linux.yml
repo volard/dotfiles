@@ -26,4 +26,4 @@
     state: file
     mode: '0600'
   loop: "{{ lookup('fileglob', '~/.ssh/*') | split(',') }}"
-  when: item.endswith('.pub') == false
+  when: not item.endswith('.pub')
