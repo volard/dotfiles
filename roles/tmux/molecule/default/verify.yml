@@ -1,0 +1,32 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Check if tmux is installed
+      ansible.builtin.command: which tmux
+      register: tmux_installed
+      changed_when: false
+      failed_when: tmux_installed.rc != 0
+
+    - name: Get user home directory
+      ansible.builtin.command: echo $HOME
+      register: user_home
+      changed_when: false
+
+    - name: Verify tmux configuration file exists
+      ansible.builtin.stat:
+        path: "{{ user_home.stdout }}/.tmux.conf"
+      register: tmux_conf
+
+    - name: Assert tmux configuration file exists
+      ansible.builtin.assert:
+        that:
+          - tmux_conf.stat.exists
+          - tmux_conf.stat.isreg
+        fail_msg: "tmux configuration file does not exist at expected location"
+        success_msg: "tmux configuration file exists at expected location"
+
+    - name: Verify tmux can be executed
+      ansible.builtin.command: tmux -V
+      changed_when: false
