@@ -1,7 +1,7 @@
 ---
 # https://forum.endeavouros.com/t/unable-to-share-screen-with-sway-wm/46654
 - name: Install packages from pacman
-  pacman:
+  community.general.pacman:
     name: "{{ pacman_item }}"
     state: present
   loop:
@@ -30,7 +30,7 @@
 # reload the system
 
 - name: Delete a directory
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.config/sway"
     state: absent
   when: ansible_distribution == 'Archlinux'
@@ -44,7 +44,7 @@
   when: ansible_distribution == 'Archlinux'
 
 - name: Delete a directory
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.config/gtklock"
     state: absent
   when: ansible_distribution == 'Archlinux'
@@ -58,7 +58,7 @@
   when: ansible_distribution == 'Archlinux'
 
 - name: Set all files in the specified directory to executable
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     mode: 'u+x'
   with_fileglob:

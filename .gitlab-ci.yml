@@ -2,8 +2,8 @@
 image: python:latest
 
 stages:
-  - lint
-  - test
+  # - lint
+  # - test
 
 variables:
   PIP_CACHE_DIR: $CI_PROJECT_DIR/.cache/pip

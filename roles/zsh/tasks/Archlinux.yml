@@ -1,6 +1,6 @@
 ---
 - name: Install Zsh
-  pacman:
+  community.general.pacman:
     name: zsh
     state: present
   become: true
@@ -21,21 +21,21 @@
   git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
     dest: "{{ lookup('env', 'ZSH_CUSTOM') | default('~/.oh-my-zsh/custom') }}/plugins/zsh-syntax-highlighting"
-    update: yes
+    update: true
 
 - name: Remove default .zshrc configuration
-  file:
+  ansible.builtin.file:
     path: ~/.zshrc
     state: absent
 
 - name: Create a symbolic link for .zshrc
-  file:
+  ansible.builtin.file:
     src: ~/dotfiles/roles/zsh/files/.zshrc
     dest: ~/.zshrc
     state: link
 
 - name: Create a symbolic link for .aliases
-  file:
+  ansible.builtin.file:
     src: ~/dotfiles/roles/zsh/files/.aliases
     dest: ~/.aliases
     state: link

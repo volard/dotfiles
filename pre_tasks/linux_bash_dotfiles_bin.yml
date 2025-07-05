@@ -29,6 +29,20 @@
     - bashrc_stat.stat.exists
     - grep_result.rc != 0 # Only add line if grep didn't find it
 
+- name: Make a list of dotfiles/bin/ files executable
+  ansible.builtin.file:
+    path: "{{ script_item }}"
+    mode: u+x
+  loop:
+    - "{{ ansible_user_dir }}/dotfiles/bin/dotfiles"
+    - "{{ ansible_user_dir }}/dotfiles/bin/grimshot_next"
+    - "{{ ansible_user_dir }}/dotfiles/bin/tsesh"
+    - "{{ ansible_user_dir }}/dotfiles/bin/wlprop"
+    - "{{ ansible_user_dir }}/dotfiles/bin/hadolint"
+    - "{{ ansible_user_dir }}/dotfiles/bin/dynamic_wallpapers"
+  loop_control:
+    loop_var: script_item
+
 - name: Source bashrc for the current shell session
   block:
     - name: Check if running interactively

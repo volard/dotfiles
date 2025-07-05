@@ -7,13 +7,13 @@
   ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml
 
 - name: Ensure .ssh directory exists
-  file:
+  ansible.builtin.file:
     path: ~/.ssh
     state: directory
     mode: '0700'
 
 - name: Set permissions for all public keys
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: file
     mode: '0644'
@@ -21,7 +21,7 @@
   when: item.endswith('.pub')
 
 - name: Set permissions for all private keys
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: file
     mode: '0600'

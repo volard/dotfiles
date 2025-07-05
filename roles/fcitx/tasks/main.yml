@@ -21,7 +21,7 @@
 - name: Enable FCITX
   service:
     name: fcitx
-    enabled: yes
+    enabled: true
     state: started
   become: true
 

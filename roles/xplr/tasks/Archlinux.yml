@@ -1,6 +1,6 @@
 ---
 - name: Delete a directory
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.config/xplr"
     state: absent
 

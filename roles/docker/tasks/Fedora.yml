@@ -25,6 +25,6 @@
   user:
     name: volard
     groups: docker
-    append: yes
+    append: true
     become: true
 

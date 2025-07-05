@@ -1,6 +1,6 @@
 ---
 - name: Install packages from pacman
-  pacman:
+  community.general.community.general.pacman:
     name: "{{ pacman_item }}"
     state: present
   loop:
@@ -12,9 +12,8 @@
     loop_var: pacman_item
   when: ansible_distribution == "Archlinux"
 
-
 - name: "Create link to config for latexmk"
-  file:
+  ansible.builtin.file:
     src: "{{ role_path }}/files/.latexmkrc"
     dest: "{{ ansible_user_dir }}/.latexmkrc"
     state: link

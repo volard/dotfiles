@@ -1,30 +1,37 @@
 ---
 - name: Create font directory
-  file:
+  ansible.builtin.file:
     path: /usr/local/share/fonts
     state: directory
     mode: '0755'
-  become: yes
+  become: true
 
 - name: Download JetBrains Mono Nerd Font
   get_url:
     url: https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
     dest: /tmp/JetBrainsMono.zip
-  become: yes
+  become: true
 
 - name: Unzip JetBrains Mono Nerd Font
   unarchive:
     src: /tmp/JetBrainsMono.zip
     dest: /usr/local/share/fonts/
-    remote_src: yes
-  become: yes
+    remote_src: true
+  become: true
 
 - name: Update font cache
   command: fc-cache -f -v
-  become: yes
+  become: true
 
 - name: Clean up downloaded font zip
-  file:
+  ansible.builtin.file:
     path: /tmp/JetBrainsMono.zip
     state: absent
-  become: yes
+  become: true
+
+- name: Add user to commonly used groups
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: "sudo, libvirt, sound, video, docker, plugdev, lpadmin, netdev, input, tty, users, i2c, spi, gpio"
+    append: true
+  become: true

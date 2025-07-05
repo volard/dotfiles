@@ -5,7 +5,7 @@
       - fontconfig
       - wget
     state: present
-  become: yes
+  become: true
   when: ansible_distribution == 'Ubuntu'
 
 - name: Include common linux bash setup

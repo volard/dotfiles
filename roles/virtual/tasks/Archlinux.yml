@@ -1,6 +1,6 @@
 ---
 - name: Install packages from pacman
-  pacman:
+  community.general.pacman:
     name: "{{ pacman_item }}"
     state: present
   loop:
@@ -27,25 +27,25 @@
   user:
     name: volard
     groups: libvirt
-    append: yes
+    append: true
   become: true
 
 - name: Enable and start libvirtd service
   systemd:
     name: libvirtd
-    enabled: yes
+    enabled: true
     state: started
   become: true
 
 - name: Delete a file
-  file:
+  ansible.builtin.file:
     src: "/etc/libvirt/libvirt.conf"
     state: absent
     force: true
   become: true
 
 - name: Create a symlink to a file
-  file:
+  ansible.builtin.file:
     src: "{{ role_path }}/files/libvirtd.conf"
     dest: "/etc/libvirt/libvirt.conf"
     state: link
@@ -54,14 +54,14 @@
 
 
 - name: Delete a file
-  file:
+  ansible.builtin.file:
     src: "/etc/libvirt/qemu.conf"
     state: absent
     force: true
   become: true
 
 - name: Create a symlink to a file
-  file:
+  ansible.builtin.file:
     src: "{{ role_path }}/files/qemu.conf"
     dest: "/etc/libvirt/qemu.conf"
     state: link
@@ -70,14 +70,14 @@
 
 
 - name: Delete a file
-  file:
+  ansible.builtin.file:
     path: "/etc/libvirt/network.conf"
     state: absent
     force: true
   become: true
 
 - name: Create a symlink to a file
-  file:
+  ansible.builtin.file:
     src: "{{ role_path }}/files/network.conf"
     dest: "/etc/libvirt/network.conf"
     state: link

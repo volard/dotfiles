@@ -1,4 +1,15 @@
 ---
+- name: Install packages from pacman
+  community.general.pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - lazygit
+  become: true
+  loop_control:
+    loop_var: pacman_item
+  when: ansible_distribution == "Archlinux"
+
 - name: Ensure .config directory exists
   ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.config/lazygit"
@@ -6,7 +17,8 @@
     mode: "0755"
 
 - name: Create a symlink to a file
-  file:
+  ansible.builtin.file:
     src: "{{ role_path }}/files/config.yml"
     dest: "{{ ansible_user_dir }}/.config/lazygit/config.yml"
     state: link
+    force: true
