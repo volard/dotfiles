@@ -5,7 +5,8 @@
 local map = vim.keymap.set
 -- mode, hotkey, command, description
 
-map("n", ";", ":", { desc = "Go to command mode" })
+-- ; is used for F/T command
+-- map("n", ";", ":", { desc = "Go to command mode" })
 map("i", "<C-i>", "<esc>", { desc = "Go to normal mode" })
 
 map("n", "<C-p>", '"0p', { desc = 'Paste last copyed "0 regester content' })

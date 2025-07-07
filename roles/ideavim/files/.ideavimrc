@@ -164,18 +164,20 @@ set NERDTree
 " ------------------------------------------------------------
 " ---------------------- HARPOON -----------------------------
 " ------------------------------------------------------------
-nmap <leader><C-h> :action SetHarpoon1<cr>
-nmap <leader><C-t> :action SetHarpoon2<cr>
-nmap <leader><C-n> :action SetHarpoon3<cr>
-nmap <leader><C-s> :action SetHarpoon4<cr>
+nmap <leader>h<C-y> :action SetHarpoon1<cr>
+nmap <leader>h<C-n> :action SetHarpoon2<cr>
+nmap <leader>h<C-e> :action SetHarpoon3<cr>
+nmap <leader>h<C-o> :action SetHarpoon4<cr>
+nmap <leader>h<C-i> :action SetHarpoon5<cr>
 
-nmap <C-h> :action GotoHarpoon1<cr>
-nmap <C-t> :action GotoHarpoon2<cr>
-nmap <C-n> :action GotoHarpoon3<cr>
-nmap <C-s> :action GotoHarpoon4<cr>
+nmap <leader>hy :action GotoHarpoon1<cr>
+nmap <leader>hn :action GotoHarpoon2<cr>
+nmap <leader>he :action GotoHarpoon3<cr>
+nmap <leader>ho :action GotoHarpoon4<cr>
+nmap <leader>hi :action GotoHarpoon5<cr>
 
 nmap <C-e> :action ShowHarpoon<cr>
-nmap <C-a> :action AddToHarpoon<cr>
+nmap <leader>a :action AddToHarpoon<cr>
 
 
 
@@ -281,7 +283,8 @@ vmap <C-P> "0p
 " Don't use Ex mode, use Q for formatting.
 map Q gq
 
-nmap ; :
+" C-; is used by repeat F/T command
+" nmap ; :
 
 " splits navigation
 map <C-H> <C-W>h

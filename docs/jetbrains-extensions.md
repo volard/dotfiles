@@ -4,3 +4,5 @@
 - GitHub Darker theme
 - Catpuccin theme
 - IdeaVim
+- AceJump
+- HarpoonIJ
