@@ -52,7 +52,7 @@ ansible-vault encrypt_string 'name' --name 'username' | wl-copy
 
 ## Useful for later
 - [SwayOS](https://swayos.github.io)
-
+- [github-issue-templates](https://github.com/stevemao/github-issue-templates/tree/master)
 ## Credits
 
 - [Wintus Ansible-WSL](https://github.com/Wintus/Ansible-WSL)
@@ -64,7 +64,5 @@ ansible-vault encrypt_string 'name' --name 'username' | wl-copy
 # jersey
 godot install:
 ```bash
-sudo pacman -S godot
-sudo pacman -S libtheora
 ```
 
