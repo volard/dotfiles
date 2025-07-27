@@ -11,6 +11,7 @@
         "custom/weather"
     ],
     "modules-center": [
+        "sway/language",
         "sway/mode",
         "sway/workspaces"
     ],
@@ -22,7 +23,6 @@
         "memory",
         "temperature",
         "backlight",
-        "sway/language",
         "battery",
         "clock",
         "tray",

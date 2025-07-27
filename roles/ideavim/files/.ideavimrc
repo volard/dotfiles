@@ -158,23 +158,27 @@ set which-key
 set NERDTree
 
 
+" ------------------------------------------------------------
+" ---------------------- INTELLIJ SPECIFIC -------------------
+" ------------------------------------------------------------
 
+nmap <leader>ir :action Replace<CR>
 
 
 " ------------------------------------------------------------
 " ---------------------- HARPOON -----------------------------
 " ------------------------------------------------------------
-nmap <leader>h<C-y> :action SetHarpoon1<cr>
-nmap <leader>h<C-n> :action SetHarpoon2<cr>
-nmap <leader>h<C-e> :action SetHarpoon3<cr>
-nmap <leader>h<C-o> :action SetHarpoon4<cr>
-nmap <leader>h<C-i> :action SetHarpoon5<cr>
-
-nmap <leader>hy :action GotoHarpoon1<cr>
-nmap <leader>hn :action GotoHarpoon2<cr>
-nmap <leader>he :action GotoHarpoon3<cr>
-nmap <leader>ho :action GotoHarpoon4<cr>
-nmap <leader>hi :action GotoHarpoon5<cr>
+nmap <leader><C-s> :action SetHarpoon1<cr>
+nmap <leader><C-t> :action SetHarpoon2<cr>
+nmap <leader><C-f> :action SetHarpoon3<cr>
+nmap <leader><C-j> :action SetHarpoon4<cr>
+nmap <leader><C-y> :action SetHarpoon5<cr>
+" f j y s t
+nmap <C-s> :action GotoHarpoon1<cr>
+nmap <C-t> :action GotoHarpoon2<cr>
+nmap <C-f> :action GotoHarpoon3<cr>
+nmap <C-j> :action GotoHarpoon4<cr>
+nmap <C-y> :action GotoHarpoon5<cr>
 
 nmap <C-e> :action ShowHarpoon<cr>
 nmap <leader>a :action AddToHarpoon<cr>

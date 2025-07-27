@@ -43,6 +43,7 @@
     # - xplr # rust based lua hackable tui file manager, too complicated
     - ncdu # space analyzer
     - hyprpicker # Wayland color picker
+    - caligula # dd wrapper with cool features
   become: true
   loop_control:
     loop_var: pacman_item
