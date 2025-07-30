@@ -27,6 +27,8 @@ bindsym --to-code {
     # Reload the configuration file
     $mod+Shift+c reload
 
+    $mod+slash exec ~/dotfiles/bin/waybinder -Fwwz
+
     # Open emoji list
     $mod+Shift+o exec bemoji
 
