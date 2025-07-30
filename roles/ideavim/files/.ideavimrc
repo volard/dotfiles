@@ -281,8 +281,8 @@ vmap <C-i> <Esc>
 imap <C-i> <Esc>
 
 " Insert right from "0
-nnoremap <C-P> "0p
-vmap <C-P> "0p
+nnoremap <S-P> "0p
+vmap <S-P> "0p
 
 " Don't use Ex mode, use Q for formatting.
 map Q gq
