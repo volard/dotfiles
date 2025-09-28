@@ -65,3 +65,4 @@ alias rm='rm -I --preserve-root'
 
 alias rr='. ranger'
 alias r='ranger'
+alias excalidraw='docker run -d -p 8888:80 --name excalidraw-instance excalidraw/excalidraw:latest'

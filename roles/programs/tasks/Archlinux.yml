@@ -5,7 +5,8 @@
     state: present
   loop:
     - ripgrep # better grep
-    - zathura # pdf viewer
+    # - zathura # pdf viewer
+    - evince # pdf viewer
     - zip
     - unzip
     - eza # better ls
@@ -45,6 +46,7 @@
     - caligula # dd wrapper with cool features
     - wl-clipboard # its and couple more down are the waybinder dependencies (look for the binary in the /bin + https://gitlab.com/cscs/waybinder)
     - wtype
+    - tree
     - zenity # gui gtk propmts
   become: true
   loop_control:

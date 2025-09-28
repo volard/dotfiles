@@ -1,5 +1,5 @@
 # vim: filetype=bash
-PATH="$PATH:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.config/emacs/bin:$HOME/.pyenv/bin:$HOME/.pyenv:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
+PATH="$PATH:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.config/emacs/bin:$HOME/.pyenv/bin:$HOME/.pyenv:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$HOME/.local/bin/idea-IU-252.26199.169/plugins/maven/lib/maven3/bin"
 
 if [ -f ~/.aliases ]; then
     . ~/.aliases

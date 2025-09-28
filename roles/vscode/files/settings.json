@@ -1,67 +1,4 @@
 {
-    /**********************************************************/
-    /*********              VIM                        ********/
-    /**********************************************************/
-
-    "vim.easymotion": true,
-    "vim.hlsearch": true,
-    "vim.incsearch": true,
-    "vim.leader": "<space>",
-    "vim.normalModeKeyBindingsNonRecursive": [
-        {
-        "before": ["K"],
-        "commands": ["editor.action.showHover"]
-        }
-    ],
-    "vim.statusBarColorControl": true,
-    "vim.statusBarColors.normal": ["#8FBCBB", "#434C5E"],
-    "vim.statusBarColors.insert": "#BF616A",
-    "vim.statusBarColors.visual": "#B48EAD",
-    "vim.statusBarColors.visualline": "#B48EAD",
-    "vim.statusBarColors.visualblock": "#A3BE8C",
-    "vim.statusBarColors.replace": "#D08770",
-    "vim.statusBarColors.commandlineinprogress": "#007ACC",
-    "vim.statusBarColors.searchinprogressmode": "#007ACC",
-    "vim.statusBarColors.easymotionmode": "#007ACC",
-    "vim.statusBarColors.easymotioninputmode": "#007ACC",
-    "vim.statusBarColors.surroundinputmode": "#007ACC",
-    "workbench.statusBar.visible": true,
-    "workbench.colorCustomizations": {
-        "statusBar.background": "#B48EAD",
-        "statusBar.noFolderBackground": "#B48EAD",
-        "statusBar.debuggingBackground": "#B48EAD",
-        "statusBar.foreground": "#434C5E",
-        "statusBar.debuggingForeground": "#434C5E"
-    },
-    "vim.useSystemClipboard": true,
-     "vim.handleKeys": {
-        "<C-v>": false,
-        "<C-s>": false,
-        "<C-y>": false,
-        "<C-z>": false,
-        "<C-p>": false,
-        "<C-q>": false,
-        "<C-n>": false,
-        "<C-x>": false,
-        "<C-b>": false,
-        "<C-a>": false,
-        "<C-f>": false,
-    },
-    "vim.camelCaseMotion.enable": true,
-    "vim.smartRelativeLine": true,
-    "vim.cursorStylePerMode.visual": "block",
-
-    /**********************************************************/
-    /*********              PLUGINS                    ********/
-    /**********************************************************/
-
-    "C_Cpp.autocompleteAddParentheses": true,
-    "cmake.configureOnOpen": true,
-
-    /**********************************************************/
-    /*********              EDITOR                     ********/
-    /**********************************************************/
-
     "editor.fontSize": 15,
     "editor.fontFamily": "'JetBrainsMono Nerd Font', Consolas, 'Courier New', monospace",
     "editor.fontLigatures": true,
@@ -70,20 +7,13 @@
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.smoothScrolling": true,
     "editor.unicodeHighlight.nonBasicASCII": false,
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.unicodeHighlight.allowedCharacters": {
+        "ru": true
+    },
+    "editor.unicodeHighlight.allowedLocales": {
+        "ru": true
+    },
 
-    /**********************************************************/
-    /*********              APPEARENCE                 ********/
-    /**********************************************************/
-    
-    "workbench.colorTheme": "Tokyo Night",
-    "workbench.iconTheme": "eq-material-theme-icons",
-    "breadcrumbs.enabled": false,
-
-    /**********************************************************/
-    /*********              TERMINAL                    *******/
-    /**********************************************************/
 
     "terminal.explorerKind": "integrated",
     "terminal.integrated.profiles.windows": {
@@ -108,18 +38,79 @@
         }
     },
     "terminal.integrated.defaultProfile.windows": "PowerShell 7",
+
+    "terminal.external.linuxExec": "zsh",
+    "terminal.integrated.copyOnSelection": true,
     
     /**********************************************************/
     /*********              BEHAVIOUR                  ********/
     /**********************************************************/
     
-    "explorer.confirmDelete": false,
-    "explorer.confirmDragAndDrop": true,
     "files.autoSave": "afterDelay",
     "security.workspace.trust.banner": "never",
     "security.workspace.trust.startupPrompt": "never",
     "workbench.editor.closeEmptyGroups": false,
     "security.workspace.trust.untrustedFiles": "open", 
     "window.menuBarVisibility": "toggle",
-    "javascript.updateImportsOnFileMove.enabled": "always",
+    "window.commandCenter": true,
+
+
+    /**********************************************************/
+    /*********              GIT                        ********/
+    /**********************************************************/
+
+    "git.autofetch": true,
+    "git.confirmSync": false,
+
+    /**********************************************************/
+    /*********              THEME                      ********/
+    /**********************************************************/
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.iconTheme": "material-icon-theme",
+
+
+    /**********************************************************/
+    /*********              PLUGINS                    ********/
+    /**********************************************************/
+
+    "vscode-office.editorTheme": "Github Dark",
+    "mermaid.vscode.minimap": false,
+    "excalidraw.theme": "light",
+    "D2.previewLayout": "tala",
+    "D2.updateOnSave": true,
+    "hediet.vscode-drawio.resizeImages": null,
+
+
+    "vscode-neovim.ctrlKeysForInsertMode": [
+        "a",
+        "d",
+        "h",
+        "j",
+        "m",
+        "o",
+        "r",
+        "t",
+        "u",
+        "w"
+    ],
+    "vscode-neovim.highlightGroups.highlights": {
+        
+        "IncSearch": {
+            "backgroundColor": "theme.editor.findMatchBackground"
+        },
+        "CurSearch": {
+            "backgroundColor": "theme.editor.findMatchBackground"
+        },
+        "Search": {
+            "backgroundColor": "theme.editor.findMatchHighlightBackground"
+        },
+        "Substitute": {
+            "backgroundColor": "theme.editor.foreground",
+            "color": "theme.editor.background"
+        }
+    },
+
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
 }
