@@ -1,0 +1,6 @@
+directory: ~/mnt/data/volard-pc/music/beets
+library: ~/mnt/data/volard-pc/music/beets/beets-musiclibrary.db
+import:
+  move: no
+  copy: no
+plugins: fetchart scrub duplicates deezer fromfilename

@@ -14,11 +14,15 @@ for_window [title="File Operation Progress"] floating enable, border pixel 1, st
 for_window [app_id="floating_shell_portrait"] floating enable, border pixel 1, sticky enable, resize set width 30 ppt height 40 ppt
 for_window [title="Picture in picture"] floating enable, sticky enable
 for_window [title="Picture-in-Picture"] floating enable, sticky enable
+for_window [app_id="Kodi"] floating enable, sticky enable, border pixel 1, resize set width pixel 25 height 35 ppt
 for_window [title="waybar_htop"] floating enable, resize set width 70 ppt height 70 ppt
 for_window [title="waybar_nmtui"] floating enable
 for_window [title="Save File"] floating enable
 for_window [app_id="firefox" title="Firefox — Sharing Indicator"] kill
 for_window [app_id="zenity"] floating enable, border pixel 2, resize set width 30 ppt height 90 ppt
+
+for_window [class="Vivaldi-stable"] sticky enable, floaing enable
+for_window [class="vivaldi-stable"] sticky enable, floaing enable
 
 # Positioning
 
