@@ -1,5 +1,5 @@
 {
-    "editor.fontSize": 15,
+    "editor.fontSize": 14,
     "editor.fontFamily": "'JetBrainsMono Nerd Font', Consolas, 'Courier New', monospace",
     "editor.fontLigatures": true,
     "editor.minimap.enabled": false,
@@ -39,7 +39,7 @@
     },
     "terminal.integrated.defaultProfile.windows": "PowerShell 7",
 
-    "terminal.external.linuxExec": "zsh",
+    "terminal.external.linuxExec": "bash",
     "terminal.integrated.copyOnSelection": true,
     
     /**********************************************************/
@@ -50,9 +50,7 @@
     "security.workspace.trust.banner": "never",
     "security.workspace.trust.startupPrompt": "never",
     "workbench.editor.closeEmptyGroups": false,
-    "security.workspace.trust.untrustedFiles": "open", 
-    "window.menuBarVisibility": "toggle",
-    "window.commandCenter": true,
+    "security.workspace.trust.untrustedFiles": "open",
 
 
     /**********************************************************/
@@ -61,12 +59,6 @@
 
     "git.autofetch": true,
     "git.confirmSync": false,
-
-    /**********************************************************/
-    /*********              THEME                      ********/
-    /**********************************************************/
-    "workbench.colorTheme": "Catppuccin Mocha",
-    "workbench.iconTheme": "material-icon-theme",
 
 
     /**********************************************************/
@@ -113,4 +105,13 @@
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
+    "workbench.layoutControl.enabled": false,
+    "editor.codeActionsOnSave": {
+
+    },
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.iconTheme": "material-icon-theme",
+    "cursorpyright.analysis.extraPaths": [
+        "ais/ais"
+    ],
 }
