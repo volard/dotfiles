@@ -30,7 +30,7 @@ bindsym --to-code {
     $mod+slash exec ~/dotfiles/bin/waybinder -Fwwz
 
     # Open emoji list
-    $mod+Shift+o exec bemoji
+    $mod+Shift+o exec bemoji -n
 
 #wayvnc rofl
 $mod+Shift+s input "type:keyboard" xkb_layout us

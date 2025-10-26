@@ -109,9 +109,23 @@
     "editor.codeActionsOnSave": {
 
     },
-    "workbench.colorTheme": "Catppuccin Mocha",
-    "workbench.iconTheme": "material-icon-theme",
     "cursorpyright.analysis.extraPaths": [
         "ais/ais"
     ],
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "[vue]": {
+        "editor.defaultFormatter": "Vue.volar"
+    },
+    "tinymist.preview.invertColors": "auto",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Tokyo Night Storm",
+    "java.jdt.ls.java.home": "~/.jdks/corretto-21.0.8-1/",
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-21",
+            "path": "~/.jdks/corretto-21.0.8-1/"
+        }
+
+    ],
+    "makefile.configureOnOpen": true,
 }
