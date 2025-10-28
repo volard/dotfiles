@@ -6,6 +6,7 @@ directories=(
     "/mnt/data/Projects"
     "/mnt/data/Projects/pet"
     "$HOME"
+    "$HOME/projects/"
 )
 
 # Initialize an empty array to hold existing directories
