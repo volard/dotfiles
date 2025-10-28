@@ -100,3 +100,4 @@ flycheck_*.el
 vault-password.*
 roles/neovim/files/lazy-lock.json
 /callback_plugins/__pycache__
+**/**/__pycache__

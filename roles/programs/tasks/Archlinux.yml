@@ -36,7 +36,6 @@
     - seahorse # afair its for keyring
     # - lf # to much os specific configuration that doesn't make sense for me
     # - xplr # rust based lua hackable tui file manager, too complicated
-    - ranger # terminal file manager
     - mpv # video player
     - jq # json processor
     - ark # kde gui archives manager
