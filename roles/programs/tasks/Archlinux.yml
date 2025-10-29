@@ -38,6 +38,7 @@
     # - xplr # rust based lua hackable tui file manager, too complicated
     - mpv # video player
     - jq # json processor
+    - yq # yaml, toml etc. processor
     - ark # kde gui archives manager
     - baobab # storage analyzer gui
     - ncdu # space analyzer
