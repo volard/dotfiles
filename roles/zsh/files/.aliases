@@ -55,6 +55,8 @@ alias dex="docker exec -it"
 # 'docker ps' displays the currently running containers
 alias dps="docker ps"
 
+# docker compose delete all from this compose using yq
+alias dcdc=docker-compose config | awk '/image:/ {print $2}' | sort -u | xargs -r docker rmi
 
 # This command is a neat shell pipeline to stop all running containers no matter
 # where you are and without knowing any container names
