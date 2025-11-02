@@ -5,10 +5,7 @@ alias sudo='sudo '
 
 alias ll="eza -l --icons --color=always -a --group-directories-first"
 
-alias mx="mise x --"
-
 alias bc=batcat
-alias pn=pnpm
 
 alias ..='cd ..'
 
@@ -17,7 +14,6 @@ alias svv='sudo nvim .'
 alias vv='v .'
 alias v=nvim
 
-alias wget='wget -c'
 alias lzd='lazydocker'
 alias lg=lazygit
 
@@ -27,10 +23,10 @@ alias grep='grep --color=auto'
 # get docker container names and port numbers
 alias dnp='docker container ls --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}" -a'
 
-# remove all dangling images -f is flag for force
-alias dip="docker image prune -f"
+# (docker images prune) remove all dangling images -f is flag for force
+alias dip="docker image prune -fa"
 
-# list all docker images available on my machine
+# (docker images list) list all docker images available on my machine
 alias dil="docker images"
 
 # Start the docker-compose stack in the current directory
@@ -45,8 +41,6 @@ alias dcd="docker-compose down"
 alias dcr="docker-compose restart"
 
 # Show the logs for the docker-compose stack in the current directory
-# May be extended with the service name to get service-specific logs, like
-# 'dcl php' to get the logs of the php container
 alias dcl="docker-compose logs"
 
 # Quickly run the docker exec command like this: 'dex container-name bash'

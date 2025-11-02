@@ -1,3 +1,23 @@
+# check the terminal width on startup and set number of columns accordingly
+${{
+    w=$(tput cols)
+    if [ $w -le 80 ]; then
+        lf -remote "send $id set ratios 1:2"
+    elif [ $w -le 160 ]; then
+        lf -remote "send $id set ratios 1:2:3"
+    else
+        lf -remote "send $id set ratios 1:2:3:5"
+    fi
+}}
+
+
+
+
+
+# -----------------------------------------------
+# VARIABLES
+# -----------------------------------------------
+
 # interpreter for shell commands
 set shell sh
 
@@ -23,18 +43,58 @@ set scrolloff 10
 # Use the `dim` attribute instead of underline for the cursor in the preview pane
 set cursorpreviewfmt "\033[7;2m"
 
-set previewer stpv
-set cleaner stpvimgclr
-&stpvimg --listen $id
-cmd on-quit $stpvimg --end $id
-
-# use enter for shell commands
-map <enter> shell
-
 set hidden true
 set ignorecase true
 set sixel true
 set icons true
+
+
+
+# -----------------------------------------------
+# Toggling the preview column
+# -----------------------------------------------
+
+cmd toggle-preview %{{
+    if [ "$lf_preview" = true ]; then
+        lf -remote "send $id :set preview false; set ratios 1:5"
+    else
+        lf -remote "send $id :set preview true; set ratios 1:2:3"
+    fi
+}}
+
+map zp toggle-preview
+
+
+
+
+
+
+# -----------------------------------------------
+# Go to the first file in the current directory
+# -----------------------------------------------
+
+cmd goto-file &{{
+    if [ -n "$(find -mindepth 1 -maxdepth 1 -type d -print -quit)" ]; then
+        lf -remote "send $id :set dironly; bottom; set nodironly; down"
+    else
+        lf -remote "send $id top"
+    fi
+}}
+
+map M goto-file
+
+
+
+
+
+
+
+# -----------------------------------------------
+# MAPS
+# -----------------------------------------------
+
+# use enter for shell commands
+map <enter> shell
 
 # show the result of execution of previous commands
 map ` !true
@@ -59,6 +119,42 @@ cmd open &{{
 }}
 
 
+# Press . to repeat the last command typed on the command line:
+map . :read; cmd-history-prev; cmd-enter
+
+# Clear selected files after copying and pasting
+map p :paste; clear
+
+
+
+
+
+# -----------------------------------------------
+# PREVIEWS
+# -----------------------------------------------
+
+set previewer stpv
+set cleaner stpvimgclr
+&stpvimg --listen $id
+cmd on-quit $stpvimg --end $id
+
+cmd pager ${{
+    if [ -f "$f" ]; then
+        bat "$f"
+    elif [ -d "$f" ]; then
+        tree "$f" | bat
+    fi
+}}
+
+
+
+
+
+# -----------------------------------------------
+# CREATE A DIRECTORY
+# -----------------------------------------------
+
+
 # create a directory passing all specified params and select newly created directory afterwards
 cmd mkdir %{{
     IFS=" "
@@ -68,6 +164,13 @@ cmd mkdir %{{
 }}
 map ad push :mkdir<space> # add directory
 
+
+
+
+# -----------------------------------------------
+# CREATE A FILE
+# -----------------------------------------------
+
 # create a file passing all specified params and select newly created directory afterwards
 cmd touch %{{
     IFS=" "
@@ -76,6 +179,62 @@ cmd touch %{{
     lf -remote "send $id select \"$(printf '%s' "$file" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
 }}
 map af push :touch<space> # add file
+
+
+
+
+
+# -----------------------------------------------
+# BULK RENAME
+# -----------------------------------------------
+
+# This command either works on selected files or non-hidden files in the current directory if you don't have any selection.
+cmd bulk-rename ${{
+    old="$(mktemp)"
+    new="$(mktemp)"
+    if [ -n "$fs" ]; then
+        fs="$(basename -a -- $fs)"
+    else
+        fs="$(ls)"
+    fi
+    printf '%s\n' "$fs" > "$old"
+    printf '%s\n' "$fs" > "$new"
+    $EDITOR "$new"
+    [ "$(wc -l < "$new")" -ne "$(wc -l < "$old")" ] && exit
+    paste "$old" "$new" | while IFS= read -r names; do
+        src="$(printf '%s' "$names" | cut -f1)"
+        dst="$(printf '%s' "$names" | cut -f2)"
+        if [ "$src" = "$dst" ] || [ -e "$dst" ]; then
+            continue
+        fi
+        mv -- "$src" "$dst"
+    done
+    rm -- "$old" "$new"
+    lf -remote "send $id unselect"
+}}
+
+map R bulk-rename
+
+
+
+
+# -----------------------------------------------
+# DIRECTORY CD
+# -----------------------------------------------
+
+cmd quit-and-cd &{{
+    pwd > "$LF_CD_FILE"
+    lf -remote "send $id quit"
+}}
+
+map Q quit-and-cd
+
+
+
+
+# -----------------------------------------------
+# TRASH
+# -----------------------------------------------
 
 # define a custom 'rename' command without prompt for overwrite
 # cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
@@ -113,61 +272,12 @@ map dD remove
 # map <delete> trash
 # map <delete> delete
 
-# This command either works on selected files or non-hidden files in the current directory if you don't have any selection.
-cmd bulk-rename ${{
-    old="$(mktemp)"
-    new="$(mktemp)"
-    if [ -n "$fs" ]; then
-        fs="$(basename -a -- $fs)"
-    else
-        fs="$(ls)"
-    fi
-    printf '%s\n' "$fs" > "$old"
-    printf '%s\n' "$fs" > "$new"
-    $EDITOR "$new"
-    [ "$(wc -l < "$new")" -ne "$(wc -l < "$old")" ] && exit
-    paste "$old" "$new" | while IFS= read -r names; do
-        src="$(printf '%s' "$names" | cut -f1)"
-        dst="$(printf '%s' "$names" | cut -f2)"
-        if [ "$src" = "$dst" ] || [ -e "$dst" ]; then
-            continue
-        fi
-        mv -- "$src" "$dst"
-    done
-    rm -- "$old" "$new"
-    lf -remote "send $id unselect"
-}}
 
-map R bulk-rename
 
-# Press . to repeat the last command typed on the command line:
-map . :read; cmd-history-prev; cmd-enter
 
-# extract the current file with the right command
-# (xkcd link: https://xkcd.com/1168/)
-cmd extract ${{
-    set -f
-    case $f in
-        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
-        *.tar.gz|*.tgz) tar xzvf $f;;
-        *.tar.xz|*.txz) tar xJvf $f;;
-        *.zip) unzip $f;;
-        *.rar) unrar x $f;;
-        *.7z) 7z x $f;;
-    esac
-}}
-
-# check the terminal width on startup and set number of columns accordingly
-${{
-    w=$(tput cols)
-    if [ $w -le 80 ]; then
-        lf -remote "send $id set ratios 1:2"
-    elif [ $w -le 160 ]; then
-        lf -remote "send $id set ratios 1:2:3"
-    else
-        lf -remote "send $id set ratios 1:2:3:5"
-    fi
-}}
+# -----------------------------------------------
+# ARCHIVES
+# -----------------------------------------------
 
 # compress current file or selected files with tar and gunzip
 cmd tar ${{
@@ -187,20 +297,57 @@ cmd zip ${{
     rm -rf $1
 }}
 
+# extract the current file with the right command
+# (xkcd link: https://xkcd.com/1168/)
+cmd extract ${{
+    set -f
+    case $f in
+        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
+        *.tar.gz|*.tgz) tar xzvf $f;;
+        *.tar.xz|*.txz) tar xJvf $f;;
+        *.zip) unzip $f;;
+        *.rar) unrar x $f;;
+        *.7z) 7z x $f;;
+    esac
+}}
+
+
+
+# -----------------------------------------------
+# FILE LINKS
+# -----------------------------------------------
+
 cmd follow-link %{{
   lf -remote "send $id select \"$(readlink -- "$f" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
 }}
 
 map gL follow-link
 
-cmd quit-and-cd &{{
-    pwd > "$LF_CD_FILE"
-    lf -remote "send $id quit"
+
+
+
+# -----------------------------------------------
+# BOOKMARKS
+# -----------------------------------------------
+
+cmd bookmark-jump ${{
+    res="$(cat -- "$LF_BOOKMARK_PATH/$(ls -- "$LF_BOOKMARK_PATH" | fzf)" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+    lf -remote "send $id cd \"$res\""
 }}
 
-map Q quit-and-cd
+cmd bookmark-create ${{
+    read -r ans
+    printf '%s\n' "$PWD" > "$LF_BOOKMARK_PATH/$ans"
+}}
 
-# zoxide integration
+
+
+
+
+# -----------------------------------------------
+# ZOXIDE INTEGRATION
+# -----------------------------------------------
+
 cmd z %{{
     result="$(zoxide query --exclude "$PWD" "$@" | sed 's/\\/\\\\/g;s/"/\\"/g')"
     lf -remote "send $id cd \"$result\""
@@ -215,23 +362,13 @@ cmd on-cd &{{
     zoxide add "$PWD"
 }}
 
-cmd pager ${{
-    if [ -f "$f" ]; then
-        bat "$f"
-    elif [ -d "$f" ]; then
-        tree "$f" | bat
-    fi
-}}
 
-cmd bookmark-jump ${{
-    res="$(cat -- "$LF_BOOKMARK_PATH/$(ls -- "$LF_BOOKMARK_PATH" | fzf)" | sed 's/\\/\\\\/g;s/"/\\"/g')"
-    lf -remote "send $id cd \"$res\""
-}}
 
-cmd bookmark-create ${{
-    read -r ans
-    printf '%s\n' "$PWD" > "$LF_BOOKMARK_PATH/$ans"
-}}
+
+
+# -----------------------------------------------
+# RIPGREP WITH FZF
+# -----------------------------------------------
 
 # Combining fzf with ripgrep to interactively search in the contents of files under
 # the current directory and select a file from the results:
