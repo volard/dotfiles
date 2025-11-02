@@ -5,6 +5,7 @@
     state: present
   loop:
     - lf
+    - chafa
   become: true
   loop_control:
     loop_var: pacman_item
@@ -58,3 +59,4 @@
     path: "{{ role_path }}/files/lf.bash"
     state: file
     mode: '0755'
+
