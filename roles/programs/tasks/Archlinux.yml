@@ -34,7 +34,6 @@
     - gnome-keyring # keyring itself
     - libsecret # for keyring
     - seahorse # afair its for keyring
-    # - lf # to much os specific configuration that doesn't make sense for me
     # - xplr # rust based lua hackable tui file manager, too complicated
     - mpv # video player
     - jq # json processor
