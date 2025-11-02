@@ -48,6 +48,7 @@
     - wtype
     - tree
     - zenity # gui gtk propmts
+    - eog # eye of gnome - image viewer
   become: true
   loop_control:
     loop_var: pacman_item

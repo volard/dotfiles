@@ -5,6 +5,7 @@
     state: present
   loop:
     - git-delta # better git diff
+    - less
   become: true
   loop_control:
     loop_var: pacman_item

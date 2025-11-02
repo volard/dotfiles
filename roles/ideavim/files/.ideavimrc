@@ -180,7 +180,7 @@ nmap <C-f> :action GotoHarpoon3<cr>
 nmap <C-j> :action GotoHarpoon4<cr>
 nmap <C-y> :action GotoHarpoon5<cr>
 
-nmap <C-e> :action ShowHarpoon<cr>
+nmap <C-h> :action ShowHarpoon<cr>
 nmap <leader>a :action AddToHarpoon<cr>
 
 
