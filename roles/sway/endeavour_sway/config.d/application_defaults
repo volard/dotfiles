@@ -23,6 +23,8 @@ for_window [app_id="zenity"] floating enable, border pixel 2, resize set width 3
 
 for_window [class="Vivaldi-stable"] sticky enable, floaing enable
 for_window [class="vivaldi-stable"] sticky enable, floaing enable
+for_window [app_id="vivaldi-stable"] sticky enable, floaing enable
+for_window [title=".*Vivaldi"] sticky enable, floaing enable
 
 # Positioning
 
