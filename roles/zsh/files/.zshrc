@@ -107,6 +107,9 @@ fi
 setopt autocd # type a dir to cd
 setopt auto_param_slash # when a dir is completed, add a / instead of a trailing space
 
+# --------------------------------
+# tmux sessionizer
+# --------------------------------
 
 if [ -f ~/.aliases ]; then
     . ~/.aliases
@@ -120,6 +123,21 @@ function run_tsesh() {
 
 zle -N run_tsesh
 bindkey '^F' run_tsesh
+
+
+
+# --------------------------------
+# lf cd
+# --------------------------------
+
+LFCD="$HOME/.config/lf/lfcd.sh"
+if [ -f "$LFCD" ]; then
+    source "$LFCD"
+fi
+bindkey -s '^o' 'lfcd\n'
+
+
+
 
 
 ___MY_VMOPTIONS_SHELL_FILE="${HOME}/.jetbrains.vmoptions.sh"

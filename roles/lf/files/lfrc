@@ -1,3 +1,5 @@
+# vim: filetype=sh
+
 # check the terminal width on startup and set number of columns accordingly
 ${{
     w=$(tput cols)
@@ -45,7 +47,6 @@ set cursorpreviewfmt "\033[7;2m"
 
 set hidden true
 set ignorecase true
-set sixel true
 set icons true
 
 
@@ -133,19 +134,17 @@ map p :paste; clear
 # PREVIEWS
 # -----------------------------------------------
 
-set previewer stpv
-set cleaner stpvimgclr
-&stpvimg --listen $id
-cmd on-quit $stpvimg --end $id
+set previewer ~/.config/lf/test.sh
+set sixel true
+map i $~/.config/lf/test.sh $f | less -R
 
 cmd pager ${{
     if [ -f "$f" ]; then
         bat "$f"
     elif [ -d "$f" ]; then
-        tree "$f" | bat
+        eza "$f" | bat
     fi
 }}
-
 
 
 
@@ -222,12 +221,12 @@ map R bulk-rename
 # DIRECTORY CD
 # -----------------------------------------------
 
-cmd quit-and-cd &{{
-    pwd > "$LF_CD_FILE"
-    lf -remote "send $id quit"
-}}
-
-map Q quit-and-cd
+#cmd quit-and-cd &{{
+#    pwd > "$LF_CD_FILE"
+#    lf -remote "send $id quit"
+#}}
+#
+#map Q quit-and-cd
 
 
 
