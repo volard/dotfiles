@@ -5,7 +5,12 @@
     state: present
   loop:
     - lf
-    - chafa
+    - chafa # image previwes
+    - less
+    - lesspipe # massive previews for a lot of shit
+    - 7zip # archieves
+    - eza # directory previews
+    - poppler # for pdfs
   become: true
   loop_control:
     loop_var: pacman_item
@@ -19,44 +24,57 @@
     state: link
     force: true
 
-- name: Check if a command exists
-  ansible.builtin.command: which stpv
-  register: stpv_check
-  ignore_errors: true
+# stopped working for me, so I wrote mine in test.sh
 
-- name: Set fact if command exists
-  ansible.builtin.set_fact:
-    stpv_exists: true
-  when: stpv_check.rc == 0
+# - name: Check if a command exists
+#   ansible.builtin.command: which stpv
+#   register: stpv_check
+#   ignore_errors: true
+#
+# - name: Set fact if command exists
+#   ansible.builtin.set_fact:
+#     stpv_exists: true
+#   when: stpv_check.rc == 0
+#
+# - name: Set fact if command does not exist
+#   ansible.builtin.set_fact:
+#     stpv_exists: false
+#   when: stpv_check.rc != 0
+#
+# - name: Clone the Git repository
+#   ansible.builtin.git:
+#     repo: https://github.com/Naheel-Azawy/stpv.git
+#     dest: /tmp/stpv
+#     update: false
+#   when: not stpv_exists
+#
+# - name: Install the package using make
+#   ansible.builtin.command: make install
+#   args:
+#     chdir: /tmp/stpv
+#   become: true
+#   when: not stpv_exists
+#
+# - name: Remove the cloned directory
+#   ansible.builtin.file:
+#     path: /tmp/stpv
+#     state: absent
+#   when: not stpv_exists
 
-- name: Set fact if command does not exist
-  ansible.builtin.set_fact:
-    stpv_exists: false
-  when: stpv_check.rc != 0
-
-- name: Clone the Git repository
-  ansible.builtin.git:
-    repo: https://github.com/Naheel-Azawy/stpv.git
-    dest: /tmp/stpv
-    update: false
-  when: not stpv_exists
-
-- name: Install the package using make
-  ansible.builtin.command: make install
-  args:
-    chdir: /tmp/stpv
-  become: true
-  when: not stpv_exists
-
-- name: Remove the cloned directory
+- name: Ensure .config directory exists
   ansible.builtin.file:
-    path: /tmp/stpv
-    state: absent
-  when: not stpv_exists
+    path: "{{ ansible_user_dir }}/.cache/lf"
+    state: directory
+    mode: "0755"
 
-- name: Ensure lf.bash executable
+- name: Ensure lfcd.sh executable
   ansible.builtin.file:
-    path: "{{ role_path }}/files/lf.bash"
+    path: "{{ role_path }}/files/lfcd.sh"
     state: file
     mode: '0755'
 
+- name: Ensure test executable
+  ansible.builtin.file:
+    path: "{{ role_path }}/files/test.sh"
+    state: file
+    mode: '0755'
