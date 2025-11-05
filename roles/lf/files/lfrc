@@ -13,7 +13,8 @@ ${{
 }}
 
 
-
+# show a warning on startup if lf is running as a nested instance:
+&[ "$LF_LEVEL" -eq 1 ] || lf -remote "send $id echoerr \"Warning: You're in a nested lf instance!\""
 
 
 # -----------------------------------------------
@@ -48,6 +49,17 @@ set cursorpreviewfmt "\033[7;2m"
 set hidden true
 set ignorecase true
 set icons true
+
+# automatic file updates via period option which polls the directory status every x seconds
+set period 2
+
+# Enable file and directory information
+set info size
+set dircounts
+
+# sort downloads by modified date (it's always a mess)
+setlocal ~/Downloads sortby time
+setlocal ~/Downloads reverse
 
 
 
@@ -126,23 +138,24 @@ map . :read; cmd-history-prev; cmd-enter
 # Clear selected files after copying and pasting
 map p :paste; clear
 
-
-
+# To quit without changing the directory even if it's lfcd performed
+map <esc> %lf -remote "send $id :cd \"$OLDPWD\"; quit"
 
 
 # -----------------------------------------------
 # PREVIEWS
 # -----------------------------------------------
 
-set previewer ~/.config/lf/test.sh
+set previewer ~/.config/lf/preview.sh
 set sixel true
-map i $~/.config/lf/test.sh $f | less -R
+map i $~/.config/lf/preview.sh $f | less -R
 
 cmd pager ${{
     if [ -f "$f" ]; then
-        bat "$f"
+      bat "$f"
     elif [ -d "$f" ]; then
-        eza "$f" | bat
+        # eza "$f"
+      eza -T --color=always --all --git-ignore --level=2 --group-directories-first "${f}"
     fi
 }}
 
@@ -217,59 +230,13 @@ map R bulk-rename
 
 
 
-# -----------------------------------------------
-# DIRECTORY CD
-# -----------------------------------------------
-
-#cmd quit-and-cd &{{
-#    pwd > "$LF_CD_FILE"
-#    lf -remote "send $id quit"
-#}}
-#
-#map Q quit-and-cd
-
-
-
 
 # -----------------------------------------------
-# TRASH
+# TRASH-CLI
 # -----------------------------------------------
 
-# define a custom 'rename' command without prompt for overwrite
-# cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
-# map r push :rename<space>
-
-# make sure trash folder exists
-# %mkdir -p ~/.trash
-
-# move current file or selected files to trash folder
-# (also see 'man mv' for backup/overwrite options)
-cmd trash %set -f; mv $fx ~/.trash
-
-
-# purge the unclean
-cmd remove ${{
-    if [ -z $fs ]; then
-        printf 'trash? [y/n]'
-        read ans
-
-        [ $ans = 'y' ] && (printf 'trashing...' && trash $f) || (printf 'cancelled...')
-    else
-        IFS=':'; printf $fs | tr " " "\n"
-        printf 'trash? [y/n]'
-        read ans
-
-        [ $ans = 'y' ] && (printf 'trashing files...' && trash $fs) || (printf 'cancelled...')
-    fi
-}}
-
-map d # leave the command name empty like this for unmapping
-map dd trash
-map dD remove
-
-# use '<delete>' key for either 'trash' or 'delete' command
-# map <delete> trash
-# map <delete> delete
+cmd trash %trash-put -- $fx
+map D trash
 
 
 
@@ -339,7 +306,9 @@ cmd bookmark-create ${{
     printf '%s\n' "$PWD" > "$LF_BOOKMARK_PATH/$ans"
 }}
 
-
+# LF_BOOKMARK_PATH is not setup by ansible, cuz' I'm using zoxide more
+# map bc bookmark-create
+# map bj bookmark-create
 
 
 
@@ -365,6 +334,38 @@ cmd on-cd &{{
 
 
 
+
+
+# -----------------------------------------------
+# RIPGREP WITH FZF
+# -----------------------------------------------
+cmd fzf_jump ${{
+    res="$(find . -maxdepth 1 | fzf --reverse --header="Jump to location" --preview='
+      if [ -d {1} ]; then
+        eza -T --color=always --all --git-ignore --level=2 --group-directories-first {1}
+      else
+        bat --color=always --style=numbers --pager=never {1}
+      fi
+    ')"
+    if [ -n "$res" ]; then
+        if [ -d "$res" ]; then
+            cmd="cd"
+        else
+            cmd="select"
+        fi
+        res="$(printf '%s' "$res" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+        lf -remote "send $id $cmd \"$res\""
+    fi
+}}
+map <c-f> :fzf_jump
+
+
+
+
+
+
+
+
 # -----------------------------------------------
 # RIPGREP WITH FZF
 # -----------------------------------------------
@@ -377,8 +378,12 @@ cmd fzf_search ${{
         --bind="start:reload([ -n {q} ] && $cmd -- {q} || true)" \
         --bind="change:reload([ -n {q} ] && $cmd -- {q} || true)" \
         --bind='enter:become(lf -remote "send $id select \"$(printf "%s" {1} | sed '\''s/\\/\\\\/g;s/"/\\"/g'\'')\"")' \
-        --preview='cat -- {1}' # Use your favorite previewer here (bat, source-highlight, etc.)
+        --preview='bat -- {1}' # Use your favorite previewer here (bat, source-highlight, etc.)
         # Alternatively you can even use the same previewer you've configured for lf
         #--preview='~/.config/lf/cleaner; ~/.config/lf/previewer {1} "$FZF_PREVIEW_COLUMNS" "$FZF_PREVIEW_LINES" "$FZF_PREVIEW_LEFT" "$FZF_PREVIEW_TOP"')"
 }}
 map gs :fzf_search
+
+
+
+set rulerfmt  "%a| %p| \033[7;31m %m \033[0m| \033[7;33m %c \033[0m| \033[7;35m %s \033[0m| \033[7;36m %v \033[0m|f=`%f',| %d|  %i/%t  %P"
