@@ -5,12 +5,14 @@
     state: present
   loop:
     - lf
+    - trash-cli 
     - chafa # image previwes
     - less
     - lesspipe # massive previews for a lot of shit
-    - 7zip # archieves
+    - 7zip # archieves previews and interactions
     - eza # directory previews
-    - poppler # for pdfs
+    - bat # files previews
+    - poppler # for pdfs previews
   become: true
   loop_control:
     loop_var: pacman_item
@@ -73,8 +75,8 @@
     state: file
     mode: '0755'
 
-- name: Ensure test executable
+- name: Ensure preview executable
   ansible.builtin.file:
-    path: "{{ role_path }}/files/test.sh"
+    path: "{{ role_path }}/files/preview.sh"
     state: file
     mode: '0755'

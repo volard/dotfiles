@@ -63,11 +63,8 @@ ZSH_THEME="dstufft"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 plugins=(git zsh-syntax-highlighting colored-man-pages vi-mode)
 
 # Enable vi mode
@@ -147,9 +144,10 @@ fi
 
 export PATH="$PATH:$HOME/dotfiles/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.config/emacs/bin:$HOME/.pyenv/bin:$HOME/.pyenv:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$HOME/bin:$HOME/.local/bin:/usr/local/bin"
 
-if command -v docker &> /dev/null; then
-  docker run -it --rm djoudix/git-tip git-tip 
-fi
+# it became annoying and noticably slow
+# if command -v docker &> /dev/null; then
+#   docker run -it --rm djoudix/git-tip git-tip 
+# fi
 
 if command -v pyenv &> /dev/null; then
     eval "$(pyenv init -)"
