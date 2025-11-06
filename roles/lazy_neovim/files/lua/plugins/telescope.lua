@@ -24,6 +24,11 @@ return {
   keys = {
     { "<leader>fd", "<cmd>GrepInDirectory<CR>", desc = "Grep in dir" },
     { "<leader>pd", "<cmd>FileInDirectory<CR>", desc = "Find in dir" },
+    {
+      "<C-g>",
+      function() require("telescope").extensions.git_file_history.actions.open_in_browser() end,
+      desc = "Open commit in browser",
+    },
   },
   opts = {
     theme = "catppuccin",
