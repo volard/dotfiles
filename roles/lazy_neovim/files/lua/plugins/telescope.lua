@@ -9,6 +9,21 @@ return {
         "tpope/vim-fugitive",
       },
     },
+    {
+      "princejoogie/dir-telescope.nvim",
+      config = function()
+        require("dir-telescope").setup({
+          hidden = true,
+          no_ignore = false,
+          show_preview = true,
+          follow_symlinks = true,
+        })
+      end,
+    },
+  },
+  keys = {
+    { "<leader>fd", "<cmd>GrepInDirectory<CR>", desc = "Grep in dir" },
+    { "<leader>pd", "<cmd>FileInDirectory<CR>", desc = "Find in dir" },
   },
   opts = {
     theme = "catppuccin",
