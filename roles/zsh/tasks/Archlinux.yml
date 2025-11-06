@@ -22,17 +22,57 @@
   args:
     creates: ~/.oh-my-zsh
 
-- name: Ensure zsh-syntax-highlighting directory exists
+- name: Get home directory
+  ansible.builtin.set_fact:
+    user_home: "{{ lookup('env', 'HOME') | default(ansible_user_dir) }}"
+
+- name: Get ZSH_CUSTOM environment variable
+  ansible.builtin.set_fact:
+    zsh_custom_env: "{{ lookup('env', 'ZSH_CUSTOM') | default('', true) | trim }}"
+
+- name: Set zsh custom directory path
+  ansible.builtin.set_fact:
+    zsh_custom_dir: "{{ zsh_custom_env if zsh_custom_env | length > 0 else (user_home + '/.oh-my-zsh/custom') }}"
+
+- name: Set zsh custom plugins directory path
+  ansible.builtin.set_fact:
+    zsh_custom_plugins: "{{ zsh_custom_dir }}/plugins/zsh-syntax-highlighting"
+
+- name: Ensure zsh custom plugins parent directory exists
   ansible.builtin.file:
-    path: "{{ lookup('env', 'ZSH_CUSTOM') | default('~/.oh-my-zsh/custom') }}/plugins/zsh-syntax-highlighting"
+    path: "{{ zsh_custom_dir }}/plugins"
     state: directory
     mode: "0755"
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
+
+- name: Check zsh-syntax-highlighting directory status
+  ansible.builtin.stat:
+    path: "{{ zsh_custom_plugins }}"
+  register: zsh_custom_plugins_stat
+
+- name: Remove zsh-syntax-highlighting directory if owned by root
+  ansible.builtin.file:
+    path: "{{ zsh_custom_plugins }}"
+    state: absent
+  become: true
+  when: zsh_custom_plugins_stat.stat.exists is defined and zsh_custom_plugins_stat.stat.exists and zsh_custom_plugins_stat.stat.uid == 0
+
+- name: Ensure zsh-syntax-highlighting directory exists
+  ansible.builtin.file:
+    path: "{{ zsh_custom_plugins }}"
+    state: directory
+    mode: "0755"
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
+    recurse: true
 
 - name: Clone or update zsh-syntax-highlighting repository
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
-    dest: "{{ lookup('env', 'ZSH_CUSTOM') | default('~/.oh-my-zsh/custom') }}/plugins/zsh-syntax-highlighting"
+    dest: "{{ zsh_custom_plugins }}"
     update: true
+    force: yes
 
 - name: Remove default .zshrc configuration
   ansible.builtin.file:
