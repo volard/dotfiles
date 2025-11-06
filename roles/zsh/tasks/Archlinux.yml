@@ -73,6 +73,25 @@
     dest: "{{ zsh_custom_plugins }}"
     update: true
     force: yes
+    
+
+- name: Ensure zsh custom themes directory exists
+  ansible.builtin.file:
+    path: "{{ zsh_custom_dir }}/themes"
+    state: directory
+    mode: "0755"
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
+
+- name: Create a symbolic link for volard.zsh-theme in custom themes directory
+  ansible.builtin.file:
+    src: "{{ ansible_env.HOME }}/dotfiles/roles/zsh/files/volard.zsh-theme"
+    dest: "{{ zsh_custom_dir }}/themes/volard.zsh-theme"
+    state: link
+    force: true
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
+
 
 - name: Remove default .zshrc configuration
   ansible.builtin.file:
