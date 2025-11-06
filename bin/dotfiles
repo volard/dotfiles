@@ -18,6 +18,50 @@ RESET='\e[0m'
 DOTFILES_DIR="${HOME}/dotfiles"
 PASSWORD_FILE_PATH="${DOTFILES_DIR}/vault-password.txt"
 
+########################################
+# Help function
+########################################
+show_help() {
+  cat << EOF
+Usage: dotfiles [OPTIONS] [ANSIBLE_ARGS]
+
+Manage dotfiles using Ansible playbook.
+
+OPTIONS:
+  -h, --help          Show this help message
+  --no-pull, --skip-pull  Skip pulling from git repository
+
+ANSIBLE_ARGS:
+  Any additional arguments are passed to ansible-playbook
+
+Examples:
+  dotfiles                    Run playbook with default behavior
+  dotfiles --no-pull          Skip git pull before running
+  dotfiles --limit localhost  Run only on localhost
+EOF
+  exit 0
+}
+
+########################################
+# Parse arguments
+########################################
+SKIP_PULL=false
+ANSIBLE_ARGS=()
+
+for arg in "$@"; do
+  case $arg in
+    -h|--help)
+      show_help
+      ;;
+    --no-pull|--skip-pull)
+      SKIP_PULL=true
+      ;;
+    *)
+      ANSIBLE_ARGS+=("$arg")
+      ;;
+  esac
+done
+
 
 ########################################
 # Determine distro
@@ -77,8 +121,10 @@ else
   if ! [[ -d "${DOTFILES_DIR}/.git" ]]; then
     git clone "https://gitlab.com/dotfiles30/comma_files.git" "${DOTFILES_DIR}"
   else
-    git -C "${DOTFILES_DIR}" pull
-	fi
+    if [[ "${SKIP_PULL}" == "false" ]]; then
+      git -C "${DOTFILES_DIR}" pull
+    fi
+  fi
 fi
 
 
@@ -146,11 +192,11 @@ ansible-playbook \
   --vault-password-file "${PASSWORD_FILE_PATH}" \
   --ask-become-pass \
   "${DOTFILES_DIR}/main.yml" \
-  --syntax-check "$@"
+  --syntax-check "${ANSIBLE_ARGS[@]}"
 
 ansible-playbook \
   --vault-password-file "${PASSWORD_FILE_PATH}" \
   --ask-become-pass \
-  "${DOTFILES_DIR}/main.yml" "$@"
+  "${DOTFILES_DIR}/main.yml" "${ANSIBLE_ARGS[@]}"
 
 # vi:ft=sh:
