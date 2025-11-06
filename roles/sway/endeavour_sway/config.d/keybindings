@@ -32,6 +32,9 @@ bindsym --to-code {
     # Open emoji list
     $mod+Shift+o exec bemoji -n
 
+    # bar toggle
+    $mod+m exec '[ "$(swaymsg -t get_bar_config bar-0 | jq -r ".mode")" = "dock" ] && swaymsg bar mode invisible || swaymsg bar mode dock'
+
 #wayvnc rofl
 $mod+Shift+s input "type:keyboard" xkb_layout us
 $mod+Shift+r input "type:keyboard" xkb_layout ru

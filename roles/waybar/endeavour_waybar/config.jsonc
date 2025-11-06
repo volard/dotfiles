@@ -5,6 +5,8 @@
     // "width": 1280, // Full screen width when commented
     "spacing": 16, // Gaps between modules (in px)
     // See `man waybar` for more configuration options
+    "ipc": true,
+    "id": "waybar",
 
 // Configuration - modules-left
 
