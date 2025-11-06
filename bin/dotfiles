@@ -19,9 +19,6 @@ DOTFILES_DIR="${HOME}/dotfiles"
 PASSWORD_FILE_PATH="${DOTFILES_DIR}/vault-password.txt"
 
 
-read -s -p "Enter sudo password: " sudo_password
-
-
 ########################################
 # Determine distro
 ########################################
@@ -60,12 +57,12 @@ echo
 ########################################
 if ! command -v git &> /dev/null; then
   if [[ ${distro} == "endeavouros" ]]; then
-    echo "$sudo_password" | sudo -S pacman -S git --noconfirm
+    sudo pacman -S git --noconfirm
   elif [[ ${distro} == "ubuntu" ]]; then
-    echo "$sudo_password" | sudo -S apt install git -y
+    sudo apt install git -y
   elif [[ ${distro} == "fedora" ]]; then
-    echo "$sudo_password" | sudo -S dnf in git -y
-    echo "$sudo_password" | sudo -S dnf in dnf-plugins-core -y
+    sudo dnf in git -y
+    sudo dnf in dnf-plugins-core -y
   fi
 fi
 
@@ -92,16 +89,16 @@ fi
 ########################################
 if ! [[ -x "$(command -v ansible || true)" ]]; then
   if [[ ${distro} == "endeavouros" ]]; then
-    echo "$sudo_password" | sudo pacman -S ansible --noconfirm
+    sudo pacman -S ansible --noconfirm
   elif [[ ${distro} == "fedora" ]]; then
-    echo "$sudo_password" | sudo -S dnf in ansible -y
+    sudo dnf in ansible -y
   elif [[ ${distro} == "ubuntu" ]]; then
 
     # pipx is the best method to install ansible imo
-    echo "$sudo_password" | sudo -S apt install pipx -y
+    sudo apt install pipx -y
 
     # Add pipx to PATH
-    echo "$sudo_password" | sudo -S pipx ensurepath
+    sudo pipx ensurepath
     source ~/.bashrc
 
     if ! [[ ":$PATH:" == *":$DIR:"* ]]; then
@@ -124,8 +121,9 @@ if ! [[ -f "${DOTFILES_DIR}/vault-password.txt" ]]; then
   read -s -p "Please enter your Ansible Vault password: " ANSIBLE_PASSWORD
   echo
   # Trim leading and trailing whitespace (including tabs and newlines)
-  trimmed_ANSIBLE_PASSWORD=$(echo "$input" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+  trimmed_ANSIBLE_PASSWORD=$(echo "$ANSIBLE_PASSWORD" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
   echo "${trimmed_ANSIBLE_PASSWORD}" > "${PASSWORD_FILE_PATH}"
+  chmod 600 "${PASSWORD_FILE_PATH}"
 fi
 
 
@@ -140,27 +138,19 @@ python3 bin/sync_roles.py
 
 ansible-galaxy install -r requirements.yml
 
-# store sudo password temporary
-cleanup() {
-    echo "Cleaning up before exit..."
-    rm -f temp_sudo.pass
-}
-
-trap cleanup SIGINT SIGTERM EXIT
-
-echo "${sudo_password}" > "temp_sudo.pass"
-
+# Use --ask-become-pass for secure interactive password prompt
+# This is more secure than storing password in a file
+# For non-interactive use, you can set ANSIBLE_BECOME_PASSWORD env var
+# or use --become-password-file with a properly secured file (chmod 600)
 ansible-playbook \
   --vault-password-file "${PASSWORD_FILE_PATH}" \
-  --become-pass-file "temp_sudo.pass" \
+  --ask-become-pass \
   "${DOTFILES_DIR}/main.yml" \
   --syntax-check "$@"
 
 ansible-playbook \
   --vault-password-file "${PASSWORD_FILE_PATH}" \
-  --become-pass-file "temp_sudo.pass" \
+  --ask-become-pass \
   "${DOTFILES_DIR}/main.yml" "$@"
-
-cleanup
 
 # vi:ft=sh:

@@ -8,6 +8,7 @@
     - trash-cli 
     - chafa # image previwes
     - less
+    - zoxide
     - lesspipe # massive previews for a lot of shit
     - 7zip # archieves previews and interactions
     - eza # directory previews
