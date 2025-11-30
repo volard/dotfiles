@@ -49,6 +49,7 @@
     - tree
     - zenity # gui gtk propmts
     - eog # eye of gnome - image viewer
+    - tesseract # OCR program
   become: true
   loop_control:
     loop_var: pacman_item

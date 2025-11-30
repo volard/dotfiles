@@ -166,7 +166,11 @@ $mod+Shift+r input "type:keyboard" xkb_layout ru
     # Note: you can clear all cliphist entries by running `cliphist wipe`
 
 
+#
+# OCR
+#
 
+$mod+Ctrl+r exec grim -g "$(slurp)" - | tesseract - - -l eng | wl-copy
 
 #
 # Screenshots
