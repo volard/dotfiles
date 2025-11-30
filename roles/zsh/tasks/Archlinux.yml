@@ -98,11 +98,11 @@
     path: ~/.zshrc
     state: absent
 
-- name: Create a symbolic link for .zshrc
-  ansible.builtin.file:
-    src: ~/dotfiles/roles/zsh/files/.zshrc
+- name: Render .zshrc from template
+  ansible.builtin.template:
+    src: .zshrc.j2
     dest: ~/.zshrc
-    state: link
+    mode: "0644"
 
 - name: Create a symbolic link for .aliases
   ansible.builtin.file:

@@ -1,5 +1,5 @@
 ```bash
-yay -S snapd
+paru -S snapd
 sudo systemctl unmask snapd.service
 sudo systemctl enable --now snapd.service
 sudo systemctl enable --now snapd.apparmor

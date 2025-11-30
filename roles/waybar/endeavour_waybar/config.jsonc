@@ -23,6 +23,13 @@
         "tooltip": false
     },
 
+    "custom/voxtype": {
+        "exec": "voxtype status --follow --format json",
+        "return-type": "json",
+        "format": "{}",
+        "tooltip": true
+    },
+
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
@@ -71,6 +78,7 @@
 // Configuration - modules-right
 
     "modules-right": [
+        "custom/voxtype",
         "custom/keyboard-layout",
         "idle_inhibitor",
         "cpu",

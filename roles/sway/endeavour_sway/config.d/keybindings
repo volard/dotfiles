@@ -1,10 +1,13 @@
-bindsym --to-code {
+bindsym --to-code $mod+r exec voxtype record start
+bindsym --to-code --release $mod+r exec voxtype record stop
 
+bindsym --to-code {
 #
 # Basics:
 #
     # Launch the terminal
     $mod+Return exec $term
+
 
     # Open the power menu
     $mod+Shift+e exec $powermenu
