@@ -3,5 +3,6 @@
     "redhat.ansible",
     "redhat.vscode-yaml",
     "wholroyd.jinja",
+    "skellock.just",
   ]
 }
