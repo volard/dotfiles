@@ -118,7 +118,6 @@
     },
     "tinymist.preview.invertColors": "auto",
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Tokyo Night Storm",
     "java.jdt.ls.java.home": "~/.jdks/corretto-21.0.8-1/",
     "java.configuration.runtimes": [
         {
@@ -128,4 +127,8 @@
 
     ],
     "makefile.configureOnOpen": true,
+    "git.showCursorWorktrees": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
 }
