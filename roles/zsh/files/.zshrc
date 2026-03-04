@@ -66,7 +66,15 @@ ZSH_THEME="volard"
 
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
-plugins=(git zsh-syntax-highlighting colored-man-pages vi-mode)
+plugins=(
+  git
+  zsh-syntax-highlighting 
+  colored-man-pages
+  fzf
+  zoxide
+  pyenv
+  mise
+)
 
 # Enable vi mode
 bindkey -v
@@ -135,28 +143,19 @@ fi
 bindkey -s '^o' 'lfcd\n'
 
 
-
-
-
 ___MY_VMOPTIONS_SHELL_FILE="${HOME}/.jetbrains.vmoptions.sh"
 if [ -f "${___MY_VMOPTIONS_SHELL_FILE}" ]; then 
   . "${___MY_VMOPTIONS_SHELL_FILE}"
 fi
 
-export PATH="$PATH:$HOME/dotfiles/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.config/emacs/bin:$HOME/.pyenv/bin:$HOME/.pyenv:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$HOME/bin:$HOME/.local/bin:/usr/local/bin"
+export PATH="$PATH:$HOME/.local/share/gem/ruby/3.4.0/bin:$HOME/dotfiles/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.config/emacs/bin:$HOME/.pyenv/bin:$HOME/.pyenv:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$HOME/bin:$HOME/.local/bin:/usr/local/bin"
 
 # it became annoying and noticably slow
 # if command -v docker &> /dev/null; then
 #   docker run -it --rm djoudix/git-tip git-tip 
 # fi
 
-if command -v pyenv &> /dev/null; then
-    eval "$(pyenv init -)"
-fi
 
-if command -v mise &> /dev/null; then
-  eval "$(mise activate zsh)"
-fi
 
 if command -v fzf &> /dev/null; then
   source <(fzf --zsh)
@@ -168,13 +167,16 @@ if command -v fzf &> /dev/null; then
     --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 fi
 
-# should be in the end
-if command -v zoxide &> /dev/null; then
-  eval "$(zoxide init zsh)"
-fi
 
 ## [Completion]
 ## Completion scripts setup. Remove the following line to uninstall
 [[ -f /home/volard/.dart-cli-completion/zsh-config.zsh ]] && . /home/volard/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
 
+
+# bun completions
+[ -s "/home/volard/.bun/_bun" ] && source "/home/volard/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
