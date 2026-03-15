@@ -4,11 +4,13 @@ return {
     ensure_installed = {
       "tinymist",
       "stylua",
+      "marksman",
       "shellcheck",
       "shfmt",
       "docker-compose-language-service",
       "dockerfile-language-server",
       "hadolint",
+      "tinymist"
     },
   },
 }

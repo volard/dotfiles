@@ -8,3 +8,4 @@ local g = vim.g
 o.number = false
 o.relativenumber = false
 g.autoformat = false
+g.conceallevel=0
