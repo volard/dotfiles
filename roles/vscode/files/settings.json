@@ -122,4 +122,5 @@
     ],
     "workbench.editor.enablePreview": false,
     "svg.preview.mode": "svg",
+    "python.languageServer": "None",
 }

@@ -4,6 +4,7 @@
     name: "{{ pacman_item }}"
     state: present
   loop:
+    - github-cli
     - ripgrep # better grep
     # - zathura # pdf viewer
     - evince # pdf viewer

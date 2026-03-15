@@ -180,3 +180,6 @@ fi
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Created by `pipx` on 2026-03-10 07:41:52
+export PATH="$PATH:/home/volard/.local/bin"
