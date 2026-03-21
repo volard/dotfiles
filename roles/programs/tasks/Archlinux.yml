@@ -4,6 +4,9 @@
     name: "{{ pacman_item }}"
     state: present
   loop:
+    - git-lfs
+    - xdg-desktop-portal-wlr
+    - xdg-desktop-portal-gtk
     - github-cli
     - ripgrep # better grep
     # - zathura # pdf viewer
@@ -72,7 +75,13 @@
   ansible.builtin.command: mise use -g {{ mise_item }}@latest
   loop:
     - node
-    - python
   loop_control:
     loop_var: mise_item
   when: ansible_distribution == "Archlinux"
+
+  # todo: install bun and global skills:
+  # - code-reviewer
+  # - coding-standarts
+  # - find-skills
+  # - gh-issues
+  # - github

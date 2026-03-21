@@ -98,13 +98,6 @@
     },
     "tinymist.preview.invertColors": "auto",
     "workbench.iconTheme": "material-icon-theme",
-    "java.jdt.ls.java.home": "~/.jdks/corretto-21.0.8-1/",
-    "java.configuration.runtimes": [
-        {
-            "name": "JavaSE-21",
-            "path": "~/.jdks/corretto-21.0.8-1/"
-        }
-    ],
     "makefile.configureOnOpen": true,
     "git.showCursorWorktrees": true,
     "[typescript]": {
@@ -123,4 +116,8 @@
     "workbench.editor.enablePreview": false,
     "svg.preview.mode": "svg",
     "python.languageServer": "None",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "editor.lineNumbers": "off",
 }
