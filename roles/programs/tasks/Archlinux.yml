@@ -79,9 +79,21 @@
     loop_var: mise_item
   when: ansible_distribution == "Archlinux"
 
-  # todo: install bun and global skills:
-  # - code-reviewer
-  # - coding-standarts
-  # - find-skills
-  # - gh-issues
-  # - github
+- name: Check if rtk is installed
+  ansible.builtin.command: command -v rtk
+  register: rtk_check
+  changed_when: false
+  failed_when: false
+  when: ansible_distribution == "Archlinux"
+
+- name: Install rtk
+  ansible.builtin.shell: curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+  args:
+    executable: /bin/bash
+  when:
+    - ansible_distribution == "Archlinux"
+    - rtk_check.rc != 0
+
+- name: Enable rtk globally
+  ansible.builtin.command: rtk init --global --auto-patch
+  when: ansible_distribution == "Archlinux"
