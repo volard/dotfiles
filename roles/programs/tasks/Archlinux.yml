@@ -4,6 +4,8 @@
     name: "{{ pacman_item }}"
     state: present
   loop:
+    - glab
+    - bun
     - git-lfs
     - xdg-desktop-portal-wlr
     - xdg-desktop-portal-gtk
@@ -22,6 +24,7 @@
     - zsh # better shell
     - mise # dev tools version manager
     - wlsunset # warm screen display
+    - wltype
     - fzf # fuzzy searching tool
     - qbittorrent # torrent client
     - qt6-wayland
@@ -67,6 +70,7 @@
     - zen-browser-bin
     - lazydocker-bin # docker TUI
     - throne-bin # docker TUI
+    - voxtype-bin
   loop_control:
     loop_var: aur_item
   when: ansible_distribution == "Archlinux"
@@ -96,4 +100,49 @@
 
 - name: Enable rtk globally
   ansible.builtin.command: rtk init --global --auto-patch
+  when: ansible_distribution == "Archlinux"
+
+
+- name: Install global skills
+  ansible.builtin.command: bunx skills install {{ skill_item }} -y --all -g
+  loop:
+    - vercel-labs/skills --skill find-skills
+    - anthropics/skills --skill skill-creator
+    - anthropics/skills --skill frontend-design
+    - vercel-labs/agent-skills --skill web-design-guidelines
+    - vercel-labs/agent-skills --skill vercel-react-best-practices
+    - affaan-m/everything-claude-code --skill frontend-patterns
+    - affaan-m/everything-claude-code --skill docker-patterns
+    - openclaw/openclaw --skill gh-issues
+    - openclaw/openclaw --skill github
+    - github/awesome-copilot --skill git-commit
+    - openai/skills --skill gh-fix-ci
+    - Shubhamsaboo/awesome-llm-apps --skill code-reviewer
+    - affaan-m/everything-claude-code --skill coding-standards
+    - affaan-m/everything-claude-code --skill api-design
+    - langgenius/dify --skill backend-code-review
+    - anthropics/skills --skill algorithmic-art
+    - affaan-m/everything-claude-code --skill java-coding-standards
+    - affaan-m/everything-claude-code --skill jpa-patterns
+    - affaan-m/everything-claude-code --skill springboot-patterns
+    - affaan-m/everything-claude-code --skill springboot-security
+    - marcelorodrigo/agent-skills --skill spring-boot-testing
+    - affaan-m/everything-claude-code --skill database-migrations
+    - affaan-m/everything-claude-code --skill postgres-patterns
+    - affaan-m/everything-claude-code --skill python-patterns
+    - affaan-m/everything-claude-code --skill python-testing
+    - Shubhamsaboo/awesome-llm-apps --skill python-expert
+    - Shubhamsaboo/awesome-llm-apps --skill visualization-expert
+    - browser-use/browser-use --skill browser-use
+    - vercel-labs/agent-browser --skill agent-browser
+    - michalparkola/tapestry-skills-for-claude-code --skill article-extractor
+    - Shubhamsaboo/awesome-llm-apps --skill decision-helper
+    - Shubhamsaboo/awesome-llm-apps --skill editor
+    - Shubhamsaboo/awesome-llm-apps --skill technical-writer
+    - Shubhamsaboo/awesome-llm-apps --skill email-drafter
+    - Shubhamsaboo/awesome-llm-apps --skill meeting-notes
+    - Shubhamsaboo/awesome-llm-apps --skill sprint-planner
+    - Shubhamsaboo/awesome-llm-apps --skill strategy-advisor
+  loop_control:
+    loop_var: skill_item
   when: ansible_distribution == "Archlinux"
