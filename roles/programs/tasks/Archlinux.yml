@@ -151,6 +151,7 @@
     - "Shubhamsaboo/awesome-llm-apps --skill meeting-notes"
     - "Shubhamsaboo/awesome-llm-apps --skill sprint-planner"
     - "Shubhamsaboo/awesome-llm-apps --skill strategy-advisor"
+    - "blader/humanizer --skill humanizer"
   loop_control:
     loop_var: skill_item
   when: ansible_distribution == "Archlinux"
