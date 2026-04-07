@@ -7,6 +7,8 @@
     - glab
     - base-devel
     - bun
+    - wf-recorder
+    - ttf-nerd-fonts-symbols-mono
     - git-lfs
     - xdg-desktop-portal-wlr
     - xdg-desktop-portal-gtk
