@@ -2,16 +2,16 @@
 
 ## Linux
 ```bash
-bash -c "$(curl -fsSL https://gitlab.com/dotfiles30/comma_files/-/raw/main/bin/dotfiles)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/volard/dotfiles/refs/heads/main/bin/dotfiles)"
 # or
-bash -c "$(wget -qO- https://gitlab.com/dotfiles30/comma_files/-/raw/main/bin/dotfiles)"
+bash -c "$(wget -qO- https://raw.githubusercontent.com/volard/dotfiles/refs/heads/main/bin/dotfiles)"
 ```
 
 ## Windows
 
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-iex (iwr -Uri "https://gitlab.com/dotfiles30/comma_files/-/raw/main/bin/dotfiles.ps1" -UseBasicParsing).Content
+iex (iwr -Uri "https://raw.githubusercontent.com/volard/dotfiles/refs/heads/main/bin/dotfiles.ps1" -UseBasicParsing).Content
 ```
 
 Binary [`dotfiles`](bin/dotfiles) is in PATH after initial setup.
