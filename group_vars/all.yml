@@ -1,10 +1,9 @@
 ---
 roles_to_exclude:
   # I'm not using Windows anymore (I had enough)
-  - vscode
   - powershell
   - windows_setup
-  - glazewm
+  - glazewm # (outdated btw)
 
   # I'm not using X anymore
   - i3
@@ -13,9 +12,8 @@ roles_to_exclude:
   - rofi
   - awesome
 
-  # Foot is my choice now
   - alacritty
-  - wezterm
+  - kitty # maintainer is asshole
 
   # Vanilla things I played with for fun
   - emacs

@@ -1,4 +1,3 @@
--- Pull in the wezterm API
 local wezterm = require("wezterm")
 
 local config = {}
@@ -21,6 +20,7 @@ config = {
 		saturation = 0.8,
 		brightness = 0.7,
 	},
+  window_background_opacity = 0.85
 }
 
 if platform_info.is_win then
@@ -34,5 +34,20 @@ end
 config.leader = { key = "n", mods = "CTRL", timeout_milliseconds = 2000 }
 
 config.keys = require("bindings")
+
+-- https://github.com/mikkasendke/sessionizer.wezterm
+local sessionizer = wezterm.plugin.require "https://github.com/mikkasendke/sessionizer.wezterm"
+
+local my_schema = {
+  { label = "Some project", id = "~/dev/project" }, -- Custom entry, label is what you see. By default id is used as the path for a workspace.
+  "Workspace 1",  -- Simple string entry, expands to { label = "Workspace 1", id = "Workspace 1" }
+  sessionizer.DefaultWorkspace {},
+  sessionizer.AllActiveWorkspaces {},
+  sessionizer.FdSearch "/mnt/data/Projects/", -- Searches for git repos in ~/my_projects
+}
+
+config.keys = {
+  { key = "S", mods = "LEADER", action = sessionizer.show(my_schema) },
+}
 
 return config

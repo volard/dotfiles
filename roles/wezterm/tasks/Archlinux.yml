@@ -1,0 +1,18 @@
+---
+- name: Install Wezterm
+  community.general.pacman:
+    name: wezterm
+    state: present
+  become: true
+
+- name: Remove existing Wezterm config
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.config/wezterm"
+    state: absent
+
+- name: Create symlink to Kitty config
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/wezterm"
+    state: link
+    force: true
