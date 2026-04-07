@@ -29,14 +29,14 @@ Manage dotfiles using Ansible playbook.
 
 OPTIONS:
   -h, --help          Show this help message
-  --no-pull, --skip-pull  Skip pulling from git repository
+  --pull              Pull from git repository before running
 
 ANSIBLE_ARGS:
   Any additional arguments are passed to ansible-playbook
 
 Examples:
-  dotfiles                    Run playbook with default behavior
-  dotfiles --no-pull          Skip git pull before running
+  dotfiles                    Run playbook without pulling first
+  dotfiles --pull             Pull latest changes before running
   dotfiles --limit localhost  Run only on localhost
 EOF
   exit 0
@@ -45,7 +45,7 @@ EOF
 ########################################
 # Parse arguments
 ########################################
-SKIP_PULL=false
+PULL=false
 ANSIBLE_ARGS=()
 
 for arg in "$@"; do
@@ -53,8 +53,8 @@ for arg in "$@"; do
     -h|--help)
       show_help
       ;;
-    --no-pull|--skip-pull)
-      SKIP_PULL=true
+    --pull)
+      PULL=true
       ;;
     *)
       ANSIBLE_ARGS+=("$arg")
@@ -113,7 +113,7 @@ fi
 
 
 ########################################
-# Clone repository or pull
+# Clone repository or optionally pull
 ########################################
 if ! [[ -d ${DOTFILES_DIR} ]]; then
   git clone "https://gitlab.com/dotfiles30/comma_files.git" "${DOTFILES_DIR}"
@@ -121,7 +121,7 @@ else
   if ! [[ -d "${DOTFILES_DIR}/.git" ]]; then
     git clone "https://gitlab.com/dotfiles30/comma_files.git" "${DOTFILES_DIR}"
   else
-    if [[ "${SKIP_PULL}" == "false" ]]; then
+    if [[ "${PULL}" == "true" ]]; then
       git -C "${DOTFILES_DIR}" pull
     fi
   fi

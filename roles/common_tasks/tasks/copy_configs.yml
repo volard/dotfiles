@@ -23,7 +23,7 @@
       #   ansible.windows.win_file:
       #     path: "{{ config_path }}"
       #     state: directory
-      #   when: ansible_os_family == 'Windows'
+      #   when: ansible_facts['os_family'] == 'Windows'
 
 - name: Find all configuration files
   ansible.builtin.find:
@@ -59,7 +59,7 @@
 #   loop: "{{ config_files.files }}"
 #   when:
 #     - item.path.endswith('.j2')
-#     - ansible_os_family == 'Windows'
+#     - ansible_facts['os_family'] == 'Windows'
 
 - name: Copy static files on Linux
   ansible.builtin.copy:
@@ -79,4 +79,4 @@
 #   loop: "{{ config_files.files }}"
 #   when:
 #     - not item.path.endswith('.j2')
-#     - ansible_os_family == 'Windows'
+#     - ansible_facts['os_family'] == 'Windows'

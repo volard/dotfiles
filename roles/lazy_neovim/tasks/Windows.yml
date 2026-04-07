@@ -9,11 +9,11 @@
     - gcc
     - vcredist2022
     - ripgrep
-  when: ansible_os_family == 'Windows'
+  when: ansible_facts['os_family'] == 'Windows'
 
 # - name: Set OS-specific config paths
 #   ansible.builtin.set_fact:
-#     config_path: "{{ ansible_user_dir }}/.config/nvim"
+#     config_path: "{{ ansible_facts['user_dir'] }}/.config/nvim"
 
 # - name: Remove Neovim configuration directories
 #   ansible.builtin.file:
@@ -21,8 +21,8 @@
 #     state: absent
 #   loop:
 #     - "{{ config_path }}"
-#     - "{{ ansible_user_dir }}/.local/share/nvim"
-#   when: ansible_distribution == 'Ubuntu'
+#     - "{{ ansible_facts['user_dir'] }}/.local/share/nvim"
+#   when: ansible_facts['distribution'] == 'Ubuntu'
 
 # - name: Include common copy tasks
 #   ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml

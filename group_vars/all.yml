@@ -58,6 +58,7 @@ default_roles:
   - rofi
   - glazewm
   - vifm
+  - kitty
   - mise
   - lazygit
   - i3

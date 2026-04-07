@@ -4,7 +4,7 @@
     repo: ppa:hluk/copyq
     state: present
   become: true
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Install required packages on Linux
   ansible.builtin.apt:
@@ -49,7 +49,7 @@
   become: true
   loop_control:
     loop_var: apt_item
-  when: ansible_os_family in ["Debian", "Ubuntu"]
+  when: ansible_facts['os_family'] in ["Debian", "Ubuntu"]
 
 # Finds a specific file or directory from the terminal
 - name: Install fd-find
@@ -57,14 +57,14 @@
     name: fd-find
     state: present
   become: true
-  when: ansible_os_family in ["Debian", "Ubuntu"]
+  when: ansible_facts['os_family'] in ["Debian", "Ubuntu"]
 
 - name: Make fd-find available by fd command
   ansible.builtin.file:
     src: "{{ lookup('pipe', 'which fdfind') }}"
-    dest: "{{ ansible_user_dir }}/.local/bin/fd"
+    dest: "{{ ansible_facts['user_dir'] }}/.local/bin/fd"
     state: link
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Download SDKMAN installation script
   ansible.builtin.get_url:
@@ -77,8 +77,8 @@
     set -o pipefail; \
     bash /tmp/sdkman-install.sh
   args:
-    creates: "{{ ansible_user_dir }}/.sdkman"  # Prevents re-running if SDKMAN is already installed
-  when: ansible_distribution == 'Ubuntu'
+    creates: "{{ ansible_facts['user_dir'] }}/.sdkman"  # Prevents re-running if SDKMAN is already installed
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Clean up SDKMAN installation script
   ansible.builtin.file:
@@ -99,7 +99,7 @@
   loop_control:
     loop_var: snap_item
   become: true
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Download zoxide installation script
   ansible.builtin.get_url:
@@ -113,7 +113,7 @@
     bash /tmp/zoxide-install.sh
   args:
     creates: /usr/local/bin/zoxide  # Prevents re-running if zoxide is already installed
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Clean up zoxide installation script
   ansible.builtin.file:
@@ -130,14 +130,14 @@
   become: true
   loop_control:
     loop_var: snap_connection
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Install Flatpak
   ansible.builtin.apt:
     name: flatpak
     state: present
   become: true
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Add Flathub repository
   community.general.flatpak_remote:
@@ -145,7 +145,7 @@
     state: present
     flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
   become: true
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 # - name: Install applications via Flatpak
 #   community.general.flatpak:
@@ -155,4 +155,4 @@
 #     - com.spotify.Client
 #     # Add more Flatpak applications as needed
 #   become: true
-#   when: ansible_distribution == 'Ubuntu'
+#   when: ansible_facts['distribution'] == 'Ubuntu'

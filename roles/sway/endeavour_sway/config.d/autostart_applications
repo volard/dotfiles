@@ -22,9 +22,6 @@ exec hash dbus-update-activation-environment 2>/dev/null && \
 # Warm display
 exec wlsunset
 
-# Start foot server
-exec_always --no-startup-id foot --server
-
 # Autotiling
 exec autotiling
 

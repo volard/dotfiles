@@ -9,7 +9,7 @@ set {
   $right l
 
   # default terminal emulator
-  $term footclient
+  $term kitty
 
   # Application launcher
   $launcher fuzzel

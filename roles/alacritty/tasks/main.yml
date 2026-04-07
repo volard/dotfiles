@@ -5,18 +5,18 @@
     state: present
     update_cache: true
   become: true
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Install Alacritty on Windows using Scoop
   community.windows.win_scoop:
     name: alacritty
     state: present
-  when: ansible_os_family == 'Windows'
+  when: ansible_facts['os_family'] == 'Windows'
 
 - name: Set alacritty config path
   ansible.builtin.set_fact:
-    config_path: "{{ ansible_user_dir }}/.config/alacritty"
-  when: ansible_distribution == 'Ubuntu'
+    config_path: "{{ ansible_facts['user_dir'] }}/.config/alacritty"
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Copy Bash config files
   ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml

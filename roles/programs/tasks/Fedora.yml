@@ -12,7 +12,7 @@
     state: latest
     update_cache: true
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Install required packages on Fedora
   ansible.builtin.dnf:
@@ -56,20 +56,20 @@
   become: true
   loop_control:
     loop_var: dnf_item
-  when: ansible_distribution == "Fedora"
+  when: ansible_facts['distribution'] == "Fedora"
 
 - name: Download and install wlprop script
   ansible.builtin.get_url:
     url: https://gist.github.com/crispyricepc/f313386043395ff06570e02af2d9a8e0/raw/8b06f025a0f34685f5ffc2000fd19a64754c9b29/wlprop.sh
-    dest: "{{ ansible_user_dir }}/.local/bin/wlprop"
+    dest: "{{ ansible_facts['user_dir'] }}/.local/bin/wlprop"
     mode: '0755'
 
 # - name: Install SDKMAN
 #   ansible.builtin.shell: >
 #     curl -s "https://get.sdkman.io" | bash
 #   args:
-#     creates: "{{ ansible_user_dir }}/.sdkman"
-#   when: ansible_distribution == 'Fedora'
+#     creates: "{{ ansible_facts['user_dir'] }}/.sdkman"
+#   when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Install programs via snap
   community.general.snap:
@@ -81,7 +81,7 @@
   loop_control:
     loop_var: snap_item
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 
 # - name: Check if nvm is installed
@@ -94,7 +94,7 @@
 #   ansible.builtin.shell: >
 #     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 #   args:
-#     creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+#     creates: "{{ ansible_facts['env']['HOME'] }}/.nvm/nvm.sh"
 #   when: nvm_check.rc != 0
 
 - name: Check if OnlyOffice is installed
@@ -111,7 +111,7 @@
 
 - name: Check if mise is installed
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.local/bin/mise"
+    path: "{{ ansible_facts['user_dir'] }}/.local/bin/mise"
   register: mise_installed
 
 - name: Download mise installation script
@@ -154,7 +154,7 @@
 
 - name: Check if lazydocker is installed
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.local/bin/lazydocker"
+    path: "{{ ansible_facts['user_dir'] }}/.local/bin/lazydocker"
   register: lazydocker_installed
 
 - name: Download LazyDocker installation script

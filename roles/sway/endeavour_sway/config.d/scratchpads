@@ -2,16 +2,13 @@ set {
     $maximize border none, move position center, resize set width 100 ppt height 100 ppt
 
     $term_id quake_term
-    $term_under_hand  footclient --app-id=$term_id
+    $term_under_hand  kitty --app-id=$term_id
 
     $messenger_id org.telegram.desktop
     $messenger telegram-desktop
 
     $tasks_class superProductivity 
     $tasks_command superproductivity
-
-    $open_whispr /home/volard/.local/bin/OpenWhispr-1.5.5-linux-x64/open-whispr
-    $open_whispr_id open-whispr
 }
 
 for_window {
@@ -24,9 +21,6 @@ for_window {
 
   ## Tasks
   [class=$tasks_class] move to scratchpad, scratchpad show
-
-  ## Voice input
-  [class=$open_whispr_id] move to scratchpad, scratchpad show
 }
 
 # Scratchpad bindsym
@@ -39,8 +33,4 @@ bindsym --to-code {
 
   ## Tasks
   $mod+t  exec swaymsg [class=$tasks_class] scratchpad show || exec $tasks_command 
-
-
-  ## Voice input
-  $mod+u  exec swaymsg [class=$open_whispr_id] scratchpad show || exec $open_whispr
 }
