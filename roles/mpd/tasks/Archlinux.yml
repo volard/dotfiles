@@ -10,17 +10,17 @@
   become: true
   loop_control:
     loop_var: pacman_item
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Ensure .mpd directory exists
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.mpd"
+    path: "{{ ansible_facts['user_dir'] }}/.mpd"
     state: directory
     mode: "0755"
 
 - name: Create a symlink to a file
   ansible.builtin.file:
     src: "{{ role_path }}/files/mpd.conf"
-    dest: "{{ ansible_user_dir }}/.mpd/mpd.conf"
+    dest: "{{ ansible_facts['user_dir'] }}/.mpd/mpd.conf"
     state: link
     force: true

@@ -13,7 +13,7 @@
 
 - name: Set Zsh as the default shell
   ansible.builtin.user:
-    name: "{{ ansible_env.USER }}"
+    name: "{{ ansible_facts['env']['USER'] }}"
     shell: /usr/bin/zsh
   become: true
 
@@ -24,7 +24,7 @@
 
 - name: Get home directory
   ansible.builtin.set_fact:
-    user_home: "{{ lookup('env', 'HOME') | default(ansible_user_dir) }}"
+    user_home: "{{ lookup('env', 'HOME') | default(ansible_facts['user_dir']) }}"
 
 - name: Get ZSH_CUSTOM environment variable
   ansible.builtin.set_fact:
@@ -43,8 +43,8 @@
     path: "{{ zsh_custom_dir }}/plugins"
     state: directory
     mode: "0755"
-    owner: "{{ ansible_env.USER }}"
-    group: "{{ ansible_env.USER }}"
+    owner: "{{ ansible_facts['env']['USER'] }}"
+    group: "{{ ansible_facts['env']['USER'] }}"
 
 - name: Check zsh-syntax-highlighting directory status
   ansible.builtin.stat:
@@ -63,8 +63,8 @@
     path: "{{ zsh_custom_plugins }}"
     state: directory
     mode: "0755"
-    owner: "{{ ansible_env.USER }}"
-    group: "{{ ansible_env.USER }}"
+    owner: "{{ ansible_facts['env']['USER'] }}"
+    group: "{{ ansible_facts['env']['USER'] }}"
     recurse: true
 
 - name: Clone or update zsh-syntax-highlighting repository
@@ -73,25 +73,14 @@
     dest: "{{ zsh_custom_plugins }}"
     update: true
     force: yes
-    
 
 - name: Ensure zsh custom themes directory exists
   ansible.builtin.file:
     path: "{{ zsh_custom_dir }}/themes"
     state: directory
     mode: "0755"
-    owner: "{{ ansible_env.USER }}"
-    group: "{{ ansible_env.USER }}"
-
-- name: Create a symbolic link for volard.zsh-theme in custom themes directory
-  ansible.builtin.file:
-    src: "{{ ansible_env.HOME }}/dotfiles/roles/zsh/files/volard.zsh-theme"
-    dest: "{{ zsh_custom_dir }}/themes/volard.zsh-theme"
-    state: link
-    force: true
-    owner: "{{ ansible_env.USER }}"
-    group: "{{ ansible_env.USER }}"
-
+    owner: "{{ ansible_facts['env']['USER'] }}"
+    group: "{{ ansible_facts['env']['USER'] }}"
 
 - name: Remove default .zshrc configuration
   ansible.builtin.file:
@@ -103,6 +92,7 @@
     src: .zshrc.j2
     dest: ~/.zshrc
     mode: "0644"
+  diff: false
 
 - name: Create a symbolic link for .aliases
   ansible.builtin.file:

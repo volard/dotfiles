@@ -8,18 +8,18 @@
   become: true
   loop_control:
     loop_var: pacman_item
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Install DNF plugins core
   ansible.builtin.dnf:
     name: tmux
     state: present
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Create a symlink to a file
   ansible.builtin.file:
     src: "{{ role_path }}/files/.tmux.conf"
-    dest: "{{ ansible_user_dir }}/.tmux.conf"
+    dest: "{{ ansible_facts['user_dir'] }}/.tmux.conf"
     state: link
     force: true

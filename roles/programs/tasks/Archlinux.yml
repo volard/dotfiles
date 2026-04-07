@@ -61,7 +61,7 @@
   become: true
   loop_control:
     loop_var: pacman_item
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 
 - name: Install packages from AUR
@@ -74,7 +74,7 @@
     - voxtype-bin
   loop_control:
     loop_var: aur_item
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Setup dev globals
   ansible.builtin.command: mise use -g {{ mise_item }}@latest
@@ -82,26 +82,26 @@
     - node
   loop_control:
     loop_var: mise_item
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Check if rtk is installed
   ansible.builtin.command: command -v rtk
   register: rtk_check
   changed_when: false
   failed_when: false
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Install rtk
   ansible.builtin.shell: curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
   args:
     executable: /bin/bash
   when:
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
     - rtk_check.rc != 0
 
 - name: Enable rtk globally
   ansible.builtin.command: rtk init --global --auto-patch
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Install bun tools
   ansible.builtin.command: bun i -g {{ bun_item }}
@@ -109,7 +109,11 @@
     - "@steipete/summarize"
   loop_control:
     loop_var: bun_item
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
+
+- name: Install context7
+  ansible.builtin.command: bunx ctx7 setup --claude --curor --universal --antigravity --opencode --codex --gemini --mcp --cli -y
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Install global skills
   ansible.builtin.command: bunx skills install {{ skill_item }} -y --all -g
@@ -154,4 +158,4 @@
     - "blader/humanizer --skill humanizer"
   loop_control:
     loop_var: skill_item
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"

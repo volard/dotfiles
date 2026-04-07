@@ -1,0 +1,18 @@
+---
+- name: Install Kitty
+  community.general.pacman:
+    name: kitty
+    state: present
+  become: true
+
+- name: Remove existing Kitty config
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.config/kitty"
+    state: absent
+
+- name: Create symlink to Kitty config
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/kitty"
+    state: link
+    force: true

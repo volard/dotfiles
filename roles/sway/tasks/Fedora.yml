@@ -10,13 +10,13 @@
   become: true
   loop_control:
     loop_var: dnf_item
-  when: ansible_distribution == "Fedora"
+  when: ansible_facts['distribution'] == "Fedora"
 
 
 - name: "Create symlink to role files directory"
   ansible.builtin.file:
     src: "{{ role_path }}/files"
-    dest: "{{ ansible_user_dir }}/.config/sway"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/sway"
     state: link
     force: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'

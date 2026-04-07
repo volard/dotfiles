@@ -14,3 +14,8 @@ if command -v mise &> /dev/null; then
   eval "$(mise activate bash --shims)"
 fi
 
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/volard/.lmstudio/bin"
+# End of LM Studio CLI section
+

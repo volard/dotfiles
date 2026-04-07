@@ -2,6 +2,6 @@
 - name: Create a symlink to a file
   ansible.builtin.file:
     src: "{{ role_path }}/files/.ideavimrc"
-    dest: "{{ ansible_user_dir }}/.ideavimrc"
+    dest: "{{ ansible_facts['user_dir'] }}/.ideavimrc"
     state: link
     force: true

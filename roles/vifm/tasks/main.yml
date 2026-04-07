@@ -5,23 +5,23 @@
     state: present
     update_cache: true
   become: true
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Install vifm on Windows using Scoop
   community.windows.win_scoop:
     name: vifm
     state: present
-  when: ansible_os_family == 'Windows'
+  when: ansible_facts['os_family'] == 'Windows'
 
 - name: Set OS-specific config paths
   ansible.builtin.set_fact:
-    config_path: "{{ ansible_user_dir }}/AppData/Roaming/Vifm"
-  when: ansible_os_family == 'Windows'
+    config_path: "{{ ansible_facts['user_dir'] }}/AppData/Roaming/Vifm"
+  when: ansible_facts['os_family'] == 'Windows'
 
 - name: Set OS-specific config paths
   ansible.builtin.set_fact:
-    config_path: "{{ ansible_user_dir }}/.config/Vifm"
-  when: ansible_distribution == 'Ubuntu'
+    config_path: "{{ ansible_facts['user_dir'] }}/.config/Vifm"
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Include common copy tasks
   ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml

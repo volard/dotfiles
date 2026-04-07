@@ -6,7 +6,7 @@
       - wget
     state: present
   become: true
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Include common linux bash setup
   ansible.builtin.include_tasks: roles/linux_setup/tasks/linux.yml

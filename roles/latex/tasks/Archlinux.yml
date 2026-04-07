@@ -10,12 +10,12 @@
   become: true
   loop_control:
     loop_var: pacman_item
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: "Create link to config for latexmk"
   ansible.builtin.file:
     src: "{{ role_path }}/files/.latexmkrc"
-    dest: "{{ ansible_user_dir }}/.latexmkrc"
+    dest: "{{ ansible_facts['user_dir'] }}/.latexmkrc"
     state: link
     force: true
   become: true

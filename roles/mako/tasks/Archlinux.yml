@@ -8,17 +8,17 @@
   become: true
   loop_control:
     loop_var: pacman_item
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Delete a directory
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.config/mako"
+    path: "{{ ansible_facts['user_dir'] }}/.config/mako"
     state: absent
 
 - name: "Create symlink to role files directory"
   ansible.builtin.file:
     src: "{{ role_path }}/files"
-    dest: "{{ ansible_user_dir }}/.config/mako"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/mako"
     state: link
     force: true
-  when: ansible_distribution == 'Archlinux'
+  when: ansible_facts['distribution'] == 'Archlinux'

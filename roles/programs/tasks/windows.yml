@@ -60,4 +60,4 @@
     - JetBrainsMono-NF-Mono
     - lazydocker
     - unar # Universal archives extractor.
-  when: ansible_os_family == 'Windows'
+  when: ansible_facts['os_family'] == 'Windows'

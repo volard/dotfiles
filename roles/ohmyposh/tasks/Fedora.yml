@@ -1,28 +1,28 @@
 ---
 - name: Create local bin directory
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.local/bin"
+    path: "{{ ansible_facts['user_dir'] }}/.local/bin"
     state: directory
     mode: "0755"
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Install Curl
   ansible.builtin.dnf:
     name: curl
     state: present
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Install Oh My Posh on Linux
   ansible.builtin.shell: >
-    curl -s https://ohmyposh.dev/install.sh | bash -s -- -d {{ ansible_user_dir }}/.local/bin
+    curl -s https://ohmyposh.dev/install.sh | bash -s -- -d {{ ansible_facts['user_dir'] }}/.local/bin
   args:
-    creates: "{{ ansible_user_dir }}/.local/bin/oh-my-posh"
-  when: ansible_distribution == 'Fedora'
+    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/oh-my-posh"
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Set OS-specific config paths
   ansible.builtin.set_fact:
-    config_path: "{{ ansible_user_dir }}/.config/oh-my-posh"
+    config_path: "{{ ansible_facts['user_dir'] }}/.config/oh-my-posh"
 
 - name: Include common copy tasks
   ansible.builtin.include_tasks: roles/common_tasks/tasks/copy_configs.yml

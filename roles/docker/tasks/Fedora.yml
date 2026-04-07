@@ -8,7 +8,7 @@
     state: present
   become: true
   when:
-    - ansible_distribution == 'Fedora'
+    - ansible_facts['distribution'] == 'Fedora'
 
 - name: Reload systemd manager configuration
   ansible.builtin.systemd:

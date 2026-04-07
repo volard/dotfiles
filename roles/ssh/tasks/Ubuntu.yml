@@ -7,7 +7,7 @@
     - ufw
     - openssh-server
     - openssh-client
-  when: ansible_os_family in ["Debian", "Ubuntu"]
+  when: ansible_facts['os_family'] in ["Debian", "Ubuntu"]
 
 - name: Enable and start SSH service
   ansible.builtin.systemd:
@@ -15,19 +15,19 @@
     state: started
     enabled: true
   become: true
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Allow SSH through UFW
   community.general.ufw:
     rule: allow
     name: OpenSSH
   become: true
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Set OS-specific config paths
   ansible.builtin.set_fact:
-    config_path: "{{ ansible_user_dir }}/.ssh"
-  when: ansible_distribution == 'Ubuntu'
+    config_path: "{{ ansible_facts['user_dir'] }}/.ssh"
+  when: ansible_facts['distribution'] == 'Ubuntu'
   become: false
 
 - name: Include common copy tasks

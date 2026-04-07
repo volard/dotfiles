@@ -38,7 +38,7 @@
 
 - name: Add user to commonly used groups
   ansible.builtin.user:
-    name: "{{ ansible_user_id }}"
+    name: "{{ ansible_facts['user_id'] }}"
     groups: "sudo, libvirt, sound, video, docker, plugdev, lpadmin, netdev, input, tty, users, i2c, spi, gpio"
     append: true
   become: true

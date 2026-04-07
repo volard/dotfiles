@@ -1,24 +1,24 @@
 ---
 - name: Ensure .config directory exists
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.config"
+    path: "{{ ansible_facts['user_dir'] }}/.config"
     state: directory
     mode: "0755"
 
 - name: Ensure .bashrc file exists
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.bashrc"
+    path: "{{ ansible_facts['user_dir'] }}/.bashrc"
     state: file
 
 - name: Check if source line already exists
-  ansible.builtin.command: grep -Fxq "source $HOME/.config/.termrc" "{{ ansible_user_dir }}/.bashrc"
+  ansible.builtin.command: grep -Fxq "source $HOME/.config/.termrc" "{{ ansible_facts['user_dir'] }}/.bashrc"
   register: grep_result
   changed_when: false
   failed_when: false
 
 - name: Add source line to existing .bashrc
   ansible.builtin.lineinfile:
-    path: "{{ ansible_user_dir }}/.bashrc"
+    path: "{{ ansible_facts['user_dir'] }}/.bashrc"
     line: source $HOME/.config/.termrc
     state: present
   when:
@@ -27,20 +27,20 @@
 - name: Create a symlink to a file
   ansible.builtin.file:
     src: "{{ role_path }}/files/.termrc"
-    dest: "{{ ansible_user_dir }}/.config/.termrc"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/.termrc"
     state: link
     force: true
 
 - name: Create a symlink to a file
   ansible.builtin.file:
     src: "{{ role_path }}/files/.bash_profile"
-    dest: "{{ ansible_user_dir }}/.bash_profile"
+    dest: "{{ ansible_facts['user_dir'] }}/.bash_profile"
     state: link
     force: true
 
 - name: Ensure .local/bin directory exists
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.local/bin"
+    path: "{{ ansible_facts['user_dir'] }}/.local/bin"
     state: directory
     mode: '0755'
 
@@ -52,19 +52,19 @@
 
 - name: Install Oh My Posh
   ansible.builtin.shell: >
-    set -o pipefail; /tmp/install.sh -d {{ ansible_user_dir }}/.local/bin
+    set -o pipefail; /tmp/install.sh -d {{ ansible_facts['user_dir'] }}/.local/bin
   args:
-    creates: "{{ ansible_user_dir }}/.local/bin/oh-my-posh"
+    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/oh-my-posh"
 
 - name: Ensure .config directory exists
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.config/oh-my-posh"
+    path: "{{ ansible_facts['user_dir'] }}/.config/oh-my-posh"
     state: directory
     mode: '0755'
 
 - name: Create a symlink to a file
   ansible.builtin.file:
     src: "{{ role_path }}/files/amro.omp.json"
-    dest: "{{ ansible_user_dir }}/.config/oh-my-posh/amro.omp.json"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/oh-my-posh/amro.omp.json"
     state: link
     force: true

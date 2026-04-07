@@ -9,7 +9,7 @@
   become: true
   loop_control:
     loop_var: pacman_item
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Reload systemd manager configuration
   ansible.builtin.systemd:

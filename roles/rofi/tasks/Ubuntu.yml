@@ -5,10 +5,10 @@
     state: present
     update_cache: true
   become: true
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Set OS-specific config paths
   ansible.builtin.set_fact:
-    config_path: "{{ ansible_user_dir }}/.local/rofi/themes"
-  when: ansible_distribution == 'Ubuntu'
+    config_path: "{{ ansible_facts['user_dir'] }}/.local/rofi/themes"
+  when: ansible_facts['distribution'] == 'Ubuntu'
   become: false
