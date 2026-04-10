@@ -4,15 +4,17 @@
     name: "{{ pacman_item }}"
     state: present
   loop:
-    - glab
-    - base-devel
-    - bun
-    - wf-recorder
-    - ttf-nerd-fonts-symbols-mono
+    - glab # gitlab cli
+    - github-cli
     - git-lfs
+    - base-devel
+    - bun # better node
+    - wf-recorder
+    - atuin # magical shell history
+    - ast-grep # grep with code understanding
+    - ttf-nerd-fonts-symbols-mono
     - xdg-desktop-portal-wlr
     - xdg-desktop-portal-gtk
-    - github-cli
     - ripgrep # better grep
     # - zathura # pdf viewer
     - evince # pdf viewer
@@ -20,7 +22,7 @@
     - zip
     - unzip
     - eza # better ls
-    - wget
+    - wget # better curl
     - tldr # better man pages
     - bat # better cat
     - trash-cli
@@ -52,7 +54,7 @@
     - ark # kde gui archives manager
     - baobab # storage analyzer gui
     - ncdu # space analyzer
-    - hyprpicker # Wayland color picker
+    # - hyprpicker # Wayland color picker
     - caligula # dd wrapper with cool features
     - wl-clipboard # its and couple more down are the waybinder dependencies (look for the binary in the /bin + https://gitlab.com/cscs/waybinder)
     - wtype
@@ -73,7 +75,7 @@
     - zen-browser-bin
     - lazydocker-bin # docker TUI
     - throne-bin # docker TUI
-    - voxtype-bin
+    - voxtype-bin # voice input
   loop_control:
     loop_var: aur_item
   when: ansible_facts['distribution'] == "Archlinux"
@@ -103,6 +105,15 @@
 
 - name: Enable rtk globally
   ansible.builtin.command: rtk init --global --auto-patch
+  when: ansible_facts['distribution'] == "Archlinux"
+
+- name: Install peonping
+  ansible.builtin.command: curl -fsSL https://raw.githubusercontent.com/PeonPing/peon-ping/main/install.sh | bash -s -- --packs=glados,peasant,peon,peon_ru,sc_battlecruiser,sc_kerrigan
+  when: ansible_facts['distribution'] == "Archlinux"
+
+
+- name: Use custom peonping voice pack
+  ansible.builtin.command: peon packs use peon_ru
   when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Install bun tools
@@ -136,6 +147,7 @@
     - "affaan-m/everything-claude-code --skill api-design"
     - "langgenius/dify --skill backend-code-review"
     - "anthropics/skills --skill algorithmic-art"
+    - "anthropics/skills --skill xlsx"
     - "affaan-m/everything-claude-code --skill java-coding-standards"
     - "affaan-m/everything-claude-code --skill jpa-patterns"
     - "affaan-m/everything-claude-code --skill springboot-patterns"
