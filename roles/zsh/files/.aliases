@@ -1,24 +1,51 @@
 # vim: filetype=bash
 
+# ============================================================================
+# DUMMY THINGS
+# ============================================================================
+#
 # https://askubuntu.com/questions/22037/aliases-not-available-when-using-sudo
 alias sudo='sudo '
 
-alias ll="eza -l --icons --color=always -a --group-directories-first"
-alias bc=batcat
+# do not delete / or prompt if deleting more than 3 files at a time #
+alias rm='rm -I --preserve-root'
 
 alias ..='cd ..'
+alias grep='grep --color=auto'
+# alias ls='ls --color=auto'
 
+
+# ============================================================================
+# NEOVIM
+# ============================================================================
 alias sv='sudo nvim'
 alias svv='sudo nvim .'
 alias vv='v .'
 alias v=nvim
 
+
+
+# ============================================================================
+# TOOLS
+# ============================================================================
 alias lzd='lazydocker'
 alias lg=lazygit
+alias bc=batcat
+alias cat='bat --style=plain'
 
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
+alias ll="eza -lh --git --icons --color=always -a --group-directories-first"
+alias lt='eza --tree --level=2 --icons'
+alias tree="eza --tree --icons"
+alias ls='eza --icons --group-directories-first'
 
+alias rr='. ranger'
+alias r='ranger'
+
+
+# ============================================================================
+# DOCKER
+# ============================================================================
+#
 # get docker container names and port numbers
 alias dnp='docker container ls --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}" -a'
 
@@ -56,9 +83,4 @@ alias dcdc=docker-compose config | awk '/image:/ {print $2}' | sort -u | xargs -
 # where you are and without knowing any container names
 alias dsa="docker ps -q | awk '{print $1}' | xargs -o docker stop"
 
-# do not delete / or prompt if deleting more than 3 files at a time #
-alias rm='rm -I --preserve-root'
 
-alias rr='. ranger'
-alias r='ranger'
-alias excalidraw='docker run -d -p 8888:80 --name excalidraw-instance excalidraw/excalidraw:latest'

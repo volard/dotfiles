@@ -5,6 +5,33 @@ return {
 	{ key = "x", mods = "CTRL", action = act.CloseCurrentPane({ confirm = false }) },
 	{ key = "l", mods = "LEADER", action = wezterm.action.ShowLauncher },
 
+	-- Navigate between panes
+	{
+    -- key = "LeftArrow",
+		key = "h",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.ActivatePaneDirection "Left",
+	},
+	{
+		-- key = "RightArrow",
+    key = "l",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.ActivatePaneDirection "Right",
+	},
+	{
+		--key = "UpArrow",
+    key="k",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.ActivatePaneDirection "Up",
+	},
+	{
+		-- key = "DownArrow",
+		key = "j",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.ActivatePaneDirection "Down",
+	},
+
+
 	-- panes: navigation
 	{ key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
 	{ key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
@@ -39,4 +66,17 @@ return {
 			end),
 		}),
 	},
+
+  -- https://wezterm.org/config/default-keys.html
+  -- CTRL+SHIFT+T       spawn new tab
+  -- CTRL+SHIFT+W       close current tab
+  -- CTRL+SHIFT+<num>   activate <num> tab
+  -- CTRL+[SHIFT]+TAB   cycle tabs
+  -- CTRL+SHIFT+UP|DOWN cycle tabs
+  -- CTRL+SHIFT+L       show debug
+  -- CTRL+SHIFT+P       command palette
+  -- CTRL+SHIFT+U       char selector
+  -- CTRL+SHIFT+F       search
+  -- CTRL+SHIFT+N       new window
+  -- CTRL+SHIFT+X       copy mode
 }
