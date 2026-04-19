@@ -29,6 +29,8 @@ for_window [title=".*Vivaldi"] sticky enable, floaing enable
 for_window [class="open_whispr"] floating enable, border pixel 2, resize set width 30 ppt height 90 ppt
 for_window [app_id="open_whispr"] floating enable, border pixel 2, resize set width 30 ppt height 90 ppt
 
+for_window [app_id="Element"] floating enable, border pixel 2, resize set width 60 ppt height 60 ppt
+
 # Positioning
 
 # Inhibit idle
