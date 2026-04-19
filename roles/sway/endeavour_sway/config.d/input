@@ -9,6 +9,7 @@ input "type:touchpad" {
   middle_emulation enabled
 }
 
+# Layout codes:
 # https://gist.github.com/jatcwang/ae3b7019f219b8cdc6798329108c9aee
 input "type:keyboard" {
 	# xkb_capslock disabled
@@ -16,13 +17,18 @@ input "type:keyboard" {
 	xkb_variant workman,,eastern
 
   # localectl list-x11-keymap-options | grep grp:
-	xkb_options grp:alt_space_toggle,grp:caps_toggle
+	# xkb_options grp:alt_space_toggle,grp:caps_toggle
 }
 
 
+bindsym --to-code {
+   $mod+Ctrl+n input "type:keyboard" xkb_switch_layout 0
+   $mod+Ctrl+o input "type:keyboard" xkb_switch_layout 1
+   $mod+Ctrl+e input "type:keyboard" xkb_switch_layout 2
+}
 
 # Enable numlock by default
-input type:keyboard xkb_numlock enabled
+# input type:keyboard xkb_numlock enabled
 
 # Set keyboard layout and variant based on current system settings
 #exec_always {
