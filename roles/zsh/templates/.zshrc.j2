@@ -67,6 +67,9 @@ zstyle ':omz:plugins:eza' 'header' yes
 zstyle ':omz:plugins:eza' 'icons' yes
 zinit snippet OMZP::eza
 
+# === zvm vim mode for zsh
+# zinit ice depth=1
+# zinit light jeffreytse/zsh-vi-mode
 
 # === fzf-tab
 # config goes first
@@ -101,7 +104,7 @@ else
 fi
 
 
-# ============================================================================
+#===========================================================================
 # ZSH specific
 # ============================================================================
 setopt autocd # type a dir to cd
@@ -110,11 +113,7 @@ setopt auto_param_slash # when a dir is completed, add a / instead of a trailing
 # export LANG=en_US.UTF-8
 DISABLE_AUTO_TITLE="true"
 
-# === Keybindings
-bindkey -v # Enable vi mode
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-
+bindkey -v
 
 # ============================================================================
 # ALIASES

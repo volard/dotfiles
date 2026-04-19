@@ -116,13 +116,20 @@
   ansible.builtin.command: peon packs use peon_ru
   when: ansible_facts['distribution'] == "Archlinux"
 
+
 - name: Install bun tools
   ansible.builtin.command: bun i -g {{ bun_item }}
   loop:
     - "@steipete/summarize"
+    - "opencode-ai"
   loop_control:
     loop_var: bun_item
   when: ansible_facts['distribution'] == "Archlinux"
+
+- name: Install peon-ping to opencode
+  ansible.builtin.command: curl -fsSL https://raw.githubusercontent.com/PeonPing/peon-ping/main/adapters/opencode.sh | bash
+  when: ansible_facts['distribution'] == "Archlinux"
+
 
 - name: Install context7
   ansible.builtin.command: bunx ctx7 setup --claude --curor --universal --antigravity --opencode --codex --gemini --mcp --cli -y
@@ -170,6 +177,7 @@
     - "Shubhamsaboo/awesome-llm-apps --skill sprint-planner"
     - "Shubhamsaboo/awesome-llm-apps --skill strategy-advisor"
     - "blader/humanizer --skill humanizer"
+    - "JuliusBrussee/caveman"
   loop_control:
     loop_var: skill_item
   when: ansible_facts['distribution'] == "Archlinux"

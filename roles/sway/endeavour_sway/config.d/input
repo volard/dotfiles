@@ -9,11 +9,11 @@ input "type:touchpad" {
   middle_emulation enabled
 }
 
-
+# https://gist.github.com/jatcwang/ae3b7019f219b8cdc6798329108c9aee
 input "type:keyboard" {
 	# xkb_capslock disabled
-	xkb_layout us,ru
-	xkb_variant workman,
+	xkb_layout us,ru,am
+	xkb_variant workman,,eastern
 
   # localectl list-x11-keymap-options | grep grp:
 	xkb_options grp:alt_space_toggle,grp:caps_toggle

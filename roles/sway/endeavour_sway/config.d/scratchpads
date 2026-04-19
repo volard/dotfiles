@@ -7,6 +7,10 @@ set {
     $messenger_id org.telegram.desktop
     $messenger telegram-desktop
 
+
+    $element_id Element
+    $element element-desktop
+
     $tasks_class superProductivity 
     $tasks_command superproductivity
 }
@@ -19,6 +23,9 @@ for_window {
   ## Messenger
   [app_id=$messenger_id] move to scratchpad, scratchpad show
 
+  ## Element
+  [app_id=$element_id] move to scratchpad, scratchpad show
+
   ## Tasks
   [class=$tasks_class] move to scratchpad, scratchpad show
 }
@@ -30,6 +37,9 @@ bindsym --to-code {
 
   ## Messenger
   $mod+o  exec swaymsg [app_id=$messenger_id] scratchpad show || exec $messenger
+
+  ## Element
+  $mod+period  exec swaymsg [app_id=$element_id] scratchpad show || exec $element
 
   ## Tasks
   $mod+t  exec swaymsg [class=$tasks_class] scratchpad show || exec $tasks_command 
