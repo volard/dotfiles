@@ -3,7 +3,7 @@
   ansible.builtin.apt:
     update_cache: true
   become: true
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Upgrade all packages
   ansible.builtin.apt:
@@ -11,4 +11,4 @@
     autoclean: true
     autoremove: true
   become: true
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'

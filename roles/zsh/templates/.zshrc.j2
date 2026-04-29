@@ -52,12 +52,10 @@ zinit snippet OMZT::dstufft
 
 # === autosuggestions and completions
 zinit light zsh-users/zsh-autosuggestions # Suggests commands as you type based on your history
-zinit snippet OMZP::git # 150+ git aliases (gst, gco, gp, etc.)
 zinit snippet OMZP::sudo
 
 # === styling
 zinit light zsh-users/zsh-syntax-highlighting
-zinit snippet OMZL::theme-and-appearance.zsh  # Terminal title, ls colors
 
 # === eza
 # config goes first
@@ -222,6 +220,15 @@ alias peon="bash /home/volard/.claude/hooks/peon-ping/peon.sh"
 # peon preview task.complete
 
 
+
+# ============================================================================
+# MISE
+# ============================================================================
+if command -v mise &> /dev/null; then
+  eval "$(mise activate zsh)"
+fi
+
+
 # ============================================================================
 # ZOXIDE
 # ============================================================================
@@ -242,6 +249,9 @@ if command -v atuin &> /dev/null; then
 fi
 
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # ============================================================================
 # ARCHIVE

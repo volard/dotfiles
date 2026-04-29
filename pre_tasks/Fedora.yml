@@ -5,65 +5,65 @@
     state: latest
     update_cache: true
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Install RPM Fusion Free Release
   ansible.builtin.dnf:
-    name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+    name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm"
     state: present
     disable_gpg_check: true
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Install RPM Fusion Non-Free Release
   ansible.builtin.dnf:
-    name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+    name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm"
     state: present
     disable_gpg_check: true
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Update core group
   ansible.builtin.dnf:
     name: '@core'
     state: latest
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Install RPM Fusion Free Release Tainted
   ansible.builtin.dnf:
     name: rpmfusion-free-release-tainted
     state: present
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Install RPM Fusion Non-Free Release Tainted
   ansible.builtin.dnf:
     name: rpmfusion-nonfree-release-tainted
     state: present
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Install DNF plugins core
   ansible.builtin.dnf:
     name: dnf-plugins-core
     state: present
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Install libdvdcss
   ansible.builtin.dnf:
     name: libdvdcss
     state: present
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Install multimedia group
   ansible.builtin.dnf:
     name: '@multimedia'
     state: present
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Install GStreamer OpenH264 plugin
   ansible.builtin.dnf:
@@ -72,28 +72,28 @@
       - mozilla-openh264
     state: present
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Install sound and video group
   ansible.builtin.dnf:
     name: '@sound-and-video'
     state: present
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Install flatpak fuse
   ansible.builtin.dnf:
     name: fuse-libs
     state: present
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Install Snap
   ansible.builtin.dnf:
     name: snapd
     state: present
   become: true
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Source dotfiles bin
   ansible.builtin.include_tasks: pre_tasks/linux_bash_dotfiles_bin.yml

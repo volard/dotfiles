@@ -36,9 +36,27 @@
     state: absent
   become: true
 
+- name: Gather local groups
+  ansible.builtin.getent:
+    database: group
+
+- name: Build list of existing supplemental groups
+  ansible.builtin.set_fact:
+    linux_setup_existing_groups: >-
+      {{
+        [
+          'sudo', 'wheel', 'libvirt', 'sound', 'audio', 'video', 'docker',
+          'plugdev', 'lpadmin', 'netdev', 'input', 'tty', 'users', 'i2c',
+          'spi', 'gpio'
+        ]
+        | select('in', ansible_facts.getent_group.keys())
+        | join(',')
+      }}
+
 - name: Add user to commonly used groups
   ansible.builtin.user:
     name: "{{ ansible_facts['user_id'] }}"
-    groups: "sudo, libvirt, sound, video, docker, plugdev, lpadmin, netdev, input, tty, users, i2c, spi, gpio"
+    groups: "{{ linux_setup_existing_groups }}"
     append: true
   become: true
+  when: linux_setup_existing_groups | length > 0

@@ -29,7 +29,6 @@
     - zsh # better shell
     - mise # dev tools version manager
     - wlsunset # warm screen display
-    - wltype
     - fzf # fuzzy searching tool
     - qbittorrent # torrent client
     - qt6-wayland

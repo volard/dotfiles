@@ -180,8 +180,6 @@ fi
 ########################################
 cd "${DOTFILES_DIR}"
 
-python3 bin/sync_roles.py
-
 ansible-galaxy install -r requirements.yml
 
 # Use --ask-become-pass for secure interactive password prompt

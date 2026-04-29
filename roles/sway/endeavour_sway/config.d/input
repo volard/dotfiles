@@ -16,8 +16,9 @@ input "type:keyboard" {
 	xkb_layout us,ru,am
 	xkb_variant workman,,eastern
 
+  # I don't use that, but I need it so on lock screen I could switch locale and type password
   # localectl list-x11-keymap-options | grep grp:
-	# xkb_options grp:alt_space_toggle,grp:caps_toggle
+	xkb_options grp:alt_space_toggle,grp:caps_toggle
 }
 
 
