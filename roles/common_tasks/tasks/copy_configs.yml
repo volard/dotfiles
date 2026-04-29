@@ -3,14 +3,18 @@
 #   debug:
 #     var: config_path
 
+- name: Check if role vars directory exists
+  ansible.builtin.stat:
+    path: "{{ role_path }}/vars"
+  register: role_vars_dir
+
 - name: Include all variables from YAML files in the 'vars' directory
   ansible.builtin.include_vars:
     dir: "{{ role_path }}/vars"
     extensions:
       - "yml"
       - "yaml"
-  register: vars_included
-  failed_when: vars_included is not defined or vars_included.failed
+  when: role_vars_dir.stat.exists and role_vars_dir.stat.isdir
 
 
 - name: Ensure config directory exists

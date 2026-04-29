@@ -4,58 +4,266 @@
   connection: local
   gather_facts: true
 
+  vars:
+    selected_role_tags: "{{ ansible_run_tags | default([]) | difference(['all', 'always', 'tagged', 'untagged']) }}"
+
   pre_tasks:
     - name: Include Windows pre-tasks
       ansible.builtin.include_tasks: pre_tasks/windows.yml
       when: ansible_facts['os_family'] == 'Windows'
+      tags:
+        - always
 
     - name: Include Ubuntu pre-tasks
       ansible.builtin.include_tasks: pre_tasks/Ubuntu.yml
       when: ansible_facts['distribution'] == 'Ubuntu'
+      tags:
+        - always
 
     - name: Include Fedora pre-tasks
       ansible.builtin.include_tasks: pre_tasks/Fedora.yml
       when: ansible_facts['distribution'] == 'Fedora'
+      tags:
+        - always
 
     - name: Include Archlinux pre-tasks
       ansible.builtin.include_tasks: pre_tasks/Archlinux.yml
       when: ansible_facts['distribution'] == 'Archlinux'
-
-  tasks:
-    - name: Display distribution
-      ansible.builtin.debug:
-        msg: "{{ ansible_facts['distribution'] }}"
       tags:
         - always
 
-    - name: Set roles_to_run
-      ansible.builtin.set_fact:
-        roles_to_run: "{{ ansible_run_tags != ['all'] and ansible_run_tags or default_roles | difference(roles_to_exclude | default([])) }}"
+  roles:
+    - role: powershell
+      when: "'powershell' in enabled_roles or 'powershell' in selected_role_tags"
       tags:
-        - always
+        - powershell
 
-    - name: Display roles
-      ansible.builtin.debug:
-        var: roles_to_run
+    - role: gtk3
+      when: "'gtk3' in enabled_roles or 'gtk3' in selected_role_tags"
       tags:
-        - always
+        - gtk3
 
-    # In case I'll need to have the same vars in many places in the future
-    # roles/sensitive_vars/tasks/main.yml
-    # - name: Load sensitive variables
-    #   ansible.builtin.include_vars:
-    #   file: /vars/sensitive_vars.yml
-
-    - name: Run roles
-      # include_role:
-      #   name: sensitive_vars
-      ansible.builtin.include_role:
-        apply:
-          tags:
-            - "{{ roles_item }}"
-        name: "{{ roles_item }}"
-      loop_control:
-        loop_var: roles_item
-      with_items: "{{ roles_to_run }}"
+    - role: i3status
+      when: "'i3status' in enabled_roles or 'i3status' in selected_role_tags"
       tags:
-        - always
+        - i3status
+
+    - role: doom
+      when: "'doom' in enabled_roles or 'doom' in selected_role_tags"
+      tags:
+        - doom
+
+    - role: virtual
+      when: "'virtual' in enabled_roles or 'virtual' in selected_role_tags"
+      tags:
+        - virtual
+
+    - role: ranger
+      when: "'ranger' in enabled_roles or 'ranger' in selected_role_tags"
+      tags:
+        - ranger
+
+    - role: tmux
+      when: "'tmux' in enabled_roles or 'tmux' in selected_role_tags"
+      tags:
+        - tmux
+
+    - role: beets
+      when: "'beets' in enabled_roles or 'beets' in selected_role_tags"
+      tags:
+        - beets
+
+    - role: ssh
+      when: "'ssh' in enabled_roles or 'ssh' in selected_role_tags"
+      tags:
+        - ssh
+
+    - role: sway
+      when: "'sway' in enabled_roles or 'sway' in selected_role_tags"
+      tags:
+        - sway
+
+    - role: swaylock
+      when: "'swaylock' in enabled_roles or 'swaylock' in selected_role_tags"
+      tags:
+        - swaylock
+
+    - role: mpd
+      when: "'mpd' in enabled_roles or 'mpd' in selected_role_tags"
+      tags:
+        - mpd
+
+    - role: lazy_neovim
+      when: "'lazy_neovim' in enabled_roles or 'lazy_neovim' in selected_role_tags"
+      tags:
+        - lazy_neovim
+
+    - role: xplr
+      when: "'xplr' in enabled_roles or 'xplr' in selected_role_tags"
+      tags:
+        - xplr
+
+    - role: ideavim
+      when: "'ideavim' in enabled_roles or 'ideavim' in selected_role_tags"
+      tags:
+        - ideavim
+
+    - role: alacritty
+      when: "'alacritty' in enabled_roles or 'alacritty' in selected_role_tags"
+      tags:
+        - alacritty
+
+    - role: vscode
+      when: "'vscode' in enabled_roles or 'vscode' in selected_role_tags"
+      tags:
+        - vscode
+
+    - role: polybar
+      when: "'polybar' in enabled_roles or 'polybar' in selected_role_tags"
+      tags:
+        - polybar
+
+    - role: rofi
+      when: "'rofi' in enabled_roles or 'rofi' in selected_role_tags"
+      tags:
+        - rofi
+
+    - role: glazewm
+      when: "'glazewm' in enabled_roles or 'glazewm' in selected_role_tags"
+      tags:
+        - glazewm
+
+    - role: vifm
+      when: "'vifm' in enabled_roles or 'vifm' in selected_role_tags"
+      tags:
+        - vifm
+
+    - role: kitty
+      when: "'kitty' in enabled_roles or 'kitty' in selected_role_tags"
+      tags:
+        - kitty
+
+    - role: mise
+      when: "'mise' in enabled_roles or 'mise' in selected_role_tags"
+      tags:
+        - mise
+
+    - role: lazygit
+      when: "'lazygit' in enabled_roles or 'lazygit' in selected_role_tags"
+      tags:
+        - lazygit
+
+    - role: i3
+      when: "'i3' in enabled_roles or 'i3' in selected_role_tags"
+      tags:
+        - i3
+
+    - role: docker
+      when: "'docker' in enabled_roles or 'docker' in selected_role_tags"
+      tags:
+        - docker
+
+    - role: windows_setup
+      when: "'windows_setup' in enabled_roles or 'windows_setup' in selected_role_tags"
+      tags:
+        - windows_setup
+
+    - role: wezterm
+      when: "'wezterm' in enabled_roles or 'wezterm' in selected_role_tags"
+      tags:
+        - wezterm
+
+    - role: neovim
+      when: "'neovim' in enabled_roles or 'neovim' in selected_role_tags"
+      tags:
+        - neovim
+
+    - role: waybar
+      when: "'waybar' in enabled_roles or 'waybar' in selected_role_tags"
+      tags:
+        - waybar
+
+    - role: fuzzel
+      when: "'fuzzel' in enabled_roles or 'fuzzel' in selected_role_tags"
+      tags:
+        - fuzzel
+
+    - role: vnc
+      when: "'vnc' in enabled_roles or 'vnc' in selected_role_tags"
+      tags:
+        - vnc
+
+    - role: hiddify
+      when: "'hiddify' in enabled_roles or 'hiddify' in selected_role_tags"
+      tags:
+        - hiddify
+
+    - role: ohmyposh
+      when: "'ohmyposh' in enabled_roles or 'ohmyposh' in selected_role_tags"
+      tags:
+        - ohmyposh
+
+    - role: foot
+      when: "'foot' in enabled_roles or 'foot' in selected_role_tags"
+      tags:
+        - foot
+
+    - role: awesome
+      when: "'awesome' in enabled_roles or 'awesome' in selected_role_tags"
+      tags:
+        - awesome
+
+    - role: emacs
+      when: "'emacs' in enabled_roles or 'emacs' in selected_role_tags"
+      tags:
+        - emacs
+
+    - role: linux_setup
+      when: "'linux_setup' in enabled_roles or 'linux_setup' in selected_role_tags"
+      tags:
+        - linux_setup
+
+    - role: programs
+      when: "'programs' in enabled_roles or 'programs' in selected_role_tags"
+      tags:
+        - programs
+
+    - role: latex
+      when: "'latex' in enabled_roles or 'latex' in selected_role_tags"
+      tags:
+        - latex
+
+    - role: wakatime
+      when: "'wakatime' in enabled_roles or 'wakatime' in selected_role_tags"
+      tags:
+        - wakatime
+
+    - role: mako
+      when: "'mako' in enabled_roles or 'mako' in selected_role_tags"
+      tags:
+        - mako
+
+    - role: zsh
+      when: "'zsh' in enabled_roles or 'zsh' in selected_role_tags"
+      tags:
+        - zsh
+
+    - role: fcitx
+      when: "'fcitx' in enabled_roles or 'fcitx' in selected_role_tags"
+      tags:
+        - fcitx
+
+    - role: bash
+      when: "'bash' in enabled_roles or 'bash' in selected_role_tags"
+      tags:
+        - bash
+
+    - role: lf
+      when: "'lf' in enabled_roles or 'lf' in selected_role_tags"
+      tags:
+        - lf
+
+    - role: git
+      when: "'git' in enabled_roles or 'git' in selected_role_tags"
+      tags:
+        - git

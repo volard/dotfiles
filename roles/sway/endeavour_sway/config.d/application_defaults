@@ -31,6 +31,9 @@ for_window [app_id="open_whispr"] floating enable, border pixel 2, resize set wi
 
 for_window [app_id="Element"] floating enable, border pixel 2, resize set width 60 ppt height 60 ppt
 
+for_window [app_id="Throne"] move window to workspace 9
+for_window [app_id="zen"] move window to workspace 1
+
 # Positioning
 
 # Inhibit idle

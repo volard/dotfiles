@@ -7,19 +7,19 @@
   loop:
     - { name: SCOOP, value: C:\Scoop }
     - { name: SCOOP_GLOBAL, value: C:\ProgramData\scoop }
-  when: ansible_os_family == 'Windows'
+  when: ansible_facts['os_family'] == 'Windows'
 
 - name: Install Scoop
   community.windows.win_scoop:
     name: scoop
     state: present
-  when: ansible_os_family == 'Windows'
+  when: ansible_facts['os_family'] == 'Windows'
 
 - name: Install Git using Scoop
   community.windows.win_scoop:
     name: git
     state: present
-  when: ansible_os_family == 'Windows'
+  when: ansible_facts['os_family'] == 'Windows'
 
 - name: Add Scoop buckets
   community.windows.scoop_bucket:
@@ -29,13 +29,13 @@
     - extras
     - nerd-fonts
     - nonportable
-  when: ansible_os_family == 'Windows'
+  when: ansible_facts['os_family'] == 'Windows'
 
 - name: Install aria2 via Scoop
   community.windows.win_scoop:
     name: aria2
     state: present
-  when: ansible_os_family == 'Windows'
+  when: ansible_facts['os_family'] == 'Windows'
 
 - name: Configure Scoop aria2 settings
   community.windows.win_scoop_config:
@@ -44,4 +44,4 @@
   loop:
     - { name: aria2-enabled, value: "true" }
     - { name: aria2-warning-enabled, value: "false" }
-  when: ansible_os_family == 'Windows'
+  when: ansible_facts['os_family'] == 'Windows'
