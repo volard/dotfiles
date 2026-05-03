@@ -10,15 +10,11 @@
     loop_var: pacman_item
   when: ansible_facts['distribution'] == "Archlinux"
 
-- name: Delete a directory
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.config/mako"
-    state: absent
-
-- name: "Create symlink to role files directory"
-  ansible.builtin.file:
-    src: "{{ role_path }}/files"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/mako"
-    state: link
-    force: true
+- name: Create mako symlink
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/create_symlinks.yml
+  vars:
+    symlink:
+      src: "{{ role_path }}/files"
+      dest: "{{ ansible_facts['user_dir'] }}/.config/mako"
+      remove_existing: true
   when: ansible_facts['distribution'] == 'Archlinux'
