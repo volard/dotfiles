@@ -1,13 +1,9 @@
 ---
-- name: Delete a directory
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.config/waybar"
-    state: absent
-
-- name: "Create symlink to role files directory"
-  ansible.builtin.file:
-    src: "{{ role_path }}/endeavour_waybar"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/waybar"
-    state: link
-    force: true
+- name: Create waybar symlink
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/create_symlinks.yml
+  vars:
+    symlink:
+      src: "{{ role_path }}/endeavour_waybar"
+      dest: "{{ ansible_facts['user_dir'] }}/.config/waybar"
+      remove_existing: true
   when: ansible_facts['distribution'] == 'Archlinux'

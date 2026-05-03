@@ -1,0 +1,39 @@
+---
+- name: Validate symlink definitions
+  ansible.builtin.assert:
+    that:
+      - symlinks is defined or symlink is defined
+    fail_msg: "Pass `symlink` or `symlinks` when including create_symlinks.yml."
+
+- name: Normalize symlink definitions
+  ansible.builtin.set_fact:
+    symlink_items: "{{ symlinks if symlinks is defined else [symlink] }}"
+
+- name: Ensure symlink list is not empty
+  ansible.builtin.assert:
+    that:
+      - symlink_items | length > 0
+    fail_msg: "Pass at least one symlink definition to create_symlinks.yml."
+
+- name: Ensure parent directories exist
+  ansible.builtin.file:
+    path: "{{ item.dest | dirname }}"
+    state: directory
+    mode: "{{ item.parent_mode | default('0755') }}"
+  loop: "{{ symlink_items }}"
+  when: item.ensure_parent | default(true)
+
+- name: Remove existing destinations when requested
+  ansible.builtin.file:
+    path: "{{ item.dest }}"
+    state: absent
+  loop: "{{ symlink_items }}"
+  when: item.remove_existing | default(false)
+
+- name: Create symlinks
+  ansible.builtin.file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+    force: "{{ item.force | default(true) }}"
+  loop: "{{ symlink_items }}"

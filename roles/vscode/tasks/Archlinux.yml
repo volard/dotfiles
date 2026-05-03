@@ -1,24 +1,10 @@
 ---
-- name: Ensure .config directory exists
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.config/Cursor/User"
-    state: directory
-    mode: "0755"
-  become: true
-
-- name: "Create symlink to settings files"
-  ansible.builtin.file:
-    src: "{{ role_path }}/files/settings.json"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/Cursor/User/settings.json"
-    state: link
-    force: true
-  when: ansible_facts['distribution'] == 'Archlinux'
-
-
-- name: "Create symlink to settings files"
-  ansible.builtin.file:
-    src: "{{ role_path }}/files/keybindings.json"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/Cursor/User/keybindings.json"
-    state: link
-    force: true
+- name: Create Cursor config symlinks
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/create_symlinks.yml
+  vars:
+    symlinks:
+      - src: "{{ role_path }}/files/settings.json"
+        dest: "{{ ansible_facts['user_dir'] }}/.config/Cursor/User/settings.json"
+      - src: "{{ role_path }}/files/keybindings.json"
+        dest: "{{ ansible_facts['user_dir'] }}/.config/Cursor/User/keybindings.json"
   when: ansible_facts['distribution'] == 'Archlinux'

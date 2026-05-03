@@ -1,0 +1,13 @@
+---
+- name: Install atuin from pacman
+  community.general.pacman:
+    name: atuin
+    state: present
+  become: true
+
+- name: Create atuin config symlink
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/create_symlinks.yml
+  vars:
+    symlink:
+      src: "{{ role_path }}/files/config.toml"
+      dest: "{{ ansible_facts['user_dir'] }}/.config/atuin/config.toml"
