@@ -180,3 +180,6 @@
   loop_control:
     loop_var: skill_item
   when: ansible_facts['distribution'] == "Archlinux"
+
+  # install tavily and auth and add its skills also, add caveman skills 
+  # 

@@ -1,0 +1,3 @@
+---
+- name: Include distribution-specific tasks
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/include_distribution_tasks.yml
