@@ -148,6 +148,16 @@
       tags:
         - mise
 
+    - role: atuin
+      when: "'atuin' in enabled_roles or 'atuin' in selected_role_tags"
+      tags:
+        - atuin
+
+    - role: zed
+      when: "'zed' in enabled_roles or 'zed' in selected_role_tags"
+      tags:
+        - zed
+
     - role: lazygit
       when: "'lazygit' in enabled_roles or 'lazygit' in selected_role_tags"
       tags:
