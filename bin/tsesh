@@ -1,34 +1,82 @@
 #!/usr/bin/env bash
 # vi:ft=sh:
 
-# Create an array of directories
-directories=(
-    "/mnt/data/Projects"
-    "/mnt/data/Projects/pet"
-    "$HOME"
-    "$HOME/projects/"
-)
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/tsesh"
+extra_dirs_file="${TSESH_EXTRA_DIRS_FILE:-$config_dir/extra-dirs}"
+root_dirs_file="${TSESH_ROOT_DIRS_FILE:-$config_dir/root-dirs}"
 
-# Initialize an empty array to hold existing directories
 existing_dirs=()
+repo_roots=()
 
-# Check if each directory exists and add it to the existing_dirs array
-for dir in "${directories[@]}"; do
-    if [[ -d "$dir" ]]; then
-        existing_dirs+=("$dir")
-    fi
+add_unique_dir() {
+    local dir="$1"
+    [[ -z "$dir" || ! -d "$dir" ]] && return
+
+    local existing
+    for existing in "${existing_dirs[@]}"; do
+        [[ "$existing" == "$dir" ]] && return
+    done
+
+    existing_dirs+=("$dir")
+}
+
+add_unique_root() {
+    local dir="$1"
+    [[ -z "$dir" || ! -d "$dir" ]] && return
+
+    local existing
+    for existing in "${repo_roots[@]}"; do
+        [[ "$existing" == "$dir" ]] && return
+    done
+
+    repo_roots+=("$dir")
+}
+
+while IFS= read -r dir; do
+    [[ -z "$dir" || "$dir" == \#* ]] && continue
+    add_unique_root "${dir/#\~/$HOME}"
+done < <(test -f "$root_dirs_file" && cat "$root_dirs_file")
+
+for dir in \
+    "${TSESH_PROJECTS_DIR:-}" \
+    "$HOME/projects" \
+    "/mnt/data/Projects"
+do
+    add_unique_root "$dir"
 done
 
-# If no directories exist, exit the script
+if command -v fd >/dev/null 2>&1; then
+    for root in "${repo_roots[@]}"; do
+        while IFS= read -r dir; do
+            add_unique_dir "$dir"
+        done < <(fd --hidden --no-ignore --type f --type d --glob '.git' "$root" -x dirname)
+    done
+else
+    for root in "${repo_roots[@]}"; do
+        while IFS= read -r dir; do
+            add_unique_dir "$dir"
+        done < <(find "$root" \( -type d -o -type f \) -name '.git' -exec dirname '{}' ';')
+    done
+fi
+
+while IFS= read -r dir; do
+    [[ -z "$dir" || "$dir" == \#* ]] && continue
+    add_unique_dir "${dir/#\~/$HOME}"
+done < <(test -f "$extra_dirs_file" && cat "$extra_dirs_file")
+
 if [[ ${#existing_dirs[@]} -eq 0 ]]; then
-    echo "No valid directories found."
+    cat <<EOF
+No projects found.
+Add repo roots to: $root_dirs_file
+Add manual directories to: $extra_dirs_file
+EOF
     exit 1
 fi
 
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find "${existing_dirs[@]}" -mindepth 1 -maxdepth 1 -type d ! -name '.*' | fzf)
+    selected=$(printf '%s\n' "${existing_dirs[@]}" | sort -u | fzf)
 fi
 
 if [[ -z $selected ]]; then

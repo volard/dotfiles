@@ -50,3 +50,4 @@ exec_always --no-startup-id remind -z '-knotify-send -u low -c Calendar %s &' ~/
 exec throne
 exec zen-browser
 exec telegram-desktop
+exec voxtype
