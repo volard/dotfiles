@@ -13,20 +13,12 @@
   changed_when: false
   failed_when: false
 
-- name: Build voxtype AUR package without installing
-  ansible.builtin.command:
-    argv:
-      - yay
-      - -S
-      - --noconfirm
-      - --needed
-      - --answerclean
-      - None
-      - --answerdiff
-      - None
-      - --buildonly
-      - voxtype-bin
-  register: voxtype_aur_build
+- name: Install packages from AUR
+  ansible.builtin.command: yay -S --noconfirm {{ aur_item }}
+  loop:
+    - voxtype-bin # voice input
+  loop_control:
+    loop_var: aur_item
   changed_when: voxtype_package_check.rc != 0
   when: voxtype_package_check.rc != 0
 
