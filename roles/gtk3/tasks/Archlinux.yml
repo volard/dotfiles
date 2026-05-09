@@ -1,13 +1,24 @@
 ---
-- name: Delete a directory
+- name: Delete GTK config directories before recreating symlinks
   ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.config/gtk-3.0"
+    path: "{{ ansible_facts['user_dir'] }}/.config/{{ gtk_config_dir }}"
     state: absent
+  loop:
+    - gtk-3.0
+    - gtk-4.0
+  loop_control:
+    loop_var: gtk_config_dir
+  when: ansible_facts['distribution'] == 'Archlinux'
 
-- name: "Create symlink to role files directory"
+- name: Create symlinks to role files directory for GTK configs
   ansible.builtin.file:
     src: "{{ role_path }}/files"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/gtk-3.0"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/{{ gtk_config_dir }}"
     state: link
     force: true
+  loop:
+    - gtk-3.0
+    - gtk-4.0
+  loop_control:
+    loop_var: gtk_config_dir
   when: ansible_facts['distribution'] == 'Archlinux'

@@ -1,5 +1,6 @@
 ---
 enabled_roles:
+  - gtk3
   - ranger
   - tmux
   - beets
