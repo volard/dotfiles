@@ -13,37 +13,21 @@
     "modules-left": [
         "custom/launcher",
         // "network",
-        "sway/mpd",
+        "custom/mpd",
         "sway/mode"
         //"sway/window"
     ],
 
 
-    "sway/mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 5,
-        "consume-icons": {
-            "on": " "
-        },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
-        },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
+    "custom/mpd": {
+        "exec": "~/.config/waybar/scripts/mpd.sh",
+        "interval": 1,
+        "format": "{}",
+        "tooltip": false,
+        "on-click": "mpc -h 127.0.0.1 -p 6600 toggle",
+        "on-click-right": "mpc -h 127.0.0.1 -p 6600 stop",
+        "on-scroll-up": "mpc -h 127.0.0.1 -p 6600 next",
+        "on-scroll-down": "mpc -h 127.0.0.1 -p 6600 prev"
     },
 
     "custom/launcher": {
