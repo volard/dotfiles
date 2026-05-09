@@ -1,0 +1,104 @@
+---
+- name: Install voxtype dependencies from pacman
+  community.general.pacman:
+    name:
+      - wtype
+      - wl-clipboard
+    state: present
+  become: true
+
+- name: Check whether voxtype-bin is already installed
+  ansible.builtin.command: pacman -Q voxtype-bin
+  register: voxtype_package_check
+  changed_when: false
+  failed_when: false
+
+- name: Build voxtype AUR package without installing
+  ansible.builtin.command:
+    argv:
+      - yay
+      - -S
+      - --noconfirm
+      - --needed
+      - --answerclean
+      - None
+      - --answerdiff
+      - None
+      - --buildonly
+      - voxtype-bin
+  register: voxtype_aur_build
+  changed_when: voxtype_package_check.rc != 0
+  when: voxtype_package_check.rc != 0
+
+- name: Locate built voxtype package artifact
+  ansible.builtin.shell: ls -1t "{{ ansible_facts['user_dir'] }}/.cache/yay/voxtype-bin"/voxtype-bin-*.pkg.tar.zst | head -n1
+  args:
+    executable: /bin/bash
+  register: voxtype_package_file
+  changed_when: false
+  when: voxtype_package_check.rc != 0
+
+- name: Install built voxtype package with pacman
+  community.general.pacman:
+    name: "{{ voxtype_package_file.stdout }}"
+    state: present
+  become: true
+  when: voxtype_package_check.rc != 0
+
+- name: Ensure voxtype ansible state directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.local/state/ansible"
+    state: directory
+    mode: "0755"
+
+- name: Stop voxtype user service if it is already running
+  ansible.builtin.command: systemctl --user stop voxtype.service
+  register: voxtype_service_stop
+  changed_when: voxtype_service_stop.rc == 0
+  failed_when: false
+
+- name: Stop any running voxtype processes
+  ansible.builtin.command: pkill -x voxtype
+  register: voxtype_process_stop
+  changed_when: voxtype_process_stop.rc == 0
+  failed_when: false
+
+- name: Create voxtype config symlink
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/create_symlinks.yml
+  vars:
+    symlink:
+      src: "{{ role_path }}/files/config.toml"
+      dest: "{{ ansible_facts['user_dir'] }}/.config/voxtype/config.toml"
+      remove_existing: true
+
+- name: Check voxtype download marker
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['user_dir'] }}/.local/state/ansible/voxtype-download.done"
+  register: voxtype_download_marker
+
+- name: Download voxtype assets
+  ansible.builtin.command: voxtype setup --download
+  when: not voxtype_download_marker.stat.exists
+
+- name: Mark voxtype assets as downloaded
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.local/state/ansible/voxtype-download.done"
+    state: touch
+    mode: "0644"
+  when: not voxtype_download_marker.stat.exists
+
+- name: Check voxtype systemd setup marker
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['user_dir'] }}/.local/state/ansible/voxtype-systemd.done"
+  register: voxtype_systemd_marker
+
+- name: Setup voxtype systemd units
+  ansible.builtin.command: voxtype setup systemd
+  when: not voxtype_systemd_marker.stat.exists
+
+- name: Mark voxtype systemd setup as completed
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.local/state/ansible/voxtype-systemd.done"
+    state: touch
+    mode: "0644"
+  when: not voxtype_systemd_marker.stat.exists
