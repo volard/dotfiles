@@ -74,7 +74,6 @@
     - zen-browser-bin
     - lazydocker-bin # docker TUI
     - throne-bin # docker TUI
-    - voxtype-bin # voice input
   loop_control:
     loop_var: aur_item
   when: ansible_facts['distribution'] == "Archlinux"
