@@ -221,11 +221,11 @@ on_transcription = true
 # The word "submit" is stripped from the output text and Enter is pressed.
 # smart_auto_submit = false
 
-# [vad]
+[vad]
 # Voice Activity Detection - filters silence-only recordings
 # Prevents Whisper hallucinations on silent audio
 #
-# enabled = false      # Enable VAD (off by default)
+enabled = true      # Enable VAD (off by default)
 # threshold = 0.5      # 0.0 = sensitive, 1.0 = aggressive
 # min_speech_duration_ms = 100  # Minimum speech required
 
