@@ -1,6 +1,6 @@
 ---
-- name: Copy swayidle config
+- name: Copy swaylock config
   ansible.builtin.copy:
-    content: "{{ role_path }}/files/config"
+    src: "{{ role_path }}/files/config"
     dest: "{{ ansible_facts['user_dir'] }}/.config/swaylock/config"
-    mode: '0755'
+    mode: '0644'

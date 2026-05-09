@@ -1,5 +1,6 @@
 bindsym --to-code $mod+r exec voxtype record start
 bindsym --to-code --release $mod+r exec voxtype record stop
+bindsym --to-code Escape exec voxtype record cancel; mode "default"
 
 bindsym --to-code {
 #
