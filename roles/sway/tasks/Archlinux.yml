@@ -29,37 +29,30 @@
 
 # reload the system
 
-- name: Delete a directory
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.config/sway"
-    state: absent
-  when: ansible_facts['distribution'] == 'Archlinux'
-
-- name: "Create symlink to role files directory"
-  ansible.builtin.file:
-    src: "{{ role_path }}/endeavour_sway"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/sway"
-    state: link
-    force: true
-  when: ansible_facts['distribution'] == 'Archlinux'
-
-- name: Delete a directory
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.config/gtklock"
-    state: absent
-  when: ansible_facts['distribution'] == 'Archlinux'
-
-- name: "Create symlink to role files directory"
-  ansible.builtin.file:
-    src: "{{ role_path }}/gtklock"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/gtklock"
-    state: link
-    force: true
+- name: Create Sway and gtklock symlinks
+  ansible.builtin.include_tasks: "{{ playbook_dir }}/roles/common_tasks/tasks/create_symlinks.yml"
+  vars:
+    symlinks:
+      - src: "{{ role_path }}/endeavour_sway"
+        dest: "{{ ansible_facts['user_dir'] }}/.config/sway"
+        remove_existing: true
+      - src: "{{ role_path }}/gtklock"
+        dest: "{{ ansible_facts['user_dir'] }}/.config/gtklock"
+        remove_existing: true
   when: ansible_facts['distribution'] == 'Archlinux'
 
 - name: Set all files in the specified directory to executable
   ansible.builtin.file:
     path: "{{ item }}"
-    mode: 'u+x'
+    mode: "u+x"
   with_fileglob:
     - "{{ ansible_facts['user_dir'] }}/.config/sway/scripts/*"
+
+- name: Install greetd sway config
+  ansible.builtin.copy:
+    src: "{{ role_path }}/greetd/greetd-sway.cfg"
+    dest: /etc/greetd/sway.cfg
+    owner: root
+    group: root
+    mode: "0644"
+  become: true

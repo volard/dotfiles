@@ -1,0 +1,15 @@
+---
+- name: Install swaylock
+  community.general.pacman:
+    name: swaylock
+    state: present
+  become: true
+
+- name: Ensure swaylock config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.config/swaylock"
+    state: directory
+    mode: '0755'
+
+- name: Include common linux tasks
+  ansible.builtin.include_tasks: roles/swaylock/tasks/linux.yml
