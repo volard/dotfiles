@@ -208,6 +208,11 @@
       tags:
         - hiddify
 
+    - role: voxtype
+      when: "'voxtype' in enabled_roles or 'voxtype' in selected_role_tags"
+      tags:
+        - voxtype
+
     - role: ohmyposh
       when: "'ohmyposh' in enabled_roles or 'ohmyposh' in selected_role_tags"
       tags:
