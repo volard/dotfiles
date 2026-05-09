@@ -24,6 +24,23 @@ alias vv='v .'
 alias v=nvim
 
 
+# ============================================================================
+# PERSONAL
+# ============================================================================
+precommit() {
+  local url='https://git.roadcons.ru/volard/ais2-editor-configs/-/raw/main/pre-commit.sh'
+  local file='./pre-commit.sh'
+  if [[ ! -f $file ]]; then
+    curl -fsSL -o "$file" "$url" && chmod +x "$file"
+    if [[ -d .git ]]; then
+      grep -qxF "$(basename "$file")" .gitignore 2>/dev/null || printf '%s\n' "$(basename "$file")" >> .gitignore
+    fi
+  fi
+  "$file" "$@"
+}
+alias lint-ais='precommit'
+
+
 
 # ============================================================================
 # TOOLS
