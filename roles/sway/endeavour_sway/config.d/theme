@@ -11,8 +11,8 @@ default_border pixel 1
 # Default Font
 font pango:Noto Sans Regular 10
 
-# Thin borders:
-smart_borders on
+# Keep focus borders visible even for a single tiled window.
+smart_borders off
 
 # Set wallpaper:
 #exec ~/.azotebg
