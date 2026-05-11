@@ -88,7 +88,7 @@ zinit light Aloxaf/fzf-tab
 #
 # === Load completions efficiently (after prompt is ready)
 autoload -Uz compinit
-compinit
+compinit -C
 
 
 
@@ -152,7 +152,7 @@ bindkey -s '^o' 'lfcd\n'
 # Vmoption
 # ============================================================================
 ___MY_VMOPTIONS_SHELL_FILE="${HOME}/.jetbrains.vmoptions.sh"
-if [ -f "${___MY_VMOPTIONS_SHELL_FILE}" ]; then 
+if [ -f "${___MY_VMOPTIONS_SHELL_FILE}" ]; then
   . "${___MY_VMOPTIONS_SHELL_FILE}"
 fi
 
@@ -224,9 +224,9 @@ alias peon="bash /home/volard/.claude/hooks/peon-ping/peon.sh"
 # ============================================================================
 # MISE
 # ============================================================================
-if command -v mise &> /dev/null; then
-  eval "$(mise activate zsh)"
-fi
+#if command -v mise &> /dev/null; then
+#  eval "$(mise activate zsh)"
+#fi
 
 
 # ============================================================================
@@ -259,6 +259,5 @@ export NVM_DIR="$HOME/.nvm"
 
 # it became annoying and noticably slow
 # if command -v docker &> /dev/null; then
-#   docker run -it --rm djoudix/git-tip git-tip 
+#   docker run -it --rm djoudix/git-tip git-tip
 # fi
-

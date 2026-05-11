@@ -17,13 +17,13 @@
     loop_var: pacman_item
   when: ansible_facts['distribution'] == "Archlinux"
 
-- name: Create docker group
+- name: Create libvirt group
   ansible.builtin.group:
     name: libvirt
     state: present
   become: true
 
-- name: Add user volard to docker group
+- name: Add user volard to libvirt group
   ansible.builtin.user:
     name: volard
     groups: libvirt
@@ -52,7 +52,6 @@
     force: true
   become: true
 
-
 - name: Delete a file
   ansible.builtin.file:
     path: "/etc/libvirt/qemu.conf"
@@ -67,7 +66,6 @@
     state: link
     force: true
   become: true
-
 
 - name: Delete a file
   ansible.builtin.file:

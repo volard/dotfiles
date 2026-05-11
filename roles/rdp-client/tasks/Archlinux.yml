@@ -1,0 +1,12 @@
+---
+- name: Install RDP client packages from pacman
+  community.general.pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - remmina
+    - freerdp
+  become: true
+  loop_control:
+    loop_var: pacman_item
+  when: ansible_facts['distribution'] == "Archlinux"
