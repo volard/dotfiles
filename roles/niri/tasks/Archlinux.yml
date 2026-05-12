@@ -1,0 +1,19 @@
+---
+- name: Install niri packages from pacman
+  community.general.pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - niri
+    - xwayland-satellite
+  loop_control:
+    loop_var: pacman_item
+  become: true
+
+- name: Create niri config symlink
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/create_symlinks.yml
+  vars:
+    symlink:
+      src: "{{ role_path }}/files/config.kdl"
+      dest: "{{ ansible_facts['user_dir'] }}/.config/niri/config.kdl"
+      remove_existing: true

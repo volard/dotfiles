@@ -28,3 +28,4 @@ enabled_roles:
   - bash
   - git
   - voxtype
+  - niri
