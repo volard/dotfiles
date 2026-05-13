@@ -40,7 +40,7 @@ client.background       #F8F8F2
 # }
 
 bar {
-    swaybar_command waybar
+    swaybar_command sh ~/.config/waybar/launch-waybar.sh
 }
 
 bar waybar {

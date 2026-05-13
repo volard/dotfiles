@@ -11,6 +11,10 @@ binds {
 
     Mod+Return hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    Mod+Shift+O hotkey-overlay-title="Pick an Emoji" { spawn "bemoji" "-n"; }
+    Mod+P hotkey-overlay-title="Pick a Window" { spawn "~/.config/niri/scripts/window_picker"; }
+    Mod+R hotkey-overlay-title="Toggle Voice Input: voxtype" repeat=false { spawn "voxtype" "record" "toggle"; }
+    F12 hotkey-overlay-title="Cancel Voice Input: voxtype" repeat=false { spawn "voxtype" "record" "cancel"; }
     // Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
@@ -38,7 +42,7 @@ binds {
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
     Mod+O repeat=false { toggle-overview; }
 
-    Mod+Shift+Q repeat=false { close-window; }
+    Mod+Shift+U repeat=false { close-window; }
 
     // ----------------------------------------------------------------------------
     // Focusing
@@ -75,7 +79,7 @@ binds {
 
     Mod+Shift+Page_Down  { move-workspace-down; }
     Mod+Shift+Page_Up    { move-workspace-up; }
-    Mod+Shift+U          { move-workspace-down; }
+    Mod+Shift+BracketLeft { move-workspace-down; }
     Mod+Shift+I          { move-workspace-up; }
 
 
@@ -153,7 +157,7 @@ binds {
     Mod+6 { focus-workspace 6; }
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
-    Mod+9 { focus-workspace 9; }
+    Mod+9 { focus-workspace "scratchpad"; }
 
     Mod+Shift+1 hotkey-overlay-title="Move window to workspace (1-9)" { move-column-to-workspace 1; }
     Mod+Shift+2 { move-column-to-workspace 2; }
@@ -163,7 +167,7 @@ binds {
     Mod+Shift+6 { move-column-to-workspace 6; }
     Mod+Shift+7 { move-column-to-workspace 7; }
     Mod+Shift+8 { move-column-to-workspace 8; }
-    Mod+Shift+9 { move-column-to-workspace 9; }
+    Mod+Shift+9 { move-column-to-workspace "scratchpad"; }
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Ctrl+1 { move-window-to-workspace 1; }
@@ -181,10 +185,10 @@ binds {
     Mod+Period { expel-window-from-column; }
 
     // Cycle through widths set in preset-column-widths.
-    Mod+R { switch-preset-column-width; }
+    // Rebound from Mod+R to keep Mod+R for voxtype.
 
     // Cycling through the presets in reverse order is also possible.
-    // Mod+Shift+R { switch-preset-column-width-back; }
+    Mod+Shift+R { switch-preset-column-width-back; }
 
     Mod+Ctrl+Shift+R { switch-preset-window-height; }
 
@@ -194,7 +198,7 @@ binds {
     // maximize-window-to-edges doesn't: the window expands to the edges of the screen.
     // This bind corresponds to normal window maximizing,
     // e.g. by double-clicking on the titlebar.
-    Mod+F { maximize-window-to-edges; }
+    Mod+F { maximize-column; }
     // Mod+Shift+F { fullscreen-window; }
 
     // Mod+M { maximize-column; }
@@ -233,7 +237,7 @@ binds {
     Mod+W { toggle-column-tabbed-display; }
 
 
-    // Capture.
+    // Capture
     Mod+S            hotkey-overlay-title="Screenshot (region)" { spawn "~/.config/niri/scripts/dfr-screenshot" "region"; }
     Mod+Shift+S      hotkey-overlay-title="Screenshot (window)" { spawn "~/.config/niri/scripts/dfr-screenshot" "window"; }
     Mod+Ctrl+S       hotkey-overlay-title="Screenshot (monitor: focused)" { spawn "~/.config/niri/scripts/dfr-screenshot" "monitor-focused"; }
