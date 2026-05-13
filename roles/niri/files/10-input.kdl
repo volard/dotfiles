@@ -1,0 +1,99 @@
+// https://niri-wm.github.io/niri/Configuration:-Input
+input {
+    keyboard {
+        xkb {
+            // For more see xkeyboard-config(7).
+
+            layout "us,ru,am"
+            variant "workman,,eastern"
+
+            options "grp:alt_space_toggle,grp:caps_toggle"
+            // If this section is empty, niri will fetch xkb settings
+            // from org.freedesktop.locale1. You can control these using
+            // localectl set-x11-keymap.
+        }
+
+        // Enable numlock on startup, omitting this setting disables it.
+        numlock
+    }
+
+    // Next sections include libinput settings.
+    // Omitting settings disables them, or leaves them at their default values.
+    // All commented-out settings here are examples, not defaults.
+    touchpad {
+        // Tapping anywhere registers a left click.
+        tap
+
+        // Inverted scrolling.
+        natural-scroll
+
+        // Disable acceleration.
+        accel-profile "flat"
+
+        // dwt
+        // dwtp
+        // drag false
+        // drag-lock
+        // accel-speed 0.2
+        // accel-profile "flat"
+        // scroll-method "two-finger"
+        // disabled-on-external-mouse
+    }
+
+    mouse {
+        // Disable acceleration.
+        accel-profile "flat"
+
+        // Faster scrolling with the mouse wheel.
+        scroll-factor 2.0
+
+
+        // off
+        // natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+        // scroll-method "no-scroll"
+    }
+
+    trackpoint {
+        // off
+        // natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+        // scroll-method "on-button-down"
+        // scroll-button 273
+        // scroll-button-lock
+        // middle-emulation
+    }
+
+    // Uncomment this to make the mouse warp to the center of newly focused windows.
+    // warp-mouse-to-focus
+
+    // Focus windows and outputs automatically when moving the mouse into them.
+    // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
+    focus-follows-mouse max-scroll-amount="0%"
+}
+
+
+binds {
+    // Languages (layouts)
+    Mod+Ctrl+N { switch-layout "0"; }
+    Mod+Ctrl+O { switch-layout "1"; }
+    Mod+Ctrl+E { switch-layout "2"; }
+
+
+    // Actions to switch layouts.
+    // Note: if you uncomment these, make sure you do NOT have
+    // a matching layout switch hotkey configured in xkb options above.
+    // Having both at once on the same hotkey will break the switching,
+    // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
+    // Mod+Space       { switch-layout "next"; }
+    // Mod+Shift+Space { switch-layout "prev"; }
+}
+
+gestures {
+    // Disable overview when mousing over the top left of primary screen.
+    hot-corners {
+        off
+    }
+}

@@ -7,3 +7,30 @@
 - name: "Run distro specific tasks"
   ansible.builtin.include_tasks: "{{ ansible_facts['distribution'] }}.yml"
   when: distribution_config.stat.exists
+
+- name: Check niri scripts directory
+  ansible.builtin.stat:
+    path: "{{ role_path }}/files/scripts"
+  register: niri_scripts_dir
+
+- name: Find niri script files
+  ansible.builtin.find:
+    paths: "{{ role_path }}/files/scripts"
+    file_type: file
+  register: niri_script_files
+  when: niri_scripts_dir.stat.exists
+
+- name: Make niri script files executable
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    mode: "0755"
+  loop: "{{ niri_script_files.files }}"
+  when: niri_scripts_dir.stat.exists
+
+- name: Create niri config directory symlink
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/create_symlinks.yml
+  vars:
+    symlink:
+      src: "{{ role_path }}/files"
+      dest: "{{ ansible_facts['user_dir'] }}/.config/niri"
+      remove_existing: true

@@ -4,19 +4,21 @@
 config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/tsesh"
 extra_dirs_file="${TSESH_EXTRA_DIRS_FILE:-$config_dir/extra-dirs}"
 root_dirs_file="${TSESH_ROOT_DIRS_FILE:-$config_dir/root-dirs}"
+cache_file="${TSESH_CACHE_FILE:-$config_dir/dirs-cache}"
+cache_ttl_seconds="${TSESH_CACHE_TTL_SECONDS:-300}"
 
 existing_dirs=()
 repo_roots=()
+declare -A seen_dirs=()
+declare -A seen_roots=()
 
 add_unique_dir() {
     local dir="$1"
     [[ -z "$dir" || ! -d "$dir" ]] && return
 
-    local existing
-    for existing in "${existing_dirs[@]}"; do
-        [[ "$existing" == "$dir" ]] && return
-    done
+    [[ -n ${seen_dirs["$dir"]} ]] && return
 
+    seen_dirs["$dir"]=1
     existing_dirs+=("$dir")
 }
 
@@ -24,12 +26,37 @@ add_unique_root() {
     local dir="$1"
     [[ -z "$dir" || ! -d "$dir" ]] && return
 
-    local existing
-    for existing in "${repo_roots[@]}"; do
-        [[ "$existing" == "$dir" ]] && return
-    done
+    [[ -n ${seen_roots["$dir"]} ]] && return
 
+    seen_roots["$dir"]=1
     repo_roots+=("$dir")
+}
+
+cache_is_fresh() {
+    [[ -f "$cache_file" ]] || return 1
+
+    local now cache_mtime
+    now=$(date +%s)
+    cache_mtime=$(stat -c %Y "$cache_file" 2>/dev/null) || return 1
+
+    (( now - cache_mtime <= cache_ttl_seconds )) || return 1
+
+    [[ ! -f "$extra_dirs_file" || "$extra_dirs_file" -ot "$cache_file" ]] || return 1
+    [[ ! -f "$root_dirs_file" || "$root_dirs_file" -ot "$cache_file" ]] || return 1
+
+    return 0
+}
+
+load_cached_dirs() {
+    while IFS= read -r dir; do
+        [[ -z "$dir" || "$dir" == \#* ]] && continue
+        add_unique_dir "$dir"
+    done < "$cache_file"
+}
+
+write_cached_dirs() {
+    mkdir -p "$config_dir"
+    printf '%s\n' "${existing_dirs[@]}" > "$cache_file"
 }
 
 while IFS= read -r dir; do
@@ -45,24 +72,42 @@ do
     add_unique_root "$dir"
 done
 
-if command -v fd >/dev/null 2>&1; then
-    for root in "${repo_roots[@]}"; do
-        while IFS= read -r dir; do
-            add_unique_dir "$dir"
-        done < <(fd --hidden --no-ignore --type f --type d --glob '.git' "$root" -x dirname)
-    done
+if cache_is_fresh; then
+    load_cached_dirs
 else
-    for root in "${repo_roots[@]}"; do
-        while IFS= read -r dir; do
-            add_unique_dir "$dir"
-        done < <(find "$root" \( -type d -o -type f \) -name '.git' -exec dirname '{}' ';')
-    done
-fi
+    if command -v fd >/dev/null 2>&1; then
+        for root in "${repo_roots[@]}"; do
+            while IFS= read -r dir; do
+                add_unique_dir "$dir"
+            done < <(
+                fd --hidden --no-ignore --type f --type d --glob --prune '.git' "$root" \
+                    | while IFS= read -r git_path; do
+                        git_path="${git_path%/}"
+                        printf '%s\n' "${git_path%/.git}"
+                    done
+            )
+        done
+    else
+        for root in "${repo_roots[@]}"; do
+            while IFS= read -r dir; do
+                add_unique_dir "$dir"
+            done < <(
+                find "$root" \( -type d -o -type f \) -name '.git' -prune \
+                    | while IFS= read -r git_path; do
+                        git_path="${git_path%/}"
+                        printf '%s\n' "${git_path%/.git}"
+                    done
+            )
+        done
+    fi
 
-while IFS= read -r dir; do
-    [[ -z "$dir" || "$dir" == \#* ]] && continue
-    add_unique_dir "${dir/#\~/$HOME}"
-done < <(test -f "$extra_dirs_file" && cat "$extra_dirs_file")
+    while IFS= read -r dir; do
+        [[ -z "$dir" || "$dir" == \#* ]] && continue
+        add_unique_dir "${dir/#\~/$HOME}"
+    done < <(test -f "$extra_dirs_file" && cat "$extra_dirs_file")
+
+    write_cached_dirs
+fi
 
 if [[ ${#existing_dirs[@]} -eq 0 ]]; then
     cat <<EOF

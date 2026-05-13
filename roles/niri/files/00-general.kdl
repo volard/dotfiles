@@ -1,0 +1,27 @@
+// Remove window decorations
+prefer-no-csd
+
+cursor {
+    // cursor-theme "breeze_cursors"
+    // xcursor-size 250
+
+    hide-when-typing
+    hide-after-inactive-ms 1000
+}
+
+// Avoid writing screenshots to disk since they get piped into satty.
+screenshot-path null
+
+// The wiki explains how to configure individual animations:
+// https://niri-wm.github.io/niri/Configuration:-Animations
+animations {
+    // Uncomment to turn off all animations.
+    // off
+
+    // Slow down all animations by this factor. Values below 1 speed them up instead.
+    slowdown 0.5
+}
+
+overview {
+    backdrop-color "#000000"
+}
