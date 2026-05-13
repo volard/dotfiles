@@ -1,23 +1,16 @@
 {
-  "layer": "top", // Waybar at top layer
-  "position": "top", // Waybar position (top|bottom|left|right)
-  // "height": 30, // Auto-height is used when commented
-  // "width": 1280, // Full screen width when commented
-  "spacing": 16, // Gaps between modules (in px)
-  // See `man waybar` for more configuration options
+  "layer": "top",
+  "position": "top",
+  "spacing": 16,
   "ipc": true,
   "id": "waybar",
 
-  // Configuration - modules-left
-
   "modules-left": [
     "custom/launcher",
-    // "network",
     "sway/mode"
   ],
 
   "custom/launcher": {
-    //"format":"<span size='x-large'></span>",
     "format": "<span size='x-large'></span>",
     "on-click": "exec nwg-drawer",
     "tooltip": false
@@ -35,6 +28,8 @@
     "all-outputs": true,
     "format": "{icon}",
     "format-icons": {
+      "1": "1",
+      "2": "2",
       "3": "3",
       "4": "4",
       "5": "5",
@@ -42,7 +37,9 @@
       "7": "7",
       "8": "8",
       "9": "9",
-      "10": "10"
+      "10": "10",
+      "focused": "",
+      "default": ""
     }
   },
 
@@ -51,9 +48,11 @@
     "tooltip": false
   },
 
-  // Configuration - modules-center
-
   "modules-center": ["sway/workspaces", "sway/language"],
+
+  "sway/language": {
+    "format": "{short}"
+  },
 
   "network": {
     "format-disabled": " Disabled",
@@ -65,8 +64,6 @@
     "on-click": "footclient -T waybar_nmtui -e nmtui",
     "interval": 2
   },
-
-  // Configuration - modules-right
 
   "modules-right": [
     "custom/voxtype",

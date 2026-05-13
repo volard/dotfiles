@@ -2,6 +2,20 @@
 
 SELECTION="$(printf "󰌾 Lock\n󰤄 Suspend\n󰍃 Log out\n Reboot\n Reboot to UEFI\n󰐥 Shutdown" | fuzzel --dmenu -a top-right -l 6 -w 18 -p "Select an option: ")"
 
+logout_session() {
+    if [[ -n "${NIRI_SOCKET:-}" ]] && command -v niri >/dev/null 2>&1; then
+        niri msg action quit
+        return
+    fi
+
+    if [[ -n "${SWAYSOCK:-}" ]] && command -v swaymsg >/dev/null 2>&1; then
+        swaymsg exit
+        return
+    fi
+
+    loginctl terminate-session "${XDG_SESSION_ID:-}"
+}
+
 confirm_action() {
     local action="$1"
     CONFIRMATION="$(printf "No\nYes" | fuzzel --dmenu -a top-right -l 2 -w 18 -p "$action?")"
@@ -17,7 +31,7 @@ case $SELECTION in
         fi;;
     *"󰍃 Log out"*)
         if confirm_action "Log out"; then
-            swaymsg exit
+            logout_session
         fi;;
     *" Reboot"*)
         if confirm_action "Reboot"; then

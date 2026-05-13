@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+row="$(
+  niri msg --json windows \
+    | jq -r '
+        def trunc($n):
+          if . == null then "" elif (length > $n) then .[:($n - 1)] + "…" else . end;
+        sort_by(.focus_timestamp.secs, .focus_timestamp.nanos)
+        | reverse[]
+        | "\((if .is_focused then "*" else " " end)) [ws:\(.workspace_id)] \((.app_id // "unknown") | trunc(24))  \((.title // "") | trunc(72)) (\(.id))"
+      ' \
+    | fuzzel --dmenu --width=140 --lines=15 --prompt "Window: "
+)"
+
+if [[ -z "${row}" ]]; then
+  exit 0
+fi
+
+winid="${row##*(}"
+winid="${winid%%)*}"
+
+if [[ -n "${winid}" ]]; then
+  niri msg action focus-window --id "${winid}"
+fi

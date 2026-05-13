@@ -3,6 +3,7 @@
 include "00-general.kdl"
 include "10-input.kdl"
 include "20-outputs.kdl"
+include "25-workspaces.kdl"
 include "30-layout.kdl"
 include "40-startup.kdl"
 include "50-window-rules.kdl"

@@ -18,6 +18,8 @@ window-rule {
 
     match app-id=r#"^Pinentry-gtk$"#
     match app-id=r#"^Tk$"#
+    match app-id=r#"^blueman-manager$"#
+    match app-id=r#"^org.pulseaudio.pavucontrol$"#
     match app-id=r#"^gimp$"# title=r#"Preferences"#
     match app-id=r#"^mpv$"#
     match app-id=r#"^soffice$"# title=r#"^Text Import"#
@@ -28,6 +30,14 @@ window-rule {
     match app-id=r#"firefox$"# title=r#"^(Picture-in-Picture|Library|About Mozilla Firefox)$"#
 
     open-floating true
+}
+
+window-rule {
+    match app-id=r#"^(org\.telegram\.desktop(\.desktop)?|telegram-desktop)$"#
+    match app-id=r#"^Throne$"#
+
+    open-on-workspace "scratchpad"
+    open-focused false
 }
 
 // Example: block out two password managers from screen capture.

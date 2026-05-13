@@ -3,16 +3,22 @@
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 
-spawn-at-startup "waybar"
+// Keep startup apps off the scratchpad workspace.
+spawn-sh-at-startup "niri msg action focus-workspace 2"
+
+// Idle and sleep handling.
+spawn-at-startup "swayidle" "idlehint" "1"
+spawn-at-startup "swayidle" "-w" "before-sleep" "gtklock -d"
+
+spawn-sh-at-startup "sh ~/.config/waybar/launch-waybar.sh"
 spawn-at-startup "telegram-desktop"
 spawn-at-startup "throne"
 spawn-at-startup "zen-browser"
 spawn-at-startup "mako"
-spawn-at-startup "voxtype"
 
 // Clipboard history
-spawn-at-startup "wl-paste --type text --watch cliphist store"
-spawn-at-startup "wl-paste --type image --watch cliphist store"
+spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
+spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
 
 // Network applet
 spawn-at-startup "nm-applet" "--indicator"
