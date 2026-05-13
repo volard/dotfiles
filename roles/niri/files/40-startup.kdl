@@ -10,15 +10,15 @@ spawn-at-startup "zen-browser"
 spawn-at-startup "mako"
 spawn-at-startup "voxtype"
 
-# Clipboard history
+// Clipboard history
 spawn-at-startup "wl-paste --type text --watch cliphist store"
 spawn-at-startup "wl-paste --type image --watch cliphist store"
 
-# Network Applet
-spawn-at-startup  nm-applet --indicator
+// Network applet
+spawn-at-startup "nm-applet" "--indicator"
 
-# Firewall Applet
-spawn-at-startup  sleep 2 && firewall-applet
+// Firewall applet
+spawn-sh-at-startup "sleep 2 && firewall-applet"
 
 hotkey-overlay {
     // Avoid auto-showing the important hotkeys menu.

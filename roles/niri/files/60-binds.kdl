@@ -17,10 +17,7 @@ binds {
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
     // For example, this is a standard bind to toggle the screen reader (orca).
     // Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
-}
-
-// Media
-binds {
+    // Media
 
     // The allow-when-locked=true property makes them work even when the session is locked.
     // Using spawn-sh allows to pass multiple arguments together with the command.
@@ -39,12 +36,9 @@ binds {
     // but you need to manually put each argument in separate "" quotes.
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
-}
-
-binds {
     Mod+O repeat=false { toggle-overview; }
 
-    Mod+Shift+U repeat=false { close-window; }
+    Mod+Shift+Q repeat=false { close-window; }
 
     // ----------------------------------------------------------------------------
     // Focusing
@@ -81,7 +75,7 @@ binds {
 
     Mod+Shift+Page_Down  { move-workspace-down; }
     Mod+Shift+Page_Up    { move-workspace-up; }
-    Mod+Shift+J          { move-workspace-down; }
+    Mod+Shift+U          { move-workspace-down; }
     Mod+Shift+I          { move-workspace-up; }
 
 
@@ -268,11 +262,11 @@ binds {
     // Mod+Shift+P { power-off-monitors; }
 
 
-    # Launch the clipboard manager
-    Mod+Ctrl+V { spawn-sh "cliphist list | fuzzel -d -w 90 -l 30 -p \"\"| cliphist decode | wl-copy" }
+    // Launch clipboard manager.
+    Mod+Ctrl+V { spawn-sh "cliphist list | fuzzel -d -w 90 -l 30 -p \"\" | cliphist decode | wl-copy"; }
 
-    # Delete an entry from the clipboard manager
-    Mod+Ctrl+X { spawn-sh "cliphist list | fuzzel -d -w 90 -l 30 -t cc9393ff -S cc9393ff -p \"Select an entry to delete it from cliphist:\"| cliphist delete" }
-    # Note: you can clear all cliphist entries by running `cliphist wipe`
+    // Delete entry from clipboard manager.
+    Mod+Ctrl+X { spawn-sh "cliphist list | fuzzel -d -w 90 -l 30 -t cc9393ff -S cc9393ff -p \"Select an entry to delete it from cliphist:\" | cliphist delete"; }
+    // Note: you can clear all cliphist entries by running `cliphist wipe`.
 
 }

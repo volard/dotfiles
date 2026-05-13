@@ -8,7 +8,6 @@
     - xwayland-satellite
     - fuzzel
     - satty
-    - wl-copy
     - jq
     - slurp
   loop_control:
