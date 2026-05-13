@@ -1,0 +1,56 @@
+// https://niri-wm.github.io/niri/Configuration:-Window-Rules
+// >>>> niri msg pick-window
+
+// Work around WezTerm's initial configure bug
+// by setting an empty default-column-width.
+window-rule {
+    // This regular expression is intentionally made as specific as possible,
+    // since this is the default config, and we want no false positives.
+    // You can get away with just app-id="wezterm" if you want.
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    default-column-width {}
+}
+
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id=r#"zen$"# title="^Picture-in-Picture$"
+    match app-id=r#"vivaldi$"# title="^Picture-in-Picture$"
+
+    match app-id=r#"^Pinentry-gtk$"#
+    match app-id=r#"^Tk$"#
+    match app-id=r#"^gimp$"# title=r#"Preferences"#
+    match app-id=r#"^mpv$"#
+    match app-id=r#"^soffice$"# title=r#"^Text Import"#
+    match app-id=r#"^thunar$"# title=r#"^Rename "#
+    match app-id=r#"^virt-manager$"# title=r#" - Connection Details"#
+    match app-id=r#"^wev$"#
+    match app-id=r#"^xarchiver$"#
+    match app-id=r#"firefox$"# title=r#"^(Picture-in-Picture|Library|About Mozilla Firefox)$"#
+
+    open-floating true
+}
+
+// Example: block out two password managers from screen capture.
+// (This example rule is commented out with a "/-" in front.)
+/-window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id=r#"^org\.gnome\.World\.Secrets$"#
+
+    block-out-from "screen-capture"
+
+    // Use this instead if you want them visible on third-party screenshot tools.
+    // block-out-from "screencast"
+}
+
+
+window-rule {
+    geometry-corner-radius 2
+    clip-to-geometry true
+}
+
+window-rule {
+    match app-id=r#"^com\.gabm\.satty$"#
+    open-floating true
+    min-width 730
+    min-height 300
+}

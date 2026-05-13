@@ -1,0 +1,29 @@
+// Add lines like this to spawn processes at startup.
+// Note that running niri as a session supports xdg-desktop-autostart,
+// which may be more convenient to use.
+// See the binds section below for more spawn examples.
+
+spawn-at-startup "waybar"
+spawn-at-startup "telegram-desktop"
+spawn-at-startup "throne"
+spawn-at-startup "zen-browser"
+spawn-at-startup "mako"
+spawn-at-startup "voxtype"
+
+# Clipboard history
+spawn-at-startup "wl-paste --type text --watch cliphist store"
+spawn-at-startup "wl-paste --type image --watch cliphist store"
+
+# Network Applet
+spawn-at-startup  nm-applet --indicator
+
+# Firewall Applet
+spawn-at-startup  sleep 2 && firewall-applet
+
+hotkey-overlay {
+    // Avoid auto-showing the important hotkeys menu.
+    skip-at-startup
+}
+
+// To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
+// spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"

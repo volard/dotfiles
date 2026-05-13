@@ -282,3 +282,8 @@
       when: "'git' in enabled_roles or 'git' in selected_role_tags"
       tags:
         - git
+
+    - role: niri
+      when: "'niri' in enabled_roles or 'niri' in selected_role_tags"
+      tags:
+        - niri
