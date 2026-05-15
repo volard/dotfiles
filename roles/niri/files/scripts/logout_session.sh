@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
-if command -v swaymsg >/dev/null 2>&1; then
-    exec swaymsg exit
+if command -v niri >/dev/null 2>&1; then
+    exec niri msg action quit
 fi
 
 if [ -n "${XDG_SESSION_ID:-}" ]; then
