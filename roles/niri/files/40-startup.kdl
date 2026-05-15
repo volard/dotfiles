@@ -10,7 +10,7 @@ spawn-sh-at-startup "niri msg action focus-workspace 2"
 spawn-at-startup "swayidle" "idlehint" "1"
 spawn-at-startup "swayidle" "-w" "before-sleep" "gtklock -d"
 
-spawn-sh-at-startup "sh ~/.config/waybar/launch-waybar.sh"
+spawn-sh-at-startup "waybar -c \"$HOME/.config/waybar/config-niri.jsonc\" -s \"$HOME/.config/waybar/style.css\""
 spawn-at-startup "telegram-desktop"
 spawn-at-startup "throne"
 spawn-at-startup "zen-browser"

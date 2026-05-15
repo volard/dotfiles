@@ -27,6 +27,7 @@
   ansible.builtin.file:
     path: "{{ item.dest }}"
     state: absent
+    force: true
   loop: "{{ symlink_items }}"
   when: item.remove_existing | default(false)
 

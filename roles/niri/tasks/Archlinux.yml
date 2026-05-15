@@ -10,6 +10,9 @@
     - satty
     - jq
     - slurp
+    - waybar
+    - btop
+    - ttf-jetbrains-mono-nerd
   loop_control:
     loop_var: pacman_item
   become: true

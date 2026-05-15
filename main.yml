@@ -188,11 +188,6 @@
       tags:
         - neovim
 
-    - role: waybar
-      when: "'waybar' in enabled_roles or 'waybar' in selected_role_tags"
-      tags:
-        - waybar
-
     - role: fuzzel
       when: "'fuzzel' in enabled_roles or 'fuzzel' in selected_role_tags"
       tags:

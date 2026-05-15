@@ -1,0 +1,22 @@
+@define-color bg #0f1115;
+@define-color surface #181c24;
+@define-color surface_hi #232938;
+@define-color border #2c3447;
+@define-color fg #e7ecf5;
+@define-color muted #8f98ab;
+
+@define-color accent #8bd5ca;
+@define-color accent_soft #17353a;
+@define-color warm #f5c27a;
+@define-color rose #f28fad;
+@define-color sky #89b4fa;
+@define-color sky_soft #13283f;
+@define-color teal #94e2d5;
+@define-color blue #74c7ec;
+@define-color gold #f9e2af;
+@define-color peach #fab387;
+@define-color mauve #cba6f7;
+@define-color lavender #b4befe;
+@define-color green #a6e3a1;
+@define-color danger #f38ba8;
+@define-color danger_soft #3b1d29;
