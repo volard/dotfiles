@@ -9,6 +9,7 @@
     - fuzzel
     - satty
     - jq
+    - mako
     - slurp
     - waybar
     - btop
