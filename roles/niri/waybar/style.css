@@ -4,8 +4,10 @@
     border: none;
     border-radius: 0;
     box-shadow: none;
-    font-family: "JetBrainsMono Nerd Font", "JetBrainsMono NF", monospace;
-    font-size: 13px;
+
+    font-family: JetBrainsMono;
+    /*font-family: "JetBrainsMono Nerd Font Mono", "JetBrainsMono NF", monospace;*/
+    font-size: 14px;
     font-weight: 600;
     min-height: 0;
 }
@@ -33,14 +35,14 @@ window#waybar {
     color: @fg;
     background-color: @surface;
     border: 1px solid @border;
-    border-radius: 14px;
-    margin: 6px 8px 0 8px;
-    padding: 8px 0;
-    min-width: 42px;
+    border-radius: 10px;
+    margin: 6px 6px 0 4px;
+    padding: 5px 0;
+    min-width: 32px;
 }
 
 #workspaces {
-    margin-top: 8px;
+    margin-top: 4px;
     padding: 6px 0;
 }
 
@@ -48,9 +50,9 @@ window#waybar {
     color: @muted;
     background: transparent;
     border-radius: 10px;
-    margin: 3px 6px;
-    padding: 4px 0;
-    min-width: 28px;
+    margin: 3px 3px;
+    padding: 3px 0;
+    min-width: 30px;
 }
 
 #workspaces button:hover {
@@ -140,15 +142,7 @@ window#waybar {
     color: @green;
 }
 
-#cpu,
-#memory,
-#language,
-#niri-language {
-    font-size: 12px;
-}
-
 #pulseaudio,
-#idle_inhibitor,
 #cpu,
 #memory {
     padding-top: 10px;
@@ -172,7 +166,6 @@ window#waybar {
     margin-bottom: 8px;
     background-color: @danger_soft;
     color: @danger;
-    font-size: 15px;
 }
 
 #pulseaudio-slider,
@@ -183,7 +176,7 @@ window#waybar {
     margin: 6px 8px 0 8px;
     min-height: 96px;
     min-width: 42px;
-    padding: 8px 0;
+    padding: 10px 0;
 }
 
 #pulseaudio-slider slider,
