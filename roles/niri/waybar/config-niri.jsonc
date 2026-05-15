@@ -18,7 +18,7 @@
 
   "modules-right": [
     "custom/voxtype",
-    "network",
+    // "network",
     "pulseaudio#microphone",
     "group/audio",
     "group/brightness",
