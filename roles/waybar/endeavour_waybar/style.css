@@ -44,7 +44,7 @@
     border: none;
     border-radius: 0;
     min-height: 0;
-    margin: 1px;
+    margin: 0;
     padding: 0;
 }
 
@@ -62,6 +62,9 @@
 #custom-mpd,
 #network,
 #custom-keyboard-layout,
+#custom-voxtype,
+#niri-language,
+#workspaces,
 #idle_inhibitor,
 #cpu,
 #memory,
@@ -70,29 +73,24 @@
 #battery,
 #clock,
 #tray {
-    padding:0.5rem 0.6rem;
-    margin: 1px 0px;
+    padding: 0.35rem 0.4rem;
+    margin: 0;
+    min-width: 0;
 }
 
 /* -----------------------------------------------------------------------------
  * Module styles
  * -------------------------------------------------------------------------- */
 
-#custom-launcher {
-    margin-left:15px;
-    margin-right:10px;
-}
-
 #workspaces {
-    font-size:13px;
+    font-size: 13px;
 }
 
 #workspaces button {
     border-radius: 5px;
     color: #eceff4;
-    padding: 1px 6px;
-    margin-right: 2px;
-    margin-left: 2px;
+    padding: 2px 4px;
+    margin: 1px 0;
 }
 
 #workspaces button.focused {
@@ -108,8 +106,7 @@
     background: @highlight;
     border-bottom: 3px transparent;
     color:white;
-    margin-left: 5px;
-    padding: 7px;
+    padding: 5px 6px;
 }
 
 #window {
@@ -181,7 +178,19 @@
 }
 
 #custom-power {
-    margin-left:15px;
-    margin-right:15px;
-    font-size:15px;
+    padding: 0.45rem 0.4rem 0.6rem;
+    font-size: 15px;
+}
+
+#custom-voxtype,
+#niri-language,
+#idle_inhibitor,
+#cpu,
+#memory,
+#backlight,
+#pulseaudio,
+#battery,
+#clock,
+#custom-power {
+    min-width: 38px;
 }
