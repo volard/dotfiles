@@ -40,7 +40,7 @@ client.background       #F8F8F2
 # }
 
 bar {
-    swaybar_command sh ~/.config/waybar/launch-waybar.sh
+    swaybar_command sh -lc 'exec waybar -c "$HOME/.config/waybar/config-sway.jsonc" -s "$HOME/.config/waybar/style.css"'
 }
 
 bar waybar {

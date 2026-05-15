@@ -16,6 +16,7 @@ window-rule {
     match app-id=r#"zen$"# title="^Picture-in-Picture$"
     match app-id=r#"vivaldi$"# title="^Picture-in-Picture$"
 
+
     match app-id=r#"^Pinentry-gtk$"#
     match app-id=r#"^Tk$"#
     match app-id=r#"^blueman-manager$"#
@@ -29,11 +30,15 @@ window-rule {
     match app-id=r#"^xarchiver$"#
     match app-id=r#"firefox$"# title=r#"^(Picture-in-Picture|Library|About Mozilla Firefox)$"#
 
+    match app-id=r#"^org\.telegram\.desktop$"# title="Media viewer"
+    match title="Media viewer"
+
     open-floating true
 }
 
 window-rule {
     match app-id=r#"^(org\.telegram\.desktop(\.desktop)?|telegram-desktop)$"#
+    exclude app-id=r#"^org\.telegram\.desktop$"# title="Media viewer"
     match app-id=r#"^Throne$"#
 
     open-on-workspace "scratchpad"
@@ -71,4 +76,9 @@ window-rule {
     open-floating true
     min-width 730
     min-height 300
+}
+
+window-rule {
+    match app-id=r#"^waybar-tool$"#
+    open-floating true
 }

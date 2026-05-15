@@ -8,6 +8,7 @@
     - xdg-desktop-portal-wlr
     - xdg-desktop-portal
     - pipewire
+    - waybar
   become: true
   loop_control:
     loop_var: pacman_item

@@ -7,3 +7,11 @@
 - name: "Run distro specific tasks"
   ansible.builtin.include_tasks: "{{ ansible_facts['distribution'] }}.yml"
   when: distribution_config.stat.exists
+
+- name: Create sway Waybar config symlink
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/create_symlinks.yml
+  vars:
+    symlink:
+      src: "{{ role_path }}/waybar/"
+      dest: "{{ ansible_facts['user_dir'] }}/.config/waybar/"
+      remove_existing: true
