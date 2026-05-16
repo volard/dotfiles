@@ -12,7 +12,7 @@ confirm_action() {
 
     confirmation="$(
         printf "No\nYes" |
-            fuzzel --dmenu -a -l 2 -w 18 -p "$action? "
+            fuzzel --dmenu -a -l 2 -w 38 -p "$action? "
     )"
 
     [[ "$confirmation" == "Yes" ]]
@@ -20,7 +20,7 @@ confirm_action() {
 
 selection="$(
     printf "󰌾 Lock\n󰤄 Suspend\n󰍃 Log out\n Reboot\n Reboot to UEFI\n󰐥 Shutdown" |
-        fuzzel --dmenu -a top-right -l 6 -w 18 -p "Select option: "
+        fuzzel --dmenu -l 6 -w 38
 )"
 
 case "$selection" in
