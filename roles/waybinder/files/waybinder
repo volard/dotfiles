@@ -18,18 +18,17 @@ if [[ -f "$manifest_path" ]] && jq -e '.entries | type == "array" and length > 0
             .entries[]? |
             [
                 (.id // .file),
-                .label,
-                ((.keywords // []) | join(" "))
+                (.label + (if ((.keywords // []) | length) > 0 then "  ·  " + ((.keywords // []) | join(" ")) else "" end))
             ] |
             @tsv
         ' "$manifest_path" |
-            fuzzel --dmenu --with-nth=2 --accept-nth=1 --match-nth=2,3 --nth-delimiter=$'\t' -a center -l 20 -w 30
+            fuzzel --dmenu --with-nth=2 --accept-nth=1 --nth-delimiter=$'\t' -a center -l 20 -w 68
     )"
 else
     selection="$(
         find "$base_dir" -type f ! -iname '.*' -printf '%P\n' |
             sort |
-            fuzzel --dmenu -a center -l 20 -w 30 -p "Insert"
+            fuzzel --dmenu -a center -l 20 -w 68 -p "Insert"
     )"
 fi
 
