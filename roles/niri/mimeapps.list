@@ -72,9 +72,7 @@ image/webp=mpv.desktop;
 application/epub=org.pwmt.zathura.desktop;
 application/djvu=org.pwmt.zathura.desktop;
 
-
 inode/directory=nemo.desktop;
-
 x-scheme-handler/http=zen.desktop
 x-scheme-handler/https=zen.desktop
 x-scheme-handler/ftp=zen.desktop
@@ -92,12 +90,9 @@ application/zip=org.kde.ark.desktop
 image/jpeg=org.gnome.eog.desktop
 image/png=org.gnome.eog.desktop
 application/pdf=org.gnome.Evince.desktop
-x-scheme-handler/clash=koala-clash.desktop
-x-scheme-handler/koala-clash=koala-clash-handler.desktop
-x-scheme-handler/bruno=bruno.desktop
 
 [Added Associations]
-audio/mpeg=mpv.desktop;firefox.desktop;
+audio/mpeg=mpv.desktop;
 x-scheme-handler/http=zen.desktop;
 x-scheme-handler/https=zen.desktop;
 x-scheme-handler/chrome=zen.desktop;
