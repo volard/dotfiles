@@ -272,3 +272,8 @@
       when: "'niri' in enabled_roles or 'niri' in selected_role_tags"
       tags:
         - niri
+
+    - role: waybinder
+      when: "'waybinder' in enabled_roles or 'waybinder' in selected_role_tags"
+      tags:
+        - waybinder

@@ -1,0 +1,35 @@
+---
+- name: "Checking for distribution config"
+  ansible.builtin.stat:
+    path: "{{ role_path }}/tasks/{{ ansible_facts['distribution'] }}.yml"
+  register: distribution_config
+
+- name: "Run distro specific tasks"
+  ansible.builtin.include_tasks: "{{ ansible_facts['distribution'] }}.yml"
+  when: distribution_config.stat.exists
+
+- name: Ensure local bin directory exists for waybinder
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.local/bin"
+    state: directory
+    mode: "0755"
+
+- name: Install waybinder launcher script
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/waybinder"
+    dest: "{{ ansible_facts['user_dir'] }}/.local/bin/waybinder"
+    mode: "0755"
+
+- name: Ensure waybinder snippets directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.config/waybinder"
+    state: directory
+    mode: "0700"
+
+- name: Install waybinder snippet files
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/waybinder/{{ item | basename }}"
+    mode: preserve
+  with_fileglob:
+    - "{{ role_path }}/files/snippets/*"

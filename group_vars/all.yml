@@ -28,3 +28,4 @@ enabled_roles:
   - git
   - voxtype
   - niri
+  - waybinder

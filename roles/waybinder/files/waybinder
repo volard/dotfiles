@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+lock_dir="${XDG_RUNTIME_DIR:-/tmp}"
+lock_path="${lock_dir}/waybinder.lock"
+base_dir="${XDG_CONFIG_HOME:-$HOME/.config}/waybinder"
+manifest_path="${base_dir}/manifest.json"
+
+mkdir "$lock_path" 2>/dev/null || exit 0
+trap 'rmdir "$lock_path" 2>/dev/null || true' EXIT
+
+mkdir -p "$base_dir"
+
+if [[ -f "$manifest_path" ]] && jq -e '.entries | type == "array" and length > 0' "$manifest_path" >/dev/null 2>&1; then
+    selection="$(
+        jq -r '
+            .entries[]? |
+            [
+                (.id // .file),
+                .label,
+                ((.keywords // []) | join(" "))
+            ] |
+            @tsv
+        ' "$manifest_path" |
+            fuzzel --dmenu --with-nth=2 --accept-nth=1 --match-nth=2,3 --nth-delimiter=$'\t' -a center -l 20 -w 30
+    )"
+else
+    selection="$(
+        find "$base_dir" -type f ! -iname '.*' -printf '%P\n' |
+            sort |
+            fuzzel --dmenu -a center -l 20 -w 30 -p "Insert"
+    )"
+fi
+
+[[ -n "$selection" ]] || exit 0
+
+if [[ -f "$manifest_path" ]] && jq -e '.entries | type == "array" and length > 0' "$manifest_path" >/dev/null 2>&1; then
+    selected_file="$(
+        jq -r --arg id "$selection" '.entries[]? | select((.id // .file) == $id) | .file' "$manifest_path"
+    )"
+    [[ -n "$selected_file" && "$selected_file" != "null" ]] || exit 1
+    selected_path="${base_dir}/${selected_file}"
+else
+    selected_path="${base_dir}/${selection}"
+fi
+
+[[ -f "$selected_path" ]] || exit 1
+
+if [[ -x "$selected_path" ]]; then
+    insert_text="$("$selected_path")"
+elif [[ "$selected_path" == *.sh ]]; then
+    insert_text="$(bash "$selected_path")"
+else
+    insert_text="$(cat "$selected_path")"
+fi
+
+clipboard_before="$(wl-paste -n 2>/dev/null || true)"
+primary_before="$(wl-paste -n -p 2>/dev/null || true)"
+
+printf '%s' "$insert_text" | wl-copy
+printf '%s' "$insert_text" | wl-copy -p
+
+sleep 0.05
+wtype -M Shift -P Insert -p Insert -m Shift
+
+sleep 0.05
+printf '%s' "$clipboard_before" | wl-copy
+printf '%s' "$primary_before" | wl-copy -p
