@@ -14,6 +14,18 @@
     - waybar
     - btop
     - ttf-jetbrains-mono-nerd
+    - qt6-wayland # Wayland support for Qt6
+    - qt5-wayland # Wayland support for Qt5
+    - qt5ct # configuration utility for Qt5 apps
+    - qt6ct # configuration utility for Qt6 apps
+    - wlsunset # warm screen display
+    - xdg-desktop-portal
+    - xdg-desktop-portal-wlr
+    - xdg-desktop-portal-gtk
+    - xdg-user-dirs
+    - wf-recorder
+    - polkit-gnome # authentication agent for polkit
+    - seahorse # GUI key and password manager
   loop_control:
     loop_var: pacman_item
   become: true
