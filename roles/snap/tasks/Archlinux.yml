@@ -1,0 +1,26 @@
+---
+- name: Install snapd from AUR
+  kewlfft.aur.aur:
+    name: snapd
+    state: present
+    use: paru
+
+- name: Unmask snapd service
+  ansible.builtin.systemd:
+    name: snapd.service
+    masked: false
+  become: true
+
+- name: Enable and start snapd service
+  ansible.builtin.systemd:
+    name: snapd.service
+    enabled: true
+    state: started
+  become: true
+
+- name: Enable and start snapd apparmor unit
+  ansible.builtin.systemd:
+    name: snapd.apparmor
+    enabled: true
+    state: started
+  become: true

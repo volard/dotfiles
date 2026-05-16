@@ -10,8 +10,9 @@
     - go
     - bun # better node
     - base-devel
-    - gnome-keyring # keyring to store secrets, passwords, keys
     - polkit # authorization framework that lets unprivileged processes request permission from privileged system services
+    - gnome-keyring # keyring to store secrets, passwords, keys
+    - libsecret # API for keyring
     - ast-grep # grep with code understanding
     # - zathura # pdf viewer
     - evince # pdf viewer
@@ -32,7 +33,6 @@
     - blueman # bluetooth gui manager
     - btop # better htop/top
     - meld # gui diffing tool
-    - libsecret # for keyring
     # - xplr # rust based lua hackable tui file manager, too complicated
     - mpv # video player
     - jq # json processor
