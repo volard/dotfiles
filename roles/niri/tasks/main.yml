@@ -35,6 +35,26 @@
       dest: "{{ ansible_facts['user_dir'] }}/.config/niri"
       remove_existing: true
 
+- name: Install mimeapps.list for niri session
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/create_symlinks.yml
+  vars:
+    symlink:
+      src: "{{ playbook_dir }}/files/mimeapps.list"
+      dest: "{{ ansible_facts['user_dir'] }}/.config/mimeapps.list"
+      remove_existing: true
+
+- name: Ensure local icons directory exists for niri
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.local/share/icons"
+    state: directory
+    mode: "0755"
+
+- name: Install Bibata cursor theme for niri
+  ansible.builtin.unarchive:
+    src: "{{ playbook_dir }}/files/Bibata-Modern-Ice.tar.xz"
+    dest: "{{ ansible_facts['user_dir'] }}/.local/share/icons"
+    creates: "{{ ansible_facts['user_dir'] }}/.local/share/icons/Bibata-Modern-Ice/index.theme"
+
 - name: Check current Waybar config path for niri
   ansible.builtin.stat:
     path: "{{ ansible_facts['user_dir'] }}/.config/waybar"

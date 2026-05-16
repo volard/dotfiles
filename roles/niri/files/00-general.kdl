@@ -2,11 +2,12 @@
 prefer-no-csd
 
 cursor {
-    // cursor-theme "breeze_cursors"
-    // xcursor-size 250
-
     hide-when-typing
     hide-after-inactive-ms 1000
+}
+
+environment {
+
 }
 
 // Avoid writing screenshots to disk since they get piped into satty.

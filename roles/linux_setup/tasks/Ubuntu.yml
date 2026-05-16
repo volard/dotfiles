@@ -8,5 +8,42 @@
   become: true
   when: ansible_facts['distribution'] == 'Ubuntu'
 
+- name: Create font directory
+  ansible.builtin.file:
+    path: /usr/local/share/fonts
+    state: directory
+    mode: "0755"
+  become: true
+
+- name: Download JetBrains Mono Nerd Font
+  ansible.builtin.get_url:
+    url: https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
+    dest: /tmp/JetBrainsMono.zip
+    mode: "0755"
+  become: true
+
+- name: Unzip JetBrains Mono Nerd Font
+  ansible.builtin.unarchive:
+    src: /tmp/JetBrainsMono.zip
+    dest: /usr/local/share/fonts/
+    remote_src: true
+  become: true
+
+- name: Check if font cache needs updating
+  ansible.builtin.command: fc-list
+  register: font_list
+  changed_when: false # This command itself does not change anything
+
+- name: Update font cache if needed
+  ansible.builtin.command: fc-cache -f -v
+  become: true
+  when: font_list.stdout | length > 0 # Run only if there are fonts listed
+
+- name: Clean up downloaded font zip
+  ansible.builtin.file:
+    path: /tmp/JetBrainsMono.zip
+    state: absent
+  become: true
+
 - name: Include common linux bash setup
   ansible.builtin.include_tasks: roles/linux_setup/tasks/linux.yml

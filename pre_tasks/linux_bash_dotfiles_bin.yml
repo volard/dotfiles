@@ -35,11 +35,10 @@
     mode: u+x
   loop:
     - "{{ ansible_facts['user_dir'] }}/dotfiles/bin/dotfiles"
-    - "{{ ansible_facts['user_dir'] }}/dotfiles/bin/grimshot_next"
     - "{{ ansible_facts['user_dir'] }}/dotfiles/bin/tsesh"
-    - "{{ ansible_facts['user_dir'] }}/dotfiles/bin/wlprop"
     - "{{ ansible_facts['user_dir'] }}/dotfiles/bin/hadolint"
     - "{{ ansible_facts['user_dir'] }}/dotfiles/bin/dynamic_wallpapers"
+    - "{{ ansible_facts['user_dir'] }}/dotfiles/bin/import-gsettings"
   loop_control:
     loop_var: script_item
 

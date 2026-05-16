@@ -1,0 +1,11 @@
+---
+- name: Install niri packages from pacman
+  community.general.pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - godot
+    - libtheora
+  loop_control:
+    loop_var: pacman_item
+  become: true

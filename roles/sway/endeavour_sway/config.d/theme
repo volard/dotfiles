@@ -1,5 +1,5 @@
 # Apply gtk theming
-exec_always ~/.config/sway/scripts/import-gsettings
+exec_always ~/dotfiles/bin/import-gsettings
 
 # Set inner/outer gaps
 gaps inner 2

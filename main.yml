@@ -38,15 +38,10 @@
       tags:
         - powershell
 
-    - role: gtk3
-      when: "'gtk3' in enabled_roles or 'gtk3' in selected_role_tags"
+    - role: gtk
+      when: "'gtk' in enabled_roles or 'gtk' in selected_role_tags"
       tags:
-        - gtk3
-
-    - role: i3status
-      when: "'i3status' in enabled_roles or 'i3status' in selected_role_tags"
-      tags:
-        - i3status
+        - gtk
 
     - role: doom
       when: "'doom' in enabled_roles or 'doom' in selected_role_tags"
@@ -207,11 +202,6 @@
       when: "'voxtype' in enabled_roles or 'voxtype' in selected_role_tags"
       tags:
         - voxtype
-
-    - role: ohmyposh
-      when: "'ohmyposh' in enabled_roles or 'ohmyposh' in selected_role_tags"
-      tags:
-        - ohmyposh
 
     - role: foot
       when: "'foot' in enabled_roles or 'foot' in selected_role_tags"

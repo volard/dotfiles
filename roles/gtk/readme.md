@@ -1,0 +1,2 @@
+- Themes located at `/usr/share/themes/`
+- Icons at `/usr/share/icons/`

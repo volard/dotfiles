@@ -12,6 +12,14 @@ spawn-at-startup "swayidle" "-w" "before-sleep" "gtklock -d"
 
 spawn-sh-at-startup "waybar -c \"$HOME/.config/waybar/config-niri.jsonc\" -s \"$HOME/.config/waybar/style.css\""
 
+
+// Auth with polkit-gnome
+spawn-sh-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+
+
+// apply gtk theming
+spawn-sh-at-startup "$HOME/dotfiles/bin/import-gsettings"
+
 spawn-sh-at-startup "$HOME/dotfiles/bin/dynamic_wallpapers"
 spawn-at-startup "telegram-desktop"
 spawn-at-startup "throne"
