@@ -12,7 +12,6 @@
     - ayugram
     - winmerge # Differencing and merging too
     - sift # A fast and powerful alternative to grep.
-    - sophiapp
     - file-converter-np
     - windirstat
     - context-menu-manager

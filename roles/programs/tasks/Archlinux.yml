@@ -7,45 +7,32 @@
     - glab # gitlab cli
     - github-cli
     - git-lfs
-    - base-devel
+    - go
     - bun # better node
-    - wf-recorder
-    - atuin # magical shell history
+    - base-devel
+    - gnome-keyring # keyring to store secrets, passwords, keys
+    - polkit # authorization framework that lets unprivileged processes request permission from privileged system services
     - ast-grep # grep with code understanding
-    - ttf-nerd-fonts-symbols-mono
-    - xdg-desktop-portal-wlr
-    - xdg-desktop-portal-gtk
-    - ripgrep # better grep
     # - zathura # pdf viewer
     - evince # pdf viewer
     - remind # proper reminder tool
     - zip
     - unzip
-    - eza # better ls
-    - wget # better curl
-    - tldr # better man pages
-    - bat # better cat
     - trash-cli
-    - zsh # better shell
     - mise # dev tools version manager
-    - wlsunset # warm screen display
     - fzf # fuzzy searching tool
     - qbittorrent # torrent client
-    - qt6-wayland
-    - qt5-wayland
     - duf # better df
     - zoxide # better cd
     - lshw
-    - vivaldi
+    # - vivaldi
     - telegram-desktop
     - nemo # file manager (found it better than thunder)
     - fastfetch # rip neofetch
     - blueman # bluetooth gui manager
     - btop # better htop/top
     - meld # gui diffing tool
-    - gnome-keyring # keyring itself
     - libsecret # for keyring
-    - seahorse # afair its for keyring
     # - xplr # rust based lua hackable tui file manager, too complicated
     - mpv # video player
     - jq # json processor
@@ -66,7 +53,6 @@
     loop_var: pacman_item
   when: ansible_facts['distribution'] == "Archlinux"
 
-
 - name: Install packages from AUR
   ansible.builtin.command: yay -S --noconfirm {{ aur_item }}
   loop:
@@ -78,13 +64,13 @@
     loop_var: aur_item
   when: ansible_facts['distribution'] == "Archlinux"
 
-- name: Setup dev globals
-  ansible.builtin.command: mise use -g {{ mise_item }}@latest
-  loop:
-    - node
-  loop_control:
-    loop_var: mise_item
-  when: ansible_facts['distribution'] == "Archlinux"
+# - name: Setup dev globals
+#   ansible.builtin.command: mise use -g {{ mise_item }}@latest
+#   loop:
+#     - node
+#   loop_control:
+#     loop_var: mise_item
+#   when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Check if rtk is installed
   ansible.builtin.command: command -v rtk
@@ -109,11 +95,9 @@
   ansible.builtin.command: curl -fsSL https://raw.githubusercontent.com/PeonPing/peon-ping/main/install.sh | bash -s -- --packs=glados,peasant,peon,peon_ru,sc_battlecruiser,sc_kerrigan
   when: ansible_facts['distribution'] == "Archlinux"
 
-
 - name: Use custom peonping voice pack
   ansible.builtin.command: peon packs use peon_ru
   when: ansible_facts['distribution'] == "Archlinux"
-
 
 - name: Install bun tools
   ansible.builtin.command: bun i -g {{ bun_item }}
@@ -127,7 +111,6 @@
 - name: Install peon-ping to opencode
   ansible.builtin.command: curl -fsSL https://raw.githubusercontent.com/PeonPing/peon-ping/main/adapters/opencode.sh | bash
   when: ansible_facts['distribution'] == "Archlinux"
-
 
 - name: Install context7
   ansible.builtin.command: bunx ctx7 setup --claude --curor --universal --antigravity --opencode --codex --gemini --mcp --cli -y
@@ -180,5 +163,5 @@
     loop_var: skill_item
   when: ansible_facts['distribution'] == "Archlinux"
 
-  # install tavily and auth and add its skills also, add caveman skills 
-  # 
+  # install tavily and auth and add its skills also, add caveman skills
+  #

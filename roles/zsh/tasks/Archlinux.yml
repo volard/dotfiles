@@ -1,8 +1,20 @@
 ---
-- name: Install Zsh
+- name: Install packages from pacman
   community.general.pacman:
-    name: zsh
+    name: "{{ pacman_item }}"
     state: present
+  loop:
+    - zsh
+    - eza # better ls
+    - wget # better curl
+    - tldr # better man pages
+    - bat # better cat
+    - fzf # fuzzy finder
+    - fd # better find
+    - atuin # magical shell history
+    - zoxide # better cd
+    - ripgrep # better grep
+    - ttf-nerd-fonts-symbols-mono
   become: true
 
 - name: Set Zsh as the default shell
