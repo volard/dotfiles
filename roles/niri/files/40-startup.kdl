@@ -25,6 +25,7 @@ spawn-at-startup "telegram-desktop"
 spawn-at-startup "throne"
 spawn-at-startup "zen-browser"
 spawn-at-startup "mako"
+spawn-at-startup "wlsunset"
 
 // Clipboard history
 spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
