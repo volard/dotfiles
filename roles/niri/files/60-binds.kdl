@@ -13,6 +13,7 @@ binds {
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+Shift+O hotkey-overlay-title="Pick an Emoji" { spawn "bemoji" "-n"; }
     Mod+P hotkey-overlay-title="Pick a Window" { spawn "~/.config/niri/scripts/window_picker"; }
+    Mod+Slash hotkey-overlay-title="Text Shortcuts: waybinder" { spawn-sh "exec \"$HOME/.local/bin/waybinder\""; }
     Mod+R hotkey-overlay-title="Toggle Voice Input: voxtype" repeat=false { spawn "voxtype" "record" "toggle"; }
     F12 hotkey-overlay-title="Cancel Voice Input: voxtype" repeat=false { spawn "voxtype" "record" "cancel"; }
     // Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }

@@ -1,0 +1,10 @@
+---
+# - name: Install waybinder packages from pacman
+#   community.general.pacman:
+#     name:
+#       - fuzzel
+#       - jq
+#       - wl-clipboard
+#       - wtype
+#     state: present
+#   become: true
