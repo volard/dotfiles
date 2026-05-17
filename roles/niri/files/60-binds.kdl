@@ -12,7 +12,7 @@ binds {
     Mod+P       hotkey-overlay-title="Pick a Window"              { spawn "~/.config/niri/scripts/window_picker"; }
     Mod+Slash   hotkey-overlay-title="Text Shortcuts: waybinder"  { spawn-sh "exec \"$HOME/.local/bin/waybinder\""; }
     Mod+O                                            repeat=false { toggle-overview; }
-    Mod+Shift+U                                      repeat=false { close-window; }
+    Mod+Shift+Q                                      repeat=false { close-window; }
 
     // The quit action will show a confirmation dialog to avoid accidental exits.
     // Mod+Shift+E { quit; }
@@ -216,7 +216,7 @@ binds {
     // ==> Horizontal
     //
 
-        Mod+R { switch-preset-column-width-back; }
+        Mod+R { switch-preset-column-width; }
         Mod+F { maximize-column; }
 
         // Expand the focused column to space not taken up by other fully visible columns.
