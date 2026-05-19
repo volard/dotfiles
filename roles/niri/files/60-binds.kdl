@@ -76,10 +76,10 @@ binds {
     Mod+U          { focus-workspace-up; }
     Mod+E          { focus-workspace-down; }
 
-    Mod+Shift+H    { focus-monitor-left; }
-    Mod+Shift+J    { focus-monitor-down; }
-    Mod+Shift+K    { focus-monitor-up; }
-    Mod+Shift+L    { focus-monitor-right; }
+    Mod+Ctrl+H    { focus-monitor-left; }
+    Mod+Ctrl+J    { focus-monitor-down; }
+    Mod+Ctrl+K    { focus-monitor-up; }
+    Mod+Ctrl+L    { focus-monitor-right; }
 
     // You can bind mouse wheel scroll ticks using the following syntax.
     // These binds will change direction based on the natural-scroll setting.
@@ -119,10 +119,10 @@ binds {
     Mod+Ctrl+Home         { move-column-to-first; }
     Mod+Ctrl+End          { move-column-to-last; }
 
-    Mod+Ctrl+H            { move-column-left; }
-    Mod+Ctrl+J            { move-window-down; }
-    Mod+Ctrl+K            { move-window-up; }
-    Mod+Ctrl+L            { move-column-right; }
+    Mod+Shift+H            { move-column-left; }
+    Mod+Shift+J            { move-window-down; }
+    Mod+Shift+K            { move-window-up; }
+    Mod+Shift+L            { move-column-right; }
 
     Mod+Shift+Page_Down   { move-workspace-down; }
     Mod+Shift+Page_Up     { move-workspace-up; }

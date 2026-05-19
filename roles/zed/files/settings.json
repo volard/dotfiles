@@ -7,6 +7,19 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "ssh_connections": [
+    {
+      "host": "elba_senko_communication",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/opt"
+          ]
+        }
+      ]
+    }
+  ],
   "diff_view_style": "split",
   "autosave": {
     "after_delay": {

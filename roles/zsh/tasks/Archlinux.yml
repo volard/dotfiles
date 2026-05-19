@@ -16,6 +16,8 @@
     - ripgrep # better grep
     - ttf-nerd-fonts-symbols-mono
   become: true
+  loop_control:
+    loop_var: pacman_item
 
 - name: Set Zsh as the default shell
   ansible.builtin.user:
