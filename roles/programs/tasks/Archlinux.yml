@@ -30,6 +30,7 @@
     - telegram-desktop
     - nemo # file manager (found it better than thunder)
     - fastfetch # rip neofetch
+    - just # better make
     - blueman # bluetooth gui manager
     - btop # better htop/top
     - meld # gui diffing tool
