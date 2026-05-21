@@ -1,0 +1,41 @@
+---
+- name: Install incus from pacman
+  community.general.pacman:
+    name: incus
+    state: present
+  become: true
+
+- name: Enable and start incus socket
+  ansible.builtin.systemd:
+    name: incus.socket
+    enabled: true
+    state: started
+  become: true
+
+- name: Start incus service
+  ansible.builtin.systemd:
+    name: incus.service
+    state: started
+  become: true
+
+- name: Check whether Incus is already initialized
+  ansible.builtin.stat:
+    path: /var/lib/incus/database
+  register: incus_database
+  become: true
+
+- name: Initialize Incus with minimal configuration
+  ansible.builtin.command: incus admin init --minimal
+  become: true
+  when: not incus_database.stat.exists
+
+- name: Add current user to incus-admin group
+  ansible.builtin.user:
+    name: "{{ ansible_env.USER }}"
+    groups: incus-admin
+    append: true
+  become: true
+
+- name: Warn that incus-admin group needs a new session
+  ansible.builtin.debug:
+    msg: "User {{ ansible_env.USER }} added to incus-admin. Run `newgrp incus-admin` or start a new session before using incus without sudo."
