@@ -168,6 +168,11 @@
       tags:
         - docker
 
+    - role: incus
+      when: "'incus' in enabled_roles or 'incus' in selected_role_tags"
+      tags:
+        - incus
+
     - role: windows_setup
       when: "'windows_setup' in enabled_roles or 'windows_setup' in selected_role_tags"
       tags:
@@ -277,3 +282,8 @@
       when: "'waybinder' in enabled_roles or 'waybinder' in selected_role_tags"
       tags:
         - waybinder
+
+    - role: snap
+      when: "'snap' in enabled_roles or 'snap' in selected_role_tags"
+      tags:
+        - snap
