@@ -13,77 +13,91 @@
       "args": [],
       "projects": [
         {
-          "paths": [
-            "/opt"
-          ]
-        }
-      ]
-    }
+          "paths": ["/opt"],
+        },
+      ],
+    },
   ],
+  "format_on_save": "off",
   "diff_view_style": "split",
   "autosave": {
     "after_delay": {
-      "milliseconds": 1000
-    }
+      "milliseconds": 1000,
+    },
   },
   "languages": {
     "JavaScript": {
-      "format_on_save": "off"
-    }
+      "format_on_save": "off",
+    },
   },
   "cli_default_open_behavior": "existing_window",
   "edit_predictions": {
-    "mode": "eager"
+    "mode": "eager",
   },
   "agent_servers": {
     "opencode": {
-      "type": "registry"
+      "type": "registry",
     },
     "codex-acp": {
       "default_config_options": {
-        "mode": "full-access"
+        "mode": "full-access",
       },
-      "type": "registry"
-    }
+      "type": "registry",
+    },
   },
   "outline_panel": {
-    "dock": "right"
+    "dock": "right",
   },
   "collaboration_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "agent": {
     "dock": "right",
     "favorite_models": [],
-    "model_parameters": []
+    "model_parameters": [],
   },
   "git_panel": {
     "tree_view": true,
-    "dock": "left"
+    "dock": "left",
   },
   "telemetry": {
     "diagnostics": false,
-    "metrics": false
+    "metrics": false,
   },
   "vim_mode": true,
   // "vim": {
   //   "enable_vim_sneak": true,
   // },
   "scrollbar": {
-    "show": "never"
+    "show": "never",
   },
   // File syntax highlighting
   "file_types": {
     "Dockerfile": ["Dockerfile", "Dockerfile.*"],
-    "JSON": ["json", "jsonc", "*.code-snippets"]
+    "JSON": ["json", "jsonc", "*.code-snippets"],
   },
   "title_bar": {
     "show_onboarding_banner": false,
-    "show_sign_in": false
+    "show_sign_in": false,
   },
   "project_panel": {
     "dock": "left",
-    "git_status": true
+    "git_status": true,
+  },
+  "auto_install_extensions": {
+    "just": true,
+    "dockerfile": true,
+    "docker-compose": true,
+    "material-icon-theme": true,
+    "catppuccin": true,
+    "editorconfig": true,
+  },
+  // Which-key popup settings
+  "which_key": {
+    // Whether to show the which-key popup when holding down key combinations.
+    "enabled": true,
+    // Delay in milliseconds before showing the which-key popup.
+    "delay_ms": 1000,
   },
   // File scan exclusions, hide on the file explorer and search
   "file_scan_exclusions": [
@@ -106,25 +120,25 @@
     "**/.tap",
     "**/.nyc_output",
     "**/report",
-    "**/node_modules"
+    "**/node_modules",
   ],
   "hide_mouse": "on_typing_and_movement",
   "tab_bar": {
-    "show": false
+    "show": false,
   },
   "gutter": {
-    "line_numbers": false
+    "line_numbers": false,
   },
   "icon_theme": {
     "mode": "dark",
     "light": "Zed (Default)",
-    "dark": "Material Icon Theme"
+    "dark": "Material Icon Theme",
   },
   "ui_font_size": 16,
   "buffer_font_size": 15,
   "theme": {
     "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Catppuccin Mocha"
-  }
+    "dark": "Catppuccin Mocha",
+  },
 }
