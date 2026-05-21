@@ -3,7 +3,14 @@ local act = wezterm.action
 
 return {
 	{ key = "x", mods = "CTRL", action = act.CloseCurrentPane({ confirm = false }) },
-	{ key = "l", mods = "LEADER", action = wezterm.action.ShowLauncher },
+	{
+		key = "o",
+		mods = "LEADER",
+		action = wezterm.action.ShowLauncherArgs({
+			flags = "FUZZY|DOMAINS|WORKSPACES|TABS|LAUNCH_MENU_ITEMS",
+			title = "wezterm launcher",
+		}),
+	},
 
 	-- Navigate between panes
 	{
@@ -33,10 +40,10 @@ return {
 
 
 	-- panes: navigation
-	{ key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
-	{ key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
-	{ key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
-	{ key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
+	-- { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
+	-- { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
+	-- { key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
+	-- { key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
 
 	-- Splits
 	{
