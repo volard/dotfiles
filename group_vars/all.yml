@@ -29,3 +29,4 @@ enabled_roles:
   - voxtype
   - niri
   - waybinder
+  - snap

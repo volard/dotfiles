@@ -1,4 +1,11 @@
 ---
+- name: Install Cursor from AUR
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/require_aur_packages.yml
+  vars:
+    aur_packages:
+      - cursor-bin
+    aur_requirement_context: vscode role
+
 - name: Create Cursor config symlinks
   ansible.builtin.include_tasks: roles/common_tasks/tasks/create_symlinks.yml
   vars:
