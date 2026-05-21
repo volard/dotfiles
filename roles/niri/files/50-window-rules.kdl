@@ -1,8 +1,9 @@
 // https://niri-wm.github.io/niri/Configuration:-Window-Rules
 // >>>> niri msg pick-window
 
-// Work around WezTerm's initial configure bug
-// by setting an empty default-column-width.
+// ----------------------------------------------------------------------------
+// WezTerm's initial configure bug by setting an empty default-column-width.
+// ----------------------------------------------------------------------------
 window-rule {
     // This regular expression is intentionally made as specific as possible,
     // since this is the default config, and we want no false positives.
@@ -11,12 +12,10 @@ window-rule {
     default-column-width {}
 }
 
+// ----------------------------------------------------------------------------
+// Floating
+// ----------------------------------------------------------------------------
 window-rule {
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    match app-id=r#"zen$"# title="^Picture-in-Picture$"
-    match app-id=r#"vivaldi$"# title="^Picture-in-Picture$"
-
-
     match app-id=r#"^Pinentry-gtk$"#
     match app-id=r#"^Tk$"#
     match app-id=r#"^blueman-manager$"#
@@ -28,22 +27,39 @@ window-rule {
     match app-id=r#"^virt-manager$"# title=r#" - Connection Details"#
     match app-id=r#"^wev$"#
     match app-id=r#"^xarchiver$"#
-    match app-id=r#"firefox$"# title=r#"^(Picture-in-Picture|Library|About Mozilla Firefox)$"#
+    match app-id=r#"firefox$"# title=r#"^(Library|About Mozilla Firefox)$"#
     match title="Choose Files"
 
     match app-id=r#"^org\.telegram\.desktop$"# title="Media viewer"
     match title="Media viewer"
     default-column-width { proportion 0.5; }
     default-window-height { proportion 0.6; }
-    default-floating-position x=100 y=200 relative-to="bottom-left"
     open-floating true
 }
 
+// ----------------------------------------------------------------------------
+// Picture-in-Picture
+// ----------------------------------------------------------------------------
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id=r#"zen$"# title="^Picture-in-Picture$"
+    match app-id=r#"vivaldi$"# title="^Picture-in-Picture$"
+
+    open-floating true
+    default-column-width { proportion 0.2; }
+    default-window-height { proportion 0.2; }
+    default-floating-position x=30 y=30 relative-to="bottom-right"
+}
+
+// ----------------------------------------------------------------------------
+// Workspace assign
+// ----------------------------------------------------------------------------
 window-rule {
     match app-id=r#"^(org\.telegram\.desktop(\.desktop)?|telegram-desktop)$"#
     exclude app-id=r#"^org\.telegram\.desktop$"# title="Media viewer"
     match app-id=r#"^Throne$"#
 
+    block-out-from "screen-capture"
     open-on-workspace "scratchpad"
     open-focused false
 }
@@ -51,23 +67,9 @@ window-rule {
 
 window-rule {
     match app-id=r#"^zen$"#
-
     open-on-workspace "main"
     open-focused true
 }
-
-// Example: block out two password managers from screen capture.
-// (This example rule is commented out with a "/-" in front.)
-/-window-rule {
-    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
-    match app-id=r#"^org\.gnome\.World\.Secrets$"#
-
-    block-out-from "screen-capture"
-
-    // Use this instead if you want them visible on third-party screenshot tools.
-    // block-out-from "screencast"
-}
-
 
 window-rule {
     geometry-corner-radius 2
@@ -84,4 +86,45 @@ window-rule {
 window-rule {
     match app-id=r#"^waybar-tool$"#
     open-floating true
+}
+
+
+
+// ----------------------------------------------------------------------------
+// Screen capture
+// ----------------------------------------------------------------------------
+// Indicate screencasted windows with red colors.
+window-rule {
+    match is-window-cast-target=true
+
+    focus-ring {
+        active-color "#f38ba8"
+        inactive-color "#7d0d2d"
+    }
+
+    border {
+        inactive-color "#7d0d2d"
+    }
+
+    shadow {
+        color "#7d0d2d70"
+    }
+
+    tab-indicator {
+        active-color "#f38ba8"
+        inactive-color "#7d0d2d"
+    }
+}
+
+
+// Example: block out two password managers from screen capture.
+// (This example rule is commented out with a "/-" in front.)
+/-window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id=r#"^org\.gnome\.World\.Secrets$"#
+
+    block-out-from "screen-capture"
+
+    // Use this instead if you want them visible on third-party screenshot tools.
+    // block-out-from "screencast"
 }
