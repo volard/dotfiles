@@ -1,9 +1,10 @@
 ---
 - name: Install snapd from AUR
-  kewlfft.aur.aur:
-    name: snapd
-    state: present
-    use: paru
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/require_aur_packages.yml
+  vars:
+    aur_packages:
+      - snapd
+    aur_requirement_context: snap role
 
 - name: Unmask snapd service
   ansible.builtin.systemd:

@@ -1,0 +1,21 @@
+---
+- name: Check whether required AUR packages are installed
+  ansible.builtin.command: pacman -Q {{ aur_package }}
+  loop: "{{ aur_packages }}"
+  loop_control:
+    loop_var: aur_package
+  register: aur_package_checks
+  changed_when: false
+  failed_when: false
+
+- name: Collect missing AUR packages
+  ansible.builtin.set_fact:
+    missing_aur_packages: "{{ aur_package_checks.results | rejectattr('rc', 'equalto', 0) | map(attribute='aur_package') | list }}"
+
+- name: Stop because required AUR packages must be installed manually
+  ansible.builtin.fail:
+    msg: >-
+      Missing required AUR packages for {{ aur_requirement_context | default('this role') }}:
+      {{ missing_aur_packages | join(', ') }}.
+      Install them manually with your preferred AUR helper, then rerun dotfiles.
+  when: missing_aur_packages | length > 0
