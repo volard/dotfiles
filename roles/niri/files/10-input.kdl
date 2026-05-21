@@ -77,9 +77,9 @@ input {
 
 binds {
     // Languages (layouts)
-    Mod+Ctrl+N { switch-layout "0"; }
-    Mod+Ctrl+O { switch-layout "1"; }
-    Mod+Ctrl+E { switch-layout "2"; }
+    Mod+N { switch-layout "0"; }
+    Mod+Y { switch-layout "1"; }
+    Mod+Ctrl+Y { switch-layout "2"; }
 
 
     // Actions to switch layouts.
@@ -92,8 +92,7 @@ binds {
 }
 
 gestures {
-    // Disable overview when mousing over the top left of primary screen.
     hot-corners {
-        off
+        top-left
     }
 }

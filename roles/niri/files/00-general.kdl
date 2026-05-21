@@ -6,8 +6,17 @@ cursor {
     hide-after-inactive-ms 1000
 }
 
-environment {
 
+environment {
+    QT_QPA_PLATFORM "wayland"
+    DISPLAY null
+}
+xwayland-satellite {
+    // off
+    path "xwayland-satellite"
+}
+clipboard {
+    disable-primary
 }
 
 // Avoid writing screenshots to disk since they get piped into satty.
@@ -24,5 +33,6 @@ animations {
 }
 
 overview {
+    zoom 0.3333
     backdrop-color "#000000"
 }
