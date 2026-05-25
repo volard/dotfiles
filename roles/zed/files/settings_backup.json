@@ -23,28 +23,28 @@
   },
   "telemetry": {
     "diagnostics": false,
-    "metrics": false,
+    "metrics": false
   },
   "vim_mode": true,
   // "vim": {
   //   "enable_vim_sneak": true,
   // },
   "scrollbar": {
-    "show": "never",
+    "show": "never"
   },
   // File syntax highlighting
   "file_types": {
     "Dockerfile": ["Dockerfile", "Dockerfile.*"],
-    "JSON": ["json", "jsonc", "*.code-snippets"],
+    "JSON": ["json", "jsonc", "*.code-snippets"]
   },
   "title_bar": {
     "show_branch_icon": false,
     "show_onboarding_banner": false,
-    "show_sign_in": false,
+    "show_sign_in": false
   },
   "project_panel": {
     "dock": "left",
-    "git_status": true,
+    "git_status": true
   },
   // File scan exclusions, hide on the file explorer and search
   "file_scan_exclusions": [
@@ -67,25 +67,25 @@
     "**/.tap",
     "**/.nyc_output",
     "**/report",
-    "**/node_modules",
+    "**/node_modules"
   ],
   "hide_mouse": "on_typing_and_movement",
   "tab_bar": {
-    "show": false,
+    "show": false
   },
   "gutter": {
-    "line_numbers": false,
+    "line_numbers": false
   },
   "icon_theme": {
     "mode": "dark",
     "light": "Zed (Default)",
-    "dark": "Material Icon Theme",
+    "dark": "Material Icon Theme"
   },
   "ui_font_size": 16,
   "buffer_font_size": 15,
   "theme": {
     "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Catppuccin Mocha",
-  },
+    "dark": "Catppuccin Mocha"
+  }
 }

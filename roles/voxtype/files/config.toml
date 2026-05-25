@@ -46,7 +46,7 @@ device = "default"
 sample_rate = 16000
 
 # Maximum recording duration in seconds (safety limit)
-max_duration_secs = 60
+max_duration_secs = 240
 
 # [audio.feedback]
 # Enable audio feedback sounds (beeps when recording starts/stops)
@@ -92,7 +92,7 @@ translate = false
 # Initial prompt to provide context for transcription
 # Use this to hint at terminology, proper nouns, or formatting conventions.
 # Example: "Technical discussion about Rust, TypeScript, and Kubernetes."
-# initial_prompt = ""
+initial_prompt = "Programming and technology dictation. Prefer exact technical terms, product names, and abbreviations. Common terms include voxtype, Linux, Wayland, X11, terminal, shell, Neovim, Emacs, Git, GitHub, TypeScript, JavaScript, Python, Rust, Go, Docker, Kubernetes, API, SDK, CLI, LLM, Whisper, and dotfiles. Do not rewrite technical names into similar common words."
 
 # --- Multi-model settings ---
 #
@@ -208,14 +208,14 @@ on_recording_stop = false
 # Show notification with transcribed text after transcription completes
 on_transcription = true
 
-# [text]
+[text]
 # Text processing options (word replacements, spoken punctuation)
 #
 # Enable spoken punctuation conversion (e.g., say "period" to get ".")
 # spoken_punctuation = false
 #
 # Custom word replacements (case-insensitive)
-# replacements = { "vox type" = "voxtype" }
+replacements = { "vox type" = "voxtype", "work type" = "voxtype" }
 #
 # Smart auto-submit: say "submit" at the end of dictation to press Enter.
 # The word "submit" is stripped from the output text and Enter is pressed.
