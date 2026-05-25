@@ -12,6 +12,7 @@ application/x-extension-xht=zen.desktop
 x-scheme-handler/stirlingpdf=stirling-pdf-handler.desktop
 application/pdf=okularApplication_pdf.desktop
 x-scheme-handler/tabby=tabby.desktop
+image/png=org.gnome.eog.desktop
 
 [Added Associations]
 x-scheme-handler/http=zen.desktop;
@@ -25,3 +26,4 @@ application/xhtml+xml=zen.desktop;
 application/x-extension-xhtml=zen.desktop;
 application/x-extension-xht=zen.desktop;
 application/pdf=okularApplication_pdf.desktop;
+image/png=org.gnome.eog.desktop;

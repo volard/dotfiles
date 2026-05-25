@@ -29,6 +29,7 @@ window-rule {
     match app-id=r#"^xarchiver$"#
     match app-id=r#"firefox$"# title=r#"^(Library|About Mozilla Firefox)$"#
     match title="Choose Files"
+    match app-id="qalculate-gtk"
 
     match app-id=r#"^org\.telegram\.desktop$"# title="Media viewer"
     match title="Media viewer"

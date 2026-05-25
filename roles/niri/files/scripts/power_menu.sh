@@ -6,6 +6,10 @@ logout_session() {
     ~/.config/niri/scripts/logout_session.sh
 }
 
+poweroff_system() {
+    systemctl -i poweroff || loginctl poweroff
+}
+
 confirm_action() {
     local action="$1"
     local confirmation
@@ -49,7 +53,7 @@ case "$selection" in
         ;;
     "󰐥 Shutdown")
         if confirm_action "Shutdown"; then
-            systemctl poweroff
+            poweroff_system
         fi
         ;;
 esac
