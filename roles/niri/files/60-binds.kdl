@@ -31,7 +31,7 @@ binds {
     // ----------------------------------------------------------------------------
     // Voxtype
     // ----------------------------------------------------------------------------
-    Mod+Shift+R hotkey-overlay-title="Toggle Voice Input: voxtype" repeat=false { spawn "voxtype" "record" "toggle"; }
+    Mod+Shift+I hotkey-overlay-title="Toggle Voice Input: voxtype" repeat=false { spawn "voxtype" "record" "toggle"; }
     F12         hotkey-overlay-title="Cancel Voice Input: voxtype" repeat=false { spawn "voxtype" "record" "cancel"; }
 
 
@@ -217,6 +217,7 @@ binds {
     //
 
         Mod+R { switch-preset-column-width; }
+        Mod+Shift+R { switch-preset-column-width-back; }
         Mod+F { maximize-column; }
 
         // Expand the focused column to space not taken up by other fully visible columns.

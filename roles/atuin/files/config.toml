@@ -121,7 +121,8 @@ ctrl_n_shortcuts = false
 history_filter = [
     "^exit$",
     "^cd ",
-    "^z "
+    "^z ",
+    "^v$",
 ]
 
 ## prevent commands run with cwd matching any of these regexes from being written

@@ -7,7 +7,7 @@ logout_session() {
 }
 
 poweroff_system() {
-    systemctl -i poweroff || loginctl poweroff
+    sudo shutdown now
 }
 
 confirm_action() {
