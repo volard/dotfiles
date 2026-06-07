@@ -9,7 +9,6 @@ cursor {
 
 environment {
     QT_QPA_PLATFORM "wayland"
-    DISPLAY null
 }
 xwayland-satellite {
     // off

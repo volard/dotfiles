@@ -57,6 +57,7 @@
     "model_parameters": []
   },
   "git_panel": {
+    "fallback_branch_name": "main",
     "tree_view": true,
     "dock": "left"
   },
