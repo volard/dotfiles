@@ -1,4 +1,5 @@
 Deprecated -> it's better to use
+
 - `scp` -> `rsync`
 - `egrep` and `fgrep` -> `grep -E` and `grep -F` -> `rg`
 - `netstat` -> `ss`

@@ -40,7 +40,8 @@
     },
     "codex-acp": {
       "default_config_options": {
-        "mode": "full-access"
+        "reasoning_effort": "medium",
+        "mode": "agent-full-access"
       },
       "type": "registry"
     }
@@ -93,7 +94,11 @@
     "catppuccin": true,
     "editorconfig": true,
     "ini": true,
-    "log": true
+    "log": true,
+    "nix": true,
+    "terraform": true,
+    "kotlin": true,
+    "dart": true
   },
   // Which-key popup settings
   "which_key": {
@@ -114,7 +119,6 @@
     "**/.settings",
     // above is default from Zed
     "**/out",
-    "**/dist",
     "**/.husky",
     "**/.turbo",
     "**/.vscode-test",
