@@ -13,6 +13,8 @@
     - slurp
     - waybar
     - btop
+    - copyq
+    - gnupg
     - ttf-jetbrains-mono-nerd
     - qt6-wayland # Wayland support for Qt6
     - qt5-wayland # Wayland support for Qt5

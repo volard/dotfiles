@@ -11,6 +11,8 @@
     - bun # better node
     - base-devel
     - mkcert
+    - nix
+    - direnv
     - polkit # authorization framework that lets unprivileged processes request permission from privileged system services
     - gnome-keyring # keyring to store secrets, passwords, keys
     - libsecret # API for keyring

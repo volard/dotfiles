@@ -50,10 +50,10 @@ alias lg=lazygit
 alias bc=batcat
 alias cat='bat --style=plain'
 
-alias ll="eza -lh --git --icons --color=always -a --group-directories-first"
+alias ll="eza -lh --git --icons --color=always -a --group-directories-first --sort=modified"
 alias lt='eza --tree --level=2 --icons'
 alias tree="eza --tree --icons"
-alias ls='eza --icons --group-directories-first'
+alias ls='eza --icons --group-directories-first --sort=modified'
 
 alias rr='. ranger'
 alias r='ranger'

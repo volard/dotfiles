@@ -172,7 +172,10 @@ export PATH="$HOME/.local/share/flatpak/exports/share:$PATH"
 export PATH="$HOME/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.config/niri/scripts:$PATH"
-
+export ANDROID_HOME="/mnt/data/sdk-android"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
+export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
+export PATH="/mnt/data/android-studio/bin:$PATH"
 
 # ============================================================================
 # BUN setup
@@ -220,6 +223,13 @@ alias peon="bash /home/volard/.claude/hooks/peon-ping/peon.sh"
 # /peon-ping-toggle to mute/unmute without leaving chat
 # peon preview task.complete
 
+
+# ============================================================================
+# DIRENV
+# ============================================================================
+if command -v direnv &> /dev/null; then
+  eval "$(direnv hook zsh)"
+fi
 
 
 # ============================================================================
