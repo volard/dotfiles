@@ -32,14 +32,6 @@
   changed_when: voxtype_process_stop.rc == 0
   failed_when: false
 
-- name: Create voxtype config symlink
-  ansible.builtin.include_tasks: roles/common_tasks/tasks/create_symlinks.yml
-  vars:
-    symlink:
-      src: "{{ role_path }}/files/config.toml"
-      dest: "{{ ansible_facts['user_dir'] }}/.config/voxtype/config.toml"
-      remove_existing: true
-
 - name: Check voxtype download marker
   ansible.builtin.stat:
     path: "{{ ansible_facts['user_dir'] }}/.local/state/ansible/voxtype-download.done"

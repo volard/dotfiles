@@ -1,6 +1,4 @@
 ---
-- name: Copy swaylock config
-  ansible.builtin.copy:
-    src: "{{ role_path }}/files/config"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/swaylock/config"
-    mode: '0644'
+- name: Skip swaylock config copy
+  ansible.builtin.debug:
+    msg: "swaylock config is managed by chezmoi now."

@@ -1,86 +1,30 @@
 ---
-# - name: Debug found configuration files
-#   debug:
-#     var: config_path
+- name: Copy Ansible-managed encrypted SSH config files
+  when: role_name == 'ssh'
+  block:
+    - name: Ensure config directory exists
+      ansible.builtin.file:
+        path: "{{ config_path }}"
+        state: directory
+        mode: "0700"
 
-- name: Check if role vars directory exists
-  ansible.builtin.stat:
-    path: "{{ role_path }}/vars"
-  register: role_vars_dir
+    - name: Find SSH configuration files
+      ansible.builtin.find:
+        paths: "{{ role_path }}/files"
+        recurse: false
+        hidden: true
+        file_type: file
+      register: config_files
 
-- name: Include all variables from YAML files in the 'vars' directory
-  ansible.builtin.include_vars:
-    dir: "{{ role_path }}/vars"
-    extensions:
-      - "yml"
-      - "yaml"
-  when: role_vars_dir.stat.exists and role_vars_dir.stat.isdir
+    - name: Copy SSH files
+      ansible.builtin.copy:
+        src: "{{ item.path }}"
+        dest: "{{ config_path }}/{{ item.path | basename }}"
+        mode: preserve
+      loop: "{{ config_files.files }}"
+      no_log: true
 
-
-- name: Ensure config directory exists
-  ansible.builtin.file:
-    path: "{{ config_path }}"
-    state: directory
-    mode: "0755"
-
-      # - name: Ensure config directory exists on Windows
-      #   ansible.windows.win_file:
-      #     path: "{{ config_path }}"
-      #     state: directory
-      #   when: ansible_facts['os_family'] == 'Windows'
-
-- name: Find all configuration files
-  ansible.builtin.find:
-    paths: "{{ role_path }}/files"
-    recurse: true
-    hidden: true
-    file_type: file # Only get regular files, exclude directories
-  register: config_files
-  become: true
-
-- name: Debug found configuration files
+- name: Skip role-managed config copies
   ansible.builtin.debug:
-    var: config_files
-
-- name: Debug found configuration files
-  ansible.builtin.debug:
-    var: role_path
-
-- name: Copy template files on Linux
-  ansible.builtin.template:
-    src: "{{ item.path }}"
-    dest: "{{ config_path }}/{{ item.path | basename | regex_replace('.j2$', '') }}"
-    mode: preserve
-  loop: "{{ config_files.files }}"
-  when:
-    - item.path.endswith('.j2')
-
-# - name: Copy template files on Windows
-#   ansible.windows.win_template:
-#     src:  "{{ item.path }}"
-#     dest: "{{ config_path }}\\{{ item.path | basename | regex_replace('.j2$', '') }}"
-#     mode: preserve
-#   loop: "{{ config_files.files }}"
-#   when:
-#     - item.path.endswith('.j2')
-#     - ansible_facts['os_family'] == 'Windows'
-
-- name: Copy static files on Linux
-  ansible.builtin.copy:
-    src: "{{ item.path }}"
-    dest: "{{ config_path }}/{{ item.path | basename }}"
-    mode: preserve
-  loop: "{{ config_files.files }}"
-  when:
-    - not item.path.endswith('.j2')
-
-
-# - name: Copy static files on Windows
-#   ansible.windows.win_copy:
-#     src: "{{ item.path }}"
-#     dest: "{{ config_path }}\\{{ item.path | basename }}"
-#     mode: preserve
-#   loop: "{{ config_files.files }}"
-#   when:
-#     - not item.path.endswith('.j2')
-#     - ansible_facts['os_family'] == 'Windows'
+    msg: "User config files are managed by chezmoi now."
+  when: role_name != 'ssh'

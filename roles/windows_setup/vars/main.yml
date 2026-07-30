@@ -1,4 +1,0 @@
----
-windows_setup_envvars:
-  scoop_path: "{{ ansible_facts['env']['USERPROFILE'] }}\\scoop"
-  scoop_global_path: "{{ ansible_facts['env']['USERPROFILE'] }}\\scoop\\global"

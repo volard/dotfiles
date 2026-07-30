@@ -1,0 +1,13 @@
+---
+- name: Install packages from pacman
+  community.general.pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - neovim
+    - fzf
+    - ripgrep
+  become: true
+  loop_control:
+    loop_var: pacman_item
+  when: ansible_facts['distribution'] == "Archlinux"

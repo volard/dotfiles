@@ -1,8 +1,0 @@
-# roles/alacritty/molecule/default/converge.yml
----
-- name: Converge
-  hosts: all
-  tasks:
-    - name: Include alacritty role
-      ansible.builtin.include_role:
-        name: alacritty
