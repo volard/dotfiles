@@ -8,41 +8,6 @@
   ansible.builtin.include_tasks: "{{ ansible_facts['distribution'] }}.yml"
   when: distribution_config.stat.exists
 
-- name: Check niri scripts directory
-  ansible.builtin.stat:
-    path: "{{ role_path }}/files/scripts"
-  register: niri_scripts_dir
-
-- name: Find niri script files
-  ansible.builtin.find:
-    paths: "{{ role_path }}/files/scripts"
-    file_type: file
-  register: niri_script_files
-  when: niri_scripts_dir.stat.exists
-
-- name: Make niri script files executable
-  ansible.builtin.file:
-    path: "{{ item.path }}"
-    mode: "0755"
-  loop: "{{ niri_script_files.files }}"
-  when: niri_scripts_dir.stat.exists
-
-- name: Create niri config directory symlink
-  ansible.builtin.include_tasks: roles/common_tasks/tasks/create_symlinks.yml
-  vars:
-    symlink:
-      src: "{{ role_path }}/files"
-      dest: "{{ ansible_facts['user_dir'] }}/.config/niri"
-      remove_existing: true
-
-- name: Install mimeapps.list for niri session
-  ansible.builtin.include_tasks: roles/common_tasks/tasks/create_symlinks.yml
-  vars:
-    symlink:
-      src: "{{ playbook_dir }}/files/mimeapps.list"
-      dest: "{{ ansible_facts['user_dir'] }}/.config/mimeapps.list"
-      remove_existing: true
-
 - name: Ensure local icons directory exists for niri
   ansible.builtin.file:
     path: "{{ ansible_facts['user_dir'] }}/.local/share/icons"
@@ -54,37 +19,3 @@
     src: "{{ playbook_dir }}/files/Bibata-Modern-Ice.tar.xz"
     dest: "{{ ansible_facts['user_dir'] }}/.local/share/icons"
     creates: "{{ ansible_facts['user_dir'] }}/.local/share/icons/Bibata-Modern-Ice/index.theme"
-
-- name: Check current Waybar config path for niri
-  ansible.builtin.stat:
-    path: "{{ ansible_facts['user_dir'] }}/.config/waybar"
-  register: niri_waybar_config_path
-
-- name: Remove legacy Waybar symlink for niri
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.config/waybar"
-    state: absent
-  when: niri_waybar_config_path.stat.islnk | default(false)
-
-- name: Ensure Waybar config directory exists for niri
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.config/waybar"
-    state: directory
-    mode: "0755"
-
-- name: Create niri Waybar file symlinks
-  ansible.builtin.include_tasks: roles/common_tasks/tasks/create_symlinks.yml
-  vars:
-    symlinks:
-      - src: "{{ role_path }}/waybar/config-niri.jsonc"
-        dest: "{{ ansible_facts['user_dir'] }}/.config/waybar/config-niri.jsonc"
-        remove_existing: true
-      - src: "{{ role_path }}/waybar/modules.json"
-        dest: "{{ ansible_facts['user_dir'] }}/.config/waybar/modules.json"
-        remove_existing: true
-      - src: "{{ role_path }}/waybar/style.css"
-        dest: "{{ ansible_facts['user_dir'] }}/.config/waybar/style.css"
-        remove_existing: true
-      - src: "{{ role_path }}/waybar/colors.css"
-        dest: "{{ ansible_facts['user_dir'] }}/.config/waybar/colors.css"
-        remove_existing: true

@@ -1,0 +1,51 @@
+---
+- name: Include Git template secrets
+  ansible.builtin.include_vars:
+    file: "{{ playbook_dir }}/roles/git/vars/sensitive_vars.yml"
+  no_log: true
+
+- name: Include Zsh template secrets
+  ansible.builtin.include_vars:
+    file: "{{ playbook_dir }}/roles/zsh/vars/main.yml"
+  no_log: true
+
+- name: Include WakaTime template secrets
+  ansible.builtin.include_vars:
+    file: "{{ playbook_dir }}/roles/wakatime/vars/main.yml"
+  no_log: true
+
+- name: Install chezmoi on Linux
+  ansible.builtin.package:
+    name: chezmoi
+    state: present
+  become: true
+  when: ansible_facts['os_family'] != 'Windows'
+
+- name: Install chezmoi on Windows
+  community.windows.win_scoop:
+    name: chezmoi
+    state: present
+  when: ansible_facts['os_family'] == 'Windows'
+
+- name: Apply chezmoi source on Linux
+  ansible.builtin.command:
+    cmd: chezmoi apply --source "{{ playbook_dir }}/chezmoi"
+  environment:
+    GIT_EMAIL_ADDRESS: "{{ git_email_address | default('') }}"
+    GIT_USERNAME: "{{ git_username | default('') }}"
+    OPENROUTER_API_KEY: "{{ openrouter_api_key | default('') }}"
+    WAKATIME_API_KEY: "{{ wakatime_api_key | default('') }}"
+  changed_when: true
+  no_log: true
+  when: ansible_facts['os_family'] != 'Windows'
+
+- name: Apply chezmoi source on Windows
+  ansible.windows.win_command: chezmoi apply --source "{{ playbook_dir }}\\chezmoi"
+  environment:
+    GIT_EMAIL_ADDRESS: "{{ git_email_address | default('') }}"
+    GIT_USERNAME: "{{ git_username | default('') }}"
+    OPENROUTER_API_KEY: "{{ openrouter_api_key | default('') }}"
+    WAKATIME_API_KEY: "{{ wakatime_api_key | default('') }}"
+  changed_when: true
+  no_log: true
+  when: ansible_facts['os_family'] == 'Windows'

@@ -24,20 +24,6 @@
   when:
     - grep_result.rc != 0 # Only add line if grep didn't find it
 
-- name: Create a symlink to a file
-  ansible.builtin.file:
-    src: "{{ role_path }}/files/.termrc"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/.termrc"
-    state: link
-    force: true
-
-- name: Create a symlink to a file
-  ansible.builtin.file:
-    src: "{{ role_path }}/files/.bash_profile"
-    dest: "{{ ansible_facts['user_dir'] }}/.bash_profile"
-    state: link
-    force: true
-
 - name: Ensure .local/bin directory exists
   ansible.builtin.file:
     path: "{{ ansible_facts['user_dir'] }}/.local/bin"
@@ -55,16 +41,3 @@
     set -o pipefail; /tmp/install.sh -d {{ ansible_facts['user_dir'] }}/.local/bin
   args:
     creates: "{{ ansible_facts['user_dir'] }}/.local/bin/oh-my-posh"
-
-- name: Ensure .config directory exists
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.config/oh-my-posh"
-    state: directory
-    mode: '0755'
-
-- name: Create a symlink to a file
-  ansible.builtin.file:
-    src: "{{ role_path }}/files/amro.omp.json"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/oh-my-posh/amro.omp.json"
-    state: link
-    force: true

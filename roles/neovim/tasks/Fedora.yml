@@ -1,0 +1,15 @@
+---
+- name: Install required packages on Fedora
+  ansible.builtin.dnf:
+    name: "{{ dnf_item }}"
+    state: present
+  loop:
+    - curl
+    - ripgrep
+    - fd-find
+    - gcc
+    - nvim
+  become: true
+  loop_control:
+    loop_var: dnf_item
+  when: ansible_facts['distribution'] == "Fedora"

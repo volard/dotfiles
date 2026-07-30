@@ -16,10 +16,3 @@
     state: present
   become: true
   when: ansible_facts['distribution'] == 'Fedora'
-
-- name: Create a symlink to a file
-  ansible.builtin.file:
-    src: "{{ role_path }}/files/.tmux.conf"
-    dest: "{{ ansible_facts['user_dir'] }}/.tmux.conf"
-    state: link
-    force: true

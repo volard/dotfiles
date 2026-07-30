@@ -14,27 +14,3 @@
   args:
     executable: pwsh.exe
   when: ansible_facts['os_family'] == 'Windows'
-
-
-- name: Create PowerShell config directories
-  ansible.windows.win_file:
-    path: "{{ item }}"
-    state: directory
-  loop:
-    - "{{ ansible_facts['env']['USERPROFILE'] }}\\Documents\\PowerShell"
-    - "{{ ansible_facts['env']['USERPROFILE'] }}\\.config\\powershell"
-  when: ansible_facts['os_family'] == 'Windows'
-
-
-- name: Create main PowerShell profile
-  ansible.windows.win_copy:
-    content: . $env:USERPROFILE\.config\powershell\profile.ps1
-    dest: "{{ ansible_facts['env']['USERPROFILE'] }}\\Documents\\PowerShell\\Microsoft.PowerShell_profile.ps1"
-  when: ansible_facts['os_family'] == 'Windows'
-
-
-- name: Create actual PowerShell config
-  ansible.windows.win_copy:
-    src: profile.ps1
-    dest: "{{ ansible_facts['env']['USERPROFILE'] }}\\.config\\powershell\\profile.ps1"
-  when: ansible_facts['os_family'] == 'Windows'

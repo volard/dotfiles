@@ -1,7 +1,4 @@
 ---
-- name: Create a symlink to a file
-  ansible.builtin.file:
-    src: "{{ role_path }}/files/.ideavimrc"
-    dest: "{{ ansible_facts['user_dir'] }}/.ideavimrc"
-    state: link
-    force: true
+- name: Skip IdeaVim config symlink
+  ansible.builtin.debug:
+    msg: "IdeaVim config is managed by chezmoi now."

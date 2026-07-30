@@ -1,16 +1,4 @@
 ---
-- name: Delete a directory
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.config/fuzzel"
-    state: absent
-
-- name: Create a symlink to a file
-  ansible.builtin.file:
-    src: "{{ role_path }}/endeavour_fuzzel"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/fuzzel"
-    state: link
-    force: true
-
 - name: Ensure bemoji directory exists
   ansible.builtin.file:
     path: /tmp/bemoji

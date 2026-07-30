@@ -10,6 +10,7 @@
     - go
     - bun # better node
     - base-devel
+    - lazyssh
     - mkcert
     - nix
     - direnv
@@ -95,26 +96,26 @@
   ansible.builtin.command: rtk init --global --auto-patch
   when: ansible_facts['distribution'] == "Archlinux"
 
-- name: Install peonping
-  ansible.builtin.command: curl -fsSL https://raw.githubusercontent.com/PeonPing/peon-ping/main/install.sh | bash -s -- --packs=glados,peasant,peon,peon_ru,sc_battlecruiser,sc_kerrigan
-  when: ansible_facts['distribution'] == "Archlinux"
+# - name: Install peonping
+#   ansible.builtin.command: curl -fsSL https://raw.githubusercontent.com/PeonPing/peon-ping/main/install.sh | bash -s -- --packs=glados,peasant,peon,peon_ru,sc_battlecruiser,sc_kerrigan
+#   when: ansible_facts['distribution'] == "Archlinux"
 
-- name: Use custom peonping voice pack
-  ansible.builtin.command: peon packs use peon_ru
-  when: ansible_facts['distribution'] == "Archlinux"
+# - name: Use custom peonping voice pack
+#   ansible.builtin.command: peon packs use peon_ru
+#   when: ansible_facts['distribution'] == "Archlinux"
 
-- name: Install bun tools
-  ansible.builtin.command: bun i -g {{ bun_item }}
-  loop:
-    - "@steipete/summarize"
-    - "opencode-ai"
-  loop_control:
-    loop_var: bun_item
-  when: ansible_facts['distribution'] == "Archlinux"
+# - name: Install bun tools
+#   ansible.builtin.command: bun i -g {{ bun_item }}
+#   loop:
+#     - "@steipete/summarize"
+#     - "opencode-ai"
+#   loop_control:
+#     loop_var: bun_item
+#   when: ansible_facts['distribution'] == "Archlinux"
 
-- name: Install peon-ping to opencode
-  ansible.builtin.command: curl -fsSL https://raw.githubusercontent.com/PeonPing/peon-ping/main/adapters/opencode.sh | bash
-  when: ansible_facts['distribution'] == "Archlinux"
+# - name: Install peon-ping to opencode
+#   ansible.builtin.command: curl -fsSL https://raw.githubusercontent.com/PeonPing/peon-ping/main/adapters/opencode.sh | bash
+#   when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Install context7
   ansible.builtin.command: bunx ctx7 setup --claude --curor --universal --antigravity --opencode --codex --gemini --mcp --cli -y
@@ -125,43 +126,41 @@
   loop:
     - "vercel-labs/skills --skill find-skills"
     - "anthropics/skills --skill skill-creator"
-    - "anthropics/skills --skill frontend-design"
-    - "vercel-labs/agent-skills --skill web-design-guidelines"
-    - "vercel-labs/agent-skills --skill vercel-react-best-practices"
-    - "affaan-m/everything-claude-code --skill frontend-patterns"
-    - "affaan-m/everything-claude-code --skill docker-patterns"
+    # - "anthropics/skills --skill frontend-design"
+    # - "vercel-labs/agent-skills --skill web-design-guidelines"
+    # - "vercel-labs/agent-skills --skill vercel-react-best-practices"
+    # - "affaan-m/everything-claude-code --skill frontend-patterns"
+    # - "affaan-m/everything-claude-code --skill docker-patterns"
     - "openclaw/openclaw --skill gh-issues"
     - "openclaw/openclaw --skill github"
-    - "github/awesome-copilot --skill git-commit"
-    - "openai/skills --skill gh-fix-ci"
-    - "Shubhamsaboo/awesome-llm-apps --skill code-reviewer"
-    - "affaan-m/everything-claude-code --skill coding-standards"
-    - "affaan-m/everything-claude-code --skill api-design"
-    - "langgenius/dify --skill backend-code-review"
-    - "anthropics/skills --skill algorithmic-art"
-    - "anthropics/skills --skill xlsx"
-    - "affaan-m/everything-claude-code --skill java-coding-standards"
-    - "affaan-m/everything-claude-code --skill jpa-patterns"
-    - "affaan-m/everything-claude-code --skill springboot-patterns"
-    - "affaan-m/everything-claude-code --skill springboot-security"
-    - "marcelorodrigo/agent-skills --skill spring-boot-testing"
-    - "affaan-m/everything-claude-code --skill database-migrations"
-    - "affaan-m/everything-claude-code --skill postgres-patterns"
-    - "affaan-m/everything-claude-code --skill python-patterns"
-    - "affaan-m/everything-claude-code --skill python-testing"
-    - "Shubhamsaboo/awesome-llm-apps --skill python-expert"
-    - "Shubhamsaboo/awesome-llm-apps --skill visualization-expert"
-    - "browser-use/browser-use --skill browser-use"
-    - "vercel-labs/agent-browser --skill agent-browser"
-    - "michalparkola/tapestry-skills-for-claude-code --skill article-extractor"
-    - "Shubhamsaboo/awesome-llm-apps --skill decision-helper"
-    - "Shubhamsaboo/awesome-llm-apps --skill editor"
-    - "Shubhamsaboo/awesome-llm-apps --skill technical-writer"
-    - "Shubhamsaboo/awesome-llm-apps --skill email-drafter"
-    - "Shubhamsaboo/awesome-llm-apps --skill meeting-notes"
-    - "Shubhamsaboo/awesome-llm-apps --skill sprint-planner"
-    - "Shubhamsaboo/awesome-llm-apps --skill strategy-advisor"
-    - "blader/humanizer --skill humanizer"
+    # - "Shubhamsaboo/awesome-llm-apps --skill code-reviewer"
+    # - "affaan-m/everything-claude-code --skill coding-standards"
+    # - "affaan-m/everything-claude-code --skill api-design"
+    # - "langgenius/dify --skill backend-code-review"
+    # - "anthropics/skills --skill algorithmic-art"
+    # - "anthropics/skills --skill xlsx"
+    # - "affaan-m/everything-claude-code --skill java-coding-standards"
+    # - "affaan-m/everything-claude-code --skill jpa-patterns"
+    # - "affaan-m/everything-claude-code --skill springboot-patterns"
+    # - "affaan-m/everything-claude-code --skill springboot-security"
+    # - "marcelorodrigo/agent-skills --skill spring-boot-testing"
+    # - "affaan-m/everything-claude-code --skill database-migrations"
+    # - "affaan-m/everything-claude-code --skill postgres-patterns"
+    # - "affaan-m/everything-claude-code --skill python-patterns"
+    # - "affaan-m/everything-claude-code --skill python-testing"
+    # - "Shubhamsaboo/awesome-llm-apps --skill python-expert"
+    # - "Shubhamsaboo/awesome-llm-apps --skill visualization-expert"
+    # - "browser-use/browser-use --skill browser-use"
+    # - "vercel-labs/agent-browser --skill agent-browser"
+    # - "michalparkola/tapestry-skills-for-claude-code --skill article-extractor"
+    # - "Shubhamsaboo/awesome-llm-apps --skill decision-helper"
+    # - "Shubhamsaboo/awesome-llm-apps --skill editor"
+    # - "Shubhamsaboo/awesome-llm-apps --skill technical-writer"
+    # - "Shubhamsaboo/awesome-llm-apps --skill email-drafter"
+    # - "Shubhamsaboo/awesome-llm-apps --skill meeting-notes"
+    # - "Shubhamsaboo/awesome-llm-apps --skill sprint-planner"
+    # - "Shubhamsaboo/awesome-llm-apps --skill strategy-advisor"
+    # - "blader/humanizer --skill humanizer"
     - "JuliusBrussee/caveman"
   loop_control:
     loop_var: skill_item

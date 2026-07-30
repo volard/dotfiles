@@ -6,27 +6,24 @@ enabled_roles:
   - beets
   - ssh
   - sway
-  - mpd
-  - lazy_neovim
+  - neovim
   - ideavim
-  - vscode
-  - mise
   - lazygit
   - docker
   - wezterm
   - fuzzel
   - vnc
   - hiddify
-  - ohmyposh
   - foot
-  - linux_setup
   - programs
   - wakatime
   - mako
+  - fish
   - zsh
   - bash
   - git
   - voxtype
   - niri
   - waybinder
+  - chezmoi
   - snap

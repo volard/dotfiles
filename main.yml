@@ -248,6 +248,11 @@
       tags:
         - mako
 
+    - role: fish
+      when: "'fish' in enabled_roles or 'fish' in selected_role_tags"
+      tags:
+        - fish
+
     - role: zsh
       when: "'zsh' in enabled_roles or 'zsh' in selected_role_tags"
       tags:
@@ -287,3 +292,8 @@
       when: "'snap' in enabled_roles or 'snap' in selected_role_tags"
       tags:
         - snap
+
+    - role: chezmoi
+      when: "'chezmoi' in enabled_roles or 'chezmoi' in selected_role_tags"
+      tags:
+        - chezmoi

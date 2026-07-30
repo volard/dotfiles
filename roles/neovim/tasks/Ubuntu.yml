@@ -1,0 +1,20 @@
+---
+- name: Install required packages on Linux
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - curl
+    - ripgrep
+    - fd-find
+    - snapd
+    - gcc
+  become: true
+  when: ansible_facts['os_family'] in ["Debian", "Ubuntu"]
+
+- name: Install nvim via snap on Linux
+  community.general.snap:
+    name: nvim
+    state: present
+  become: true
+  when: ansible_facts['distribution'] == 'Ubuntu'

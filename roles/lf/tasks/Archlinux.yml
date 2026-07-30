@@ -19,14 +19,6 @@
     loop_var: pacman_item
   when: ansible_facts['distribution'] == "Archlinux"
 
-- name: Create a symlink
-  ansible.builtin.file:
-    src: "{{ role_path }}/files"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/lf"
-    mode: "0755"
-    state: link
-    force: true
-
 # stopped working for me, so I wrote mine in test.sh
 
 # - name: Check if a command exists
@@ -69,15 +61,3 @@
     path: "{{ ansible_facts['user_dir'] }}/.cache/lf"
     state: directory
     mode: "0755"
-
-- name: Ensure lfcd.sh executable
-  ansible.builtin.file:
-    path: "{{ role_path }}/files/lfcd.sh"
-    state: file
-    mode: '0755'
-
-- name: Ensure preview executable
-  ansible.builtin.file:
-    path: "{{ role_path }}/files/preview.sh"
-    state: file
-    mode: '0755'

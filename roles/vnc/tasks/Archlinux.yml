@@ -10,17 +10,3 @@
   loop_control:
     loop_var: pacman_item
   when: ansible_facts['distribution'] == "Archlinux"
-
-- name: Ensure config directory exists
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/wayvnc"
-    state: directory
-    mode: '0755'
-
-- name: "Create link to wayvnc config"
-  ansible.builtin.file:
-    src: "{{ role_path }}/files/config"
-    dest: "{{ ansible_facts['user_dir'] }}/wayvnc/config"
-    state: link
-    force: true
-  become: true

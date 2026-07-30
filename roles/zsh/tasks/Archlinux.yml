@@ -24,21 +24,3 @@
     name: "{{ ansible_facts['env']['USER'] }}"
     shell: /usr/bin/zsh
   become: true
-
-- name: Remove default .zshrc configuration
-  ansible.builtin.file:
-    path: ~/.zshrc
-    state: absent
-
-- name: Render .zshrc from template
-  ansible.builtin.template:
-    src: .zshrc.j2
-    dest: ~/.zshrc
-    mode: "0644"
-  diff: false
-
-- name: Create a symbolic link for .aliases
-  ansible.builtin.file:
-    src: ~/dotfiles/roles/zsh/files/.aliases
-    dest: ~/.aliases
-    state: link
