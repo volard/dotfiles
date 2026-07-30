@@ -38,16 +38,6 @@
       tags:
         - powershell
 
-    - role: gtk
-      when: "'gtk' in enabled_roles or 'gtk' in selected_role_tags"
-      tags:
-        - gtk
-
-    - role: doom
-      when: "'doom' in enabled_roles or 'doom' in selected_role_tags"
-      tags:
-        - doom
-
     - role: virtual
       when: "'virtual' in enabled_roles or 'virtual' in selected_role_tags"
       tags:
@@ -78,45 +68,15 @@
       tags:
         - sway
 
-    - role: swaylock
-      when: "'swaylock' in enabled_roles or 'swaylock' in selected_role_tags"
-      tags:
-        - swaylock
-
-    - role: mpd
-      when: "'mpd' in enabled_roles or 'mpd' in selected_role_tags"
-      tags:
-        - mpd
-
-    - role: lazy_neovim
+    - role: neovim
       when: "'lazy_neovim' in enabled_roles or 'lazy_neovim' in selected_role_tags"
       tags:
-        - lazy_neovim
-
-    - role: xplr
-      when: "'xplr' in enabled_roles or 'xplr' in selected_role_tags"
-      tags:
-        - xplr
-
-    - role: ideavim
-      when: "'ideavim' in enabled_roles or 'ideavim' in selected_role_tags"
-      tags:
-        - ideavim
+        - neovim
 
     - role: alacritty
       when: "'alacritty' in enabled_roles or 'alacritty' in selected_role_tags"
       tags:
         - alacritty
-
-    - role: vscode
-      when: "'vscode' in enabled_roles or 'vscode' in selected_role_tags"
-      tags:
-        - vscode
-
-    - role: polybar
-      when: "'polybar' in enabled_roles or 'polybar' in selected_role_tags"
-      tags:
-        - polybar
 
     - role: rofi
       when: "'rofi' in enabled_roles or 'rofi' in selected_role_tags"
@@ -132,16 +92,6 @@
       when: "'vifm' in enabled_roles or 'vifm' in selected_role_tags"
       tags:
         - vifm
-
-    - role: kitty
-      when: "'kitty' in enabled_roles or 'kitty' in selected_role_tags"
-      tags:
-        - kitty
-
-    - role: mise
-      when: "'mise' in enabled_roles or 'mise' in selected_role_tags"
-      tags:
-        - mise
 
     - role: atuin
       when: "'atuin' in enabled_roles or 'atuin' in selected_role_tags"
@@ -172,11 +122,6 @@
       when: "'incus' in enabled_roles or 'incus' in selected_role_tags"
       tags:
         - incus
-
-    - role: windows_setup
-      when: "'windows_setup' in enabled_roles or 'windows_setup' in selected_role_tags"
-      tags:
-        - windows_setup
 
     - role: wezterm
       when: "'wezterm' in enabled_roles or 'wezterm' in selected_role_tags"
@@ -213,21 +158,6 @@
       tags:
         - foot
 
-    - role: awesome
-      when: "'awesome' in enabled_roles or 'awesome' in selected_role_tags"
-      tags:
-        - awesome
-
-    - role: emacs
-      when: "'emacs' in enabled_roles or 'emacs' in selected_role_tags"
-      tags:
-        - emacs
-
-    - role: linux_setup
-      when: "'linux_setup' in enabled_roles or 'linux_setup' in selected_role_tags"
-      tags:
-        - linux_setup
-
     - role: programs
       when: "'programs' in enabled_roles or 'programs' in selected_role_tags"
       tags:
@@ -243,30 +173,20 @@
       tags:
         - wakatime
 
-    - role: mako
-      when: "'mako' in enabled_roles or 'mako' in selected_role_tags"
-      tags:
-        - mako
-
-    - role: fish
-      when: "'fish' in enabled_roles or 'fish' in selected_role_tags"
-      tags:
-        - fish
-
     - role: zsh
       when: "'zsh' in enabled_roles or 'zsh' in selected_role_tags"
       tags:
         - zsh
 
-    - role: fcitx
-      when: "'fcitx' in enabled_roles or 'fcitx' in selected_role_tags"
-      tags:
-        - fcitx
-
     - role: bash
       when: "'bash' in enabled_roles or 'bash' in selected_role_tags"
       tags:
         - bash
+
+    - role: fish
+      when: "'fish' in enabled_roles or 'fish' in selected_role_tags"
+      tags:
+        - fish
 
     - role: lf
       when: "'lf' in enabled_roles or 'lf' in selected_role_tags"

@@ -29,7 +29,7 @@ selection="$(
 
 case "$selection" in
     "󰌾 Lock")
-        gtklock
+        swaylock
         ;;
     "󰤄 Suspend")
         if confirm_action "Suspend"; then

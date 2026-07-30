@@ -10,7 +10,7 @@ exec hash dbus-update-activation-environment 2>/dev/null && \
 
 # Idle configuration
 exec swayidle idlehint 1
-exec_always swayidle -w before-sleep "gtklock -d"
+exec_always swayidle -w before-sleep "swaylock -f"
 
 # Desktop notifications
 exec mako

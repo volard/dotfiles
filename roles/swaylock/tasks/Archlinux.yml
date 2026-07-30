@@ -1,9 +1,0 @@
----
-- name: Install swaylock
-  community.general.pacman:
-    name: swaylock
-    state: present
-  become: true
-
-- name: Include common linux tasks
-  ansible.builtin.include_tasks: roles/swaylock/tasks/linux.yml

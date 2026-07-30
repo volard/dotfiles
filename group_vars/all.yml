@@ -7,7 +7,6 @@ enabled_roles:
   - ssh
   - sway
   - neovim
-  - ideavim
   - lazygit
   - docker
   - wezterm

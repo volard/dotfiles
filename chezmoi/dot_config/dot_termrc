@@ -25,15 +25,6 @@ export EDITOR=nvim
 bind -x '"\C-f": "tsesh"'
 bind -x '"\C-g": "lf"'
 
-if command -v oh-my-posh &> /dev/null; then
-  OH_MY_POSH_CONFIG="$HOME/.config/oh-my-posh/amro.omp.json"
-  if [ -e "${OH_MY_POSH_CONFIG}" ]; then
-    eval "$(oh-my-posh init bash --config $OH_MY_POSH_CONFIG)"
-  else
-    eval "$(oh-my-posh init bash)"
-  fi
-fi
-
 if command -v pyenv &> /dev/null; then
     eval "$(pyenv init -)"
 fi
@@ -46,4 +37,3 @@ fi
 if command -v zoxide &> /dev/null; then
     eval "$(zoxide init bash)"
 fi
-

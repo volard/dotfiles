@@ -9,6 +9,7 @@
     - xdg-desktop-portal
     - pipewire
     - waybar
+    - swaylock
   become: true
   loop_control:
     loop_var: pacman_item
