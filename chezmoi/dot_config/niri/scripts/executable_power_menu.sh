@@ -7,7 +7,7 @@ logout_session() {
 }
 
 poweroff_system() {
-    sudo shutdown now
+    systemctl poweroff
 }
 
 confirm_action() {
@@ -16,7 +16,7 @@ confirm_action() {
 
     confirmation="$(
         printf "No\nYes" |
-            fuzzel --dmenu -a -l 2 -w 38 -p "$action? "
+            fuzzel --dmenu -a center -l 2 -w 38 -p "$action? "
     )"
 
     [[ "$confirmation" == "Yes" ]]
