@@ -19,7 +19,7 @@ confirm_action() {
 
 case $SELECTION in
     *"󰌾 Lock"*)
-        gtklock;;
+        swaylock;;
     *"󰤄 Suspend"*)
         if confirm_action "Suspend"; then
             systemctl suspend

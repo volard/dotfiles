@@ -23,21 +23,3 @@
     state: present
   when:
     - grep_result.rc != 0 # Only add line if grep didn't find it
-
-- name: Ensure .local/bin directory exists
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.local/bin"
-    state: directory
-    mode: '0755'
-
-- name: Download Oh My Posh installation script
-  ansible.builtin.get_url:
-    url: https://ohmyposh.dev/install.sh
-    dest: /tmp/install.sh
-    mode: '0755'  # Make the script executable
-
-- name: Install Oh My Posh
-  ansible.builtin.shell: >
-    set -o pipefail; /tmp/install.sh -d {{ ansible_facts['user_dir'] }}/.local/bin
-  args:
-    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/oh-my-posh"

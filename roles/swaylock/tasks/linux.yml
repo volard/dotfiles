@@ -1,4 +1,0 @@
----
-- name: Skip swaylock config copy
-  ansible.builtin.debug:
-    msg: "swaylock config is managed by chezmoi now."

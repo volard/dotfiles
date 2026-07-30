@@ -1,4 +1,0 @@
----
-- name: Skip IdeaVim config symlink
-  ansible.builtin.debug:
-    msg: "IdeaVim config is managed by chezmoi now."

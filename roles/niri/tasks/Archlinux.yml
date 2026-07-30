@@ -5,6 +5,8 @@
     state: present
   loop:
     - niri
+    - ly
+    - swaylock
     - xwayland-satellite
     - fuzzel
     - satty
@@ -29,4 +31,93 @@
     - seahorse # GUI key and password manager
   loop_control:
     loop_var: pacman_item
+  become: true
+
+- name: Ensure Ly custom sessions directory exists
+  ansible.builtin.file:
+    path: /etc/ly/custom-sessions
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: Install Niri session for Ly
+  ansible.builtin.copy:
+    dest: /etc/ly/custom-sessions/niri.desktop
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      [Desktop Entry]
+      Name=Niri
+      Exec=/usr/bin/niri-session
+      Type=Application
+  become: true
+
+- name: Configure Ly to use Niri Wayland sessions
+  ansible.builtin.lineinfile:
+    path: /etc/ly/config.ini
+    regexp: "^{{ ly_config_item.key }}\\s*="
+    line: "{{ ly_config_item.key }} = {{ ly_config_item.value }}"
+  loop:
+    - key: lang
+      value: en
+    - key: shell
+      value: "false"
+    - key: xinitrc
+      value: "null"
+    - key: xsessions
+      value: "null"
+    - key: waylandsessions
+      value: /etc/ly/custom-sessions
+  loop_control:
+    loop_var: ly_config_item
+    label: "{{ ly_config_item.key }}"
+  become: true
+
+- name: Read current keyboard layout
+  ansible.builtin.command: localectl status
+  register: localectl_status
+  changed_when: false
+
+- name: Set console keyboard layout to English
+  ansible.builtin.command: localectl set-keymap us
+  become: true
+  changed_when: true
+  when: "'VC Keymap: us' not in localectl_status.stdout"
+
+- name: Set X11 keyboard layout to English Workman
+  ansible.builtin.command: localectl set-x11-keymap us pc105 workman
+  become: true
+  changed_when: true
+  when: >-
+    'X11 Layout: us' not in localectl_status.stdout
+    or 'X11 Variant: workman' not in localectl_status.stdout
+
+- name: Disable other display managers
+  ansible.builtin.systemd_service:
+    name: "{{ display_manager_service }}"
+    enabled: false
+  loop:
+    - greetd.service
+    - gdm.service
+    - sddm.service
+    - lightdm.service
+  loop_control:
+    loop_var: display_manager_service
+  become: true
+  failed_when: false
+
+- name: Disable getty on Ly TTY
+  ansible.builtin.systemd_service:
+    name: getty@tty2.service
+    enabled: false
+  become: true
+
+- name: Enable Ly display manager
+  ansible.builtin.systemd_service:
+    name: ly@tty2.service
+    enabled: true
+    daemon_reload: true
   become: true

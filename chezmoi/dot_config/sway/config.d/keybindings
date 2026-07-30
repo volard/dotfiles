@@ -23,7 +23,7 @@ bindsym --to-code {
     $mod+Shift+d exec $menu
 
     # Lock screen
-    $mod+f1 exec gtklock
+    $mod+f1 exec swaylock
 
     # Activities
     $mod+p exec ~/.config/sway/scripts/window_switcher.sh

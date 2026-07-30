@@ -83,8 +83,6 @@ function yy {
     Remove-Item -Path $tmp
 }
 
-# enable fancy oh-my-posh
-oh-my-posh init pwsh --config ~/.config/oh-my-posh/amro.omp.json | Invoke-Expression;
 
 # use z instead of cd - zoxide
 Invoke-Expression (& { (zoxide init powershell | Out-String) }); 
