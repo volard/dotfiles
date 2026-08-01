@@ -1,28 +1,15 @@
 ---
 enabled_roles:
-  - gtk3
-  - ranger
-  - tmux
-  - beets
+  - gtk
   - ssh
-  - sway
   - neovim
   - lazygit
   - docker
   - wezterm
-  - fuzzel
-  - vnc
-  - hiddify
-  - foot
   - programs
-  - wakatime
-  - mako
   - fish
-  - zsh
   - bash
   - git
   - voxtype
   - niri
-  - waybinder
   - chezmoi
-  - snap

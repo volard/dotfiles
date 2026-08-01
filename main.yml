@@ -43,21 +43,6 @@
       tags:
         - virtual
 
-    - role: ranger
-      when: "'ranger' in enabled_roles or 'ranger' in selected_role_tags"
-      tags:
-        - ranger
-
-    - role: tmux
-      when: "'tmux' in enabled_roles or 'tmux' in selected_role_tags"
-      tags:
-        - tmux
-
-    - role: beets
-      when: "'beets' in enabled_roles or 'beets' in selected_role_tags"
-      tags:
-        - beets
-
     - role: ssh
       when: "'ssh' in enabled_roles or 'ssh' in selected_role_tags"
       tags:
@@ -69,39 +54,14 @@
         - sway
 
     - role: neovim
-      when: "'lazy_neovim' in enabled_roles or 'lazy_neovim' in selected_role_tags"
+      when: "'neovim' in enabled_roles or 'neovim' in selected_role_tags"
       tags:
         - neovim
 
-    - role: alacritty
-      when: "'alacritty' in enabled_roles or 'alacritty' in selected_role_tags"
+    - role: gtk
+      when: "'gtk' in enabled_roles or 'gtk' in selected_role_tags"
       tags:
-        - alacritty
-
-    - role: rofi
-      when: "'rofi' in enabled_roles or 'rofi' in selected_role_tags"
-      tags:
-        - rofi
-
-    - role: glazewm
-      when: "'glazewm' in enabled_roles or 'glazewm' in selected_role_tags"
-      tags:
-        - glazewm
-
-    - role: vifm
-      when: "'vifm' in enabled_roles or 'vifm' in selected_role_tags"
-      tags:
-        - vifm
-
-    - role: atuin
-      when: "'atuin' in enabled_roles or 'atuin' in selected_role_tags"
-      tags:
-        - atuin
-
-    - role: zed
-      when: "'zed' in enabled_roles or 'zed' in selected_role_tags"
-      tags:
-        - zed
+        - gtk
 
     - role: lazygit
       when: "'lazygit' in enabled_roles or 'lazygit' in selected_role_tags"
@@ -133,10 +93,10 @@
       tags:
         - neovim
 
-    - role: fuzzel
-      when: "'fuzzel' in enabled_roles or 'fuzzel' in selected_role_tags"
+    - role: bemoji
+      when: "'bemoji' in enabled_roles or 'bemoji' in selected_role_tags"
       tags:
-        - fuzzel
+        - bemoji
 
     - role: vnc
       when: "'vnc' in enabled_roles or 'vnc' in selected_role_tags"
@@ -153,11 +113,6 @@
       tags:
         - voxtype
 
-    - role: foot
-      when: "'foot' in enabled_roles or 'foot' in selected_role_tags"
-      tags:
-        - foot
-
     - role: programs
       when: "'programs' in enabled_roles or 'programs' in selected_role_tags"
       tags:
@@ -172,11 +127,6 @@
       when: "'wakatime' in enabled_roles or 'wakatime' in selected_role_tags"
       tags:
         - wakatime
-
-    - role: zsh
-      when: "'zsh' in enabled_roles or 'zsh' in selected_role_tags"
-      tags:
-        - zsh
 
     - role: bash
       when: "'bash' in enabled_roles or 'bash' in selected_role_tags"

@@ -4,7 +4,7 @@
     name: "{{ pacman_item }}"
     state: present
   loop:
-    - tigervnc # clien
+    - tigervnc # client
     - wayvnc   # server
   become: true
   loop_control:

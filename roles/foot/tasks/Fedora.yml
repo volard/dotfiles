@@ -1,7 +1,0 @@
----
-- name: Install foot
-  ansible.builtin.dnf:
-    name: foot
-    state: present
-  become: true
-  when: ansible_facts['distribution'] == 'Fedora'
