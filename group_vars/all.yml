@@ -8,7 +8,6 @@ enabled_roles:
   - wezterm
   - programs
   - fish
-  - bash
   - git
   - voxtype
   - niri
