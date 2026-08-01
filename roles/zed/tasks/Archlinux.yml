@@ -1,6 +1,0 @@
----
-- name: Install zed from pacman
-  community.general.pacman:
-    name: zed
-    state: present
-  become: true

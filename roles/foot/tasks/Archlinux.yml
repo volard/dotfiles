@@ -1,4 +1,0 @@
----
-- name: Skip foot config symlink
-  ansible.builtin.debug:
-    msg: "foot config is managed by chezmoi now."

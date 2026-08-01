@@ -1,9 +1,28 @@
 ---
-- name: "Checking for distribution config"
-  ansible.builtin.stat:
-    path: "{{ role_path }}/tasks/{{ ansible_facts['distribution'] }}.yml"
-  register: distribution_config
+- name: Install git-delta
+  community.general.pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - git-delta # better git diff
+    - less
+  become: true
+  loop_control:
+    loop_var: pacman_item
+  when: ansible_facts['distribution'] == "Archlinux"
 
-- name: "Run distro specific tasks"
-  ansible.builtin.include_tasks: "{{ ansible_facts['distribution'] }}.yml"
-  when: distribution_config.stat.exists
+- name: Install Git on Linux
+  ansible.builtin.apt:
+    name: git
+    state: present
+    update_cache: true
+  become: true
+  when:
+    - ansible_facts['distribution'] == 'Ubuntu'
+    - ansible_facts['pkg_mgr'] == 'apt'
+
+- name: Install Git using Scoop
+  community.windows.win_scoop:
+    name: git
+    state: present
+  when: ansible_facts['os_family'] == 'Windows'

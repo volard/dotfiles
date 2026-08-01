@@ -6,12 +6,14 @@
   loop:
     - glab # gitlab cli
     - github-cli
+    - zed
     - git-lfs
     - go
     - bun # better node
     - base-devel
     - lazyssh
     - mkcert
+    - tmux
     - nix
     - direnv
     - polkit # authorization framework that lets unprivileged processes request permission from privileged system services
@@ -20,11 +22,11 @@
     - ast-grep # grep with code understanding
     # - zathura # pdf viewer
     - evince # pdf viewer
-    - remind # proper reminder tool
+    # - remind # proper reminder tool
     - zip
     - unzip
     - trash-cli
-    - mise # dev tools version manager
+    # - mise # dev tools version manager
     - fzf # fuzzy searching tool
     - qbittorrent # torrent client
     - duf # better df
@@ -37,7 +39,7 @@
     - just # better make
     - blueman # bluetooth gui manager
     - btop # better htop/top
-    - meld # gui diffing tool
+    # - meld # gui diffing tool
     # - xplr # rust based lua hackable tui file manager, too complicated
     - mpv # video player
     - jq # json processor
@@ -50,7 +52,7 @@
     - wl-clipboard # its and couple more down are the waybinder dependencies (look for the binary in the /bin + https://gitlab.com/cscs/waybinder)
     - wtype
     - tree
-    - zenity # gui gtk propmts
+    # - zenity # gui gtk propmts
     - eog # eye of gnome - image viewer
     - tesseract # OCR program
   become: true

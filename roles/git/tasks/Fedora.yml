@@ -1,4 +1,0 @@
----
-- name: Skip Git config copy
-  ansible.builtin.debug:
-    msg: "Git config is managed by chezmoi now."

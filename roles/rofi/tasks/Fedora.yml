@@ -1,7 +1,0 @@
----
-- name: Install packages
-  ansible.builtin.dnf:
-    name: rofimoji
-    state: present
-  become: true
-  when: ansible_facts['distribution'] == 'Fedora'

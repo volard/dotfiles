@@ -13,9 +13,3 @@
     path: "{{ ansible_facts['user_dir'] }}/.local/share/icons"
     state: directory
     mode: "0755"
-
-- name: Install Bibata cursor theme for niri
-  ansible.builtin.unarchive:
-    src: "{{ playbook_dir }}/files/Bibata-Modern-Ice.tar.xz"
-    dest: "{{ ansible_facts['user_dir'] }}/.local/share/icons"
-    creates: "{{ ansible_facts['user_dir'] }}/.local/share/icons/Bibata-Modern-Ice/index.theme"

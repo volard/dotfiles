@@ -10,3 +10,4 @@ Deprecated -> it's better to use
 - `route` -> `ip route`
 - `iwconfig` -> `iw`
 - `iptables` -> `nftables`
+- `find` -> `locate` from plocate

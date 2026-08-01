@@ -7,7 +7,7 @@
 
 binds {
     Mod+Return  hotkey-overlay-title="Open a Terminal: wezterm"   { spawn "wezterm"; }
-    Mod+D       hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    Mod+D       hotkey-overlay-title="Run an Application" { spawn "rofi -show drun"; }
     Mod+Shift+O hotkey-overlay-title="Pick an Emoji"              { spawn "bemoji" "-n"; }
     Mod+P       hotkey-overlay-title="Pick a Window"              { spawn "~/.config/niri/scripts/window_picker"; }
     Mod+Slash   hotkey-overlay-title="Text Shortcuts: waybinder"  { spawn-sh "exec \"$HOME/.local/bin/waybinder\""; }
