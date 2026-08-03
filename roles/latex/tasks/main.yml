@@ -1,6 +1,6 @@
 ---
 - name: Install packages from pacman
-  community.general.community.general.pacman:
+  community.general.pacman:
     name: "{{ pacman_item }}"
     state: present
   loop:

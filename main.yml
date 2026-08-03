@@ -26,12 +26,6 @@
       tags:
         - always
 
-    - name: Include Archlinux pre-tasks
-      ansible.builtin.include_tasks: pre_tasks/Archlinux.yml
-      when: ansible_facts['distribution'] == 'Archlinux'
-      tags:
-        - always
-
   roles:
     - role: powershell
       when: "'powershell' in enabled_roles or 'powershell' in selected_role_tags"
@@ -63,10 +57,10 @@
       tags:
         - gtk
 
-    - role: lazygit
-      when: "'lazygit' in enabled_roles or 'lazygit' in selected_role_tags"
+    - role: user_groups
+      when: "'user_groups' in enabled_roles or 'user_groups' in selected_role_tags"
       tags:
-        - lazygit
+        - user_groups
 
     - role: i3
       when: "'i3' in enabled_roles or 'i3' in selected_role_tags"
@@ -117,6 +111,11 @@
       when: "'programs' in enabled_roles or 'programs' in selected_role_tags"
       tags:
         - programs
+
+    - role: bluetooth
+      when: "'bluetooth' in enabled_roles or 'bluetooth' in selected_role_tags"
+      tags:
+        - bluetooth
 
     - role: latex
       when: "'latex' in enabled_roles or 'latex' in selected_role_tags"

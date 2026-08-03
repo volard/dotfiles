@@ -95,9 +95,6 @@
   become: true
   when: ansible_facts['distribution'] == 'Fedora'
 
-- name: Source dotfiles bin
-  ansible.builtin.include_tasks: pre_tasks/linux_bash_dotfiles_bin.yml
-
 - name: Adding existing user to group sudo
   ansible.builtin.user:
     name: volard

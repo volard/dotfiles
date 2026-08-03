@@ -1,9 +1,38 @@
 ---
-- name: "Checking for distribution config"
-  ansible.builtin.stat:
-    path: "{{ role_path }}/tasks/{{ ansible_facts['distribution'] }}.yml"
-  register: distribution_config
+- name: Get latest Lazygit version
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/jesseduffield/lazygit/releases/latest
+    return_content: true
+  register: lazygit_latest
 
-- name: "Run distro specific tasks"
-  ansible.builtin.include_tasks: "{{ ansible_facts['distribution'] }}.yml"
-  when: distribution_config.stat.exists
+- name: Set Lazygit version fact
+  ansible.builtin.set_fact:
+    lazygit_version: "{{ lazygit_latest.json.tag_name[1:] }}"
+
+- name: Download Lazygit archive
+  ansible.builtin.get_url:
+    url: https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_{{ lazygit_version }}_Linux_x86_64.tar.gz
+    dest: /tmp/lazygit.tar.gz
+    mode: '0755'
+
+- name: Extract Lazygit binary
+  ansible.builtin.unarchive:
+    src: /tmp/lazygit.tar.gz
+    dest: /tmp
+    remote_src: true
+
+- name: Move Lazygit binary to /usr/local/bin
+  ansible.builtin.copy:
+    src: /tmp/lazygit
+    dest: /usr/local/bin/lazygit
+    mode: "0755"
+    remote_src: true
+  become: true
+
+- name: Clean up temporary files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /tmp/lazygit.tar.gz
+    - /tmp/lazygit
