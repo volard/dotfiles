@@ -8,10 +8,10 @@
     - github-cli
     - zed
     - git-lfs
-    - go
-    - bun # better node
+    - bun
     - base-devel
     - lazyssh
+    - lazygit
     - mkcert
     - tmux
     - nix

@@ -1,1 +1,11 @@
-- stutter from jamestomasino.com
+- Stutter from jamestomasino.com
+- Privacy Badger
+- Disconnect
+- uBlock Origin
+- Protect My Choices
+- Consent-O-Matic
+- PopUpOFF
+- Port Authority
+- NoScript Security Suite by Giorgio Maone
+- Youtube Playback Speed Control
+- SponsorBlock - Skip Sponsorships on YouTube

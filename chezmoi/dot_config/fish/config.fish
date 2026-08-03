@@ -1,4 +1,5 @@
 set -g fish_greeting
+fish_add_path "$HOME/dotfiles/bin"
 
 if status is-interactive
     if command -q starship

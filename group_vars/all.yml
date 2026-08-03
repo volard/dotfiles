@@ -2,8 +2,8 @@
 enabled_roles:
   - gtk
   - ssh
+  - user_groups
   - neovim
-  - lazygit
   - docker
   - wezterm
   - programs
