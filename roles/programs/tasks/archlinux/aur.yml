@@ -1,0 +1,7 @@
+---
+- name: Install packages from AUR
+  ansible.builtin.include_tasks: roles/common_tasks/tasks/require_aur_packages.yml
+  vars:
+    aur_packages:
+      - lazyssh-bin
+    aur_requirement_context: programs role

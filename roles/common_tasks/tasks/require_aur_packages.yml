@@ -12,10 +12,71 @@
   ansible.builtin.set_fact:
     missing_aur_packages: "{{ aur_package_checks.results | rejectattr('rc', 'equalto', 0) | map(attribute='aur_package') | list }}"
 
-- name: Stop because required AUR packages must be installed manually
-  ansible.builtin.fail:
-    msg: >-
-      Missing required AUR packages for {{ aur_requirement_context | default('this role') }}:
-      {{ missing_aur_packages | join(', ') }}.
-      Install them manually with your preferred AUR helper, then rerun dotfiles.
+- name: Install AUR build dependencies
+  community.general.pacman:
+    name:
+      - base-devel
+      - git
+      - gnupg
+      - sudo
+    state: present
+  become: true
+  when: missing_aur_packages | length > 0
+
+- name: Create aur_builder user
+  ansible.builtin.user:
+    name: aur_builder
+    create_home: true
+    group: wheel
+  become: true
+  when: missing_aur_packages | length > 0
+
+- name: Ensure aur_builder Ansible tmp directory exists
+  ansible.builtin.file:
+    path: /home/aur_builder/.ansible/tmp
+    state: directory
+    owner: aur_builder
+    group: wheel
+    mode: "0700"
+  become: true
+  when: missing_aur_packages | length > 0
+
+- name: Allow aur_builder to install packages with pacman
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/11-install-aur_builder
+    line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
+    create: true
+    mode: "0440"
+    validate: "visudo -cf %s"
+  become: true
+  when: missing_aur_packages | length > 0
+
+- name: Check AUR PGP keys
+  ansible.builtin.command: "gpg --list-keys {{ aur_pgp_key }}"
+  loop: "{{ aur_pgp_keys | default([]) }}"
+  loop_control:
+    loop_var: aur_pgp_key
+  register: aur_pgp_key_checks
+  changed_when: false
+  failed_when: false
+  become: true
+  become_user: aur_builder
+  when: missing_aur_packages | length > 0
+
+- name: Import missing AUR PGP keys
+  ansible.builtin.command: >-
+    gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys {{ item.aur_pgp_key }}
+  loop: "{{ aur_pgp_key_checks.results | default([]) | rejectattr('rc', 'equalto', 0) | list }}"
+  changed_when: true
+  become: true
+  become_user: aur_builder
+  when: missing_aur_packages | length > 0
+
+- name: Install missing AUR packages
+  kewlfft.aur.aur:
+    name: "{{ missing_aur_packages }}"
+    use: makepkg
+    state: present
+  become: true
+  become_user: aur_builder
   when: missing_aur_packages | length > 0

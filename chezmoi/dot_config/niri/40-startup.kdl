@@ -5,15 +5,12 @@ spawn-sh-at-startup "niri msg action focus-workspace 2"
 spawn-at-startup "swayidle" "idlehint" "1"
 spawn-at-startup "swayidle" "-w" "before-sleep" "swaylock -f"
 
-spawn-sh-at-startup "waybar -c \"$HOME/.config/waybar/config-niri.jsonc\" -s \"$HOME/.config/waybar/style.css\""
-
 // Auth with polkit-gnome
 spawn-sh-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
-// apply gtk theming
-spawn-sh-at-startup "$HOME/.config/niri/import-gsettings"
-
-spawn-sh-at-startup "$HOME/.config/niri/dynamic_wallpapers"
+spawn-sh-at-startup "$HOME/.config/niri/scripts/import-gsettings"
+spawn-sh-at-startup "$HOME/.config/niri/scripts/dynamic_wallpapers"
+spawn-sh-at-startup "waybar -c \"$HOME/.config/waybar/config-niri.jsonc\" -s \"$HOME/.config/waybar/style.css\""
 spawn-at-startup "Telegram"
 spawn-at-startup "throne"
 spawn-at-startup "zen-browser"

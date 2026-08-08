@@ -13,6 +13,7 @@
     - 7zip # archieves previews and interactions
     - eza # directory previews
     - bat # files previews
+    - doxx # docx previews
     - poppler # for pdfs previews
   become: true
   loop_control:

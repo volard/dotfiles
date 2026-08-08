@@ -34,3 +34,4 @@
     name: docker
     state: started
     enabled: true
+  become: true

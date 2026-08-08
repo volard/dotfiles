@@ -27,9 +27,16 @@
     state: present
   when: ansible_facts['os_family'] == 'Windows'
 
+- name: Copy chezmoi source on Linux
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/chezmoi/"
+    dest: "{{ ansible_facts['user_dir'] }}/.local/share/dotfiles-chezmoi/"
+    mode: preserve
+  when: ansible_facts['os_family'] != 'Windows'
+
 - name: Apply chezmoi source on Linux
   ansible.builtin.command:
-    cmd: chezmoi apply --source "{{ playbook_dir }}/chezmoi"
+    cmd: chezmoi apply --source "{{ ansible_facts['user_dir'] }}/.local/share/dotfiles-chezmoi"
   environment:
     GIT_EMAIL_ADDRESS: "{{ git_email_address | default('') }}"
     GIT_USERNAME: "{{ git_username | default('') }}"

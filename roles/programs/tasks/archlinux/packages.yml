@@ -1,0 +1,56 @@
+---
+- name: Install packages from pacman
+  community.general.pacman:
+    name: "{{ pacman_item }}"
+    state: present
+  loop:
+    - glab # gitlab cli
+    - github-cli
+    - zed
+    - git-lfs
+    - bun
+    - base-devel
+    - lazygit
+    - mkcert
+    - tmux
+    - nix
+    - direnv
+    - zip
+    - unzip
+    - trash-cli
+    - fzf
+    - qbittorrent
+    - duf
+    - zoxide
+    - lshw
+    - telegram-desktop
+    - nemo
+    - fastfetch
+    - just
+    - btop
+    - mpv
+    - ffmpeg
+    - doxx     # docx in terminal
+    - ast-grep # grep with code understanding
+    - blueman  # bluetooth gui manager
+    - jq       # json processor
+    - yq       # yaml, toml etc. processor
+    - ark      # kde gui archives manager
+    - baobab   # storage analyzer gui (or qwindir)
+    - ncdu     # space analyzer
+    - caligula # dd wrapper with cool features
+    - tree
+    - eog # eye of gnome - image viewer
+    - tesseract # OCR
+    # - mise # dev tools version manager
+    # - zenity # gui gtk propmts
+    # - hyprpicker # Wayland color picker
+    # - meld # gui diffing tool
+    # - xplr # rust based lua hackable tui file manager, too complicated
+    # - remind # proper reminder tool
+    # - vivaldi
+    # - zathura # pdf viewer
+    # - evince # pdf viewer
+  become: true
+  loop_control:
+    loop_var: pacman_item

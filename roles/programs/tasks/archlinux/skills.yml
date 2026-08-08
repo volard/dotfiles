@@ -1,0 +1,50 @@
+---
+- name: Install global skills
+  ansible.builtin.command: bunx skills install {{ skill_item }} -y --all -g
+  loop:
+    - "vercel-labs/skills --skill find-skills"
+    - "anthropics/skills --skill skill-creator"
+    # - "anthropics/skills --skill frontend-design"
+    # - "vercel-labs/agent-skills --skill web-design-guidelines"
+    # - "vercel-labs/agent-skills --skill vercel-react-best-practices"
+    # - "affaan-m/everything-claude-code --skill frontend-patterns"
+    # - "affaan-m/everything-claude-code --skill docker-patterns"
+    - "openclaw/openclaw --skill gh-issues"
+    - "openclaw/openclaw --skill github"
+    # - "Shubhamsaboo/awesome-llm-apps --skill code-reviewer"
+    # - "affaan-m/everything-claude-code --skill coding-standards"
+    # - "affaan-m/everything-claude-code --skill api-design"
+    # - "langgenius/dify --skill backend-code-review"
+    # - "anthropics/skills --skill algorithmic-art"
+    # - "anthropics/skills --skill xlsx"
+    #
+    # - "affaan-m/everything-claude-code --skill java-coding-standards"
+    # - "affaan-m/everything-claude-code --skill jpa-patterns"
+    # - "affaan-m/everything-claude-code --skill springboot-patterns"
+    # - "affaan-m/everything-claude-code --skill springboot-security"
+    # - "marcelorodrigo/agent-skills --skill spring-boot-testing"
+    #
+    # - "affaan-m/everything-claude-code --skill database-migrations"
+    # - "affaan-m/everything-claude-code --skill postgres-patterns"
+    #
+    # - "affaan-m/everything-claude-code --skill python-patterns"
+    # - "affaan-m/everything-claude-code --skill python-testing"
+    # - "Shubhamsaboo/awesome-llm-apps --skill python-expert"
+    #
+    # - "Shubhamsaboo/awesome-llm-apps --skill visualization-expert"
+    #
+    # - "browser-use/browser-use --skill browser-use"
+    # - "vercel-labs/agent-browser --skill agent-browser"
+    #
+    # - "michalparkola/tapestry-skills-for-claude-code --skill article-extractor"
+    # - "Shubhamsaboo/awesome-llm-apps --skill decision-helper"
+    # - "Shubhamsaboo/awesome-llm-apps --skill editor"
+    # - "Shubhamsaboo/awesome-llm-apps --skill technical-writer"
+    # - "Shubhamsaboo/awesome-llm-apps --skill email-drafter"
+    # - "Shubhamsaboo/awesome-llm-apps --skill meeting-notes"
+    # - "Shubhamsaboo/awesome-llm-apps --skill sprint-planner"
+    # - "Shubhamsaboo/awesome-llm-apps --skill strategy-advisor"
+    # - "blader/humanizer --skill humanizer"
+    - "JuliusBrussee/caveman"
+  loop_control:
+    loop_var: skill_item

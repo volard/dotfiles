@@ -1,0 +1,21 @@
+#!/bin/bash
+
+WALLPAPER_DIR="$HOME/dotfiles/files/wallpapers"
+
+killall swaybg
+
+set_random_wallpaper() {
+
+	wallpaper=$(find "$WALLPAPER_DIR" -type f | shuf -n 1)
+
+	swaybg -i "$wallpaper" -m fill &
+
+	PID=$(pidof swaybg)
+  sleep 600
+
+  kill $PID
+}
+
+while true; do
+	set_random_wallpaper
+done

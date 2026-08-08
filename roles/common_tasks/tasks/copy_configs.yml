@@ -8,20 +8,12 @@
         state: directory
         mode: "0700"
 
-    - name: Find SSH configuration files
-      ansible.builtin.find:
-        paths: "{{ role_path }}/files"
-        recurse: false
-        hidden: true
-        file_type: file
-      register: config_files
-
     - name: Copy SSH files
       ansible.builtin.copy:
-        src: "{{ item.path }}"
-        dest: "{{ config_path }}/{{ item.path | basename }}"
-        mode: preserve
-      loop: "{{ config_files.files }}"
+        src: "{{ item }}"
+        dest: "{{ config_path }}/{{ item | basename }}"
+        mode: "{{ '0644' if (item | basename).endswith('.pub') else '0600' }}"
+      loop: "{{ query('ansible.builtin.fileglob', role_path + '/files/*') }}"
       no_log: true
 
 - name: Skip role-managed config copies
