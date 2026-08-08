@@ -1,0 +1,20 @@
+---
+- name: Install Flatpak package
+  community.general.pacman:
+    name: flatpak
+    state: present
+  become: true
+
+- name: Add Flathub repository
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+  become: true
+
+- name: Install Gear Lever from Flathub
+  community.general.flatpak:
+    name: it.mijorus.gearlever
+    state: present
+    remote: flathub
+  become: true

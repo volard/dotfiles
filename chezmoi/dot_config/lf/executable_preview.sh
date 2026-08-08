@@ -38,6 +38,14 @@ pdf() {
 	image "${CACHE}.jpg"
 }
 
+docx() {
+	if ! is_installed doxx; then
+		echo "doxx is not installed. Please install doxx to preview docx files."
+		exit 1
+	fi
+	doxx --export ansi --terminal-width "${width}" --no-images "${file}"
+}
+
 batorcat() {
 	shift
 	if is_installed bat; then
@@ -48,21 +56,27 @@ batorcat() {
 }
 
 mime_type=$(file -Lb --mime-type -- "${file}")
+extension="${file##*.}"
+extension="${extension,,}"
 
-case "${mime_type}" in
-*/directory)
+case "${extension}:${mime_type}" in
+*:*/directory)
 	eza -T --color=always --all --git-ignore --level=2 --group-directories-first "${file}"
   exit 1
 	;;
-image/*)
+*:image/*)
 	image "${file}"
   exit 1
 	;;
-text/* | application/json)
+docx:* | *:application/vnd.openxmlformats-officedocument.wordprocessingml.document)
+	docx
+  exit 1
+	;;
+*:text/* | *:application/json)
 	batorcat
   exit 1
 	;;
-application/pdf)
+*:application/pdf)
 	pdf
   exit 1
 	;;

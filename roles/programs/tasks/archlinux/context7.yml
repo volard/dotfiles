@@ -1,0 +1,9 @@
+---
+- name: Install context7
+  ansible.builtin.command: >-
+    bunx ctx7 setup --claude --cursor --antigravity --opencode --codex --gemini
+    --mcp --cli --api-key {{ context7_api_key | quote }} -y
+  no_log: true
+  when:
+    - context7_api_key is defined
+    - context7_api_key | length > 0

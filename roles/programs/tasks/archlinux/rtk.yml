@@ -1,0 +1,22 @@
+---
+- name: Check if rtk is installed
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['user_dir'] }}/.local/bin/rtk"
+  register: rtk_check
+
+- name: Install rtk
+  ansible.builtin.shell: curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+  args:
+    executable: /bin/bash
+  when: not rtk_check.stat.exists
+
+- name: Ensure Claude config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.claude"
+    state: directory
+    mode: "0755"
+
+- name: Enable rtk globally
+  ansible.builtin.command:
+    cmd: "{{ ansible_facts['user_dir'] }}/.local/bin/rtk init --global --auto-patch"
+    stdin: "n"

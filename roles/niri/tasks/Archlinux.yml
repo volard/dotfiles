@@ -8,29 +8,33 @@
     - ly
     - swaylock
     - xwayland-satellite
-    # - fuzzel
+    - fuzzel
     - satty
-    - jq
     - mako
     - rofi
     - rofimoji
     - slurp
-    - waybar
     - btop
+    - jq
+    - waybar
+    - wl-clipboard
+    - wtype
     - copyq
     - gnupg
     - ttf-jetbrains-mono-nerd
-    - qt6-wayland # Wayland support for Qt6
-    - qt5-wayland # Wayland support for Qt5
-    - wlsunset # warm screen display
+    - qt6-wayland
+    - qt5-wayland
+    - wlsunset
     - xdg-desktop-portal
     - xdg-desktop-portal-wlr
     - xdg-desktop-portal-kde
     - xdg-user-dirs
     - wf-recorder
-    - polkit # authorization framework that lets unprivileged processes request permission from privileged system services
-    - polkit-gnome # authentication agent for polkit
-    - seahorse # GUI key and password manager
+    - polkit        # authorization framework that lets unprivileged processes request permission from privileged system services
+    - polkit-gnome  # authentication agent for polkit
+    - seahorse      # GUI key and password manager
+    - libsecret     # API for keyring
+    - gnome-keyring # GUI for keyring to store secrets, passwords, keys
   loop_control:
     loop_var: pacman_item
   become: true
@@ -65,6 +69,8 @@
   loop:
     - key: lang
       value: en
+    - key: animation
+      value: matrix
     - key: shell
       value: "false"
     - key: xinitrc

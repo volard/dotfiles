@@ -12,6 +12,8 @@
   vars:
     aur_packages:
       - voxtype-bin
+    aur_pgp_keys:
+      - A3FC9F33FD209279
     aur_requirement_context: voxtype role
 
 - name: Ensure voxtype ansible state directory exists

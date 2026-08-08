@@ -34,4 +34,4 @@ monitor-all)
   echo "'${MODE}' is not a supported, aborting!" >&2
   exit 1
   ;;
-esac | satty --filename - --output-filename "${PICTURES_DIR}/screenshot-%+.png"
+esac | satty --filename - --copy-command wl-copy --output-filename "${PICTURES_DIR}/screenshot-%+.png"

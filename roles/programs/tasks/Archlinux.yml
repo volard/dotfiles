@@ -1,172 +1,24 @@
 ---
-- name: Install packages from pacman
-  community.general.pacman:
-    name: "{{ pacman_item }}"
-    state: present
-  loop:
-    - glab # gitlab cli
-    - github-cli
-    - zed
-    - git-lfs
-    - bun
-    - base-devel
-    - lazyssh
-    - lazygit
-    - mkcert
-    - tmux
-    - nix
-    - direnv
-    - polkit # authorization framework that lets unprivileged processes request permission from privileged system services
-    - gnome-keyring # keyring to store secrets, passwords, keys
-    - libsecret # API for keyring
-    - ast-grep # grep with code understanding
-    # - zathura # pdf viewer
-    - evince # pdf viewer
-    # - remind # proper reminder tool
-    - zip
-    - unzip
-    - trash-cli
-    # - mise # dev tools version manager
-    - fzf # fuzzy searching tool
-    - qbittorrent # torrent client
-    - duf # better df
-    - zoxide # better cd
-    - lshw
-    # - vivaldi
-    - telegram-desktop
-    - nemo # file manager (found it better than thunder)
-    - fastfetch # rip neofetch
-    - just # better make
-    - blueman # bluetooth gui manager
-    - btop # better htop/top
-    # - meld # gui diffing tool
-    # - xplr # rust based lua hackable tui file manager, too complicated
-    - mpv # video player
-    - jq # json processor
-    - yq # yaml, toml etc. processor
-    - ark # kde gui archives manager
-    - baobab # storage analyzer gui
-    - ncdu # space analyzer
-    # - hyprpicker # Wayland color picker
-    - caligula # dd wrapper with cool features
-    - wl-clipboard # its and couple more down are the waybinder dependencies (look for the binary in the /bin + https://gitlab.com/cscs/waybinder)
-    - wtype
-    - tree
-    # - zenity # gui gtk propmts
-    - eog # eye of gnome - image viewer
-    - tesseract # OCR program
-  become: true
-  loop_control:
-    loop_var: pacman_item
+- name: Install pacman packages
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/archlinux/packages.yml"
   when: ansible_facts['distribution'] == "Archlinux"
 
-# - name: Install packages from AUR
-#   ansible.builtin.include_tasks: roles/common_tasks/tasks/require_aur_packages.yml
-#   vars:
-#     aur_packages:
-#       # - stretchly-bin # don't stare at screen too hard
-#       - zen-browser-bin
-#       - lazydocker-bin # docker TUI
-#       - throne-bin # docker TUI
-#     aur_requirement_context: programs role
-#   when: ansible_facts['distribution'] == "Archlinux"
-
-# - name: Setup dev globals
-#   ansible.builtin.command: mise use -g {{ mise_item }}@latest
-#   loop:
-#     - node
-#   loop_control:
-#     loop_var: mise_item
-#   when: ansible_facts['distribution'] == "Archlinux"
-
-- name: Check if rtk is installed
-  ansible.builtin.command: command -v rtk
-  register: rtk_check
-  changed_when: false
-  failed_when: false
+- name: Install AUR packages
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/archlinux/aur.yml"
   when: ansible_facts['distribution'] == "Archlinux"
 
-- name: Install rtk
-  ansible.builtin.shell: curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
-  args:
-    executable: /bin/bash
-  when:
-    - ansible_facts['distribution'] == "Archlinux"
-    - rtk_check.rc != 0
-
-- name: Enable rtk globally
-  ansible.builtin.command: rtk init --global --auto-patch
+- name: Install Flatpak applications
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/archlinux/flatpak.yml"
   when: ansible_facts['distribution'] == "Archlinux"
 
-# - name: Install peonping
-#   ansible.builtin.command: curl -fsSL https://raw.githubusercontent.com/PeonPing/peon-ping/main/install.sh | bash -s -- --packs=glados,peasant,peon,peon_ru,sc_battlecruiser,sc_kerrigan
-#   when: ansible_facts['distribution'] == "Archlinux"
-
-# - name: Use custom peonping voice pack
-#   ansible.builtin.command: peon packs use peon_ru
-#   when: ansible_facts['distribution'] == "Archlinux"
-
-# - name: Install bun tools
-#   ansible.builtin.command: bun i -g {{ bun_item }}
-#   loop:
-#     - "@steipete/summarize"
-#     - "opencode-ai"
-#   loop_control:
-#     loop_var: bun_item
-#   when: ansible_facts['distribution'] == "Archlinux"
-
-# - name: Install peon-ping to opencode
-#   ansible.builtin.command: curl -fsSL https://raw.githubusercontent.com/PeonPing/peon-ping/main/adapters/opencode.sh | bash
-#   when: ansible_facts['distribution'] == "Archlinux"
-
-- name: Install context7
-  ansible.builtin.command: bunx ctx7 setup --claude --curor --universal --antigravity --opencode --codex --gemini --mcp --cli -y
+- name: Configure RTK
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/archlinux/rtk.yml"
   when: ansible_facts['distribution'] == "Archlinux"
 
-- name: Install global skills
-  ansible.builtin.command: bunx skills install {{ skill_item }} -y --all -g
-  loop:
-    - "vercel-labs/skills --skill find-skills"
-    - "anthropics/skills --skill skill-creator"
-    # - "anthropics/skills --skill frontend-design"
-    # - "vercel-labs/agent-skills --skill web-design-guidelines"
-    # - "vercel-labs/agent-skills --skill vercel-react-best-practices"
-    # - "affaan-m/everything-claude-code --skill frontend-patterns"
-    # - "affaan-m/everything-claude-code --skill docker-patterns"
-    - "openclaw/openclaw --skill gh-issues"
-    - "openclaw/openclaw --skill github"
-    # - "Shubhamsaboo/awesome-llm-apps --skill code-reviewer"
-    # - "affaan-m/everything-claude-code --skill coding-standards"
-    # - "affaan-m/everything-claude-code --skill api-design"
-    # - "langgenius/dify --skill backend-code-review"
-    # - "anthropics/skills --skill algorithmic-art"
-    # - "anthropics/skills --skill xlsx"
-    # - "affaan-m/everything-claude-code --skill java-coding-standards"
-    # - "affaan-m/everything-claude-code --skill jpa-patterns"
-    # - "affaan-m/everything-claude-code --skill springboot-patterns"
-    # - "affaan-m/everything-claude-code --skill springboot-security"
-    # - "marcelorodrigo/agent-skills --skill spring-boot-testing"
-    # - "affaan-m/everything-claude-code --skill database-migrations"
-    # - "affaan-m/everything-claude-code --skill postgres-patterns"
-    # - "affaan-m/everything-claude-code --skill python-patterns"
-    # - "affaan-m/everything-claude-code --skill python-testing"
-    # - "Shubhamsaboo/awesome-llm-apps --skill python-expert"
-    # - "Shubhamsaboo/awesome-llm-apps --skill visualization-expert"
-    # - "browser-use/browser-use --skill browser-use"
-    # - "vercel-labs/agent-browser --skill agent-browser"
-    # - "michalparkola/tapestry-skills-for-claude-code --skill article-extractor"
-    # - "Shubhamsaboo/awesome-llm-apps --skill decision-helper"
-    # - "Shubhamsaboo/awesome-llm-apps --skill editor"
-    # - "Shubhamsaboo/awesome-llm-apps --skill technical-writer"
-    # - "Shubhamsaboo/awesome-llm-apps --skill email-drafter"
-    # - "Shubhamsaboo/awesome-llm-apps --skill meeting-notes"
-    # - "Shubhamsaboo/awesome-llm-apps --skill sprint-planner"
-    # - "Shubhamsaboo/awesome-llm-apps --skill strategy-advisor"
-    # - "blader/humanizer --skill humanizer"
-    - "JuliusBrussee/caveman"
-  loop_control:
-    loop_var: skill_item
+- name: Configure Context7
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/archlinux/context7.yml"
   when: ansible_facts['distribution'] == "Archlinux"
 
-  # install tavily and auth and add its skills also, add caveman skills
-  #
+- name: Install global agent skills
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/archlinux/skills.yml"
+  when: ansible_facts['distribution'] == "Archlinux"
