@@ -4,8 +4,8 @@ input {
         xkb {
             // For more see xkeyboard-config(7).
 
-            layout "us,ru,am"
-            variant "workman,,eastern"
+            layout "us,ru"
+            variant "workman,"
 
             options "grp:alt_space_toggle,grp:caps_toggle"
             // If this section is empty, niri will fetch xkb settings
@@ -79,7 +79,6 @@ binds {
     // Languages (layouts)
     Mod+N { switch-layout "0"; }
     Mod+Y { switch-layout "1"; }
-    Mod+Ctrl+Y { switch-layout "2"; }
 
 
 

@@ -13,8 +13,8 @@ input "type:touchpad" {
 # https://gist.github.com/jatcwang/ae3b7019f219b8cdc6798329108c9aee
 input "type:keyboard" {
 	# xkb_capslock disabled
-	xkb_layout us,ru,am
-	xkb_variant workman,,eastern
+	xkb_layout us,ru
+	xkb_variant workman,
 
   # I don't use that, but I need it so on lock screen I could switch locale and type password
   # localectl list-x11-keymap-options | grep grp:
@@ -25,7 +25,6 @@ input "type:keyboard" {
 bindsym --to-code {
    $mod+Ctrl+n input "type:keyboard" xkb_switch_layout 0
    $mod+Ctrl+o input "type:keyboard" xkb_switch_layout 1
-   $mod+Ctrl+e input "type:keyboard" xkb_switch_layout 2
 }
 
 # Enable numlock by default
