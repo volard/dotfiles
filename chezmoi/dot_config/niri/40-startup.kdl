@@ -2,7 +2,6 @@
 spawn-sh-at-startup "niri msg action focus-workspace 2"
 
 // Idle and sleep handling.
-spawn-at-startup "swayidle" "idlehint" "1"
 spawn-at-startup "swayidle" "-w" "before-sleep" "swaylock -f"
 
 // Auth with polkit-gnome

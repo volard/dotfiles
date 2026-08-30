@@ -1,0 +1,31 @@
+include "/usr/share/kbd/keymaps/i386/qwerty/us.map.gz"
+
+keycode  16 = q Q Control_q
+keycode  17 = d D Control_d
+keycode  18 = r R Control_r
+keycode  19 = w W Control_w
+keycode  20 = b B Control_b
+keycode  21 = j J Control_j
+keycode  22 = f F Control_f
+keycode  23 = u U Control_u
+keycode  24 = p P Control_p
+keycode  25 = semicolon colon
+
+keycode  30 = a A Control_a
+keycode  31 = s S Control_s
+keycode  32 = h H Control_h
+keycode  33 = t T Control_t
+keycode  34 = g G Control_g
+keycode  35 = y Y Control_y
+keycode  36 = n N Control_n
+keycode  37 = e E Control_e
+keycode  38 = o O Control_o
+keycode  39 = i I Control_i
+
+keycode  44 = z Z Control_z
+keycode  45 = x X Control_x
+keycode  46 = m M Control_m
+keycode  47 = c C Control_c
+keycode  48 = v V Control_v
+keycode  49 = k K Control_k
+keycode  50 = l L Control_l

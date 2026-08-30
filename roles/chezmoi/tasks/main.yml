@@ -14,12 +14,22 @@
     file: "{{ playbook_dir }}/roles/wakatime/vars/main.yml"
   no_log: true
 
+- name: Check for chezmoi on Linux
+  ansible.builtin.command:
+    cmd: chezmoi --version
+  register: chezmoi_check
+  changed_when: false
+  failed_when: false
+  when: ansible_facts['os_family'] != 'Windows'
+
 - name: Install chezmoi on Linux
   ansible.builtin.package:
     name: chezmoi
     state: present
   become: true
-  when: ansible_facts['os_family'] != 'Windows'
+  when:
+    - ansible_facts['os_family'] != 'Windows'
+    - chezmoi_check.rc != 0
 
 - name: Install chezmoi on Windows
   community.windows.win_scoop:
@@ -36,7 +46,11 @@
 
 - name: Apply chezmoi source on Linux
   ansible.builtin.command:
-    cmd: chezmoi apply --source "{{ ansible_facts['user_dir'] }}/.local/share/dotfiles-chezmoi"
+    cmd: >-
+      chezmoi apply
+      --source "{{ ansible_facts['user_dir'] }}/.local/share/dotfiles-chezmoi"
+      --force
+      --no-tty
   environment:
     GIT_EMAIL_ADDRESS: "{{ git_email_address | default('') }}"
     GIT_USERNAME: "{{ git_username | default('') }}"
@@ -47,7 +61,11 @@
   when: ansible_facts['os_family'] != 'Windows'
 
 - name: Apply chezmoi source on Windows
-  ansible.windows.win_command: chezmoi apply --source "{{ playbook_dir }}\\chezmoi"
+  ansible.windows.win_command: >-
+    chezmoi apply
+    --source "{{ playbook_dir }}\\chezmoi"
+    --force
+    --no-tty
   environment:
     GIT_EMAIL_ADDRESS: "{{ git_email_address | default('') }}"
     GIT_USERNAME: "{{ git_username | default('') }}"
