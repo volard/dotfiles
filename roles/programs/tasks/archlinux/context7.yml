@@ -1,4 +1,30 @@
 ---
+- name: Check for chezmoi age identity
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['user_dir'] }}/.config/chezmoi/key.txt"
+  register: chezmoi_age_identity
+
+- name: Read context7 API key from chezmoi secrets
+  ansible.builtin.command: >-
+    age --decrypt
+    --identity {{ ansible_facts['user_dir'] }}/.config/chezmoi/key.txt
+    {{ playbook_dir }}/chezmoi/encrypted_secrets.yaml.age
+  register: chezmoi_secret_yaml
+  changed_when: false
+  no_log: true
+  when:
+    - context7_api_key is not defined
+    - chezmoi_age_identity.stat.exists
+
+- name: Set context7 API key from chezmoi secrets
+  ansible.builtin.set_fact:
+    context7_api_key: "{{ (chezmoi_secret_yaml.stdout | from_yaml).context7_api_key | default('') }}"
+  no_log: true
+  when:
+    - context7_api_key is not defined
+    - chezmoi_secret_yaml is defined
+    - chezmoi_secret_yaml.stdout is defined
+
 - name: Install context7
   ansible.builtin.command: >-
     bunx ctx7 setup --claude --cursor --antigravity --opencode --codex --gemini

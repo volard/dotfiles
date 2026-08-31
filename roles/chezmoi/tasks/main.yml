@@ -1,19 +1,4 @@
 ---
-- name: Include Git template secrets
-  ansible.builtin.include_vars:
-    file: "{{ playbook_dir }}/roles/git/vars/sensitive_vars.yml"
-  no_log: true
-
-- name: Include Zsh template secrets
-  ansible.builtin.include_vars:
-    file: "{{ playbook_dir }}/roles/zsh/vars/main.yml"
-  no_log: true
-
-- name: Include WakaTime template secrets
-  ansible.builtin.include_vars:
-    file: "{{ playbook_dir }}/roles/wakatime/vars/main.yml"
-  no_log: true
-
 - name: Check for chezmoi on Linux
   ansible.builtin.command:
     cmd: chezmoi --version
@@ -37,11 +22,38 @@
     state: present
   when: ansible_facts['os_family'] == 'Windows'
 
-- name: Copy chezmoi source on Linux
-  ansible.builtin.copy:
+- name: Sync chezmoi source on Linux
+  ansible.posix.synchronize:
     src: "{{ playbook_dir }}/chezmoi/"
     dest: "{{ ansible_facts['user_dir'] }}/.local/share/dotfiles-chezmoi/"
-    mode: preserve
+    archive: true
+    delete: true
+  when: ansible_facts['os_family'] != 'Windows'
+
+- name: Ensure chezmoi config directory exists on Linux
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.config/chezmoi"
+    state: directory
+    mode: "0700"
+  when: ansible_facts['os_family'] != 'Windows'
+
+- name: Install chezmoi age identity on Linux
+  ansible.builtin.copy:
+    src: age-key.txt
+    dest: "{{ ansible_facts['user_dir'] }}/.config/chezmoi/key.txt"
+    mode: "0600"
+  no_log: true
+  diff: false
+  when: ansible_facts['os_family'] != 'Windows'
+
+- name: Initialize chezmoi config on Linux
+  ansible.builtin.command:
+    cmd: >-
+      chezmoi init
+      --source "{{ ansible_facts['user_dir'] }}/.local/share/dotfiles-chezmoi"
+      --force
+      --no-tty
+  changed_when: true
   when: ansible_facts['os_family'] != 'Windows'
 
 - name: Apply chezmoi source on Linux
@@ -51,11 +63,6 @@
       --source "{{ ansible_facts['user_dir'] }}/.local/share/dotfiles-chezmoi"
       --force
       --no-tty
-  environment:
-    GIT_EMAIL_ADDRESS: "{{ git_email_address | default('') }}"
-    GIT_USERNAME: "{{ git_username | default('') }}"
-    OPENROUTER_API_KEY: "{{ openrouter_api_key | default('') }}"
-    WAKATIME_API_KEY: "{{ wakatime_api_key | default('') }}"
   changed_when: true
   no_log: true
   when: ansible_facts['os_family'] != 'Windows'
@@ -66,11 +73,6 @@
     --source "{{ playbook_dir }}\\chezmoi"
     --force
     --no-tty
-  environment:
-    GIT_EMAIL_ADDRESS: "{{ git_email_address | default('') }}"
-    GIT_USERNAME: "{{ git_username | default('') }}"
-    OPENROUTER_API_KEY: "{{ openrouter_api_key | default('') }}"
-    WAKATIME_API_KEY: "{{ wakatime_api_key | default('') }}"
   changed_when: true
   no_log: true
   when: ansible_facts['os_family'] == 'Windows'

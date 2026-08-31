@@ -185,19 +185,17 @@ export PATH="/mnt/data/android-studio/bin:$PATH"
 # [ -s "/home/volard/.bun/_bun" ] && source "/home/volard/.bun/_bun"
 
 # bun
+{{- $secretsFile := joinPath .chezmoi.sourceDir "encrypted_secrets.yaml.age" -}}
+{{- $secrets := dict -}}
+{{- if stat $secretsFile -}}
+{{- $secrets = $secretsFile | include | decrypt | fromYaml -}}
+{{- end -}}
+{{- $openrouterApiKey := env "OPENROUTER_API_KEY" -}}
+{{- with index $secrets "openrouter_api_key" -}}
+{{- $openrouterApiKey = . -}}
+{{- end }}
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-
-
-
-# ============================================================================
-# DMUX setup
-# ============================================================================
-#
-# >>> dmux openrouter >>>
-export OPENROUTER_API_KEY='{{ env "OPENROUTER_API_KEY" }}'
-# <<< dmux openrouter <<<
-
 
 
 # ============================================================================

@@ -1,7 +1,16 @@
+{{- $secretsFile := joinPath .chezmoi.sourceDir "encrypted_secrets.yaml.age" -}}
+{{- $secrets := dict -}}
+{{- if stat $secretsFile -}}
+{{- $secrets = $secretsFile | include | decrypt | fromYaml -}}
+{{- end -}}
+{{- $wakatimeApiKey := env "WAKATIME_API_KEY" -}}
+{{- with index $secrets "wakatime_api_key" -}}
+{{- $wakatimeApiKey = . -}}
+{{- end }}
 [settings]
 debug=false
 api_url = https://wakapi.dev/api
-api-key = {{ env "WAKATIME_API_KEY" }}
+api-key = {{ $wakatimeApiKey }}
 exclude = 
     COMMIT_EDITMSG$
     PULLREQ_EDITMSG$
