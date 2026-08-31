@@ -18,10 +18,10 @@
     - zip
     - unzip
     - trash-cli
-    - fzf
+    # - wezterm
+    - foot
     - qbittorrent
     - duf
-    - zoxide
     - lshw
     - telegram-desktop
     - nemo
@@ -30,22 +30,31 @@
     - btop
     - mpv
     - ffmpeg
-    - doxx     # docx in terminal
-    - ast-grep # grep with code understanding
-    - blueman  # bluetooth gui manager
-    - jq       # json processor
-    - yq       # yaml, toml etc. processor
-    - ark      # kde gui archives manager
-    - baobab   # storage analyzer gui (or qwindir)
-    - ncdu     # space analyzer
-    - caligula # dd wrapper with cool features
-    - tree
-    - eog # eye of gnome - image viewer
+    - ttf-nerd-fonts-symbols-mono
+    - doxx      # docx in terminal
+    - ast-grep  # grep with code understanding
+    - blueman   # bluetooth gui manager
+    - jq        # json processor
+    # - yq     # yml processor
+    # - zsh
+    - eza       # better ls
+    - wget      # better curl
+    - tldr      # better man pages
+    - bat       # better cat
+    - fzf       # fuzzy finder
+    - fd        # better find
+    - atuin     # magical shell history
+    - zoxide    # better cd
+    - ripgrep   # better grep
+    - ark       # kde gui archives manager
+    - baobab    # storage analyzer gui (or qwindir)
+    - ncdu      # space analyzer
+    - caligula  # dd wrapper with cool features
+    - eog       # eye of gnome - image viewer
     - tesseract # OCR
     # - mise # dev tools version manager
     # - zenity # gui gtk propmts
     # - hyprpicker # Wayland color picker
-    # - meld # gui diffing tool
     # - xplr # rust based lua hackable tui file manager, too complicated
     # - remind # proper reminder tool
     # - vivaldi
