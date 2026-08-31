@@ -98,6 +98,8 @@ flycheck_*.el
 *.DS_Store
 
 vault-password.*
+dotfiles-secrets.yaml
+chezmoi/secrets.yaml
 roles/neovim/files/lazy-lock.json
 /callback_plugins/__pycache__
 **/**/__pycache__
