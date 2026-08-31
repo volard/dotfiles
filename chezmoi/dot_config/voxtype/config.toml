@@ -81,7 +81,7 @@ model = "small"
 # The array form helps with multilingual users where Whisper might misdetect
 # the language, especially for short sentences.
 # See: https://github.com/openai/whisper#available-models-and-languages
-language = ["en", "ru"]
+language = "en"
 
 # Translate non-English speech to English
 translate = false
@@ -97,10 +97,10 @@ initial_prompt = "Programming and technology dictation. Prefer exact technical t
 # --- Multi-model settings ---
 #
 # Secondary model for difficult audio (used with hotkey.model_modifier or CLI --model)
-# secondary_model = "large-v3-turbo"
+secondary_model = "large-v3"
 #
 # List of available models that can be requested via CLI --model flag
-# available_models = ["large-v3-turbo", "medium.en"]
+available_models = ["small", "large-v3"]
 #
 # Maximum models to keep loaded in memory (LRU eviction when exceeded)
 # Default: 2 (primary + one secondary). Only applies when gpu_isolation = false.

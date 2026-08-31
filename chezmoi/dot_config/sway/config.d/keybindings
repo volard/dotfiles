@@ -1,5 +1,7 @@
 bindsym --to-code $mod+r exec voxtype record start
 bindsym --to-code --release $mod+r exec voxtype record stop
+bindsym --to-code $mod+Ctrl+r exec voxtype --language auto record start --model large-v3
+bindsym --to-code --release $mod+Ctrl+r exec voxtype record stop
 #bindsym --to-code Escape exec voxtype record cancel; mode "default"
 
 bindsym --to-code {

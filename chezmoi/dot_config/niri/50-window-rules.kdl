@@ -2,6 +2,13 @@
 // >>>> niri msg pick-window
 
 // ----------------------------------------------------------------------------
+// Global
+// ----------------------------------------------------------------------------
+window-rule {
+    draw-border-with-background false
+}
+
+// ----------------------------------------------------------------------------
 // WezTerm's initial configure bug by setting an empty default-column-width.
 // ----------------------------------------------------------------------------
 window-rule {
@@ -97,6 +104,15 @@ window-rule {
 window-rule {
     match app-id=r#"^waybar-tool$"#
     open-floating true
+}
+
+window-rule {
+    match title=r#"^Super Productivity Task Widget$"#
+
+    open-floating true
+    default-column-width { fixed 314; }
+    default-window-height { fixed 70; }
+    default-floating-position x=2227 y=749
 }
 
 
