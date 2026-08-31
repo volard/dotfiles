@@ -7,17 +7,6 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "ssh_connections": [
-    {
-      "host": "elba_senko_communication",
-      "args": [],
-      "projects": [
-        {
-          "paths": ["/opt"]
-        }
-      ]
-    }
-  ],
   "format_on_save": "off",
   "diff_view_style": "unified",
   "autosave": {
@@ -28,10 +17,14 @@
   "languages": {
     "JavaScript": {
       "format_on_save": "off"
+    },
+    "Python": {
+      "format_on_save": "off"
     }
   },
   "cli_default_open_behavior": "existing_window",
   "edit_predictions": {
+    "allow_data_collection": "no",
     "mode": "eager"
   },
   "agent_servers": {
@@ -53,6 +46,12 @@
     "dock": "left"
   },
   "agent": {
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "gpt-5.6-sol",
+      "enable_thinking": true,
+      "effort": "medium"
+    },
     "dock": "right",
     "favorite_models": [],
     "model_parameters": []
@@ -67,9 +66,6 @@
     "metrics": false
   },
   "vim_mode": true,
-  // "vim": {
-  //   "enable_vim_sneak": true,
-  // },
   "scrollbar": {
     "show": "never"
   },
@@ -77,10 +73,6 @@
   "file_types": {
     "Dockerfile": ["Dockerfile", "Dockerfile.*"],
     "JSON": ["json", "jsonc", "*.code-snippets"]
-  },
-  "title_bar": {
-    "show_onboarding_banner": false,
-    "show_sign_in": false
   },
   "project_panel": {
     "dock": "left",
@@ -107,31 +99,7 @@
     // Delay in milliseconds before showing the which-key popup.
     "delay_ms": 1000
   },
-  // File scan exclusions, hide on the file explorer and search
-  "file_scan_exclusions": [
-    "**/.git",
-    "**/.svn",
-    "**/.hg",
-    "**/CVS",
-    "**/.DS_Store",
-    "**/Thumbs.db",
-    "**/.classpath",
-    "**/.settings",
-    // above is default from Zed
-    "**/out",
-    "**/.husky",
-    "**/.turbo",
-    "**/.vscode-test",
-    "**/.next",
-    "**/.storybook",
-    "**/.tap",
-    "**/.nyc_output",
-    "**/node_modules"
-  ],
-  "hide_mouse": "on_typing_and_movement",
-  "tab_bar": {
-    "show": false
-  },
+  "hide_mouse": "on_typing_and_action",
   "gutter": {
     "line_numbers": false
   },

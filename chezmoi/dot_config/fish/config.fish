@@ -67,3 +67,7 @@ function precommit
 
     "$file" $argv
 end
+
+if command -q but
+    but completions fish | source
+end

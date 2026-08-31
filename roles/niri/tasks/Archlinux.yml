@@ -84,34 +84,16 @@
     label: "{{ ly_config_item.key }}"
   become: true
 
-- name: Ensure custom console keymaps directory exists
-  ansible.builtin.file:
-    path: /usr/share/kbd/keymaps/i386/workman
-    state: directory
-    owner: root
-    group: root
-    mode: "0755"
-  become: true
-
-- name: Install Workman console keymap
-  ansible.builtin.copy:
-    src: workman.map
-    dest: /usr/share/kbd/keymaps/i386/workman/workman.map
-    owner: root
-    group: root
-    mode: "0644"
-  become: true
-
 - name: Read current keyboard layout
   ansible.builtin.command: localectl status
   register: localectl_status
   changed_when: false
 
-- name: Set console keyboard layout to English Workman
-  ansible.builtin.command: localectl set-keymap workman
+- name: Set console keyboard layout to English
+  ansible.builtin.command: localectl set-keymap us
   become: true
   changed_when: true
-  when: "'VC Keymap: workman' not in localectl_status.stdout"
+  when: "'VC Keymap: us' not in localectl_status.stdout"
 
 - name: Set X11 keyboard layout to English Workman
   ansible.builtin.command: localectl set-x11-keymap us pc105 workman
