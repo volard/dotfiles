@@ -150,7 +150,7 @@
       "warning": 70,
       "critical": 90
     },
-    "on-click": "wezterm start --always-new-process --class waybar-tool -- btop"
+    "on-click": "foot --app-id=waybar-tool --title=waybar_btop --window-size-pixels=1500x760 -- btop"
   },
 
   "memory": {

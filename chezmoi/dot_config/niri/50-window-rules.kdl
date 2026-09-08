@@ -103,7 +103,10 @@ window-rule {
 
 window-rule {
     match app-id=r#"^waybar-tool$"#
+
     open-floating true
+    default-column-width { fixed 1500; }
+    default-window-height { fixed 760; }
 }
 
 window-rule {
