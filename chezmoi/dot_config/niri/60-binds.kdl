@@ -6,7 +6,7 @@
 // `niri msg action do-something`.
 
 binds {
-    Mod+Return  { spawn "wezterm"; }
+    Mod+Return  { spawn "foot"; }
     Mod+D       { spawn "rofi" "-show" "drun"; }
     Mod+P       { spawn "rofi" "-show" "window"; }
     Mod+Shift+O { spawn "bemoji" "-n"; }
@@ -27,7 +27,7 @@ binds {
     // Voxtype
     // ----------------------------------------------------------------------------
     Mod+Shift+I           repeat=false { spawn "voxtype" "record" "toggle"; }
-    Mod+Ctrl+Shift+I      repeat=false { spawn "voxtype" "--language" "auto" "record" "toggle" "--model" "large-v3"; }
+    Mod+Ctrl+Shift+I      repeat=false { spawn "voxtype-multilingual-toggle"; }
     Mod+Shift+semicolon   repeat=false { spawn "voxtype" "record" "cancel"; }
 
 
