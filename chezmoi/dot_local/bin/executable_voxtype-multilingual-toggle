@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+status="$(voxtype status --format json 2>/dev/null || true)"
+
+case "$status" in
+    *'"alt": "recording"'*)
+        exec voxtype record stop
+        ;;
+    *'"alt": "transcribing"'*)
+        exit 0
+        ;;
+    *)
+        exec voxtype --language auto record start --model small
+        ;;
+esac
