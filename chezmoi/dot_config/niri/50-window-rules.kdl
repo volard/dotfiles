@@ -105,7 +105,7 @@ window-rule {
     match app-id=r#"^waybar-tool$"#
 
     open-floating true
-    default-column-width { fixed 1500; }
+    default-column-width { fixed 1100; }
     default-window-height { fixed 760; }
 }
 
@@ -123,6 +123,13 @@ window-rule {
 // ----------------------------------------------------------------------------
 // Screen capture
 // ----------------------------------------------------------------------------
+window-rule {
+    match app-id=r#"^com\.super_productivity\.SuperProductivity$"#
+    match title=r#"^Super Productivity$"#
+
+    block-out-from "screen-capture"
+}
+
 // Indicate screencasted windows with red colors.
 window-rule {
     match is-window-cast-target=true

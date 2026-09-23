@@ -16,6 +16,7 @@ spawn-at-startup "zen-browser"
 spawn-at-startup "mako"
 spawn-at-startup "wlsunset"
 spawn-at-startup "copyq"
+spawn-at-startup "super-productivity"
 spawn-at-startup "nm-applet" "--indicator"
 spawn-sh-at-startup "sleep 2 && firewall-applet"
 
