@@ -93,6 +93,6 @@ binds {
 
 gestures {
     hot-corners {
-        top-left
+        off
     }
 }
