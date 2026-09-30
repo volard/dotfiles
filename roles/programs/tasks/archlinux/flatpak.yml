@@ -18,3 +18,16 @@
     state: present
     remote: flathub
   become: true
+
+- name: Install applications from Flathub
+  community.general.flatpak:
+    name: "{{ flatpak_app }}"
+    state: present
+    remote: flathub
+  loop:
+    - md.obsidian.Obsidian
+    - io.github.anil_e.Codd
+    - io.gitlab.theevilskeleton.Upscaler
+  loop_control:
+    loop_var: flatpak_app
+  become: true

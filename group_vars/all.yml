@@ -5,10 +5,10 @@ enabled_roles:
   - user_groups
   - neovim
   - docker
-  - wezterm
   - programs
   - fish
   - git
   - voxtype
   - niri
+  - bluetooth
   - chezmoi

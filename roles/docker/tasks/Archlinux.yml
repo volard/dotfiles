@@ -6,6 +6,7 @@
   loop:
     - docker
     - docker-compose
+    - docker-buildx
   become: true
   loop_control:
     loop_var: pacman_item

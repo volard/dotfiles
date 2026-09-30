@@ -1,5 +1,15 @@
 @import "./colors.css";
 
+@keyframes battery-low {
+    from {
+        color: @gold;
+    }
+
+    to {
+        color: @danger;
+    }
+}
+
 * {
     border: none;
     border-radius: 0;
@@ -135,6 +145,15 @@ window#waybar {
 
 #battery {
     color: @green;
+}
+
+#battery.warning.discharging,
+#battery.critical.discharging {
+    animation-name: battery-low;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
 
 #battery.charging,

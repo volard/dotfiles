@@ -17,6 +17,7 @@
     - btop
     - jq
     - waybar
+    - network-manager-applet
     - wl-clipboard
     - wtype
     - copyq
@@ -27,6 +28,7 @@
     - wlsunset
     - xdg-desktop-portal
     - xdg-desktop-portal-wlr
+    - xdg-desktop-portal-gnome
     - xdg-desktop-portal-kde
     - xdg-user-dirs
     - wf-recorder
