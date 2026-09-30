@@ -166,16 +166,16 @@
 
   "battery": {
     "interval": 5,
-    "format": "{icon}",
+    "format": "{icon}\n{capacity}%",
     "format-icons": ["", "", "", "", ""],
-    "format-charging": "",
-    "format-full": "",
-    "format-plugged": "",
+    "format-charging": "\n{capacity}%",
+    "format-full": "\n{capacity}%",
+    "format-plugged": "\n{capacity}%",
     "tooltip-format": "{capacity}%\n{time}",
     "tooltip-format-charging": "Charging {capacity}%\n{time}",
     "tooltip": true,
     "states": {
-      "warning": 25,
+      "warning": 20,
       "critical": 10
     }
   },

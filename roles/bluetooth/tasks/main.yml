@@ -12,10 +12,9 @@
     loop_var: pacman_item
   when: ansible_facts['distribution'] == "Archlinux"
 
-- name: Start bluetooth service
-  ansible.builtin.command: systemctl start bluetooth
-  become: true
-
-- name: Enable bluetooth service
-  ansible.builtin.command: systemctl enable bluetooth
+- name: Ensure bluetooth service is enabled and running
+  ansible.builtin.systemd_service:
+    name: bluetooth
+    enabled: true
+    state: started
   become: true

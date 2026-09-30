@@ -9,6 +9,7 @@
     - zed
     - git-lfs
     - bun
+    - age       # decrypt chezmoi secrets
     - base-devel
     - lazygit
     - mkcert
@@ -16,10 +17,15 @@
     - nix
     - direnv
     - zip
+    - mise
     - unzip
     - trash-cli
-    # - wezterm
+    - alacritty
+    - obs-studio
+    #- wezterm
     - foot
+    - xed
+    - sed
     - qbittorrent
     - duf
     - lshw
@@ -52,6 +58,7 @@
     - caligula  # dd wrapper with cool features
     - eog       # eye of gnome - image viewer
     - tesseract # OCR
+    - typst     # typesetting system
     # - mise # dev tools version manager
     # - zenity # gui gtk propmts
     # - hyprpicker # Wayland color picker

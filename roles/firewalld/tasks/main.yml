@@ -1,0 +1,21 @@
+---
+- name: Install firewalld
+  ansible.builtin.package:
+    name: firewalld
+    state: present
+  become: true
+
+- name: Enable and start firewalld
+  ansible.builtin.systemd_service:
+    name: firewalld
+    enabled: true
+    state: started
+  become: true
+
+- name: Allow TCP port 6768 in firewalld
+  ansible.posix.firewalld:
+    port: 6768/tcp
+    permanent: true
+    immediate: true
+    state: enabled
+  become: true

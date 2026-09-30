@@ -76,11 +76,6 @@
       tags:
         - incus
 
-    - role: wezterm
-      when: "'wezterm' in enabled_roles or 'wezterm' in selected_role_tags"
-      tags:
-        - wezterm
-
     - role: neovim
       when: "'neovim' in enabled_roles or 'neovim' in selected_role_tags"
       tags:
@@ -120,6 +115,11 @@
       when: "'bluetooth' in enabled_roles or 'bluetooth' in selected_role_tags"
       tags:
         - bluetooth
+
+    - role: firewalld
+      when: "'firewalld' in enabled_roles or 'firewalld' in selected_role_tags"
+      tags:
+        - firewalld
 
     - role: latex
       when: "'latex' in enabled_roles or 'latex' in selected_role_tags"

@@ -2,6 +2,11 @@ set -g fish_greeting
 fish_add_path "$HOME/.local/bin"
 fish_add_path "$HOME/.bun/bin"
 
+set -l ___MY_VMOPTIONS_SHELL_FILE "$HOME/.jetbrains.vmoptions.sh"
+if test -f "$___MY_VMOPTIONS_SHELL_FILE"
+    source "$___MY_VMOPTIONS_SHELL_FILE"
+end
+
 if status is-interactive
     if command -q starship
         starship init fish | source
@@ -22,6 +27,12 @@ if status is-interactive
     if test -f /usr/share/fzf/completion.fish
         source /usr/share/fzf/completion.fish
     end
+
+    if command -q mise
+        mise activate fish | source
+    end
+else
+    mise activate fish --shims | source
 end
 
 function dnp
@@ -68,6 +79,7 @@ function precommit
 
     "$file" $argv
 end
+
 
 if command -q but
     but completions fish | source
