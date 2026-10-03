@@ -3,6 +3,14 @@
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/archlinux/packages.yml"
   when: ansible_facts['distribution'] == "Archlinux"
 
+- name: Enable and start Power Profiles Daemon
+  ansible.builtin.systemd_service:
+    name: power-profiles-daemon.service
+    enabled: true
+    state: started
+  become: true
+  when: ansible_facts['distribution'] == "Archlinux"
+
 - name: Install AUR packages
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/archlinux/aur.yml"
   when: ansible_facts['distribution'] == "Archlinux"
