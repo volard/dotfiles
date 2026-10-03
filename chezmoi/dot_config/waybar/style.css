@@ -2,11 +2,15 @@
 
 @keyframes battery-low {
     from {
-        color: @gold;
+        color: @fg;
+        background-color: @danger;
+        border-color: @danger;
     }
 
     to {
         color: @danger;
+        background-color: @surface;
+        border-color: @danger;
     }
 }
 
@@ -39,20 +43,21 @@ window#waybar {
 #cpu,
 #memory,
 #battery,
+#power-profiles-daemon,
 #idle_inhibitor,
 #tray,
 #custom-power {
     color: @fg;
     background-color: @surface;
     border: 1px solid @border;
-    border-radius: 10px;
-    margin: 6px 6px 0 4px;
+    border-radius: 0 10px 10px 0;
+    margin: 6px 6px 0 0;
     padding: 5px 0;
     min-width: 32px;
 }
 
 #workspaces {
-    margin-top: 4px;
+    margin-top: 0;
     padding: 6px 0;
 }
 
@@ -150,8 +155,8 @@ window#waybar {
 #battery.warning.discharging,
 #battery.critical.discharging {
     animation-name: battery-low;
-    animation-duration: 1s;
-    animation-timing-function: ease-in-out;
+    animation-duration: 0.6s;
+    animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
@@ -182,48 +187,9 @@ window#waybar {
 }
 
 #custom-power {
-    margin-bottom: 8px;
+    margin-bottom: 0;
     background-color: @danger_soft;
     color: @danger;
-}
-
-#pulseaudio-slider,
-#backlight-slider {
-    background-color: @surface;
-    border: 1px solid @border;
-    border-radius: 14px;
-    margin: 6px 8px 0 8px;
-    min-height: 96px;
-    min-width: 42px;
-    padding: 10px 0;
-}
-
-#pulseaudio-slider slider,
-#backlight-slider slider {
-    min-width: 0;
-    min-height: 0;
-    opacity: 0;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-}
-
-#pulseaudio-slider trough,
-#backlight-slider trough {
-    min-width: 8px;
-    margin: 0 16px;
-    border-radius: 999px;
-    background-color: @surface_hi;
-}
-
-#pulseaudio-slider highlight {
-    border-radius: 999px;
-    background-color: @blue;
-}
-
-#backlight-slider highlight {
-    border-radius: 999px;
-    background-color: @gold;
 }
 
 tooltip {

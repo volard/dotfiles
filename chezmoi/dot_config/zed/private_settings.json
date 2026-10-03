@@ -7,6 +7,11 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "preview_tabs": {
+    "enable_keep_preview_on_code_navigation": true,
+    "enable_preview_multibuffer_from_code_navigation": true,
+    "enable_preview_from_file_finder": true
+  },
   "format_on_save": "off",
   "diff_view_style": "unified",
   "autosave": {
@@ -24,6 +29,12 @@
   },
   "cli_default_open_behavior": "existing_window",
   "edit_predictions": {
+    "ollama": {
+      "prediction_debounce": 300,
+      "model": "qwen2.5-coder:3b"
+    },
+    "provider": "ollama",
+    "disabled_globs": [],
     "allow_data_collection": "no",
     "mode": "eager"
   },
@@ -90,7 +101,12 @@
     "nix": true,
     "terraform": true,
     "kotlin": true,
-    "dart": true
+    "dart": true,
+    "lua": true,
+    "toml": true,
+    "git-firefly": true,
+    "fish": true,
+    "ps1": true
   },
   // Which-key popup settings
   "which_key": {

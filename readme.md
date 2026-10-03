@@ -30,7 +30,5 @@ ansible-vault encrypt_string 'name' --name 'username' | wl-copy
 
 - `gh auth login`
 - glab auth
-- context7 problem?
 - browser extensions
 - login into corporate docker registry
-

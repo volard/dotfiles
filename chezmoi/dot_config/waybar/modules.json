@@ -1,24 +1,4 @@
 {
-  "group/audio": {
-    "orientation": "inherit",
-    "drawer": {
-      "transition-duration": 240,
-      "children-class": "audio",
-      "transition-left-to-right": false
-    },
-    "modules": ["pulseaudio", "pulseaudio/slider"]
-  },
-
-  "group/brightness": {
-    "orientation": "inherit",
-    "drawer": {
-      "transition-duration": 240,
-      "children-class": "brightness",
-      "transition-left-to-right": false
-    },
-    "modules": ["backlight", "backlight/slider"]
-  },
-
   "custom/voxtype": {
     "exec": "voxtype status --follow --format json",
     "return-type": "json",
@@ -105,7 +85,8 @@
   },
 
   "pulseaudio": {
-    "scroll-step": 2,
+    "on-scroll-up": "swayosd-client --output-volume +2 --max-volume 100",
+    "on-scroll-down": "swayosd-client --output-volume -2 --max-volume 100",
     "format": "<span size='115%'>{icon}</span>",
     "format-muted": "󰝟",
     "format-icons": {
@@ -121,24 +102,12 @@
     "on-click": "pavucontrol"
   },
 
-  "pulseaudio/slider": {
-    "min": 0,
-    "max": 100,
-    "orientation": "vertical"
-  },
-
   "backlight": {
     "format": "{icon}",
     "format-icons": ["󰃚", "󰃛", "󰃜", "󰃝", "󰃞", "󰃟", "󰃠"],
     "tooltip-format": "Brightness {percent}%",
-    "on-scroll-down": "brightnessctl -c backlight set 5%-",
-    "on-scroll-up": "brightnessctl -c backlight set +5%"
-  },
-
-  "backlight/slider": {
-    "min": 0,
-    "max": 100,
-    "orientation": "vertical"
+    "on-scroll-down": "swayosd-client --brightness -5",
+    "on-scroll-up": "swayosd-client --brightness +5"
   },
 
   "cpu": {
@@ -177,6 +146,17 @@
     "states": {
       "warning": 20,
       "critical": 10
+    }
+  },
+
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}",
+    "format-icons": {
+      "power-saver": "",
+      "balanced": "",
+      "performance": "",
+      "default": ""
     }
   },
 

@@ -91,11 +91,6 @@
       tags:
         - vnc
 
-    - role: hiddify
-      when: "'hiddify' in enabled_roles or 'hiddify' in selected_role_tags"
-      tags:
-        - hiddify
-
     - role: voxtype
       when: "'voxtype' in enabled_roles or 'voxtype' in selected_role_tags"
       tags:
