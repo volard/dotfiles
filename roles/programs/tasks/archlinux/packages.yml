@@ -15,6 +15,8 @@
     - mkcert
     - tmux
     - nix
+    - power-profiles-daemon
+    - swayosd
     - direnv
     - zip
     - mise
