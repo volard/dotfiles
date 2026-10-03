@@ -9,6 +9,8 @@ spawn-sh-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
 spawn-sh-at-startup "$HOME/.config/niri/scripts/import-gsettings"
 spawn-sh-at-startup "$HOME/.config/niri/scripts/dynamic_wallpapers"
+spawn-at-startup "swayosd-server"
+spawn-at-startup "ollama serve"
 spawn-sh-at-startup "waybar -c \"$HOME/.config/waybar/config-niri.jsonc\" -s \"$HOME/.config/waybar/style.css\""
 spawn-at-startup "Telegram"
 spawn-at-startup "throne"

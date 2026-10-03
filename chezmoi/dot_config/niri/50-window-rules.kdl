@@ -9,14 +9,15 @@ window-rule {
 }
 
 // ----------------------------------------------------------------------------
-// WezTerm's initial configure bug by setting an empty default-column-width.
+// WezTerm initial size.
 // ----------------------------------------------------------------------------
 window-rule {
     // This regular expression is intentionally made as specific as possible,
     // since this is the default config, and we want no false positives.
     // You can get away with just app-id="wezterm" if you want.
     match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
+    default-column-width { proportion 0.5; }
+    default-window-height { proportion 1.0; }
 }
 
 // ----------------------------------------------------------------------------
@@ -53,6 +54,18 @@ window-rule {
     open-floating true
     default-column-width { proportion 0.33; }
     default-window-height { proportion 0.5; }
+}
+
+// Full-width application windows.
+window-rule {
+    match app-id=r#"^orca$"#
+    match app-id=r#"^zen$"#
+    match app-id=r#"^org\.telegram\.desktop$"#
+
+    exclude app-id=r#"^zen$"# title=r#"^Picture-in-Picture$"#
+    exclude app-id=r#"^org\.telegram\.desktop$"# title="Media viewer"
+
+    default-column-width { proportion 1.0; }
 }
 
 // ----------------------------------------------------------------------------

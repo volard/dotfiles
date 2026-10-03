@@ -9,7 +9,9 @@ function module.apply_to_config(config)
 		config.default_prog = { "pwsh" }
 		config.default_cwd = "D:\\"
 	elseif platform_info.is_linux then
-		-- keep defaults
+		if os.getenv("NIRI_SOCKET") then
+			config.window_decorations = "TITLE|RESIZE"
+		end
 	end
 end
 
