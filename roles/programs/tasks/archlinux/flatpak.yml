@@ -12,13 +12,6 @@
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
   become: true
 
-- name: Install Gear Lever from Flathub
-  community.general.flatpak:
-    name: it.mijorus.gearlever
-    state: present
-    remote: flathub
-  become: true
-
 - name: Install applications from Flathub
   community.general.flatpak:
     name: "{{ flatpak_app }}"
@@ -27,7 +20,10 @@
   loop:
     - md.obsidian.Obsidian
     - io.github.anil_e.Codd
+    - it.mijorus.gearlever
     - io.gitlab.theevilskeleton.Upscaler
+    - io.gitlab.theevilskeleton.Upscaler
+    - com.super_productivity.SuperProductivity
   loop_control:
     loop_var: flatpak_app
   become: true
