@@ -31,6 +31,11 @@
       tags:
         - powershell
 
+    - role: rdp-client
+      when: "'rdp-client' in enabled_roles or 'rdp-client' in selected_role_tags"
+      tags:
+        - rdp-client
+
     - role: virtual
       when: "'virtual' in enabled_roles or 'virtual' in selected_role_tags"
       tags:
