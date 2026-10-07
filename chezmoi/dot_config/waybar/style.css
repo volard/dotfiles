@@ -14,6 +14,18 @@
     }
 }
 
+@keyframes battery-full {
+    from {
+        background-color: @green;
+        border-color: @green;
+    }
+
+    to {
+        background-color: @gold;
+        border-color: @gold;
+    }
+}
+
 * {
     border: none;
     border-radius: 0;
@@ -164,6 +176,18 @@ window#waybar {
 #battery.charging,
 #battery.plugged {
     color: @green;
+}
+
+#battery.full {
+    color: @bg;
+    background-color: @green;
+    border-color: @green;
+    font-weight: 900;
+    animation-name: battery-full;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
 
 #pulseaudio,

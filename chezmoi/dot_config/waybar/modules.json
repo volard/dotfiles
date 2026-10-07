@@ -142,7 +142,12 @@
     "format-plugged": "\n{capacity}%",
     "tooltip-format": "{capacity}%\n{time}",
     "tooltip-format-charging": "Charging {capacity}%\n{time}",
+    "tooltip-format-full": "Battery full — unplug charger",
     "tooltip": true,
+    "events": {
+      "on-discharging-warning": "notify-send -u critical -a Waybar 'Battery low' 'Battery is at 20% or below. Connect charger.'",
+      "on-charging-100": "notify-send -u normal -a Waybar 'Battery full' 'Battery is at 100%. Unplug charger.'"
+    },
     "states": {
       "warning": 20,
       "critical": 10
